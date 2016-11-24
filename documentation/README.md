@@ -10,6 +10,7 @@
 
 ## ReactJS + Django
 - http://geezhawk.github.io/using-react-with-django-rest-framework
+
 1. `npm init`
 2. `npm install --save-dev jquery react react-dom webpack webpack-bundle-tracker babel-loader babel-core babel-preset-es2015 babel-preset-react`
 3. `mkdir -p assets/js`
