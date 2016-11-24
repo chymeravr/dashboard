@@ -128,8 +128,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = 'staticfiles'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "chym_user/static"),
-    os.path.join(BASE_DIR, "assets"),
+    os.path.join(BASE_DIR, "chym_user/assets/"),
 )
 
 STATICFILES_FINDERS = (
@@ -138,8 +137,8 @@ STATICFILES_FINDERS = (
 )
 
 WEBPACK_LOADER = {
-    'DEFAULT': {
-        'BUNDLE_DIR_NAME': 'bundles/',
-        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+    'CHYM_USER': {
+        'BUNDLE_DIR_NAME': 'chym_user/bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'chym_user/webpack-stats.json'),
     }
 }

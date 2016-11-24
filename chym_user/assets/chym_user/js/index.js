@@ -31,7 +31,7 @@ var BooksList = React.createClass({
         }
         return (
             <div>
-                <h1>Hello Readddct!</h1>
+                <h1>Hello React!</h1>
                 <ul>
                     {bookNodes}
                 </ul>
