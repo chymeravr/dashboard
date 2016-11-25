@@ -54,7 +54,7 @@ ROOT_URLCONF = 'dashboard.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['chym_user/templates'],
+        'DIRS': ['dashboard/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -128,7 +128,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = 'staticfiles'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "chym_user/assets/"),
+    os.path.join(BASE_DIR, 'dashboard/assets/'),
 )
 
 STATICFILES_FINDERS = (
@@ -137,8 +137,8 @@ STATICFILES_FINDERS = (
 )
 
 WEBPACK_LOADER = {
-    'CHYM_USER': {
-        'BUNDLE_DIR_NAME': 'chym_user/bundles/',
-        'STATS_FILE': os.path.join(BASE_DIR, 'chym_user/webpack-stats.json'),
-    }
+    'DASHBOARD': {
+        'BUNDLE_DIR_NAME': 'dashboard/bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'dashboard/webpack-stats.json'),
+    },
 }

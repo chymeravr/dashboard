@@ -8,7 +8,6 @@ from chym_user.views.app import login
 chym_user module stores the user profile and authentication methods
 """
 urlpatterns = [
-    url(r'^login', login),
     url(r'^api/login', obtain_jwt_token),
     url(r'^api/view_profile', ProfileView.as_view()),
 ]
