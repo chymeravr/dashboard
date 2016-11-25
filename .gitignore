@@ -95,3 +95,7 @@ ENV/
 # DB
 db.sqlite3
 staticfiles
+webpack-stats.json
+
+bundles/
+node_modules
