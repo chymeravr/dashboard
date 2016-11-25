@@ -1,0 +1,15 @@
+{% load staticfiles %}
+{% load render_bundle from webpack_loader %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Latest compiled and minified CSS -->
+</head>
+<body>
+<div id="root"></div>
+{% render_bundle 'main' 'js' 'CHYM_USER' %}
+{% include "chym_user/import.html" %}
+</body>
+</html>

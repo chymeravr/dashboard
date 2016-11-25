@@ -1,44 +1,50 @@
 var React = require('react')
 var ReactDOM = require('react-dom')
+require('whatwg-fetch')
 
-var BooksList = React.createClass({
-    loadBooksFromServer: function(){
-        $.ajax({
-            url: this.props.url,
-            datatype: 'json',
-            cache: false,
-            success: function(data) {
-                this.setState({data: data});
-            }.bind(this)
-        })
-    },
+/*
+ * Components
+ */
 
-    getInitialState: function() {
-        return {data: []};
-    },
 
-    componentDidMount: function() {
-        this.loadBooksFromServer();
-        setInterval(this.loadBooksFromServer,
-                    this.props.pollInterval)
-    },
-    render: function() {
-        if (this.state.data) {
-            console.log('DATA!')
-            var bookNodes = this.state.data.map(function(book){
-                return <li> {book.title} </li>
-            })
-        }
-        return (
-            <div>
-                <h1>Hello React!</h1>
-                <ul>
-                    {bookNodes}
-                </ul>
-            </div>
-        )
-    }
-})
+class NameForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { username: '', password: '' };
+  }
 
-ReactDOM.render(<BooksList url='/api/' pollInterval={100000} />,
-    document.getElementById('container'))
+  handleChange(key) {
+    return function (e) {
+      var state = {};
+      state[key] = e.target.value;
+      this.setState(state);
+    }.bind(this);
+  }
+
+  tryLogin(e) {
+    console.log("Trying to log in");
+  }
+
+  render() {
+    return (
+      <div>
+        <form>
+          Username: <input
+            value={this.state.username}
+            onChange={this.handleChange('username')} />
+          <br />
+          Password: <input type="password"
+            value={this.state.password}
+            onChange={this.handleChange('password')} />
+        </form>
+        <button onClick={this.tryLogin}>Login</button>
+        <pre>{JSON.stringify(this.state, null, 4)}</pre>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(
+  <NameForm />,
+  document.getElementById('root')
+);

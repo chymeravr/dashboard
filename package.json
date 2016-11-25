@@ -22,6 +22,8 @@
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "webpack": "^1.13.3",
-    "webpack-bundle-tracker": "0.0.93"
-  }
+    "webpack-bundle-tracker": "0.0.93",
+    "whatwg-fetch": "^2.0.1"
+  },
+  "dependencies": {}
 }
