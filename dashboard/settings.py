@@ -129,6 +129,7 @@ STATIC_ROOT = 'staticfiles'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'dashboard/assets/'),
+    os.path.join(BASE_DIR, 'dashboard/assets/dashboard'),
 )
 
 STATICFILES_FINDERS = (

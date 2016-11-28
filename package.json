@@ -25,5 +25,7 @@
     "webpack-bundle-tracker": "0.0.93",
     "whatwg-fetch": "^2.0.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "react-router": "^3.0.0"
+  }
 }

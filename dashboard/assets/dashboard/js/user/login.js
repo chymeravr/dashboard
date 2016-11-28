@@ -34,16 +34,21 @@ class LoginForm extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
                 <form>
-                    Username:
-                    <input value={this.state.username} onChange={this.handleChange('username')}>
-                    </input>
-                    <br />
-                    'Password: ',
-                    <input value={this.state.password} onChange={this.handleChange('password')}>
-                    </input>
-                    <button onClick={this.tryLogin.bind(this)}>Login</button>
+                    <div className="input-field col s6">
+                        <input id="username" type="text" className="validate" value={this.state.username}
+                            onChange={this.handleChange('username')} />
+                        <label htmlFor="username">Username</label>
+                    </div>
+                    <div className="input-field col s6">
+                        <input id="password" type="text" className="validate" value={this.state.password}
+                            onChange={this.handleChange('password')} />
+                        <label htmlFor="password">Password</label>
+                    </div>
+                    <a className="waves-effect waves-light btn" onClick={this.tryLogin.bind(this)}>
+                    button
+                    </a>
                 </form>
             </div>
         );

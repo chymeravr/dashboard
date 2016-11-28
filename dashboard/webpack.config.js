@@ -2,12 +2,7 @@
 var path = require('path')
 var webpack = require('webpack')
 var BundleTracker = require('webpack-bundle-tracker')
-var folders = {
-    APP: path.resolve(__dirname, '../app'),
-    BUILD: path.resolve(__dirname, '../build'),
-    BOWER: path.resolve(__dirname, '../bower_components'),
-    NPM: path.resolve(__dirname, '../node_modules')
-};
+
 module.exports = {
     //the base directory (absolute path) for resolving the entry option
     context: __dirname,
@@ -28,10 +23,7 @@ module.exports = {
         new BundleTracker({ filename: './webpack-stats.json' }),
         //makes jQuery available in every module
         new webpack.ProvidePlugin({
-            $: 'jquery',
-            jQuery: 'jquery',
-            'window.jQuery': 'jquery',
-            jquery: 'jquery',
+           
         })
     ],
 

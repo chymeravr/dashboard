@@ -1,77 +1,57 @@
 var React = require('react')
 var ReactDOM = require('react-dom')
 var HomeView = require('./home')
+var Header = require('./header')
+var Footer = require('./footer')
+
 var LoginForm = require('./../user/login')
+
+var Router = require('react-router').Router
+var Route = require('react-router').Route
+var Link = require('react-router').Link
+var hashHistory = require('react-router').hashHistory
 
 require('whatwg-fetch')
 
-// Set the initial app state
-var state = {
-    location: window.location.hash
-};
-
-function navigated() {
-    setState({
-        location: window.location.hash
-    });
-}
-
 class AppView extends React.Component {
+
+    componentDidMount() {
+        $('.button-collapse').sideNav();
+    }
 
     constructor(props) {
         super(props);
         this.state = Object.assign(
-            { header: LoginForm },
-            { footer: LoginForm },
-            { container: <LoginForm/> },
+            { header: Header },
+            { footer: Footer },
+            { container: <LoginForm /> },
             props
         )
     }
 
     render() {
         return (
-            <div>
+            <div className="page-flexbox-wrapper">
                 <this.state.header />
-                {this.state.container}
+                <main>
+                   
+                    {this.props.children}
+                </main>
                 <this.state.footer />
             </div>
         );
     }
 }
-// Handle browser navigation events
-window.addEventListener('hashchange', navigated, false);
 
-// Make the given changes to the state and perform any required housekeeping
-function setState(changes) {
-    var component;
-    Object.assign(state, changes);
-
-    switch (state.location) {
-        case '#/login':
-            component = (
-                <LoginForm />
-            );
-            break;
-        case '#/profile':
-            component = (
-                <div>
-                    Welcome {state.username}
-                </div>
-            );
-            break;
-        default:
-            component = (<HomeView />)
-    }
-
-    console.info(component);
-    ReactDOM.render(
-        <AppView container={component = component} />,
-        document.getElementById('root')
-    );
-}
-
-// Handle browser navigation events
-window.addEventListener('hashchange', navigated, false);
-
-// Start the app
-navigated();
+ReactDOM.render((
+    <Router history={hashHistory}>
+        <Route path="/" component={AppView}>
+            <Route path="login" component={LoginForm} />
+            {// <Route path="users" component={Users}>
+                //     <Route path="/user/:userId" component={User} />
+                // </Route>
+            }
+            <Route path="*" component={AppView} />
+        </Route>
+    </Router>
+), document.getElementById('root'))
