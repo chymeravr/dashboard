@@ -4,8 +4,7 @@ var HomeView = require('./home')
 var Header = require('./header')
 var Footer = require('./footer')
 
-var LoginForm = require('./../user/login')
-var ProfileView = require('./../user/profile')
+var LoginForm = require('./login')
 
 var Router = require('react-router').Router
 var Route = require('react-router').Route
@@ -40,7 +39,6 @@ ReactDOM.render((
         <Route path="/" component={AppView}>
             <IndexRoute component={HomeView} />
             <Route path="/login" component={LoginForm} />
-            <Route path="/profile" component={ProfileView} />
             {// <Route path="users" component={Users}>
                 //     <Route path="/user/:userId" component={User} />
                 // </Route>
