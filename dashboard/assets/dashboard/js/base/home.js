@@ -1,13 +1,12 @@
 var React = require('react');
+var Link = require('react-router').Link
 
 class HomeView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
     }
-    redirectTologin() {
-        window.location = '/user/login#/login';
-    }
+
     render() {
         var style = {
             fontWeight: "lighter",
@@ -16,15 +15,12 @@ class HomeView extends React.Component {
 
         return (
             <div className="center-align">
-                <br />
                 <div><img src="" /></div>
                 <h2 className="container" style={style}>
                     Monetise with <strong>VR</strong>
                 </h2>
-                <a className="waves-effect waves-light btn" 
-                onClick={event => window.location = "#/login"}>
-                    Get Started
-                </a>
+                <br />
+                <Link className="waves-effect waves-light btn" to="/login">GET STARTED</Link>
             </div>
         );
     }

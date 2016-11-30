@@ -5,9 +5,11 @@ var Header = require('./header')
 var Footer = require('./footer')
 
 var LoginForm = require('./../user/login')
+var ProfileView = require('./../user/profile')
 
 var Router = require('react-router').Router
 var Route = require('react-router').Route
+var IndexRoute = require('react-router').IndexRoute
 var Link = require('react-router').Link
 var hashHistory = require('react-router').hashHistory
 
@@ -19,25 +21,15 @@ class AppView extends React.Component {
         $('.button-collapse').sideNav();
     }
 
-    constructor(props) {
-        super(props);
-        this.state = Object.assign(
-            { header: Header },
-            { footer: Footer },
-            { container: <LoginForm /> },
-            props
-        )
-    }
-
     render() {
         return (
             <div className="page-flexbox-wrapper">
-                <this.state.header />
+                <Header />
+                <br />
                 <main>
-                   
                     {this.props.children}
                 </main>
-                <this.state.footer />
+                <Footer />
             </div>
         );
     }
@@ -46,12 +38,13 @@ class AppView extends React.Component {
 ReactDOM.render((
     <Router history={hashHistory}>
         <Route path="/" component={AppView}>
-            <Route path="login" component={LoginForm} />
+            <IndexRoute component={HomeView} />
+            <Route path="/login" component={LoginForm} />
+            <Route path="/profile" component={ProfileView} />
             {// <Route path="users" component={Users}>
                 //     <Route path="/user/:userId" component={User} />
                 // </Route>
             }
-            <Route path="*" component={AppView} />
         </Route>
     </Router>
 ), document.getElementById('root'))

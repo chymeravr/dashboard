@@ -1,4 +1,5 @@
 var React = require('react')
+var config = require('./../config.js')
 
 class LoginForm extends React.Component {
     constructor(props) {
@@ -26,29 +27,38 @@ class LoginForm extends React.Component {
         fetch('/user/api/login', {
             method: 'POST',
             body: data
-        }).then(response => response.json()).then(token => {
-            localStorage.setItem(TOKEN_KEY, token['token']);
+        }).then(response => {
+            if (response.status != 200) {
+                throw new Error(response.statusText)
+            }
+            return response.json();
+        }).then(token => {
+            localStorage.setItem(config.jwt.tokenKey, token['token']);
             window.location = "#/profile";
+        }).catch(function(error) {
+            alert(error)
         });
     }
 
     render() {
         return (
             <div className="container">
-                <form>
-                    <div className="input-field col s6">
-                        <input id="username" type="text" className="validate" value={this.state.username}
-                            onChange={this.handleChange('username')} />
-                        <label htmlFor="username">Username</label>
-                    </div>
-                    <div className="input-field col s6">
-                        <input id="password" type="text" className="validate" value={this.state.password}
-                            onChange={this.handleChange('password')} />
-                        <label htmlFor="password">Password</label>
-                    </div>
-                    <a className="waves-effect waves-light btn" onClick={this.tryLogin.bind(this)}>
-                    button
+                <form className="row">
+                    <div className="col s6 offset-s3">
+                        <div className="input-field row">
+                            <input id="username" type="text" className="validate" value={this.state.username}
+                                onChange={this.handleChange('username')} />
+                            <label htmlFor="username">Username</label>
+                        </div>
+                        <div className="input-field row">
+                            <input id="password" type="password" className="validate" value={this.state.password}
+                                onChange={this.handleChange('password')} />
+                            <label htmlFor="password">Password</label>
+                        </div>
+                        <a className="waves-effect waves-light btn right" onClick={this.tryLogin.bind(this)}>
+                            Login
                     </a>
+                    </div>
                 </form>
             </div>
         );
