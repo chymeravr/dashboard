@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'webpack_loader',
     'chym_user',
-    'dashboard'
+    'dashboard',
+    'advertiser'
 ]
 
 MIDDLEWARE = [
