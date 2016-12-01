@@ -1,10 +1,13 @@
-var React = require('react')
-var config = require('./../config.js')
+import React from 'react'
+import { config } from '../config.js'
+import { hashHistory } from 'react-router';
+import { callApiWithJwt, debug } from '../lib.js'
 
 class LoginForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { username: '', password: '' };
+        this.state = { username: '', password: '', assignUser: props.assignUser };
+        debug("state login form", this.state);
     }
 
     handleChange(key) {
@@ -17,13 +20,14 @@ class LoginForm extends React.Component {
 
     tryLogin(e) {
         console.log("Trying to log in");
-        console.log(this);
+        console.log(config);
         var data = new FormData();
         data.append("username", this.state.username);
         data.append("password", this.state.password);
         for (var [key, value] of data.entries()) {
             console.log(key, value);
         }
+
         fetch('/user/api/login', {
             method: 'POST',
             body: data
@@ -34,9 +38,15 @@ class LoginForm extends React.Component {
             return response.json();
         }).then(token => {
             localStorage.setItem(config.jwt.tokenKey, token['token']);
-            window.location = "#/profile";
-        }).catch(function(error) {
-            alert(error)
+            callApiWithJwt('/user/api/view_profile',
+                'GET',
+                {},
+                (response) => this.state.assignUser(response),
+                (error) => console.info(error)
+            );
+            hashHistory.push('/profile/' + this.state.username);
+        }).catch(function (error) {
+            throw error
         });
     }
 
@@ -46,12 +56,12 @@ class LoginForm extends React.Component {
                 <form className="row">
                     <div className="col s6 offset-s3">
                         <div className="input-field row">
-                            <input id="username" type="text" className="validate" value={this.state.username}
+                            <input id="username" type="text" value={this.state.username}
                                 onChange={this.handleChange('username')} />
                             <label htmlFor="username">Username</label>
                         </div>
                         <div className="input-field row">
-                            <input id="password" type="password" className="validate" value={this.state.password}
+                            <input id="password" type="password" value={this.state.password}
                                 onChange={this.handleChange('password')} />
                             <label htmlFor="password">Password</label>
                         </div>
