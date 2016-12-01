@@ -7,7 +7,7 @@ class LoginForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = { username: '', password: '', assignUser: props.assignUser };
-        debug("state login form", this.state);
+        // debug("state login form", this.state);
     }
 
     handleChange(key) {
@@ -19,14 +19,9 @@ class LoginForm extends React.Component {
     }
 
     tryLogin(e) {
-        console.log("Trying to log in");
-        console.log(config);
         var data = new FormData();
         data.append("username", this.state.username);
         data.append("password", this.state.password);
-        for (var [key, value] of data.entries()) {
-            console.log(key, value);
-        }
 
         fetch('/user/api/login', {
             method: 'POST',
@@ -38,13 +33,7 @@ class LoginForm extends React.Component {
             return response.json();
         }).then(token => {
             localStorage.setItem(config.jwt.tokenKey, token['token']);
-            callApiWithJwt('/user/api/view_profile',
-                'GET',
-                {},
-                (response) => this.state.assignUser(response),
-                (error) => console.info(error)
-            );
-            hashHistory.push('/profile/' + this.state.username);
+            hashHistory.push('/profile/');
         }).catch(function (error) {
             throw error
         });

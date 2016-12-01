@@ -14,9 +14,9 @@ class HomeView extends React.Component {
         }
 
         return (
-            <div className="center-align">
+            <div className="center-align container">
                 <div><img src="" /></div>
-                <h2 className="container" style={style}>
+                <h2 className="" style={style}>
                     Monetise with <strong>VR</strong>
                 </h2>
                 <br />

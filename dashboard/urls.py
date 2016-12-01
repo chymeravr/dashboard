@@ -19,7 +19,7 @@ from django.contrib import admin
 from dashboard import views
 
 urlpatterns = [
-    url(r'^user/', include('chym_user.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^user/', include('chym_user.urls')),
     url(r'^', views.home)
 ]

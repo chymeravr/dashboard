@@ -1,29 +1,24 @@
 from django.contrib.auth.models import User
+from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
-
-class DynamicFieldsModelSerializer(ModelSerializer):
-    """
-    A ModelSerializer that takes an additional `fields` argument that
-    controls which fields should be displayed.
-    """
-
-    def __init__(self, *args, **kwargs):
-        # Don't pass the 'fields' arg up to the superclass
-        fields = kwargs.pop('fields', None)
-
-        # Instantiate the superclass normally
-        super(DynamicFieldsModelSerializer, self).__init__(*args, **kwargs)
-
-        if fields is not None:
-            # Drop any fields that are not specified in the `fields` argument.
-            allowed = set(fields)
-            existing = set(self.fields.keys())
-            for field_name in existing - allowed:
-                self.fields.pop(field_name)
+from chym_user.models import Profile
 
 
-class UserSerializer(DynamicFieldsModelSerializer):
+class UserProfileSerializer(ModelSerializer):
+    currency = serializers.CharField(source='profile.currency')
+    advertising_budget = serializers.FloatField(source='profile.advertising_budget')
+    publisher_earnings = serializers.FloatField(source='profile.publisher_earnings')
+
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'is_staff', 'is_active')
+        fields = (
+            'id',
+            'username',
+            'email',
+            'advertising_budget',
+            'publisher_earnings',
+            'currency'
+        )
+
+        read_only_fields = ('created_at', 'updated_at',)

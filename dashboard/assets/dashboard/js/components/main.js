@@ -30,35 +30,31 @@ class AppView extends React.Component {
         // }, 10000);
     }
 
-    assignUser(user) {
-        this.props.user = user;
-    }
-
     componentDidMount() {
         $('.button-collapse').sideNav();
     }
 
     render() {
-        debug("Rendering AppView", this.props);
+        // debug("Rendering AppView", this.props);
         var props = {}
-        switch (this.props.children.props.route.name) {
-            case 'login':
-                props = {
-                    assignUser: this.assignUser.bind(this)
-                }
-                break;
-            case 'login':
-                break;
-            default:
-                break;
-        }
-        debug("children props", props);
+        // switch (this.props.children.props.route.name) {
+        //     case 'login':
+        //         props = {
+        //             assignUser: this.assignUser.bind(this)
+        //         }
+        //         break;
+        //     case 'login':
+        //         break;
+        //     default:
+        //         break;
+        // }
+        // debug("children props", props);
         return (
             <div className="page-flexbox-wrapper">
                 <Header />
                 <br />
-                <main>
-                    {React.cloneElement(this.props.children, props)}
+                <main className="valign-wrapper">
+                    {this.props.children}
                 </main>
                 <Footer />
             </div>
@@ -71,7 +67,7 @@ render((
         <Route path="/" component={AppView}>
             <IndexRoute component={HomeView} />
             <Route name="login" path="/login" component={LoginForm} />
-            <Route name="profile" path="/profile/:username"
+            <Route name="profile" path="/profile/"
                 component={ProfileView} />} />
 
             {// <Route path="users" component={Users}>

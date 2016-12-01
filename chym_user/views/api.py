@@ -4,7 +4,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from chym_user.serializers import UserSerializer
+from chym_user.serializers import UserProfileSerializer
 
 
 class ProfileView(APIView):
@@ -12,5 +12,5 @@ class ProfileView(APIView):
 
     @permission_classes((IsAuthenticated,))
     def get(self, request):
-        serializer = UserSerializer(request.user)
+        serializer = UserProfileSerializer(request.user)
         return Response(serializer.data)
