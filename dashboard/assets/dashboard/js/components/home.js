@@ -1,10 +1,20 @@
 var React = require('react');
 var Link = require('react-router').Link
+import { debug, callApiWithJwt } from '../lib.js'
 
 class HomeView extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = { next: '/login' };
+    }
+
+    componentWillMount() {
+        callApiWithJwt('/user/api/view_profile',
+            'GET',
+            {},
+            (response) => this.setState({ next: '/profile/' }),
+            (error) => ({})
+        );
     }
 
     render() {
@@ -20,7 +30,8 @@ class HomeView extends React.Component {
                     Monetise with <strong>VR</strong>
                 </h2>
                 <br />
-                <Link className="waves-effect waves-light btn" to="/login">GET STARTED</Link>
+                <Link className="waves-effect waves-light btn"
+                    to={this.state.next}>GET STARTED</Link>
             </div>
         );
     }

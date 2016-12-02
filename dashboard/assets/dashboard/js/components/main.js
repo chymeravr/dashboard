@@ -1,6 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 
 import 'whatwg-fetch'
 
@@ -43,9 +44,21 @@ class AppView extends React.Component {
             <div className="page-flexbox-wrapper">
                 <Header />
                 <br />
-                <main className="valign-wrapper">
-                    {this.props.children}
-                </main>
+                <ReactCSSTransitionGroup
+                    component="main"
+                    className="valign-wrapper"
+                    transitionName="example"
+                    transitionAppear={true}
+                    transitionLeave={false}
+                    transitionEnterTimeout={500}
+                    transitionLeaveTimeout={500}
+                    transitionAppearTimeout={500}>
+                    {
+                        React.cloneElement(this.props.children, {
+                            key: this.props.children.props.route.name,
+                        })
+                    }
+                </ReactCSSTransitionGroup>
                 <Footer />
             </div>
         );
