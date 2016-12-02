@@ -1,6 +1,7 @@
 var React = require('react');
 var Link = require('react-router').Link
 import { debug, callApiWithJwt } from '../lib.js'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 
 class HomeView extends React.Component {
     constructor(props) {
@@ -24,7 +25,15 @@ class HomeView extends React.Component {
         }
 
         return (
-            <div className="center-align container">
+            <ReactCSSTransitionGroup
+                component="div"
+                transitionName="fadeTransition"
+                transitionAppear={true}
+                transitionLeave={false}
+                transitionEnterTimeout={500}
+                transitionLeaveTimeout={500}
+                transitionAppearTimeout={500}
+                className="center-align container">
                 <div><img src="" /></div>
                 <h2 className="" style={style}>
                     Monetise with <strong>VR</strong>
@@ -32,7 +41,7 @@ class HomeView extends React.Component {
                 <br />
                 <Link className="waves-effect waves-light btn"
                     to={this.state.next}>GET STARTED</Link>
-            </div>
+            </ReactCSSTransitionGroup>
         );
     }
 }

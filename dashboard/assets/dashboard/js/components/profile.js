@@ -2,6 +2,7 @@ import React from 'react'
 import { debug, callApiWithJwt } from '../lib.js'
 import { config } from '../config.js'
 import { hashHistory } from 'react-router';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 
 class Offering extends React.Component {
     render() {
@@ -30,6 +31,7 @@ class Offering extends React.Component {
         );
     }
 }
+
 export class ProfileView extends React.Component {
     constructor(props) {
         super(props);
@@ -53,7 +55,8 @@ export class ProfileView extends React.Component {
         var publisherMessage = "Earnings available";
         if (this.state.username) {
             var body = (
-                <div className="row">
+                // Key is important for transitions
+                <div key="loaded" className="row">
                     <div className="col s8 offset-s2">
                         <Offering offering="Advertise"
                             balance={this.state.advertising_budget}
@@ -68,12 +71,19 @@ export class ProfileView extends React.Component {
             /**
              * The API call hasn't succeeded yet. TODO Show a spinner'
              */
-            var body = <div></div>
+            var body = <div key="notloaded"></div>
         }
         return (
-            <div className="container valign">
+            <ReactCSSTransitionGroup
+                transitionName="fadeTransition"
+                transitionAppear={true}
+                transitionLeave={false}
+                transitionEnterTimeout={500}
+                transitionLeaveTimeout={500}
+                transitionAppearTimeout={500}
+                className="center-align container">
                 {body}
-            </div>
+            </ReactCSSTransitionGroup>
         );
     }
 }

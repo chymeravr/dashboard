@@ -44,21 +44,9 @@ class AppView extends React.Component {
             <div className="page-flexbox-wrapper">
                 <Header />
                 <br />
-                <ReactCSSTransitionGroup
-                    component="main"
-                    className="valign-wrapper"
-                    transitionName="example"
-                    transitionAppear={true}
-                    transitionLeave={false}
-                    transitionEnterTimeout={500}
-                    transitionLeaveTimeout={500}
-                    transitionAppearTimeout={500}>
-                    {
-                        React.cloneElement(this.props.children, {
-                            key: this.props.children.props.route.name,
-                        })
-                    }
-                </ReactCSSTransitionGroup>
+                <main className="valign-wrapper">
+                 {this.props.children}
+                </main>
                 <Footer />
             </div>
         );

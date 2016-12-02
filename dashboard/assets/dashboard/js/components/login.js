@@ -6,7 +6,7 @@ import { callApiWithJwt, debug } from '../lib.js'
 class LoginForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { username: '', password: ''};
+        this.state = { username: '', password: '' };
         // debug("state login form", this.state);
     }
 
@@ -47,7 +47,15 @@ class LoginForm extends React.Component {
 
     render() {
         return (
-            <div className="container">
+            <ReactCSSTransitionGroup
+                component="div"
+                transitionName="fadeTransition"
+                transitionAppear={true}
+                transitionLeave={false}
+                transitionEnterTimeout={500}
+                transitionLeaveTimeout={500}
+                transitionAppearTimeout={500}
+                className="center-align container">
                 <form className="row">
                     <div className="col s6 offset-s3">
                         <div className="input-field row">
@@ -65,7 +73,7 @@ class LoginForm extends React.Component {
                     </a>
                     </div>
                 </form>
-            </div>
+            </ReactCSSTransitionGroup>
         );
     }
 }

@@ -8574,29 +8574,29 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
   }
 }
 
-.example-appear {
+.fadeTransition-appear {
   opacity: 0.01;
 }
 
-.example-appear.example-appear-active {
+.fadeTransition-appear.fadeTransition-appear-active {
   opacity: 1;
   transition: opacity .5s ease-in;
 }
 
-.example-enter {
+.fadeTransition-enter {
   opacity: 0.01;
   transition: opacity 0.5s ease-in;
 }
 
-.example-enter.example-enter-active {
+.fadeTransition-enter.fadeTransition-enter-active {
   opacity: 1;
 }
 
-.example-leave {
+.fadeTransition-leave {
   opacity: 1;
   transition: opacity 0.5s ease-in;
 }
 
-.example-leave.example-leave-active {
+.fadeTransition-leave.fadeTransition-leave-active {
   opacity: 0.01;
 }
