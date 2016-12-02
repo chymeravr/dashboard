@@ -10,6 +10,7 @@ import Header from './header'
 import Footer from './footer'
 import { ProfileView } from './profile'
 import LoginForm from './login'
+import { AdvertiserView } from './advertiser'
 
 import { debug } from '../lib.js'
 // require('whatwg-fetch')
@@ -40,12 +41,21 @@ class AppView extends React.Component {
         //         break;
         // }
         // debug("children props", props);
+        var currentRoute = this.props.children.props.route.name;
+        var align = "";
+        console.info(currentRoute);
+        if (!currentRoute
+            || currentRoute == 'profile'
+            || currentRoute == '/'
+            || currentRoute == 'login') {
+            align += " valign-wrapper"
+        }
+
         return (
             <div className="page-flexbox-wrapper">
                 <Header />
-                <br />
-                <main className="valign-wrapper">
-                 {this.props.children}
+                <main className={align}>
+                    {this.props.children}
                 </main>
                 <Footer />
             </div>
@@ -60,7 +70,7 @@ render((
             <Route name="login" path="/login" component={LoginForm} />
             <Route name="profile" path="/profile/"
                 component={ProfileView} />} />
-
+            <Route name="advertiser" path="/advertiser" component={AdvertiserView} />
             {// <Route path="users" component={Users}>
                 //     <Route path="/user/:userId" component={User} />
                 // </Route>

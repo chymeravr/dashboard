@@ -4,38 +4,28 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
-IMG_360 = 'IMG_360'
-VIDEO_360 = 'VIDEO_360'
 
-FORMATS = (
-    (IMG_360, IMG_360),
-    (VIDEO_360, VIDEO_360)
-)
+class Format(models.Model):
+    name = models.CharField(max_length=20)
 
-CPM = 'CPM'
 
-PRICING = (
-    (CPM, CPM),
-)
+class Os(models.Model):
+    name = models.CharField(max_length=20)
+    version = models.IntegerField()
 
-GEAR_VR = 'GEAR_VR'
-DAYDREAM = 'DAYDREAM'
 
-HMD = (
-    (GEAR_VR, GEAR_VR),
-    (DAYDREAM, DAYDREAM)
-)
+class Pricing(models.Model):
+    name = models.CharField(max_length=20)
 
-ANDROID = 'ANDROID'
-OS = (
-    (ANDROID, ANDROID),
-)
+
+class Hmd(models.Model):
+    name = models.CharField(max_length=50)
 
 
 class Campaign(models.Model):
     user = models.ForeignKey(User)
     name = models.CharField(max_length=100)
-    type = models.CharField(choices=FORMATS, max_length=20)
+    type = models.ForeignKey(Format)
     total_budget = models.FloatField(validators=[MinValueValidator(0.0)])
     daily_budget = models.FloatField(validators=[MinValueValidator(0.0)])
     start_date = models.DateField()
@@ -47,21 +37,27 @@ class Budget(models.Model):
     bid = models.FloatField(validators=[MinValueValidator(0.0)])
     total_budget = models.FloatField(validators=[MinValueValidator(0.0)])
     daily_budget = models.FloatField(validators=[MinValueValidator(0.0)])
-    pricing = models.CharField(choices=PRICING, default=CPM, max_length=20)
+    pricing = models.ForeignKey(Pricing)
 
 
 class Device(models.Model):
     ram = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)])
-    os = models.CharField(choices=OS, default=ANDROID, max_length=20)
+    os = models.ForeignKey(Os)
 
 
 class Targeting(models.Model):
-    hmd = models.CharField(choices=HMD, default=GEAR_VR, max_length=20)
+    hmd = models.ForeignKey(Hmd)
     device = models.ForeignKey(Device)
 
 
-class AdGroup(models.Model):
+class Adgroup(models.Model):
     campaign = models.ForeignKey(Campaign)
     name = models.CharField(max_length=100)
     budget = models.OneToOneField(Budget, on_delete=models.CASCADE)
     targeting = models.OneToOneField(Targeting, null=True)
+
+
+class Ad(models.Model):
+    adgroup = models.ForeignKey(Adgroup)
+    creative_url = models.URLField(max_length=300)
+    format = models.ForeignKey(Format)

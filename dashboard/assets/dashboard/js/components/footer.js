@@ -5,10 +5,11 @@ class Footer extends React.Component {
         var style = {
             fontWeight: "lighter",
             color: '#ffffff',
+            marginTop: '0px'
         }
 
         return (
-            <footer className="page-footer">
+            <footer className="page-footer" style={style}>
                 <div className="container">
                     <div className="row">
                         <div className="col s6">

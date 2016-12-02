@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
-from advertiser import views
+from advertiser.views import CampaignView
 
 urlpatterns = [
-    url(r'^', view=views.campaign_view),
+    url(r'^', view=CampaignView.as_view()),
 ]

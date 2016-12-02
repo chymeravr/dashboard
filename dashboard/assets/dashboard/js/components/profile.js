@@ -1,7 +1,7 @@
 import React from 'react'
 import { debug, callApiWithJwt } from '../lib.js'
 import { config } from '../config.js'
-import { hashHistory } from 'react-router';
+import { hashHistory, Link } from 'react-router';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 
 class Offering extends React.Component {
@@ -12,22 +12,32 @@ class Offering extends React.Component {
             textAlign: 'center',
             color: '#eeeeee',
         }
+        switch (this.props.offering) {
+            case 'Advertise':
+                var message = "Funds available"
+                var linkTo = "/advertiser/"
+                break;
+            case 'Monetise':
+                var message = "Earnings available"
+                var linkTo = "/publisher/"
+                break
+        }
         return (
             <div>
                 <div className="col s12 m6">
                     <div className="card blue-grey lighten-2">
                         <div className="card-content white-text">
                             <span className="card-title">$ {this.props.balance}</span>
-                            <p>{this.props.message}</p>
+                            <p>{message}</p>
                         </div>
                         <div className="card-action blue-grey center-align">
-                            <a href="#" style={offeringLinkStyle}>
+                            <Link to={linkTo} style={offeringLinkStyle}>
                                 {this.props.offering}
-                            </a>
+                            </Link>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div >
+            </div >
         );
     }
 }
@@ -59,11 +69,9 @@ export class ProfileView extends React.Component {
                 <div key="loaded" className="row">
                     <div className="col s8 offset-s2">
                         <Offering offering="Advertise"
-                            balance={this.state.advertising_budget}
-                            message={advertisingMessage} />
+                            balance={this.state.advertising_budget} />
                         <Offering offering="Monetise"
-                            balance={this.state.publisher_earnings}
-                            message={publisherMessage} />
+                            balance={this.state.publisher_earnings} />
                     </div>
                 </div>
             )
@@ -81,7 +89,7 @@ export class ProfileView extends React.Component {
                 transitionEnterTimeout={500}
                 transitionLeaveTimeout={500}
                 transitionAppearTimeout={500}
-                className="center-align container">
+                className="container">
                 {body}
             </ReactCSSTransitionGroup>
         );

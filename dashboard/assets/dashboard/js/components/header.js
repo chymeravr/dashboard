@@ -18,7 +18,7 @@ class Header extends React.Component {
         return (
             <header>
                 <nav>
-                    <div className="nav-wrapper">
+                    <div className="nav-wrapper container">
                         <a href="#" className="brand-logo" style={style}>Chymera <strong>VR</strong></a>
                         <a href="#" data-activates="mobile-demo" className="button-collapse"
                             ref={select => this._select = select}>

@@ -35,11 +35,11 @@ class HomeView extends React.Component {
                 transitionAppearTimeout={500}
                 className="center-align container">
                 <div><img src="" /></div>
-                <h2 className="" style={style}>
+                <h2 className="light" style={style}>
                     Monetise with <strong>VR</strong>
                 </h2>
                 <br />
-                <Link className="waves-effect waves-light btn"
+                <Link className="waves-effect orange waves-light btn"
                     to={this.state.next}>GET STARTED</Link>
             </ReactCSSTransitionGroup>
         );
