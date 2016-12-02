@@ -1,6 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router'
+
 import 'whatwg-fetch'
 
 import HomeView from './home'
@@ -17,17 +18,6 @@ class AppView extends React.Component {
         super(props);
         this.state = {}
         this.state.username = 'rubbalsidhu';
-        this.initializeRandom = this.initializeRandom.bind(this);
-        this.initializeRandom();
-    }
-
-    initializeRandom() {
-        // setInterval(() => {
-        //     console.info("Triggering");
-        //     this.setState({
-        //         username: Math.random().toString(36).substring(7)
-        //     });
-        // }, 10000);
     }
 
     componentDidMount() {

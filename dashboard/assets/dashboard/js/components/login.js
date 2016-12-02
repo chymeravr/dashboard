@@ -6,8 +6,17 @@ import { callApiWithJwt, debug } from '../lib.js'
 class LoginForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { username: '', password: '', assignUser: props.assignUser };
+        this.state = { username: '', password: ''};
         // debug("state login form", this.state);
+    }
+
+    componentWillMount() {
+        callApiWithJwt('/user/api/view_profile',
+            'GET',
+            {},
+            (response) => hashHistory.push('/profile/'),
+            (error) => ({})
+        );
     }
 
     handleChange(key) {
@@ -23,20 +32,17 @@ class LoginForm extends React.Component {
         data.append("username", this.state.username);
         data.append("password", this.state.password);
 
-        fetch('/user/api/login', {
-            method: 'POST',
-            body: data
-        }).then(response => {
-            if (response.status != 200) {
-                throw new Error(response.statusText)
+        callApiWithJwt('/user/api/login',
+            'POST',
+            data,
+            (response) => {
+                localStorage.setItem(config.jwt.tokenKey, response['token']);
+                hashHistory.push('/profile/');
+            },
+            (error) => {
+                throw error;
             }
-            return response.json();
-        }).then(token => {
-            localStorage.setItem(config.jwt.tokenKey, token['token']);
-            hashHistory.push('/profile/');
-        }).catch(function (error) {
-            throw error
-        });
+        );
     }
 
     render() {

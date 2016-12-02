@@ -1,6 +1,7 @@
 import React from 'react'
 import { debug, callApiWithJwt } from '../lib.js'
 import { config } from '../config.js'
+import { hashHistory } from 'react-router';
 
 class Offering extends React.Component {
     render() {
@@ -11,7 +12,7 @@ class Offering extends React.Component {
             color: '#eeeeee',
         }
         return (
-            <div class="row">
+            <div>
                 <div className="col s12 m6">
                     <div className="card blue-grey lighten-2">
                         <div className="card-content white-text">
@@ -40,18 +41,18 @@ export class ProfileView extends React.Component {
             'GET',
             {},
             (response) => this.setState(response),
-            (error) => alert(error)
+            (error) => {
+                hashHistory.push('/login/');
+            }
         );
     }
 
     render() {
-        debug("Profile View", this.state);
-
-        var body = <div></div>
+        // debug("Profile View", this.state);
         var advertisingMessage = "Funds available";
         var publisherMessage = "Earnings available";
         if (this.state.username) {
-            body = (
+            var body = (
                 <div className="row">
                     <div className="col s8 offset-s2">
                         <Offering offering="Advertise"
@@ -63,6 +64,11 @@ export class ProfileView extends React.Component {
                     </div>
                 </div>
             )
+        } else {
+            /**
+             * The API call hasn't succeeded yet. TODO Show a spinner'
+             */
+            var body = <div></div>
         }
         return (
             <div className="container valign">
