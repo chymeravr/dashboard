@@ -1,29 +1,9 @@
 import React from 'react'
-import { debug, callApiWithJwt } from '../lib.js'
-import { config } from '../config.js'
+import { debug, callApiWithJwt } from '../../lib.js'
+import { config } from '../../config.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 import { hashHistory } from 'react-router'
-
-class SideBar extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-
-        };
-    }
-
-    render() {
-
-        return (
-            <div className="teal col s3" >
-                asdfasd
-            asdfasdasdfasd
-
-            asdfasd
-            </div>
-        );
-    }
-}
+import { SideBar } from './sidebar'
 
 export class AdvertiserView extends React.Component {
     constructor(props) {
@@ -32,7 +12,7 @@ export class AdvertiserView extends React.Component {
     }
 
     componentWillMount() {
-        callApiWithJwt('/user/api/campaigns',
+        callApiWithJwt('/user/api/advertiser/campaigns/',
             'GET',
             {},
             (response) => this.setState({ campaigns: response }),
@@ -90,7 +70,7 @@ export class AdvertiserView extends React.Component {
                                     return (
                                         <tr key={campaign.id} className="grey-text text-darken-1">
                                             <td>{campaign.name}</td>
-                                            <td>{campaign.type.name}</td>
+                                            <td>{campaign.campaign_type.name}</td>
                                             <td>{campaign.total_budget}</td>
                                             <td>{campaign.daily_budget}</td>
                                             <td>{campaign.start_date}</td>
@@ -104,7 +84,7 @@ export class AdvertiserView extends React.Component {
                     </tbody>
                 </ReactCSSTransitionGroup>
                 <div className="fixed-action-btn" style={fabStyle}>
-                    <a className="btn-floating btn-large" onClick={() => alert('clicked')}>
+                    <a className="btn-floating btn-large orange" onClick={() => alert('clicked')}>
                         <i className="large material-icons">add</i>
                     </a>
                 </div>

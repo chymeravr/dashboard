@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'webpack_loader',
     'chym_user',
     'dashboard',
-    'advertiser'
+    'advertiser',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -123,8 +124,8 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
 }
@@ -151,3 +152,5 @@ WEBPACK_LOADER = {
         'STATS_FILE': os.path.join(BASE_DIR, 'dashboard/webpack-stats.json'),
     },
 }
+
+APPEND_SLASH = True

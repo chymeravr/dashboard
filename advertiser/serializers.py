@@ -1,12 +1,12 @@
 from django.db import models
 from rest_framework import serializers
 
-from advertiser.models import Format, Os, Hmd, Campaign, Budget, Device, Targeting, Adgroup, Ad, Pricing
+from advertiser.models import CampaignType, Os, Hmd, Campaign, Budget, Device, Targeting, Adgroup, Ad, Pricing
 
 
-class FormatSerializer(serializers.ModelSerializer):
+class CampaignTypeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Format
+        model = CampaignType
         fields = ('id', 'name')
 
 
@@ -52,13 +52,19 @@ class TargetingSerializer(serializers.ModelSerializer):
 
 
 class CampaignSerializer(serializers.ModelSerializer):
-    type = FormatSerializer()
+    campaign_type = CampaignTypeSerializer()
+    user = serializers.ReadOnlyField(source='user.username')
 
     class Meta:
         model = Campaign
-        fields = ('id', 'name', 'type', 'total_budget',
+        fields = ('user', 'id', 'name', 'campaign_type', 'total_budget',
                   'daily_budget', 'start_date', 'end_date',
                   'status')
+
+    def create(self, validated_data):
+        campaign_type_data = validated_data.pop('campaign_type')
+        campaign_type = CampaignType.objects.create(**campaign_type_data)
+        return Campaign.objects.create(campaign_type=campaign_type, **validated_data)
 
 
 class AdgroupSerializer(serializers.ModelSerializer):
@@ -76,9 +82,7 @@ class AdgroupSerializer(serializers.ModelSerializer):
 class AdSerializer(serializers.ModelSerializer):
     adgroup = AdgroupSerializer()
     creative_url = models.URLField(max_length=300)
-    format = FormatSerializer()
 
     class Meta:
         model = Ad
-        fields = ['id', 'adgroup', 'creative_url', 'format',
-                  ]
+        fields = ['id', 'adgroup', 'creative_url',]

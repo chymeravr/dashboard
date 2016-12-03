@@ -1,11 +1,13 @@
 from __future__ import unicode_literals
 
+import uuid
+
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 
-class Format(models.Model):
+class CampaignType(models.Model):
     name = models.CharField(max_length=20)
 
 
@@ -40,9 +42,11 @@ class Targeting(models.Model):
 
 
 class Campaign(models.Model):
+    id2 = models.UUIDField(default=uuid.uuid4, editable=False)
+    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User)
     name = models.CharField(max_length=100)
-    type = models.ForeignKey(Format)
+    campaign_type = models.ForeignKey(CampaignType)
     total_budget = models.FloatField(validators=[MinValueValidator(0.0)])
     daily_budget = models.FloatField(validators=[MinValueValidator(0.0)])
     start_date = models.DateField()
@@ -51,6 +55,8 @@ class Campaign(models.Model):
 
 
 class Adgroup(models.Model):
+    id2 = models.UUIDField(default=uuid.uuid4, editable=False)
+    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     campaign = models.ForeignKey(Campaign)
     name = models.CharField(max_length=100)
     budget = models.OneToOneField(Budget, on_delete=models.CASCADE)
@@ -58,6 +64,7 @@ class Adgroup(models.Model):
 
 
 class Ad(models.Model):
+    id2 = models.UUIDField(default=uuid.uuid4, editable=False)
+    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     adgroup = models.ForeignKey(Adgroup)
     creative_url = models.URLField(max_length=300)
-    format = models.ForeignKey(Format)

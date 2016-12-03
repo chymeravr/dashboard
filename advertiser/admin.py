@@ -10,7 +10,7 @@ adv_models = [
     models.Budget,
     models.Pricing,
     models.Hmd,
-    models.Format,
+    models.CampaignType,
     models.Os,
     models.Ad,
 ]

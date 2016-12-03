@@ -10,7 +10,7 @@ import Header from './header'
 import Footer from './footer'
 import { ProfileView } from './profile'
 import LoginForm from './login'
-import { AdvertiserView } from './advertiser'
+import { AdvertiserView } from './advertiser/advertiser'
 
 import { debug } from '../lib.js'
 // require('whatwg-fetch')
