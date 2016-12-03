@@ -2,6 +2,7 @@ import React from 'react'
 import { config } from '../config.js'
 import { hashHistory } from 'react-router';
 import { callApiWithJwt, debug } from '../lib.js'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 
 class LoginForm extends React.Component {
     constructor(props) {

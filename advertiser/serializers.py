@@ -28,15 +28,6 @@ class HmdSerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
 
 
-class CampaignSerializer(serializers.ModelSerializer):
-    type = FormatSerializer()
-
-    class Meta:
-        model = Campaign
-        fields = ('id', 'name', 'type', 'total_budget',
-                  'daily_budget', 'start_date', 'end_date', 'status')
-
-
 class BudgetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Budget
@@ -60,6 +51,16 @@ class TargetingSerializer(serializers.ModelSerializer):
         fields = ['id', 'hmd', 'device']
 
 
+class CampaignSerializer(serializers.ModelSerializer):
+    type = FormatSerializer()
+
+    class Meta:
+        model = Campaign
+        fields = ('id', 'name', 'type', 'total_budget',
+                  'daily_budget', 'start_date', 'end_date',
+                  'status')
+
+
 class AdgroupSerializer(serializers.ModelSerializer):
     campaign = CampaignSerializer()
     name = models.CharField(max_length=100)
@@ -68,7 +69,8 @@ class AdgroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Adgroup
-        fields = ['id', 'campaign', 'name', 'budget', 'targeting']
+        fields = ['id', 'campaign', 'name', 'budget',
+                  'targeting']
 
 
 class AdSerializer(serializers.ModelSerializer):
@@ -78,4 +80,5 @@ class AdSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Ad
-        fields = ['adgroup', 'creative_url', 'format']
+        fields = ['id', 'adgroup', 'creative_url', 'format',
+                  ]

@@ -22,17 +22,6 @@ class Hmd(models.Model):
     name = models.CharField(max_length=50)
 
 
-class Campaign(models.Model):
-    user = models.ForeignKey(User)
-    name = models.CharField(max_length=100)
-    type = models.ForeignKey(Format)
-    total_budget = models.FloatField(validators=[MinValueValidator(0.0)])
-    daily_budget = models.FloatField(validators=[MinValueValidator(0.0)])
-    start_date = models.DateField()
-    end_date = models.DateField()
-    status = models.BooleanField(default=False)
-
-
 class Budget(models.Model):
     bid = models.FloatField(validators=[MinValueValidator(0.0)])
     total_budget = models.FloatField(validators=[MinValueValidator(0.0)])
@@ -48,6 +37,17 @@ class Device(models.Model):
 class Targeting(models.Model):
     hmd = models.ForeignKey(Hmd)
     device = models.ForeignKey(Device)
+
+
+class Campaign(models.Model):
+    user = models.ForeignKey(User)
+    name = models.CharField(max_length=100)
+    type = models.ForeignKey(Format)
+    total_budget = models.FloatField(validators=[MinValueValidator(0.0)])
+    daily_budget = models.FloatField(validators=[MinValueValidator(0.0)])
+    start_date = models.DateField()
+    end_date = models.DateField()
+    status = models.BooleanField(default=False)
 
 
 class Adgroup(models.Model):

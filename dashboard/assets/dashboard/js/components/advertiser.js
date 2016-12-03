@@ -2,6 +2,7 @@ import React from 'react'
 import { debug, callApiWithJwt } from '../lib.js'
 import { config } from '../config.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
+import { hashHistory } from 'react-router'
 
 class SideBar extends React.Component {
     constructor(props) {
@@ -12,7 +13,7 @@ class SideBar extends React.Component {
     }
 
     render() {
- 
+
         return (
             <div className="teal col s3" >
                 asdfasd
@@ -35,7 +36,10 @@ export class AdvertiserView extends React.Component {
             'GET',
             {},
             (response) => this.setState({ campaigns: response }),
-            (error) => alert(error)
+            (error) => {
+                alert(error);
+                hashHistory.push('/login/')
+            },
         );
     }
 
@@ -45,11 +49,12 @@ export class AdvertiserView extends React.Component {
             return <div></div> // TODO : Spinner
         }
 
-        var style = {
-            alignItems: 'flex-start'
+        var fabStyle = {
+            bottom: '195px',
+            right: '50px'
         }
 
-        var heightStyle=  {
+        var heightStyle = {
             height: '100%',
             minHeight: '100%'
         }
@@ -66,7 +71,7 @@ export class AdvertiserView extends React.Component {
                     transitionEnterTimeout={150}
                     transitionLeaveTimeout={150}
                     transitionAppearTimeout={150}
-                    className="table highlight grey-text text-darken-4 col s9 offset-s3" style={style}>
+                    className="table highlight grey-text text-darken-4 col s9 offset-s3">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -98,6 +103,11 @@ export class AdvertiserView extends React.Component {
                         }
                     </tbody>
                 </ReactCSSTransitionGroup>
+                <div className="fixed-action-btn" style={fabStyle}>
+                    <a className="btn-floating btn-large" onClick={() => alert('clicked')}>
+                        <i className="large material-icons">add</i>
+                    </a>
+                </div>
             </div>
         );
     }
