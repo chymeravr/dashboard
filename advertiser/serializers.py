@@ -63,7 +63,7 @@ class CampaignSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         campaign_type_data = validated_data.pop('campaign_type')
-        campaign_type = CampaignType.objects.create(**campaign_type_data)
+        campaign_type, created = CampaignType.objects.get_or_create(**campaign_type_data)
         return Campaign.objects.create(campaign_type=campaign_type, **validated_data)
 
 

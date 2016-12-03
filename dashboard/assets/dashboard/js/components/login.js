@@ -1,13 +1,14 @@
 import React from 'react'
 import { config } from '../config.js'
 import { hashHistory } from 'react-router';
-import { callApiWithJwt, debug } from '../lib.js'
+import { callRawApiWithJwt, callApiWithJwt, debug } from '../lib.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
+import { FormInput } from './common'
 
-class LoginForm extends React.Component {
+export class LoginForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { username: '', password: '' };
+        this.state = {};
         // debug("state login form", this.state);
     }
 
@@ -20,12 +21,13 @@ class LoginForm extends React.Component {
         );
     }
 
+
     handleChange(key) {
         return function (e) {
             var state = {};
             state[key] = e.target.value;
-            this.setState(state);
-        }.bind(this);
+            this.setState(Object.assign({}, this.state, state));
+        };
     }
 
     tryLogin(e) {
@@ -33,7 +35,7 @@ class LoginForm extends React.Component {
         data.append("username", this.state.username);
         data.append("password", this.state.password);
 
-        callApiWithJwt('/user/api/login',
+        callRawApiWithJwt('/user/api/login',
             'POST',
             data,
             (response) => {
@@ -42,8 +44,7 @@ class LoginForm extends React.Component {
             },
             (error) => {
                 throw error;
-            }
-        );
+            });
     }
 
     render() {
@@ -59,19 +60,20 @@ class LoginForm extends React.Component {
                 className="center-align container">
                 <form className="row">
                     <div className="col s6 offset-s3">
-                        <div className="input-field row">
-                            <input id="username" type="text" value={this.state.username}
-                                onChange={this.handleChange('username')} />
-                            <label htmlFor="username">Username</label>
-                        </div>
-                        <div className="input-field row">
-                            <input id="password" type="password" value={this.state.password}
-                                onChange={this.handleChange('password')} />
-                            <label htmlFor="password">Password</label>
-                        </div>
+                        <FormInput
+                            fieldName="username"
+                            label="Username"
+                            value={this.state.username}
+                            handleChange={this.handleChange('username').bind(this)} />
+                        <FormInput
+                            fieldName="password"
+                            label="Password"
+                            value={this.state.password}
+                            handleChange={this.handleChange('password').bind(this)}
+                            type="password" />
                         <a className="waves-effect waves-light btn right" onClick={this.tryLogin.bind(this)}>
                             Login
-                    </a>
+                        </a>
                     </div>
                 </form>
             </ReactCSSTransitionGroup>
@@ -79,4 +81,3 @@ class LoginForm extends React.Component {
     }
 }
 
-module.exports = LoginForm

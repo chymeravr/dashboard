@@ -9,7 +9,7 @@ import HomeView from './home'
 import Header from './header'
 import Footer from './footer'
 import { ProfileView } from './profile'
-import LoginForm from './login'
+import { LoginForm } from './login'
 import { AdvertiserView } from './advertiser/advertiser'
 
 import { debug } from '../lib.js'
@@ -44,11 +44,13 @@ class AppView extends React.Component {
         var currentRoute = this.props.children.props.route.name;
         var align = "";
         console.info(currentRoute);
+        var dashboard = true;
         if (!currentRoute
             || currentRoute == 'profile'
             || currentRoute == '/'
             || currentRoute == 'login') {
-            align += " valign-wrapper"
+            align += " valign-wrapper";
+            dashboard = false;
         }
 
         return (
@@ -57,7 +59,7 @@ class AppView extends React.Component {
                 <main className={align}>
                     {this.props.children}
                 </main>
-                <Footer />
+                {dashboard ? null : <Footer />}
             </div>
         );
     }
