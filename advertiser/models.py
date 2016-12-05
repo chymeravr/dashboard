@@ -42,8 +42,7 @@ class Targeting(models.Model):
 
 
 class Campaign(models.Model):
-    id2 = models.UUIDField(default=uuid.uuid4, editable=False)
-    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(default=uuid.uuid4, editable=False ,primary_key=True)
     user = models.ForeignKey(User)
     name = models.CharField(max_length=100)
     campaignType = models.ForeignKey(CampaignType)
@@ -55,8 +54,7 @@ class Campaign(models.Model):
 
 
 class Adgroup(models.Model):
-    id2 = models.UUIDField(default=uuid.uuid4, editable=False)
-    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     campaign = models.ForeignKey(Campaign)
     name = models.CharField(max_length=100)
     budget = models.OneToOneField(Budget, on_delete=models.CASCADE)
@@ -64,7 +62,6 @@ class Adgroup(models.Model):
 
 
 class Ad(models.Model):
-    id2 = models.UUIDField(default=uuid.uuid4, editable=False)
-    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     adgroup = models.ForeignKey(Adgroup)
     creativeUrl = models.URLField(max_length=300)

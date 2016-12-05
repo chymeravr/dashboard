@@ -73,7 +73,7 @@ export class CampaignEditModal extends React.Component {
     }
 
     setDate(key, date) {
-        var dateString = [date.year, date.month, date.date].join('-');
+        var dateString = [date.year, date.month + 1, date.date].join('-');
         this.state.campaign[key] = dateString;
         this.setState(Object.assign({}, this.state));
         this.validateState();
