@@ -9,18 +9,19 @@ const campaignTypes = {
         label: 'Image 360',
         name: 'IMG_360'
     },
-    '2': {
-        label: 'Video 360',
-        name: 'VID_360'
-    }
+    // '2': {
+    //     label: 'Video 360',
+    //     name: 'VID_360'
+    // }
 }
 
 
 export class CampaignEditModal extends React.Component {
     constructor(props) {
         super(props);
-        var defaultCampaignType= '1';
-        this.state = {
+        var defaultCampaignType = '1';
+        // Initialise state if not initialised in props
+        this.state = Object.assign({
             valid: false,
             campaign: {
                 campaignType: {
@@ -28,7 +29,8 @@ export class CampaignEditModal extends React.Component {
                     name: campaignTypes[defaultCampaignType].name
                 }
             }
-        };
+        }, props);
+        
     }
 
 
@@ -39,7 +41,6 @@ export class CampaignEditModal extends React.Component {
 
         // Campaign should be present
         if (!valid) {
-            console.info("oh no");
             this.setState(Object.assign({}, this.state, { valid: false }));
             return;
         }
@@ -51,7 +52,6 @@ export class CampaignEditModal extends React.Component {
             campaign.campaignType && campaign.dailyBudget;
 
         if (!valid) {
-            console.info("oh shit");
             this.setState(Object.assign({}, this.state, { valid: false }));
             return;
         }
@@ -66,6 +66,7 @@ export class CampaignEditModal extends React.Component {
         console.info(key);
         return function (e) {
             this.state.campaign[key] = e.target.value;
+            // Required to update state
             this.setState(Object.assign({}, this.state));
             this.validateState();
         };
@@ -152,18 +153,20 @@ export class CampaignEditModal extends React.Component {
             }
         );
     }
+
     render() {
-        console.info(this.state);
         if (this.state.valid) {
             var saveButton =
-                <a className="modal-action waves-effect waves-green btn-flat teal white-text" onClick={e => this.saveCampaign()}>
+                <a className="modal-action waves-effect waves-green btn-flat teal white-text"
+                    onClick={e => this.saveCampaign()}>
                     Save
                 </a>
         } else {
             var saveButton =
-                <a className="modal-action waves-effect waves-green btn-flat teal white-text disabled" onClick={e => this.saveCampaign()}>
+                <a className="modal-action waves-effect waves-green btn-flat teal white-text disabled"
+                    onClick={e => this.saveCampaign()}>
                     Save
-            </a>
+                </a>
         }
 
         return (
@@ -185,8 +188,13 @@ export class CampaignEditModal extends React.Component {
                                 {campaignTypes[this.state.campaign.campaignType.id].label}
                             </a>
                             <ul id='dropdown1' className='dropdown-content'>
-                                <li><a onClick={e => this.setCampaignType('1')}>Image 360</a></li>
-                                <li><a onClick={e => this.setCampaignType('2')}>Video 360</a></li>
+                                {Object.keys(campaignTypes).map(id =>
+                                    <li key={id}>
+                                        <a onClick={e => this.setCampaignType(id)}>
+                                            {campaignTypes[id].label}
+                                        </a>
+                                    </li>
+                                )}
                             </ul>
                         </div>
                     </div>
