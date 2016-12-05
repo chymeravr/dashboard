@@ -23,3 +23,26 @@ export class FormInput extends React.Component {
         )
     }
 }
+
+export class NumberInput extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleChange = props.handleChange;
+        this.fieldName = props.fieldName;
+        this.label = props.label;
+        this.state = {
+            value: props.value,
+        }
+    }
+    render() {
+        return (
+            <div className="input-field row">
+                <input id={this.fieldName} type="number" min="0" value={this.state.value}
+                    onChange={this.handleChange} className="validate"/>
+                <label htmlFor={this.fieldName} data-error="Enter a positive value"  className={this.state.value && this.state.value.length > 0 ? "active" : ""}>
+                    {this.label}
+                </label>
+            </div>
+        )
+    }
+}

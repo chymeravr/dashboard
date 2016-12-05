@@ -6,6 +6,7 @@ import { hashHistory } from 'react-router'
 import { SideBar } from './sidebar'
 import Modal from 'react-modal'
 import { FormInput } from '../common'
+import { CampaignEditModal } from './campaignModal'
 
 
 const customStyles = {
@@ -24,10 +25,10 @@ const customStyles = {
  */
 const headers = {
     'Name': 'name',
-    'Total Budget': 'total_budget',
-    'Daily Budget': 'daily_budget',
-    'Start Date': 'start_date',
-    'End Date': 'end_date'
+    'Total Budget': 'totalBudget',
+    'Daily Budget': 'dailyBudget',
+    'Start Date': 'startDate',
+    'End Date': 'endDate'
 }
 
 export class AdvertiserView extends React.Component {
@@ -35,8 +36,6 @@ export class AdvertiserView extends React.Component {
         super(props);
         this.state = { modalIsOpen: false };
         this.openModal = this.openModal.bind(this);
-        this.afterOpenModal = this.afterOpenModal.bind(this);
-        this.closeModal = this.closeModal.bind(this);
     }
 
     handleChange(key) {
@@ -48,6 +47,8 @@ export class AdvertiserView extends React.Component {
     }
 
     componentWillMount() {
+        console.info($('.modal').modal());
+
         callApiWithJwt('/user/api/advertiser/campaigns/',
             'GET',
             {},
@@ -57,37 +58,14 @@ export class AdvertiserView extends React.Component {
                 hashHistory.push('/login/')
             },
         );
+
+
     }
 
     openModal() {
+        $('.modal').modal();
+        $('#modal1').modal('open');
         this.setState(Object.assign({}, this.state, { modalIsOpen: true }));
-    }
-
-    afterOpenModal() {
-        // references are now sync'd and can be accessed.
-        this.refs.subtitle.style.color = '#f00';
-    }
-
-    closeModal() {
-        this.setState(Object.assign({}, this.state, { modalIsOpen: false }));
-    }
-
-    saveCampaign() {
-        var campaign_type = {
-
-        }
-        var campaign = {
-            name: this.state.newCampaignName,
-
-        }
-        callApiWithJwt('/user/api/advertiser/campaigns',
-            'POST',
-            {},
-            (response) => this.setState(response),
-            (error) => {
-                hashHistory.push('/login/');
-            }
-        );
     }
 
     render() {
@@ -130,57 +108,20 @@ export class AdvertiserView extends React.Component {
                         {this.state.campaigns.map(campaign =>
                             <tr key={campaign.id} className="grey-text text-darken-1">
                                 {Object.keys(headers).map(key => <td key={key}>{campaign[headers[key]]}</td>)}
-                                <td>{campaign.campaign_type.name}</td>
+                                <td>{campaign.campaignType.name}</td>
                                 <td>{campaign.status ? "Active" : "Paused"}</td>
                             </tr>)
                         }
                     </tbody>
                 </ReactCSSTransitionGroup>
+
                 <div className="fixed-action-btn" style={fabStyle}>
                     <a className="btn-floating btn-large orange" onClick={this.openModal}>
                         <i className="large material-icons">add</i>
                     </a>
                 </div>
 
-                <Modal
-                    isOpen={this.state.modalIsOpen}
-                    onAfterOpen={this.afterOpenModal}
-                    onRequestClose={this.closeModal}
-                    style={customStyles}
-                    contentLabel="Example Modal"
-                    >
-                    <ReactCSSTransitionGroup
-                        component="table"
-                        transitionName="fadeTransition"
-                        transitionAppear={true}
-                        transitionLeave={true}
-                        transitionEnterTimeout={500}
-                        transitionLeaveTimeout={500}
-                        transitionAppearTimeout={500}>
-                        <h2 ref="subtitle">Hello</h2>
-                        <button onClick={this.closeModal}>close</button>
-                        <div>I am a modal</div>
-                        <form className="row">
-                            <div className="col s6 offset-s3">
-                                <FormInput
-                                    fieldName="username"
-                                    label="Username"
-                                    value={this.state.username}
-                                    handleChange={this.handleChange('username').bind(this)} />
-                                <FormInput
-                                    fieldName="password"
-                                    label="Password"
-                                    value={this.state.password}
-                                    handleChange={this.handleChange('password').bind(this)}
-                                    type="password"/>
-                                <a className="waves-effect waves-light btn right" onClick={(event) => alert('yaya')}>
-                                    Save
-                            </a>
-                            </div>
-                        </form>
-                    </ReactCSSTransitionGroup>
-
-                </Modal>
+                 <CampaignEditModal />
             </div >
         );
     }

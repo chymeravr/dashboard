@@ -31,7 +31,7 @@ class HmdSerializer(serializers.ModelSerializer):
 class BudgetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Budget
-        fields = ('id', 'bid', 'total_budget', 'daily_budget')
+        fields = ('id', 'bid', 'totalBudget', 'dailyBudget')
 
 
 class DeviceSerializer(serializers.ModelSerializer):
@@ -52,19 +52,19 @@ class TargetingSerializer(serializers.ModelSerializer):
 
 
 class CampaignSerializer(serializers.ModelSerializer):
-    campaign_type = CampaignTypeSerializer()
+    campaignType = CampaignTypeSerializer()
     user = serializers.ReadOnlyField(source='user.username')
 
     class Meta:
         model = Campaign
-        fields = ('user', 'id', 'name', 'campaign_type', 'total_budget',
-                  'daily_budget', 'start_date', 'end_date',
+        fields = ('user', 'id', 'name', 'campaignType', 'totalBudget',
+                  'dailyBudget', 'startDate', 'endDate',
                   'status')
 
     def create(self, validated_data):
-        campaign_type_data = validated_data.pop('campaign_type')
-        campaign_type, created = CampaignType.objects.get_or_create(**campaign_type_data)
-        return Campaign.objects.create(campaign_type=campaign_type, **validated_data)
+        campaignType_data = validated_data.pop('campaignType')
+        campaignType, created = CampaignType.objects.get_or_create(**campaignType_data)
+        return Campaign.objects.create(campaignType=campaignType, **validated_data)
 
 
 class AdgroupSerializer(serializers.ModelSerializer):

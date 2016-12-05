@@ -26,8 +26,8 @@ class Hmd(models.Model):
 
 class Budget(models.Model):
     bid = models.FloatField(validators=[MinValueValidator(0.0)])
-    total_budget = models.FloatField(validators=[MinValueValidator(0.0)])
-    daily_budget = models.FloatField(validators=[MinValueValidator(0.0)])
+    totalBudget = models.FloatField(validators=[MinValueValidator(0.0)])
+    dailyBudget = models.FloatField(validators=[MinValueValidator(0.0)])
     pricing = models.ForeignKey(Pricing)
 
 
@@ -46,11 +46,11 @@ class Campaign(models.Model):
     # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User)
     name = models.CharField(max_length=100)
-    campaign_type = models.ForeignKey(CampaignType)
-    total_budget = models.FloatField(validators=[MinValueValidator(0.0)])
-    daily_budget = models.FloatField(validators=[MinValueValidator(0.0)])
-    start_date = models.DateField()
-    end_date = models.DateField()
+    campaignType = models.ForeignKey(CampaignType)
+    totalBudget = models.FloatField(validators=[MinValueValidator(0.0)])
+    dailyBudget = models.FloatField(validators=[MinValueValidator(0.0)])
+    startDate = models.DateField()
+    endDate = models.DateField()
     status = models.BooleanField(default=False)
 
 
@@ -67,4 +67,4 @@ class Ad(models.Model):
     id2 = models.UUIDField(default=uuid.uuid4, editable=False)
     # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     adgroup = models.ForeignKey(Adgroup)
-    creative_url = models.URLField(max_length=300)
+    creativeUrl = models.URLField(max_length=300)
