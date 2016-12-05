@@ -59,7 +59,7 @@ export class CampaignEditModal extends React.Component {
         // Campaign fields should be in bounds
         valid = +campaign.totalBudget >= 0 && +campaign.dailyBudget >= 0
             && campaign.name.length > 0;
-        this.setState(Object.assign({}, this.state, { valid: true }));
+        this.setState(Object.assign({}, this.state, { valid: valid }));
     }
 
     handleChange(key) {
