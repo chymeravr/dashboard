@@ -1,6 +1,7 @@
 import React, { ReactDOM } from 'react'
 import Modal from 'react-modal'
 import { FormInput, NumberInput } from '../common'
+import { callApiWithJwt, debug } from '../../lib.js'
 
 
 const campaignTypes = {
@@ -18,10 +19,14 @@ const campaignTypes = {
 export class CampaignEditModal extends React.Component {
     constructor(props) {
         super(props);
+        var defaultCampaignType= '1';
         this.state = {
             valid: false,
             campaign: {
-                type: '1',
+                campaignType: {
+                    id: defaultCampaignType,
+                    name: campaignTypes[defaultCampaignType].name
+                }
             }
         };
     }
@@ -43,7 +48,7 @@ export class CampaignEditModal extends React.Component {
         // Campaign fields should be present
         valid = campaign.name && campaign.startDate && campaign.endDate
             && campaign.totalBudget &&
-            campaign.type && campaign.dailyBudget;
+            campaign.campaignType && campaign.dailyBudget;
 
         if (!valid) {
             console.info("oh shit");
@@ -125,26 +130,25 @@ export class CampaignEditModal extends React.Component {
     }
 
     setCampaignType(type) {
-        var campaign = Object.assign(this.state.campaign, { type: type });
+        var campaign = Object.assign(this.state.campaign, {
+            campaignType: {
+                id: type,
+                name: campaignTypes[type].name
+            }
+        });
         this.setState(Object.assign({}, this.state, { campaign: campaign }));
         this.validateState();
         $('.dropdown-button').dropdown('close')
     }
 
     saveCampaign() {
-        var campaign_type = {
-
-        }
-        var campaign = {
-            name: this.state.newCampaignName,
-
-        }
+        console.info(this.state.campaign);
         callApiWithJwt('/user/api/advertiser/campaigns',
             'POST',
-            {},
-            (response) => this.setState(response),
+            JSON.stringify(this.state.campaign),
+            (response) => alert(response.id),
             (error) => {
-                hashHistory.push('/login/');
+                alert(error);
             }
         );
     }
@@ -178,7 +182,7 @@ export class CampaignEditModal extends React.Component {
                             <a className='dropdown-button btn'
                                 onClick={e => $('.dropdown-button').dropdown('open')}
                                 data-activates='dropdown1'>
-                                {campaignTypes[this.state.campaign.type].label}
+                                {campaignTypes[this.state.campaign.campaignType.id].label}
                             </a>
                             <ul id='dropdown1' className='dropdown-content'>
                                 <li><a onClick={e => this.setCampaignType('1')}>Image 360</a></li>
