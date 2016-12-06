@@ -48,7 +48,10 @@ export class AdvertiserView extends React.Component {
         callApiWithJwt('/user/api/advertiser/campaigns/',
             'GET',
             null,
-            (response) => this.setState(Object.assign({}, this.state, { campaigns: response })),
+            (response) => {
+                response = response.map(cmp => Object.assign(cmp, { key: cmp.id }));
+                this.setState(Object.assign({}, this.state, { campaigns: response }))
+            },
             (error) => {
                 alert(error);
                 hashHistory.push('/login/')
@@ -59,7 +62,9 @@ export class AdvertiserView extends React.Component {
     }
 
     postSave(campaign) {
-        this.setState(Object.assign({}, this.state, { campaigns: this.state.campaigns.push(campaign) }))
+        campaign.key = campaign.id;
+        this.state.campaigns.unshift(campaign);
+        this.setState(Object.assign({}, this.state));
     }
 
     openModal() {
@@ -104,7 +109,7 @@ export class AdvertiserView extends React.Component {
                     </thead>
                     <tbody>
                         {this.state.campaigns.map(campaign =>
-                            <tr key={campaign.id} className="grey-text text-darken-1">
+                            <tr key={campaign.key} className="grey-text text-darken-1">
                                 <td>
                                     <Link to={'/advertiser/campaigns/' + campaign.id + "/"}>
                                         {campaign.name}
@@ -124,7 +129,7 @@ export class AdvertiserView extends React.Component {
                     </a>
                 </div>
 
-                <CampaignEditModal label="Create Campaign" saveMethod="POST" postSave={() => { } } successStatus="201" />
+                <CampaignEditModal label="Create Campaign" saveMethod="POST" postSave={this.postSave.bind(this)} successStatus="201" />
             </div >
         );
     }

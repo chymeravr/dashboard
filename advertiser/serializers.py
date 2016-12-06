@@ -61,6 +61,7 @@ class CampaignSerializer(serializers.ModelSerializer):
         fields = ('user', 'id', 'name', 'campaignType', 'totalBudget',
                   'dailyBudget', 'startDate', 'endDate',
                   'status', 'adgroups')
+        order_by = (('created_on'),)
 
 class AdgroupSerializer(serializers.ModelSerializer):
     campaign = CampaignSerializer()
@@ -72,6 +73,8 @@ class AdgroupSerializer(serializers.ModelSerializer):
         model = Adgroup
         fields = ['id', 'campaign', 'name', 'budget',
                   'targeting']
+        order_by = (('created_on'),)
+
 
 
 class AdSerializer(serializers.ModelSerializer):
@@ -81,3 +84,5 @@ class AdSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ad
         fields = ['id', 'adgroup', 'creative_url', ]
+        order_by = (('created_on'),)
+
