@@ -58,7 +58,7 @@ export class LoginForm extends React.Component {
                 transitionLeaveTimeout={500}
                 transitionAppearTimeout={500}
                 className="center-align container">
-                <form className="row">
+                <form className="row" onSubmit={this.tryLogin.bind(this)}>
                     <div className="col s6 offset-s3">
                         <FormInput
                             fieldName="username"

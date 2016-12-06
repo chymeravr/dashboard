@@ -38,3 +38,8 @@ export function callRawApiWithJwt(path, method, body, onSuccess, onError, status
         return response.json();
     }).then(onSuccess).catch(onError);
 }
+
+export function logout(hashHistory) {
+    localStorage.removeItem(config.jwt.tokenKey);
+    hashHistory.push('/login/');
+}

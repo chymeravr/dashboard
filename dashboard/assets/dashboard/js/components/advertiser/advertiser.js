@@ -58,9 +58,13 @@ export class AdvertiserView extends React.Component {
 
     }
 
+    postSave(campaign) {
+        this.setState(Object.assign({}, this.state, { campaigns: this.state.campaigns.push(campaign) }))
+    }
+
     openModal() {
         $('.modal').modal();
-        $('#modal1').modal('open');
+        $('#cmpForm').modal('open');
         this.setState(Object.assign({}, this.state, { modalIsOpen: true }));
     }
 
@@ -120,7 +124,7 @@ export class AdvertiserView extends React.Component {
                     </a>
                 </div>
 
-                <CampaignEditModal label="Create Campaign" saveMethod="POST" postSave={() => { } } />
+                <CampaignEditModal label="Create Campaign" saveMethod="POST" postSave={() => { } } successStatus="201" />
             </div >
         );
     }

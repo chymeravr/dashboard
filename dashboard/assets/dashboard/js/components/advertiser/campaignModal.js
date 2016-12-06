@@ -22,6 +22,7 @@ export class CampaignEditModal extends React.Component {
         this.postSave = props.postSave;
         this.saveMethod = props.saveMethod;
         this.label = props.label;
+        this.successStatus = props.successStatus;
         console.info("Props");
         console.info(this.state);
     }
@@ -163,12 +164,12 @@ export class CampaignEditModal extends React.Component {
             (response) => {
                 console.info(response);
                 this.postSave(response);
-                $('#modal1').modal('close');
+                $('#cmpForm').modal('close');
             },
             (error) => {
                 alert(error);
             },
-            200
+            this.successStatus
         );
     }
 
@@ -187,7 +188,7 @@ export class CampaignEditModal extends React.Component {
                 </a>
         }
         return (
-            <div id="modal1" className="modal modal-fixed-footer">
+            <div id="cmpForm" className="modal modal-fixed-footer">
                 <div className="modal-content">
                     <h4>{this.label}</h4>
                     <div className="row">

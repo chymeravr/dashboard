@@ -39,7 +39,7 @@ class AppView extends React.Component {
         //     default:
         //         break;
         // }
-        // debug("children props", props);
+        debug("children props", props);
         var currentRoute = this.props.children.props.route.name;
         var align = "";
         var dashboard = true;
@@ -48,12 +48,15 @@ class AppView extends React.Component {
             || currentRoute == '/'
             || currentRoute == 'login') {
             align += " valign-wrapper";
-            dashboard = false;
-        }
 
+            if (currentRoute != 'profile') { // Center profile but show logout button as well
+                dashboard = false;
+            }
+        }
+        debug("Dashboard", dashboard);
         return (
             <div className="page-flexbox-wrapper">
-                <Header />
+                <Header showLogout={dashboard} />
                 <main className={align}>
                     {this.props.children}
                 </main>
