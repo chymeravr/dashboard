@@ -5,9 +5,8 @@ export function debug(message, props) {
     console.info(props);
 }
 
-export function callApiWithJwt(path, method, body, onSuccess, onError) {
+export function callApiWithJwt(path, method, body, onSuccess, onError, statusCode=200) {
     const jwtToken = localStorage.getItem(config.jwt.tokenKey);
-    debug("Body", body);
     fetch(path, {
         method: method,
         body: body,
@@ -16,14 +15,14 @@ export function callApiWithJwt(path, method, body, onSuccess, onError) {
             'Content-Type': 'application/json'
         }
     }).then(response => {
-        if (response.status != 200) {
+        if (response.status != statusCode) {
             throw new Error(response.statusText)
         }
         return response.json();
     }).then(onSuccess).catch(onError);
 }
 
-export function callRawApiWithJwt(path, method, body, onSuccess, onError) {
+export function callRawApiWithJwt(path, method, body, onSuccess, onError, statusCode=200) {
     const jwtToken = localStorage.getItem(config.jwt.tokenKey);
     debug("Body", body);
     fetch(path, {
@@ -33,7 +32,7 @@ export function callRawApiWithJwt(path, method, body, onSuccess, onError) {
             'Authorization': 'JWT ' + jwtToken,
         }
     }).then(response => {
-        if (response.status != 200) {
+        if (response.status != statusCode) {
             throw new Error(response.statusText)
         }
         return response.json();

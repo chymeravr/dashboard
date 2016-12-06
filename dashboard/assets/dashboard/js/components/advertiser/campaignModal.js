@@ -2,18 +2,9 @@ import React, { ReactDOM } from 'react'
 import Modal from 'react-modal'
 import { FormInput, NumberInput } from '../common'
 import { callApiWithJwt, debug } from '../../lib.js'
+import { hashHistory } from 'react-router'
+import { config } from '../../config'
 
-
-const campaignTypes = {
-    '1': {
-        label: 'Image 360',
-        name: 'IMG_360'
-    },
-    // '2': {
-    //     label: 'Video 360',
-    //     name: 'VID_360'
-    // }
-}
 
 
 export class CampaignEditModal extends React.Component {
@@ -21,23 +12,23 @@ export class CampaignEditModal extends React.Component {
         super(props);
         var defaultCampaignType = '1';
         // Initialise state if not initialised in props
+
         this.state = Object.assign({
             valid: false,
             campaign: {
-                campaignType: {
-                    id: defaultCampaignType,
-                    name: campaignTypes[defaultCampaignType].name
-                }
+                campaignType: config.defaultCampaignType,
             }
-        }, props);
-        
+        }, JSON.parse(JSON.stringify(props)));
+        this.postSave = props.postSave;
+        this.saveMethod = props.saveMethod;
+        this.label = props.label;
+        console.info("Props");
+        console.info(this.state);
     }
 
 
     validateState() {
-        console.info("Validating");
-        var valid =
-            this.state.campaign;
+        var valid = this.state.campaign;
 
         // Campaign should be present
         if (!valid) {
@@ -63,12 +54,15 @@ export class CampaignEditModal extends React.Component {
     }
 
     handleChange(key) {
-        console.info(key);
         return function (e) {
+            console.info("Updating", key, e.target.value);
             this.state.campaign[key] = e.target.value;
+            var newCampaign = Object.assign({}, this.state.campaign);
+            newCampaign[key] = e.target.value;
             // Required to update state
-            this.setState(Object.assign({}, this.state));
+            this.setState(Object.assign({}, this.state, { campaign: newCampaign }));
             this.validateState();
+            console.info(this.state);
         };
     }
 
@@ -91,51 +85,67 @@ export class CampaignEditModal extends React.Component {
             alignment: 'left' // Displays dropdown with edge aligned to the left of button
         });
 
-        $('#startDate').pickadate({
-            selectMonths: true,
-            selectYears: 5,
-            format: 'yyyy-mm-dd',
-            min: new Date(),
-            onSet: function (arg) {
-                // Set minDate of endDate to startDate
-                if ('select' in arg) {
-                    var fromInput = $('#startDate').pickadate(),
-                        fromPicker = fromInput.pickadate('picker')
-
-                    var toInput = $('#endDate').pickadate(),
-                        toPicker = toInput.pickadate('picker');
-                    var fromDate = fromPicker.get('select');
-                    toPicker.set('min', fromDate);
-                    toPicker.set('select', fromDate);
-                    that.setDate('startDate', fromDate);
-                    this.close();
-                }
-            }
-        });
-
+        // Set end date element first. Swapping leads to loss of formatting
         $('#endDate').pickadate({
             selectMonths: true,
             selectYears: 5,
             format: 'yyyy-mm-dd',
             min: new Date(),
+            onStart: () => {
+                console.info("Endinggg");
+                var endInput = $('#endDate').pickadate(),
+                    endPicker = endInput.pickadate('picker')
+                if (this.state.campaign.endDate) {
+                    endPicker.set('select', that.state.campaign.endDate, { format: 'yyyy-mm-dd' });
+                    console.info(endPicker.get('select'))
+                }
+            },
             onSet: function (arg) {
                 if ('select' in arg) { // Do not close on selection of month/year
                     var toInput = $('#endDate').pickadate(),
                         toPicker = toInput.pickadate('picker');
                     var toDate = toPicker.get('select');
                     that.setDate('endDate', toDate);
-                    this.close();
+                    toPicker.close();
                 }
             }
         });
+
+        $('#startDate').pickadate({
+            selectMonths: true,
+            selectYears: 5,
+            format: 'yyyy-mm-dd',
+            min: new Date(),
+            onStart: () => {
+                var fromInput = $('#startDate').pickadate(),
+                    fromPicker = fromInput.pickadate('picker')
+                if (this.state.campaign.startDate) {
+                    fromPicker.set('select', that.state.campaign.startDate, { format: 'yyyy-mm-dd' });
+                    console.info(fromPicker.get('select'))
+                }
+            },
+            onSet: arg => {
+                // Set minDate of endDate to startDate
+                if ('select' in arg) {
+                    var fromInput = $('#startDate').pickadate()
+                    var fromPicker = fromInput.pickadate('picker')
+
+                    var toInput = $('#endDate').pickadate()
+                    var toPicker = toInput.pickadate('picker');
+
+                    var fromDate = fromPicker.get('select');
+                    toPicker.set('min', fromDate);
+                    that.setDate('startDate', fromDate);
+                    fromPicker.close();
+                }
+            }
+        });
+
     }
 
     setCampaignType(type) {
         var campaign = Object.assign(this.state.campaign, {
-            campaignType: {
-                id: type,
-                name: campaignTypes[type].name
-            }
+            campaignType: type
         });
         this.setState(Object.assign({}, this.state, { campaign: campaign }));
         this.validateState();
@@ -143,14 +153,22 @@ export class CampaignEditModal extends React.Component {
     }
 
     saveCampaign() {
-        console.info(this.state.campaign);
-        callApiWithJwt('/user/api/advertiser/campaigns',
-            'POST',
+        const apiSuffix = this.saveMethod === 'PUT' ? this.state.campaign.id : '';
+        const apiPath = '/user/api/advertiser/campaigns/' + apiSuffix;
+        console.info(apiPath);
+        callApiWithJwt(
+            apiPath,
+            this.saveMethod,
             JSON.stringify(this.state.campaign),
-            (response) => alert(response.id),
+            (response) => {
+                console.info(response);
+                this.postSave(response);
+                $('#modal1').modal('close');
+            },
             (error) => {
                 alert(error);
-            }
+            },
+            200
         );
     }
 
@@ -168,11 +186,10 @@ export class CampaignEditModal extends React.Component {
                     Save
                 </a>
         }
-
         return (
             <div id="modal1" className="modal modal-fixed-footer">
                 <div className="modal-content">
-                    <h4>Create Campaign</h4>
+                    <h4>{this.label}</h4>
                     <div className="row">
                         <div className="col s8">
                             <FormInput
@@ -185,13 +202,13 @@ export class CampaignEditModal extends React.Component {
                             <a className='dropdown-button btn'
                                 onClick={e => $('.dropdown-button').dropdown('open')}
                                 data-activates='dropdown1'>
-                                {campaignTypes[this.state.campaign.campaignType.id].label}
+                                {config.campaignTypes[this.state.campaign.campaignType].label}
                             </a>
                             <ul id='dropdown1' className='dropdown-content'>
-                                {Object.keys(campaignTypes).map(id =>
+                                {Object.keys(config.campaignTypes).map(id =>
                                     <li key={id}>
                                         <a onClick={e => this.setCampaignType(id)}>
-                                            {campaignTypes[id].label}
+                                            {config.campaignTypes[id].label}
                                         </a>
                                     </li>
                                 )}

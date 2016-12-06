@@ -11,7 +11,7 @@ import Footer from './footer'
 import { ProfileView } from './profile'
 import { LoginForm } from './login'
 import { AdvertiserView } from './advertiser/advertiser'
-
+import { CampaignDetailView } from './advertiser/campaignDetail'
 import { debug } from '../lib.js'
 // require('whatwg-fetch')
 
@@ -19,7 +19,6 @@ class AppView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {}
-        this.state.username = 'rubbalsidhu';
     }
 
     componentDidMount() {
@@ -43,7 +42,6 @@ class AppView extends React.Component {
         // debug("children props", props);
         var currentRoute = this.props.children.props.route.name;
         var align = "";
-        console.info(currentRoute);
         var dashboard = true;
         if (!currentRoute
             || currentRoute == 'profile'
@@ -72,9 +70,10 @@ render((
             <Route name="login" path="/login" component={LoginForm} />
             <Route name="profile" path="/profile/"
                 component={ProfileView} />} />
-            <Route name="advertiser" path="/advertiser" component={AdvertiserView} />
+            <Route name="advertiser" path="/advertiser/" component={AdvertiserView} />
+            <Route name="campaignDetail" path="/advertiser/campaigns/:campaignId" component={CampaignDetailView} />
+
             {// <Route path="users" component={Users}>
-                //     <Route path="/user/:userId" component={User} />
                 // </Route>
             }
         </Route>

@@ -55,7 +55,7 @@ class Campaign(models.Model):
 
 class Adgroup(models.Model):
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
-    campaign = models.ForeignKey(Campaign)
+    campaign = models.ForeignKey(Campaign, related_name='adgroups')
     name = models.CharField(max_length=100)
     budget = models.OneToOneField(Budget, on_delete=models.CASCADE)
     targeting = models.OneToOneField(Targeting, null=True)

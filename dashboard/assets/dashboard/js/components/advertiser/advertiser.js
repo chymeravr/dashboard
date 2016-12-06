@@ -2,7 +2,7 @@ import React from 'react'
 import { debug, callApiWithJwt } from '../../lib.js'
 import { config } from '../../config.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
-import { hashHistory } from 'react-router'
+import { hashHistory, Link } from 'react-router'
 import { SideBar } from './sidebar'
 import Modal from 'react-modal'
 import { FormInput } from '../common'
@@ -15,8 +15,6 @@ const customStyles = {
         left: '20%',
         right: '20%',
         bottom: '20%',
-        // marginRight: '-20%',
-        // transform: 'translate(-20%, -20%)'
     }
 };
 
@@ -24,7 +22,7 @@ const customStyles = {
  * Store direct properties of campaigns which can be printed by map
  */
 const headers = {
-    'Name': 'name',
+    //'Name': 'name',
     'Total Budget': 'totalBudget',
     'Daily Budget': 'dailyBudget',
     'Start Date': 'startDate',
@@ -47,11 +45,9 @@ export class AdvertiserView extends React.Component {
     }
 
     componentWillMount() {
-        console.info($('.modal').modal());
-
         callApiWithJwt('/user/api/advertiser/campaigns/',
             'GET',
-            {},
+            null,
             (response) => this.setState(Object.assign({}, this.state, { campaigns: response })),
             (error) => {
                 alert(error);
@@ -69,7 +65,6 @@ export class AdvertiserView extends React.Component {
     }
 
     render() {
-        debug("Advertiser View", this.state);
         if (!this.state.campaigns) {
             return <div></div> // TODO : Spinner
         }
@@ -85,9 +80,7 @@ export class AdvertiserView extends React.Component {
         }
 
         return (
-            <div className="row" style={heightStyle} >
-                <SideBar />
-                <div></div>
+            <div className="container" style={heightStyle} >
                 <ReactCSSTransitionGroup
                     component="table"
                     transitionName="fadeTransitionFast"
@@ -96,9 +89,10 @@ export class AdvertiserView extends React.Component {
                     transitionEnterTimeout={150}
                     transitionLeaveTimeout={150}
                     transitionAppearTimeout={150}
-                    className="table highlight grey-text text-darken-4 col s9 offset-s3">
+                    className="table highlight grey-text text-darken-4 col s12">
                     <thead>
                         <tr>
+                            <th>Name</th>
                             {Object.keys(headers).map(header => <th key={header}>{header}</th>)}
                             <th>Campaign Type</th>
                             <th>Status</th>
@@ -107,8 +101,13 @@ export class AdvertiserView extends React.Component {
                     <tbody>
                         {this.state.campaigns.map(campaign =>
                             <tr key={campaign.id} className="grey-text text-darken-1">
+                                <td>
+                                    <Link to={'/advertiser/campaigns/' + campaign.id + "/"}>
+                                        {campaign.name}
+                                    </Link>
+                                </td>
                                 {Object.keys(headers).map(key => <td key={key}>{campaign[headers[key]]}</td>)}
-                                <td>{campaign.campaignType.name}</td>
+                                <td>{config.campaignTypes[campaign.campaignType].label}</td>
                                 <td>{campaign.status ? "Active" : "Paused"}</td>
                             </tr>)
                         }
@@ -121,7 +120,7 @@ export class AdvertiserView extends React.Component {
                     </a>
                 </div>
 
-                 <CampaignEditModal />
+                <CampaignEditModal label="Create Campaign" saveMethod="POST" postSave={() => { } } />
             </div >
         );
     }

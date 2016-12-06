@@ -52,20 +52,15 @@ class TargetingSerializer(serializers.ModelSerializer):
 
 
 class CampaignSerializer(serializers.ModelSerializer):
-    campaignType = CampaignTypeSerializer()
+    campaignType = serializers.PrimaryKeyRelatedField(queryset=CampaignType.objects.all())
+    adgroups = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     user = serializers.ReadOnlyField(source='user.username')
 
     class Meta:
         model = Campaign
         fields = ('user', 'id', 'name', 'campaignType', 'totalBudget',
                   'dailyBudget', 'startDate', 'endDate',
-                  'status')
-
-    def create(self, validated_data):
-        campaignType_data = validated_data.pop('campaignType')
-        campaignType, created = CampaignType.objects.get_or_create(**campaignType_data)
-        return Campaign.objects.create(campaignType=campaignType, **validated_data)
-
+                  'status', 'adgroups')
 
 class AdgroupSerializer(serializers.ModelSerializer):
     campaign = CampaignSerializer()
@@ -85,4 +80,4 @@ class AdSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Ad
-        fields = ['id', 'adgroup', 'creative_url',]
+        fields = ['id', 'adgroup', 'creative_url', ]

@@ -11,6 +11,11 @@ export class FormInput extends React.Component {
         }
         this.type = props.type ? props.type : "text";
     }
+
+    componentWillReceiveProps(nextProps) {
+        this.state.value = nextProps.value;
+    }
+
     render() {
         return (
             <div className="input-field row">
@@ -34,12 +39,17 @@ export class NumberInput extends React.Component {
             value: props.value,
         }
     }
+
+    componentWillReceiveProps(nextProps) {
+        this.state.value = nextProps.value;
+    }
+
     render() {
         return (
             <div className="input-field row">
                 <input id={this.fieldName} type="number" min="0" value={this.state.value}
-                    onChange={this.handleChange} className="validate"/>
-                <label htmlFor={this.fieldName} data-error="Enter a positive value"  className={this.state.value && this.state.value.length > 0 ? "active" : ""}>
+                    onChange={this.handleChange} className="validate" />
+                <label htmlFor={this.fieldName} data-error="Enter a positive value" className={this.state.value ? "active" : ""}>
                     {this.label}
                 </label>
             </div>

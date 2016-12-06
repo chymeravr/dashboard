@@ -51,7 +51,7 @@ export class ProfileView extends React.Component {
     componentDidMount() {
         callApiWithJwt('/user/api/view_profile',
             'GET',
-            {},
+            null,
             (response) => this.setState(response),
             (error) => {
                 hashHistory.push('/login/');

@@ -4,9 +4,9 @@ from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
 
-from advertiser.models import Campaign
+from advertiser.models import Campaign, Adgroup
 from advertiser.permissions import IsOwner
-from advertiser.serializers import CampaignSerializer
+from advertiser.serializers import CampaignSerializer, AdgroupSerializer
 
 
 @permission_classes((IsAuthenticated, IsOwner))
@@ -29,19 +29,20 @@ class CampaignDetailView(generics.RetrieveUpdateAPIView):
     def get_queryset(self):
         return Campaign.objects.filter(user=self.request.user)
 
-# class AdgroupView(generics.ListCreateAPIView):
-#     serializer_class = AdgroupSerializer()
-#     renderer_classes = (JSONRenderer,)
-#
-#     @permission_classes((IsAuthenticated,))
-#     def get_queryset(self):
-#         return Campaign.objects.filter(user=self.request.user)
-#
-#
-# class AdgroupDetailView(generics.RetrieveUpdateAPIView):
-#     serializer_class = AdgroupSerializer()
-#     renderer_classes = (JSONRenderer,)
-#
-#     @permission_classes((IsAuthenticated,))
-#     def get_queryset(self):
-#         return Campaign.objects.filter(user=self.request.user)
+
+class AdgroupView(generics.ListCreateAPIView):
+    serializer_class = AdgroupSerializer
+    renderer_classes = (JSONRenderer,)
+
+    @permission_classes((IsAuthenticated,))
+    def get_queryset(self):
+        return Adgroup.objects.filter(campaign__user=self.request.user)
+
+
+class AdgroupDetailView(generics.RetrieveUpdateAPIView):
+    serializer_class = AdgroupSerializer
+    renderer_classes = (JSONRenderer,)
+
+    @permission_classes((IsAuthenticated,))
+    def get_queryset(self):
+        return Adgroup.objects.filter(campaign__user=self.request.user)
