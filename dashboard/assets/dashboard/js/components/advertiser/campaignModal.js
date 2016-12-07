@@ -82,10 +82,13 @@ export class CampaignEditModal extends React.Component {
             constrain_width: true, // Does not change width of dropdown to that of the activator
             hover: false, // Activate on hover
             gutter: 0, // Spacing from edge
-            belowOrigin: false, // Displays dropdown below the button
+            belowOrigin: true, // Displays dropdown below the button
             alignment: 'left' // Displays dropdown with edge aligned to the left of button
         });
 
+        $(document).ready(function () {
+            $('.tooltipped').tooltip({ delay: 50 });
+        });
         // Set end date element first. Swapping leads to loss of formatting
         $('#endDate').pickadate({
             selectMonths: true,
@@ -189,57 +192,67 @@ export class CampaignEditModal extends React.Component {
         }
         return (
             <div id="cmpForm" className="modal modal-fixed-footer">
-                <div className="modal-content">
-                    <h4>{this.label}</h4>
-                    <div className="row">
-                        <div className="col s8">
-                            <FormInput
-                                fieldName="name"
-                                label="Campaign Name"
-                                value={this.state.campaign.name}
-                                handleChange={this.handleChange('name').bind(this)} />
+                <div className="modal-content valign-wrapper">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col s8">
+                                <FormInput
+                                    fieldName="name"
+                                    label="Campaign Name"
+                                    value={this.state.campaign.name}
+                                    handleChange={this.handleChange('name').bind(this)} />
+                            </div>
+                            <div className="col s3 right">
+                                <a className='dropdown-button btn tooltipped'
+                                    data-position="right" data-delay="50" data-tooltip="Campaign Type"
+                                    onClick={e => $('.dropdown-button').dropdown('open')}
+                                    data-activates='dropdown1'>
+                                    {config.campaignTypes[this.state.campaign.campaignType].label}
+                                </a>
+                                <ul id='dropdown1' className='dropdown-content'>
+                                    {Object.keys(config.campaignTypes).map(id =>
+                                        <li key={id}>
+                                            <a onClick={e => this.setCampaignType(id)}>
+                                                {config.campaignTypes[id].label}
+                                            </a>
+                                        </li>
+                                    )}
+                                </ul>
+                            </div>
                         </div>
-                        <div className="col s3 right">
-                            <a className='dropdown-button btn'
-                                onClick={e => $('.dropdown-button').dropdown('open')}
-                                data-activates='dropdown1'>
-                                {config.campaignTypes[this.state.campaign.campaignType].label}
-                            </a>
-                            <ul id='dropdown1' className='dropdown-content'>
-                                {Object.keys(config.campaignTypes).map(id =>
-                                    <li key={id}>
-                                        <a onClick={e => this.setCampaignType(id)}>
-                                            {config.campaignTypes[id].label}
-                                        </a>
-                                    </li>
-                                )}
-                            </ul>
+                        <div className="row">
+                            <div className="col s5">
+                                <NumberInput
+                                    fieldName="totalBudget"
+                                    label="Total Budget ($)"
+                                    value={this.state.campaign.totalBudget}
+                                    handleChange={this.handleChange('totalBudget').bind(this)} />
+                            </div>
+                            <div className="col s1">
+                            </div>
+                            <div className="col s5">
+                                <NumberInput
+                                    fieldName="dailyBudget"
+                                    label="Daily Budget ($)"
+                                    value={this.state.campaign.dailyBudget}
+                                    handleChange={this.handleChange('dailyBudget').bind(this)} />
+                            </div>
                         </div>
-                    </div>
-                    <div className="row">
-                        <div className="col s6">
-                            <NumberInput
-                                fieldName="totalBudget"
-                                label="Total Budget ($)"
-                                value={this.state.campaign.totalBudget}
-                                handleChange={this.handleChange('totalBudget').bind(this)} />
-                        </div>
-                        <div className="col s6">
-                            <NumberInput
-                                fieldName="dailyBudget"
-                                label="Daily Budget ($)"
-                                value={this.state.campaign.dailyBudget}
-                                handleChange={this.handleChange('dailyBudget').bind(this)} />
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col s6">
-                            <label htmlFor="startDate">Start Date</label>
-                            <input type="date" id="startDate" className="datepicker" label="Start Date" />
-                        </div>
-                        <div className="col s6">
-                            <label htmlFor="endDate">End Date</label>
-                            <input type="date" id="endDate" className="datepicker" label="End Date" />
+                        <div className="row">
+                            <div className="col s5">
+                                <div className="input-field row">
+                                    <label htmlFor="startDate">Start Date</label>
+                                    <input type="date" id="startDate" className="datepicker" label="Start Date" />
+                                </div>
+                            </div>
+                            <div className="col s1">
+                            </div>
+                            <div className="col s5">
+                                <div className="input-field row">
+                                    <label htmlFor="endDate">End Date</label>
+                                    <input type="date" id="endDate" className="datepicker" label="End Date" />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
