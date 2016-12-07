@@ -1,7 +1,23 @@
 from django.db import models
 from rest_framework import serializers
+from rest_framework.relations import PrimaryKeyRelatedField
 
-from advertiser.models import CampaignType, Os, Hmd, Campaign, Budget, Device, Targeting, Adgroup, Ad, Pricing
+from advertiser.models import CampaignType, Os, Hmd, Campaign, Targeting, Adgroup, Ad, Pricing
+
+
+class UserFilteredPKRelatedField(PrimaryKeyRelatedField):
+    """
+    This class is required to enable filtering on the available foreign keys
+    Ex. an adgroup being created by user1 can only set those campaigns as foreign
+    key which were created by the same user. Similarly for targeting.
+    We do not need to use this field for any global foreign keys like "Pricing", handset etc.
+    """
+    def __init__(self, **kwargs):
+        super(UserFilteredPKRelatedField, self).__init__(**kwargs)
+
+    def get_queryset(self):
+        queryset = super(UserFilteredPKRelatedField, self).get_queryset()
+        return queryset.filter(user=self.context['request'].user)
 
 
 class CampaignTypeSerializer(serializers.ModelSerializer):
@@ -28,27 +44,12 @@ class HmdSerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
 
 
-class BudgetSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Budget
-        fields = ('id', 'bid', 'totalBudget', 'dailyBudget')
-
-
-class DeviceSerializer(serializers.ModelSerializer):
-    os = OsSerializer()
-
-    class Meta:
-        model = Device
-        fields = ('id', 'ram', 'os')
-
-
 class TargetingSerializer(serializers.ModelSerializer):
     hmd = HmdSerializer()
-    device = DeviceSerializer()
 
     class Meta:
         model = Targeting
-        fields = ['id', 'hmd', 'device']
+        fields = ['id', 'hmd', 'ram', 'os']
 
 
 class CampaignSerializer(serializers.ModelSerializer):
@@ -63,18 +64,18 @@ class CampaignSerializer(serializers.ModelSerializer):
                   'status', 'adgroups')
         order_by = (('created_on'),)
 
+
 class AdgroupSerializer(serializers.ModelSerializer):
-    campaign = CampaignSerializer()
     name = models.CharField(max_length=100)
-    budget = BudgetSerializer()
-    targeting = TargetingSerializer()
+    pricing = PrimaryKeyRelatedField(queryset=Pricing.objects.all())
+    campaign = UserFilteredPKRelatedField(queryset=Campaign.objects)
+    targeting = UserFilteredPKRelatedField(queryset=Targeting.objects)
 
     class Meta:
         model = Adgroup
-        fields = ['id', 'campaign', 'name', 'budget',
-                  'targeting']
+        fields = ['id', 'campaign', 'name', 'dailyBudget', 'totalBudget',
+                  'targeting', 'bid', 'pricing']
         order_by = (('created_on'),)
-
 
 
 class AdSerializer(serializers.ModelSerializer):
@@ -85,4 +86,3 @@ class AdSerializer(serializers.ModelSerializer):
         model = Ad
         fields = ['id', 'adgroup', 'creative_url', ]
         order_by = (('created_on'),)
-
