@@ -116,7 +116,7 @@ export class AdvertiserView extends React.Component {
                                     </Link>
                                 </td>
                                 {Object.keys(headers).map(key => <td key={key}>{campaign[headers[key]]}</td>)}
-                                <td>{config.campaignTypes[campaign.campaignType].label}</td>
+                                <td>{config.campaignTypes[campaign.campaignType]}</td>
                                 <td>{campaign.status ? "Active" : "Paused"}</td>
                             </tr>)
                         }

@@ -6,14 +6,8 @@ config.jwt = {
 }
 
 config.campaignTypes = {
-    '1': {
-        label: 'Image 360',
-        name: 'IMG_360'
-    },
-    // '2': {
-    //     label: 'Video 360',
-    //     name: 'VID_360'
-    // }
+    '1': 'Image 360',
+    '2': 'Video 360'
 }
 
 config.defaultCampaignType = 1;

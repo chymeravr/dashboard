@@ -190,6 +190,7 @@ export class CampaignEditModal extends React.Component {
                     Save
                 </a>
         }
+
         return (
             <div id="cmpForm" className="modal modal-fixed-footer">
                 <div className="modal-content valign-wrapper">
@@ -206,14 +207,14 @@ export class CampaignEditModal extends React.Component {
                                 <a className='dropdown-button btn tooltipped'
                                     data-position="right" data-delay="50" data-tooltip="Campaign Type"
                                     onClick={e => $('.dropdown-button').dropdown('open')}
-                                    data-activates='dropdown1'>
-                                    {config.campaignTypes[this.state.campaign.campaignType].label}
+                                    data-activates='campaignTypeDropdown'>
+                                    {config.campaignTypes[this.state.campaign.campaignType]}
                                 </a>
-                                <ul id='dropdown1' className='dropdown-content'>
+                                <ul id='campaignTypeDropdown' className='dropdown-content'>
                                     {Object.keys(config.campaignTypes).map(id =>
                                         <li key={id}>
                                             <a onClick={e => this.setCampaignType(id)}>
-                                                {config.campaignTypes[id].label}
+                                                {config.campaignTypes[id]}
                                             </a>
                                         </li>
                                     )}
