@@ -53,11 +53,13 @@ class Campaign(BaseModel):
 
 class Adgroup(BaseModel):
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
-    campaign = models.ForeignKey(Campaign)
+    campaign = models.ForeignKey(Campaign, related_name='adgroups')
     name = models.CharField(max_length=100)
     bid = models.FloatField(validators=[MinValueValidator(0.0)])
     totalBudget = models.FloatField(validators=[MinValueValidator(0.0)])
     dailyBudget = models.FloatField(validators=[MinValueValidator(0.0)])
+    startDate = models.DateField()
+    endDate = models.DateField()
     pricing = models.ForeignKey(Pricing)
     targeting = models.ForeignKey(Targeting, null=True, blank=True)
 

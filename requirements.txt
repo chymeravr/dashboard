@@ -9,4 +9,5 @@ djangorestframework-jwt==1.8.0
 PyExecJS==1.4.0
 PyJWT==1.4.2
 PyReact==0.6.0
+PyYAML==3.12
 six==1.10.0

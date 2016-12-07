@@ -17,3 +17,10 @@ config.campaignTypes = {
 }
 
 config.defaultCampaignType = 1;
+
+config.pricings = {
+    '1': 'CPM',
+    '2': 'CPC'
+}
+
+config.defaultPricing = 1;

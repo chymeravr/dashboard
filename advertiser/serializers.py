@@ -12,6 +12,7 @@ class UserFilteredPKRelatedField(PrimaryKeyRelatedField):
     key which were created by the same user. Similarly for targeting.
     We do not need to use this field for any global foreign keys like "Pricing", handset etc.
     """
+
     def __init__(self, **kwargs):
         super(UserFilteredPKRelatedField, self).__init__(**kwargs)
 
@@ -52,9 +53,22 @@ class TargetingSerializer(serializers.ModelSerializer):
         fields = ['id', 'hmd', 'ram', 'os']
 
 
+class AdgroupSerializer(serializers.ModelSerializer):
+    name = models.CharField(max_length=100)
+    pricing = PrimaryKeyRelatedField(queryset=Pricing.objects.all())
+    campaign = UserFilteredPKRelatedField(queryset=Campaign.objects)
+    targeting = UserFilteredPKRelatedField(queryset=Targeting.objects, allow_null=True, allow_empty=True)
+
+    class Meta:
+        model = Adgroup
+        fields = ['id', 'campaign', 'name', 'dailyBudget', 'totalBudget',
+                  'targeting', 'bid', 'pricing', 'startDate', 'endDate']
+        order_by = (('created_on'),)
+
+
 class CampaignSerializer(serializers.ModelSerializer):
     campaignType = serializers.PrimaryKeyRelatedField(queryset=CampaignType.objects.all())
-    adgroups = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    adgroups = AdgroupSerializer(many=True, read_only=True)
     user = serializers.ReadOnlyField(source='user.username')
 
     class Meta:
@@ -62,19 +76,6 @@ class CampaignSerializer(serializers.ModelSerializer):
         fields = ('user', 'id', 'name', 'campaignType', 'totalBudget',
                   'dailyBudget', 'startDate', 'endDate',
                   'status', 'adgroups')
-        order_by = (('created_on'),)
-
-
-class AdgroupSerializer(serializers.ModelSerializer):
-    name = models.CharField(max_length=100)
-    pricing = PrimaryKeyRelatedField(queryset=Pricing.objects.all())
-    campaign = UserFilteredPKRelatedField(queryset=Campaign.objects)
-    targeting = UserFilteredPKRelatedField(queryset=Targeting.objects)
-
-    class Meta:
-        model = Adgroup
-        fields = ['id', 'campaign', 'name', 'dailyBudget', 'totalBudget',
-                  'targeting', 'bid', 'pricing']
         order_by = (('created_on'),)
 
 
