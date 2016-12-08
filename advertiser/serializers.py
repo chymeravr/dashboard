@@ -18,8 +18,6 @@ class UserFilteredPKRelatedField(PrimaryKeyRelatedField):
 
     def get_queryset(self):
         queryset = super(UserFilteredPKRelatedField, self).get_queryset()
-        print ','.join(queryset)
-        print self.context['request'].user
         return queryset.filter(user=self.context['request'].user)
 
 
