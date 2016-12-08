@@ -14,7 +14,6 @@ export class AdgroupEditModal extends React.Component {
             adgroup: {
                 campaign: props.campaignId,
                 pricing: config.defaultPricing,
-                targeting: null
             }
         }, JSON.parse(JSON.stringify(props)));
         this.postSave = props.postSave;
