@@ -18,6 +18,8 @@ class UserFilteredPKRelatedField(PrimaryKeyRelatedField):
 
     def get_queryset(self):
         queryset = super(UserFilteredPKRelatedField, self).get_queryset()
+        print ','.join(queryset)
+        print self.context['request'].user
         return queryset.filter(user=self.context['request'].user)
 
 
@@ -46,11 +48,13 @@ class HmdSerializer(serializers.ModelSerializer):
 
 
 class TargetingSerializer(serializers.ModelSerializer):
-    hmd = HmdSerializer()
+    hmd = PrimaryKeyRelatedField(queryset=Hmd.objects.all(), allow_null=True)
+    os = PrimaryKeyRelatedField(queryset=Os.objects.all(), allow_null=True)
+    user = serializers.ReadOnlyField(source='user.username')
 
     class Meta:
         model = Targeting
-        fields = ['id', 'hmd', 'ram', 'os']
+        fields = ['id', 'user', 'hmd', 'ram', 'os', 'name']
 
 
 class AdgroupSerializer(serializers.ModelSerializer):

@@ -34,6 +34,7 @@ class Hmd(BaseModel):
 
 class Targeting(BaseModel):
     user = models.ForeignKey(User)
+    name = models.CharField(max_length=100)
     hmd = models.ForeignKey(Hmd, blank=True, null=True)
     ram = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)], null=True, blank=True)
     os = models.ForeignKey(Os, null=True, blank=True)

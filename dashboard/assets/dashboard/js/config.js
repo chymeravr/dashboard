@@ -18,3 +18,17 @@ config.pricings = {
 }
 
 config.defaultPricing = 1;
+
+config.hmds = {
+    '': null,
+    '1': 'Gear VR'
+}
+
+config.defaultHmd = '';
+
+config.operatingSystems = {
+    '': null,
+    '1': 'Android'
+}
+
+config.defaultOperatingSystem = '';

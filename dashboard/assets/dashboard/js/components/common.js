@@ -49,7 +49,7 @@ export class NumberInput extends React.Component {
             <div className="input-field row">
                 <input id={this.fieldName} type="number" min="0" value={this.state.value}
                     onChange={this.handleChange} className="validate" />
-                <label htmlFor={this.fieldName} data-error="Enter a positive value" className={this.state.value ? "active" : ""}>
+                <label htmlFor={this.fieldName} data-error="Enter a positive value" className={this.state.value == 0 || this.state.value ? "active" : ""}>
                     {this.label}
                 </label>
             </div>

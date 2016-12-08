@@ -4,13 +4,13 @@ import { FormInput, NumberInput } from '../common'
 import { callApiWithJwt, debug } from '../../lib.js'
 import { hashHistory } from 'react-router'
 import { config } from '../../config'
-
-
+import { CreateTargetingModal } from './createTargetingModal'
 
 export class AdgroupEditModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = Object.assign({
+            targetingModalOpen: false,
             adgroup: {
                 campaign: props.campaignId,
                 pricing: config.defaultPricing,
@@ -50,7 +50,7 @@ export class AdgroupEditModal extends React.Component {
     }
 
     handleChange(key) {
-        return function(e) {
+        return function (e) {
             console.info("Updating", key, e.target.value);
             this.state.adgroup[key] = e.target.value;
             var newAdgroup = Object.assign({}, this.state.adgroup);
@@ -105,7 +105,7 @@ export class AdgroupEditModal extends React.Component {
                     console.info(endPicker.get('select'))
                 }
             },
-            onSet: function(arg) {
+            onSet: function (arg) {
                 if ('select' in arg) { // Do not close on selection of month/year
                     var toInput = $('#agEndDate').pickadate(),
                         toPicker = toInput.pickadate('picker');
@@ -169,6 +169,18 @@ export class AdgroupEditModal extends React.Component {
         );
     }
 
+    openSelectTargetingModal() {
+        $('.modal').modal();
+        $('#selectTargetingForm').modal('open');
+        this.setState(Object.assign({}, this.state, { targetingModalOpen: true }));
+    }
+
+    openCreateTargetingModal() {
+        $('.modal').modal();
+        $('#createTargetingForm').modal('open');
+        this.setState(Object.assign({}, this.state, { targetingModalOpen: true }));
+    }
+
     render() {
         console.info(this.state.adgroup);
         if (this.state.valid) {
@@ -185,85 +197,99 @@ export class AdgroupEditModal extends React.Component {
                 </a>
         }
         return (
-            <div id="agForm" className="modal modal-fixed-footer">
-                <div className="modal-content valign-wrapper">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col s8">
-                                <FormInput
-                                    fieldName="name"
-                                    label="Adgroup Name"
-                                    value={this.state.adgroup.name}
-                                    handleChange={this.handleChange('name').bind(this)} />
+            <div>
+                <div id="agForm" className="modal modal-fixed-footer">
+                    <div className="modal-content valign-wrapper">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col s8">
+                                    <FormInput
+                                        fieldName="name"
+                                        label="Adgroup Name"
+                                        value={this.state.adgroup.name}
+                                        handleChange={this.handleChange('name').bind(this)} />
+                                </div>
+                                <div className="col s3 right">
+                                    <a className='dropdown-button btn tooltipped'
+                                        data-position="right" data-delay="50" data-tooltip="Pricing"
+                                        onClick={e => $('.dropdown-button').dropdown('open')}
+                                        data-activates='pricingDropdown'>
+                                        {config.pricings[this.state.adgroup.pricing]}
+                                    </a>
+                                    <ul id='pricingDropdown' className='dropdown-content'>
+                                        {Object.keys(config.pricings).map(id =>
+                                            <li key={id}>
+                                                <a onClick={e => this.setPricing(id)}>
+                                                    {config.pricings[id]}
+                                                </a>
+                                            </li>
+                                        )}
+                                    </ul>
+                                </div>
                             </div>
-                            <div className="col s3 right">
-                                <a className='dropdown-button btn tooltipped'
-                                    data-position="right" data-delay="50" data-tooltip="Pricing"
-                                    onClick={e => $('.dropdown-button').dropdown('open')}
-                                    data-activates='pricingDropdown'>
-                                    {config.pricings[this.state.adgroup.pricing]}
+                            <div className="row">
+                                <div className="col s4">
+                                    <NumberInput
+                                        fieldName="totalBudget"
+                                        label="Total Budget ($)"
+                                        value={this.state.adgroup.totalBudget}
+                                        handleChange={this.handleChange('totalBudget').bind(this)} />
+                                </div>
+                                <div className="col s1">
+                                </div>
+                                <div className="col s4">
+                                    <NumberInput
+                                        fieldName="dailyBudget"
+                                        label="Daily Budget ($)"
+                                        value={this.state.adgroup.dailyBudget}
+                                        handleChange={this.handleChange('dailyBudget').bind(this)} />
+                                </div>
+                                <div className="col s1">
+                                </div>
+                                <div className="col s2">
+                                    <NumberInput
+                                        fieldName="bid"
+                                        label="Bid ($)"
+                                        value={this.state.adgroup.bid}
+                                        handleChange={this.handleChange('bid').bind(this)} />
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col s3">
+                                    <div className="input-field row">
+                                        <label htmlFor="agStartDate">Start Date</label>
+                                        <input type="date" id="agStartDate" className="datepicker" label="Start Date" />
+                                    </div>
+                                </div>
+                                <div className="col s1">
+                                </div>
+                                <div className="col s3">
+                                    <div className="input-field row">
+                                        <label htmlFor="agEndDate">End Date</label>
+                                        <input type="date" id="agEndDate" className="datepicker" label="End Date" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="row">
+                                <a className="modal-action waves-effect waves-green btn-flat teal white-text"
+                                    onClick={e => this.openSelectTargetingModal()}>
+                                    ADD TARGETING
                                 </a>
-                                <ul id='pricingDropdown' className='dropdown-content'>
-                                    {Object.keys(config.pricings).map(id =>
-                                        <li key={id}>
-                                            <a onClick={e => this.setPricing(id)}>
-                                                {config.pricings[id]}
-                                            </a>
-                                        </li>
-                                    )}
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col s5">
-                                <NumberInput
-                                    fieldName="totalBudget"
-                                    label="Total Budget ($)"
-                                    value={this.state.adgroup.totalBudget}
-                                    handleChange={this.handleChange('totalBudget').bind(this)} />
-                            </div>
-                            <div className="col s1">
-                            </div>
-                            <div className="col s5">
-                                <NumberInput
-                                    fieldName="dailyBudget"
-                                    label="Daily Budget ($)"
-                                    value={this.state.adgroup.dailyBudget}
-                                    handleChange={this.handleChange('dailyBudget').bind(this)} />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col s5">
-                                <div className="input-field row">
-                                    <label htmlFor="agStartDate">Start Date</label>
-                                    <input type="date" id="agStartDate" className="datepicker" label="Start Date" />
-                                </div>
-                            </div>
-                            <div className="col s1">
-                            </div>
-                            <div className="col s5">
-                                <div className="input-field row">
-                                    <label htmlFor="agEndDate">End Date</label>
-                                    <input type="date" id="agEndDate" className="datepicker" label="End Date" />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col s6">
-                                <NumberInput
-                                    fieldName="bid"
-                                    label="Bid ($)"
-                                    value={this.state.adgroup.bid}
-                                    handleChange={this.handleChange('bid').bind(this)} />
+                                <a className="modal-action waves-effect waves-green btn-flat teal white-text"
+                                    onClick={e => this.openCreateTargetingModal()}>
+                                    CREATE NEW TARGETING
+                                </a>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div className="modal-footer">
-                    {saveButton}
-                </div>
-            </div >
+                    <div className="modal-footer">
+                        {saveButton}
+                    </div>
+                </div >
+                <CreateTargetingModal saveMethod="POST"  successStatus="201" />
+            </div>
         )
     }
 }
