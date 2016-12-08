@@ -61,7 +61,7 @@ class Adgroup(BaseModel):
     startDate = models.DateField()
     endDate = models.DateField()
     pricing = models.ForeignKey(Pricing)
-    targeting = models.ForeignKey(Targeting, null=True, blank=True)
+    targeting = models.ManyToManyField(Targeting, blank=True)
 
 
 class Ad(BaseModel):

@@ -57,7 +57,7 @@ class AdgroupSerializer(serializers.ModelSerializer):
     name = models.CharField(max_length=100)
     pricing = PrimaryKeyRelatedField(queryset=Pricing.objects.all())
     campaign = UserFilteredPKRelatedField(queryset=Campaign.objects)
-    targeting = UserFilteredPKRelatedField(queryset=Targeting.objects, allow_null=True, allow_empty=True)
+    targeting = UserFilteredPKRelatedField(queryset=Targeting.objects, many=True, allow_null=True, allow_empty=True)
 
     class Meta:
         model = Adgroup
