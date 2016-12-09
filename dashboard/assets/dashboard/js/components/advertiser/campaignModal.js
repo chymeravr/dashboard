@@ -23,8 +23,6 @@ export class CampaignEditModal extends React.Component {
         this.saveMethod = props.saveMethod;
         this.label = props.label;
         this.successStatus = props.successStatus;
-        console.info("Props");
-        console.info(this.state);
     }
 
 
@@ -56,14 +54,12 @@ export class CampaignEditModal extends React.Component {
 
     handleChange(key) {
         return function (e) {
-            console.info("Updating", key, e.target.value);
             this.state.campaign[key] = e.target.value;
             var newCampaign = Object.assign({}, this.state.campaign);
             newCampaign[key] = e.target.value;
             // Required to update state
             this.setState(Object.assign({}, this.state, { campaign: newCampaign }));
             this.validateState();
-            console.info(this.state);
         };
     }
 
@@ -96,12 +92,10 @@ export class CampaignEditModal extends React.Component {
             format: 'yyyy-mm-dd',
             min: new Date(),
             onStart: () => {
-                console.info("Endinggg");
                 var endInput = $('#endDate').pickadate(),
                     endPicker = endInput.pickadate('picker')
                 if (this.state.campaign.endDate) {
                     endPicker.set('select', that.state.campaign.endDate, { format: 'yyyy-mm-dd' });
-                    console.info(endPicker.get('select'))
                 }
             },
             onSet: function (arg) {
@@ -125,7 +119,6 @@ export class CampaignEditModal extends React.Component {
                     fromPicker = fromInput.pickadate('picker')
                 if (this.state.campaign.startDate) {
                     fromPicker.set('select', that.state.campaign.startDate, { format: 'yyyy-mm-dd' });
-                    console.info(fromPicker.get('select'))
                 }
             },
             onSet: arg => {
@@ -159,13 +152,11 @@ export class CampaignEditModal extends React.Component {
     saveCampaign() {
         const apiSuffix = this.saveMethod === 'PUT' ? this.state.campaign.id : '';
         const apiPath = '/user/api/advertiser/campaigns/' + apiSuffix;
-        console.info(apiPath);
         callApiWithJwt(
             apiPath,
             this.saveMethod,
             JSON.stringify(this.state.campaign),
             (response) => {
-                console.info(response);
                 this.postSave(response);
                 $('#cmpForm').modal('close');
             },

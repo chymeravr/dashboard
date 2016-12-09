@@ -22,7 +22,6 @@ export class CreateTargetingModal extends React.Component {
         // Targeting fields should be present
         var valid = +this.state.ram >= 0 && this.state.name;
         valid = valid ? true : false;
-        console.info(valid);
         this.setState(Object.assign({}, this.state, { valid: valid }));
     }
 
@@ -70,13 +69,11 @@ export class CreateTargetingModal extends React.Component {
     saveTargeting() {
         const apiSuffix = this.saveMethod === 'PUT' ? this.state.adgroup.id : '';
         const apiPath = '/user/api/advertiser/targetings/' + apiSuffix;
-        console.info(apiPath);
         callApiWithJwt(
             apiPath,
             this.saveMethod,
             JSON.stringify(this.state),
             (response) => {
-                console.info(response);
                 this.postSave(response);
                 $('#createTargetingForm').modal('close');
             },
@@ -104,8 +101,7 @@ export class CreateTargetingModal extends React.Component {
                     Save
                 </a>
         }
-        // console.info(this);
-        console.info(this.state);
+
         return (
             <div>
                 <div id="createTargetingForm" className="modal bottom-sheet">

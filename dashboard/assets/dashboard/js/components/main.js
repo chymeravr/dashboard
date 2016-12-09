@@ -26,7 +26,6 @@ class AppView extends React.Component {
     }
 
     render() {
-        // debug("Rendering AppView", this.props);
         var props = {}
         // switch (this.props.children.props.route.name) {
         //     case 'login':
@@ -39,7 +38,6 @@ class AppView extends React.Component {
         //     default:
         //         break;
         // }
-        debug("children props", props);
         var currentRoute = this.props.children.props.route.name;
         var align = "";
         var dashboard = true;
@@ -53,7 +51,6 @@ class AppView extends React.Component {
                 dashboard = false;
             }
         }
-        debug("Dashboard", dashboard);
         return (
             <div className="page-flexbox-wrapper">
                 <Header showLogout={dashboard} />

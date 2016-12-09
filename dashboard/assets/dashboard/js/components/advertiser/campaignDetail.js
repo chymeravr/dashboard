@@ -106,7 +106,6 @@ export class CampaignDetailView extends React.Component {
             height: '100%',
             minHeight: '100%',
         }
-        console.info(this.state);
         return (
             <div className="container">
                 <div className="row">

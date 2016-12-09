@@ -50,14 +50,12 @@ export class AdgroupEditModal extends React.Component {
 
     handleChange(key) {
         return function (e) {
-            console.info("Updating", key, e.target.value);
             this.state.adgroup[key] = e.target.value;
             var newAdgroup = Object.assign({}, this.state.adgroup);
             newAdgroup[key] = e.target.value;
             // Required to update state
             this.setState(Object.assign({}, this.state, { adgroup: newAdgroup }));
             this.validateState();
-            console.info(this.state);
         };
     }
 
@@ -96,12 +94,10 @@ export class AdgroupEditModal extends React.Component {
             format: 'yyyy-mm-dd',
             min: new Date(),
             onStart: () => {
-                console.info("Endinggg");
                 var endInput = $('#agEndDate').pickadate(),
                     endPicker = endInput.pickadate('picker')
                 if (this.state.adgroup.agEndDate) {
                     endPicker.set('select', that.state.adgroup.agEndDate, { format: 'yyyy-mm-dd' });
-                    console.info(endPicker.get('select'))
                 }
             },
             onSet: function (arg) {
@@ -125,7 +121,6 @@ export class AdgroupEditModal extends React.Component {
                     fromPicker = fromInput.pickadate('picker')
                 if (this.state.adgroup.agStartDate) {
                     fromPicker.set('select', that.state.adgroup.agStartDate, { format: 'yyyy-mm-dd' });
-                    console.info(fromPicker.get('select'))
                 }
             },
             onSet: arg => {
@@ -150,13 +145,17 @@ export class AdgroupEditModal extends React.Component {
     saveAdgroup() {
         const apiSuffix = this.saveMethod === 'PUT' ? this.state.adgroup.id : '';
         const apiPath = '/user/api/advertiser/adgroups/' + apiSuffix;
-        console.info(apiPath);
+        if (this.state.targeting) {
+            var body = JSON.stringify(Object.assign({}, this.state.adgroup, { targeting: [this.state.targeting.id] }));
+        } else {
+            var body = JSON.stringify(this.state.adgroup);
+        }
+
         callApiWithJwt(
             apiPath,
             this.saveMethod,
-            JSON.stringify(this.state.adgroup),
+            body,
             (response) => {
-                console.info(response);
                 this.postSave(response);
                 $('#agForm').modal('close');
             },
@@ -180,8 +179,11 @@ export class AdgroupEditModal extends React.Component {
         this.setState(Object.assign({}, this.state, { targetingModalOpen: true }));
     }
 
+    postTargetingSave(targeting) {
+        this.setState(Object.assign({}, this.state, { targeting: targeting }))
+    }
+
     render() {
-        console.info(this.state.adgroup);
         if (this.state.valid) {
             var saveButton =
                 <a className="modal-action waves-effect waves-green btn-flat teal white-text"
@@ -195,6 +197,29 @@ export class AdgroupEditModal extends React.Component {
                     Save
                 </a>
         }
+
+
+        if (!this.state.targeting) {
+            var targetingBody = (
+                <div className="row">
+                    <a className="modal-action waves-effect waves-green btn-flat teal white-text"
+                        onClick={e => this.openCreateTargetingModal()}>
+                        ADD TARGETING
+                    </a>
+                </div>
+            )
+        } else {
+            var targetingBody = (
+                <div className="row">
+                    {this.state.targeting}
+                    <a className="modal-action waves-effect waves-green btn-flat teal white-text"
+                        onClick={e => this.openCreateTargetingModal()}>
+                        EDIT TARGETING
+                    </a>
+                </div>
+            )
+        }
+
         return (
             <div>
                 <div id="agForm" className="modal modal-fixed-footer">
@@ -272,12 +297,8 @@ export class AdgroupEditModal extends React.Component {
 
                             <div className="row">
                                 <a className="modal-action waves-effect waves-green btn-flat teal white-text"
-                                    onClick={e => this.openSelectTargetingModal()}>
-                                    ADD TARGETING
-                                </a>
-                                <a className="modal-action waves-effect waves-green btn-flat teal white-text"
                                     onClick={e => this.openCreateTargetingModal()}>
-                                    CREATE NEW TARGETING
+                                    ADD TARGETING
                                 </a>
                             </div>
                         </div>
@@ -287,7 +308,8 @@ export class AdgroupEditModal extends React.Component {
                         {saveButton}
                     </div>
                 </div >
-                <CreateTargetingModal saveMethod="POST"  successStatus="201" />
+                <CreateTargetingModal saveMethod="POST" successStatus="201" postSave={this.postTargetingSave.bind(this)}
+                    />
             </div>
         )
     }

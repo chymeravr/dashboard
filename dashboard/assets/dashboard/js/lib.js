@@ -24,7 +24,6 @@ export function callApiWithJwt(path, method, body, onSuccess, onError, statusCod
 
 export function callRawApiWithJwt(path, method, body, onSuccess, onError, statusCode=200) {
     const jwtToken = localStorage.getItem(config.jwt.tokenKey);
-    debug("Body", body);
     fetch(path, {
         method: method,
         body: body,

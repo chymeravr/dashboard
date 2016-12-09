@@ -9,7 +9,6 @@ export class LoginForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
-        // debug("state login form", this.state);
     }
 
     componentWillMount() {

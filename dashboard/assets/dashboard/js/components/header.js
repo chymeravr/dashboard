@@ -10,7 +10,6 @@ class Header extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.info("YAyy");
         this.setState({showHeader: nextProps.showLogout});
     }
 
@@ -19,8 +18,7 @@ class Header extends React.Component {
             fontWeight: "lighter",
             color: '#ffffff',
         }
-        console.info("Render header again");
-        console.info(this.state.showLogout);
+
         if (this.state.showHeader && localStorage.getItem(config.jwt.tokenKey)) {
             var logoutButton = (
                 <li>

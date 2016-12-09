@@ -60,7 +60,6 @@ export class ProfileView extends React.Component {
     }
 
     render() {
-        // debug("Profile View", this.state);
         var advertisingMessage = "Funds available";
         var publisherMessage = "Earnings available";
         if (this.state.username) {
