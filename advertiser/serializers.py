@@ -45,6 +45,12 @@ class HmdSerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
 
 
+class TargetingReadOnlySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Targeting
+        fields = ['id', 'hmd', 'ram', 'os', 'name']
+
+
 class TargetingSerializer(serializers.ModelSerializer):
     hmd = PrimaryKeyRelatedField(queryset=Hmd.objects.all(), allow_null=True)
     os = PrimaryKeyRelatedField(queryset=Os.objects.all(), allow_null=True)
@@ -55,7 +61,7 @@ class TargetingSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'hmd', 'ram', 'os', 'name']
 
 
-class AdgroupSerializer(serializers.ModelSerializer):
+class AdgroupUpdateSerializer(serializers.ModelSerializer):
     name = models.CharField(max_length=100)
     pricing = PrimaryKeyRelatedField(queryset=Pricing.objects.all())
     campaign = UserFilteredPKRelatedField(queryset=Campaign.objects)
@@ -69,9 +75,22 @@ class AdgroupSerializer(serializers.ModelSerializer):
         order_by = (('created_on'),)
 
 
+class AdgroupDetailSerializer(serializers.ModelSerializer):
+    name = models.CharField(max_length=100)
+    pricing = PricingSerializer(read_only=True)
+    campaign = UserFilteredPKRelatedField(queryset=Campaign.objects)
+    targeting = TargetingReadOnlySerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Adgroup
+        fields = ['id', 'campaign', 'name', 'dailyBudget', 'totalBudget',
+                  'targeting', 'bid', 'pricing', 'startDate', 'endDate']
+        order_by = (('created_on'),)
+
+
 class CampaignSerializer(serializers.ModelSerializer):
     campaignType = serializers.PrimaryKeyRelatedField(queryset=CampaignType.objects.all())
-    adgroups = AdgroupSerializer(many=True, read_only=True)
+    adgroups = AdgroupUpdateSerializer(many=True, read_only=True)
     user = serializers.ReadOnlyField(source='user.username')
 
     class Meta:
@@ -83,7 +102,7 @@ class CampaignSerializer(serializers.ModelSerializer):
 
 
 class AdSerializer(serializers.ModelSerializer):
-    adgroup = AdgroupSerializer()
+    adgroup = AdgroupUpdateSerializer()
     creative_url = models.URLField(max_length=300)
 
     class Meta:

@@ -162,7 +162,7 @@ export class CampaignDetailView extends React.Component {
                         {this.state.campaign.adgroups.map(adgroup =>
                             <tr key={adgroup.id} className="grey-text text-darken-1">
                                 <td>
-                                    <Link to={'/advertiser/adgroup' + adgroup.id + "/"}>
+                                    <Link to={'/advertiser/adgroups/' + adgroup.id + "/"}>
                                         {adgroup.name}
                                     </Link>
                                 </td>

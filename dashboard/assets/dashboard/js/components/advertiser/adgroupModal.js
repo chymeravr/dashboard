@@ -96,8 +96,8 @@ export class AdgroupEditModal extends React.Component {
             onStart: () => {
                 var endInput = $('#agEndDate').pickadate(),
                     endPicker = endInput.pickadate('picker')
-                if (this.state.adgroup.agEndDate) {
-                    endPicker.set('select', that.state.adgroup.agEndDate, { format: 'yyyy-mm-dd' });
+                if (this.state.adgroup.endDate) {
+                    endPicker.set('select', that.state.adgroup.endDate, { format: 'yyyy-mm-dd' });
                 }
             },
             onSet: function (arg) {
@@ -119,8 +119,8 @@ export class AdgroupEditModal extends React.Component {
             onStart: () => {
                 var fromInput = $('#agStartDate').pickadate(),
                     fromPicker = fromInput.pickadate('picker')
-                if (this.state.adgroup.agStartDate) {
-                    fromPicker.set('select', that.state.adgroup.agStartDate, { format: 'yyyy-mm-dd' });
+                if (this.state.adgroup.startDate) {
+                    fromPicker.set('select', that.state.adgroup.startDate, { format: 'yyyy-mm-dd' });
                 }
             },
             onSet: arg => {

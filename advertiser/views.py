@@ -6,7 +6,8 @@ from rest_framework.renderers import JSONRenderer
 
 from advertiser.models import Campaign, Adgroup, Targeting
 from advertiser.permissions import IsOwner
-from advertiser.serializers import CampaignSerializer, AdgroupSerializer, TargetingSerializer
+from advertiser.serializers import CampaignSerializer, AdgroupUpdateSerializer, TargetingSerializer, \
+    AdgroupDetailSerializer
 
 
 @permission_classes((IsAuthenticated, IsOwner))
@@ -31,7 +32,7 @@ class CampaignDetailView(generics.RetrieveUpdateAPIView):
 
 
 class AdgroupView(generics.ListCreateAPIView):
-    serializer_class = AdgroupSerializer
+    serializer_class = AdgroupUpdateSerializer
     renderer_classes = (JSONRenderer,)
 
     @permission_classes((IsAuthenticated,))
@@ -40,7 +41,15 @@ class AdgroupView(generics.ListCreateAPIView):
 
 
 class AdgroupDetailView(generics.RetrieveUpdateAPIView):
-    serializer_class = AdgroupSerializer
+    serializer_class = AdgroupUpdateSerializer
+    renderer_classes = (JSONRenderer,)
+
+    @permission_classes((IsAuthenticated,))
+    def get_queryset(self):
+        return Adgroup.objects.filter(campaign__user=self.request.user)
+
+class AdgroupReadOnlyDetailView(generics.RetrieveAPIView):
+    serializer_class = AdgroupDetailSerializer
     renderer_classes = (JSONRenderer,)
 
     @permission_classes((IsAuthenticated,))

@@ -12,6 +12,8 @@ import { ProfileView } from './profile'
 import { LoginForm } from './login'
 import { AdvertiserView } from './advertiser/advertiser'
 import { CampaignDetailView } from './advertiser/campaignDetail'
+import { AdgroupDetailView } from './advertiser/adgroupDetail'
+
 import { debug } from '../lib.js'
 // require('whatwg-fetch')
 
@@ -72,7 +74,7 @@ render((
                 component={ProfileView} />} />
             <Route name="advertiser" path="/advertiser/" component={AdvertiserView} />
             <Route name="campaignDetail" path="/advertiser/campaigns/:campaignId" component={CampaignDetailView} />
-
+            <Route name="adgroupDetail" path="/advertiser/adgroups/:adgroupId" component={AdgroupDetailView} />
             {// <Route path="users" component={Users}>
                 // </Route>
             }
