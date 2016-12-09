@@ -82,9 +82,7 @@ export class CampaignEditModal extends React.Component {
             alignment: 'left' // Displays dropdown with edge aligned to the left of button
         });
 
-        $(document).ready(function () {
-            $('.tooltipped').tooltip({ delay: 50 });
-        });
+        $('.tooltipped').tooltip({ delay: 50 });
         // Set end date element first. Swapping leads to loss of formatting
         $('#endDate').pickadate({
             selectMonths: true,

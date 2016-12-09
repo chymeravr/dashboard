@@ -167,6 +167,11 @@ export class AdgroupEditModal extends React.Component {
         );
     }
 
+    componentDidUpdate() {
+        $('.tooltipped').tooltip({ delay: 25 });
+
+    }
+
     openSelectTargetingModal() {
         $('.modal').modal();
         $('#selectTargetingForm').modal('open');
@@ -200,24 +205,38 @@ export class AdgroupEditModal extends React.Component {
 
 
         if (!this.state.targeting) {
-            var targetingBody = (
+            var targetingBody =
                 <div className="row">
                     <a className="modal-action waves-effect waves-green btn-flat teal white-text"
                         onClick={e => this.openCreateTargetingModal()}>
                         ADD TARGETING
                     </a>
                 </div>
-            )
+            var saveMethod = "POST";
+            var successStatus = "201";
         } else {
-            var targetingBody = (
+            var targetingBody =
                 <div className="row">
-                    {this.state.targeting}
-                    <a className="modal-action waves-effect waves-green btn-flat teal white-text"
-                        onClick={e => this.openCreateTargetingModal()}>
-                        EDIT TARGETING
-                    </a>
+                    <h5 className="lighter" ></h5>
+
+                    <blockquote>
+                        <div className="chip tooltipped" data-position="bottom" data-tooltip="HMD">
+                            {config.hmds[this.state.targeting.hmd] ? config.hmds[this.state.targeting.hmd] : "ALL"}
+                        </div>
+                        <div className="chip tooltipped" data-position="bottom" data-tooltip="Minimum RAM">
+                            {this.state.targeting.ram}GB
+                        </div>
+                        <div className="chip tooltipped" data-position="bottom" data-tooltip="OS">
+                            {config.operatingSystems[this.state.targeting.os] ? config.operatingSystems[this.state.targeting.os] : "ALL"}
+                        </div>
+                        <a className="modal-action waves-effect waves-green btn-flat teal white-text right"
+                            onClick={e => this.openCreateTargetingModal()}>
+                            EDIT TARGETING
+                          </a>
+                    </blockquote>
                 </div>
-            )
+            var saveMethod = "PUT";
+            var successStatus = "200";
         }
 
         return (
@@ -294,13 +313,7 @@ export class AdgroupEditModal extends React.Component {
                                     </div>
                                 </div>
                             </div>
-
-                            <div className="row">
-                                <a className="modal-action waves-effect waves-green btn-flat teal white-text"
-                                    onClick={e => this.openCreateTargetingModal()}>
-                                    ADD TARGETING
-                                </a>
-                            </div>
+                            {targetingBody}
                         </div>
                     </div>
 
@@ -308,8 +321,10 @@ export class AdgroupEditModal extends React.Component {
                         {saveButton}
                     </div>
                 </div >
-                <CreateTargetingModal saveMethod="POST" successStatus="201" postSave={this.postTargetingSave.bind(this)}
-                    />
+                <CreateTargetingModal saveMethod={saveMethod}
+                    successStatus={successStatus}
+                    postSave={this.postTargetingSave.bind(this)}
+                    initialState={this.state.targeting} />
             </div>
         )
     }

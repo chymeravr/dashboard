@@ -10,5 +10,5 @@ urlpatterns = [
     url(r'^adgroups/?$', view=AdgroupView.as_view()),
     url(r'^adgroups/(?P<pk>%s)/?$' % uuid_regex, view=AdgroupDetailView.as_view()),
     url(r'^targetings/?$', view=TargetingView.as_view()),
-    url(r'^targetings/(?P<pk>%s)/?$' % uuid_regex, view=TargetingDetailView.as_view()),
+    url(r'^targetings/(?P<pk>[0-9]+)/?$', view=TargetingDetailView.as_view()),
 ]

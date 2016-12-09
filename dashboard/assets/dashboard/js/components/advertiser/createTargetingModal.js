@@ -7,16 +7,27 @@ import { config } from '../../config'
 export class CreateTargetingModal extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
+        this.state = Object.assign({
             hmd: '',
             os: '',
             ram: 0,
-        };
+        }, props.initialState);
+
         this.postSave = props.postSave;
         this.saveMethod = props.saveMethod;
         this.successStatus = props.successStatus;
     }
 
+    componentWillReceiveProps(props) {
+        this.state = Object.assign({
+            hmd: '',
+            os: '',
+            ram: 0,
+        }, props.initialState);
+        this.postSave = props.postSave;
+        this.saveMethod = props.saveMethod;
+        this.successStatus = props.successStatus;
+    }
 
     validateState() {
         // Targeting fields should be present
@@ -26,7 +37,7 @@ export class CreateTargetingModal extends React.Component {
     }
 
     handleChange(key) {
-        return function (e) {
+        return function(e) {
             var nextState = Object.assign({}, this.state);
             nextState[key] = e.target.value;
             this.setState(nextState, this.validateState.bind(this));
@@ -67,7 +78,7 @@ export class CreateTargetingModal extends React.Component {
     }
 
     saveTargeting() {
-        const apiSuffix = this.saveMethod === 'PUT' ? this.state.adgroup.id : '';
+        const apiSuffix = this.saveMethod === 'PUT' ? this.state.id : '';
         const apiPath = '/user/api/advertiser/targetings/' + apiSuffix;
         callApiWithJwt(
             apiPath,
@@ -91,13 +102,13 @@ export class CreateTargetingModal extends React.Component {
         if (this.state.valid) {
             var saveButton =
                 <a className="modal-action waves-effect waves-green btn-flat teal white-text"
-                    onClick={e => this.saveTargeting() }>
+                    onClick={e => this.saveTargeting()}>
                     Save
                 </a>
         } else {
             var saveButton =
                 <a className="modal-action waves-effect waves-green btn-flat teal white-text disabled"
-                    onClick={e => this.saveTargeting() }>
+                    onClick={e => this.saveTargeting()}>
                     Save
                 </a>
         }
