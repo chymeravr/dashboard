@@ -79,11 +79,11 @@ export class AdgroupDetailView extends React.Component {
         this.setState(Object.assign({}, this.state, { agModalIsOpen: true }));
     }
 
-    postSave(campaign) {
-        this.setState(Object.assign({}, this.state, { campaign: campaign }))
+    postAdgroupEdit(adgroup) {
+        this.setState(Object.assign({}, this.state, { adgroup: adgroup }))
     }
 
-    postAdgoupAddition(adgroup) {
+    postAdAddition(adgroup) {
         this.state.campaign.adgroups.unshift(adgroup);
         this.setState(Object.assign({}, this.state));
     }
@@ -134,8 +134,8 @@ export class AdgroupDetailView extends React.Component {
                     </div>
                 </div>
 
-                <AdgroupEditModal label="Edit Adgroup" saveMethod="POST"
-                    postSave={this.postAdgoupAddition.bind(this)} successStatus="200"
+                <AdgroupEditModal label="Edit Adgroup" saveMethod="PUT"
+                    postSave={this.postAdgroupEdit.bind(this)} successStatus="200"
                     adgroupId={this.state.adgroup.id}
                     adgroup={this.state.adgroup}
                     targeting={this.state.targeting} />
