@@ -61,8 +61,17 @@ class TargetingSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'hmd', 'ram', 'os', 'name']
 
 
+class AdSerializer(serializers.ModelSerializer):
+    adgroup = UserFilteredPKRelatedField(queryset=Adgroup.objects)
+    creative_url = models.URLField(max_length=300)
+
+    class Meta:
+        model = Ad
+        fields = ['id', 'adgroup', 'creativeUrl', 'name']
+        order_by = (('created_on'),)
+
+
 class AdgroupUpdateSerializer(serializers.ModelSerializer):
-    name = models.CharField(max_length=100)
     pricing = PrimaryKeyRelatedField(queryset=Pricing.objects.all())
     campaign = UserFilteredPKRelatedField(queryset=Campaign.objects)
     targeting = UserFilteredPKRelatedField(queryset=Targeting.objects, many=True,
@@ -80,11 +89,13 @@ class AdgroupDetailSerializer(serializers.ModelSerializer):
     pricing = PricingSerializer(read_only=True)
     campaign = UserFilteredPKRelatedField(queryset=Campaign.objects)
     targeting = TargetingReadOnlySerializer(read_only=True, many=True)
+    ads = AdSerializer(many=True, read_only=True)
 
     class Meta:
         model = Adgroup
         fields = ['id', 'campaign', 'name', 'dailyBudget', 'totalBudget',
-                  'targeting', 'bid', 'pricing', 'startDate', 'endDate']
+                  'targeting', 'bid', 'pricing', 'startDate', 'endDate',
+                  'ads']
         order_by = (('created_on'),)
 
 
@@ -98,14 +109,4 @@ class CampaignSerializer(serializers.ModelSerializer):
         fields = ('user', 'id', 'name', 'campaignType', 'totalBudget',
                   'dailyBudget', 'startDate', 'endDate',
                   'status', 'adgroups')
-        order_by = (('created_on'),)
-
-
-class AdSerializer(serializers.ModelSerializer):
-    adgroup = AdgroupUpdateSerializer()
-    creative_url = models.URLField(max_length=300)
-
-    class Meta:
-        model = Ad
-        fields = ['id', 'adgroup', 'creative_url', ]
         order_by = (('created_on'),)

@@ -14,6 +14,9 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 
+    def __str__(self):
+        return str(self.id)
+
 
 class CampaignType(BaseModel):
     name = models.CharField(max_length=20)
@@ -67,5 +70,6 @@ class Adgroup(BaseModel):
 
 class Ad(BaseModel):
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
-    adgroup = models.ForeignKey(Adgroup)
+    adgroup = models.ForeignKey(Adgroup, related_name='ads')
+    name = models.CharField(max_length=200)
     creativeUrl = models.URLField(max_length=300)

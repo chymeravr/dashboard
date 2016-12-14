@@ -7,6 +7,7 @@ import { SideBar } from './sidebar'
 import Modal from 'react-modal'
 import { FormInput } from '../common'
 import { AdgroupEditModal } from './adgroupModal'
+import { AdModal } from './adModal'
 
 
 const customStyles = {
@@ -24,13 +25,9 @@ const customStyles = {
  * Store direct properties of campaigns which can be printed by map
  */
 
-const adgroupHeaders = {
+const adHeaders = {
     // 'Name': 'name',
-    'Total Budget': 'totalBudget',
-    'Daily Budget': 'dailyBudget',
-    'Start Date': 'startDate',
-    'End Date': 'endDate',
-    'Bid': 'bid'
+    'URL': 'creativeUrl'
 }
 
 export class AdgroupDetailView extends React.Component {
@@ -79,12 +76,19 @@ export class AdgroupDetailView extends React.Component {
         this.setState(Object.assign({}, this.state, { agModalIsOpen: true }));
     }
 
+    openAdModal() {
+        $('.modal').modal();
+        $('#adForm').modal('open');
+        this.setState(Object.assign({}, this.state, { adModalIsOpen: true }));
+    }
+
+
     postAdgroupEdit(adgroup) {
         this.setState(Object.assign({}, this.state, { adgroup: adgroup }))
     }
 
-    postAdAddition(adgroup) {
-        this.state.campaign.adgroups.unshift(adgroup);
+    postAdAddition(ad) {
+        this.state.adgroup.unshift(ad);
         this.setState(Object.assign({}, this.state));
     }
 
@@ -128,7 +132,7 @@ export class AdgroupDetailView extends React.Component {
                             </div>
                             <div className="card-action">
                                 <a onClick={e => this.openAgModal()}>Edit</a>
-                                <a onClick={e => this.openAgModal()}>Add Ads</a>
+                                <a onClick={e => this.openAdModal()}>Add Ads</a>
                             </div>
                         </div>
                     </div>
@@ -140,39 +144,42 @@ export class AdgroupDetailView extends React.Component {
                     adgroup={this.state.adgroup}
                     targeting={this.state.targeting} />
 
-                {// <ReactCSSTransitionGroup
-                    //     component="table"
-                    //     transitionName="fadeTransitionFast"
-                    //     transitionAppear={true}
-                    //     transitionLeave={false}
-                    //     transitionEnterTimeout={150}
-                    //     transitionLeaveTimeout={150}
-                    //     transitionAppearTimeout={150}
-                    //     className="table highlight grey-text text-darken-4 col s12">
-                    //     <thead>
-                    //         <tr>
-                    //             <th>Name</th>
-                    //             {Object.keys(adgroupHeaders).map(header => <th key={header}>{header}</th>)}
-                    //             {//<th>Status</th>
-                    //             }
-                    //         </tr>
-                    //     </thead>
-                    //     <tbody>
-                    //         {this.state.campaign.adgroups.map(adgroup =>
-                    //             <tr key={adgroup.id} className="grey-text text-darken-1">
-                    //                 <td>
-                    //                     <Link to={'/advertiser/adgroup' + adgroup.id + "/"}>
-                    //                         {adgroup.name}
-                    //                     </Link>
-                    //                 </td>
-                    //                 {Object.keys(adgroupHeaders).map(key => <td key={key}>{adgroup[adgroupHeaders[key]]}</td>)}
-                    //                 {//<td>{campaign.status ? "Active" : "Paused"}</td>
-                    //                 }
-                    //             </tr>)
-                    //         }
-                    //     </tbody>
-                    // </ReactCSSTransitionGroup>
-                }
+                <AdModal label="Add Ads" saveMethod="POST"
+                    postSave={this.postAdgroupEdit.bind(this)} successStatus="201"
+                    adgroupId={this.state.adgroup.id} />
+
+
+
+                <ReactCSSTransitionGroup
+                    component="table"
+                    transitionName="fadeTransitionFast"
+                    transitionAppear={true}
+                    transitionLeave={false}
+                    transitionEnterTimeout={150}
+                    transitionLeaveTimeout={150}
+                    transitionAppearTimeout={150}
+                    className="table highlight grey-text text-darken-4 col s12">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            {Object.keys(adHeaders).map(header => <th key={header}>{header}</th>)}
+                            {//<th>Status</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.adgroup.ads.map(ad =>
+                            <tr key={ad.id} className="grey-text text-darken-1">
+                                <td>
+                                    <Link to={'/advertiser/ad/' + ad.id + "/"}>
+                                        {ad.name}
+                                    </Link>
+                                </td>
+                                {Object.keys(adHeaders).map(key => <td key={key}>{ad[adHeaders[key]]}</td>)}
+                            </tr>)
+                        }
+                    </tbody>
+                </ReactCSSTransitionGroup>
             </div >
         );
     }
