@@ -48,7 +48,7 @@ export class NumberInput extends React.Component {
         return (
             <div className="input-field row">
                 <input id={this.fieldName} type="number" min="0" value={this.state.value}
-                    onChange={this.handleChange} className="validate" />
+                    onChange={this.handleChange} className="validate" step="any"/>
                 <label htmlFor={this.fieldName} data-error="Enter a positive value" className={this.state.value == 0 || this.state.value ? "active" : ""}>
                     {this.label}
                 </label>
