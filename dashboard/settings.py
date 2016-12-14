@@ -154,3 +154,6 @@ WEBPACK_LOADER = {
 }
 
 APPEND_SLASH = True
+
+MEDIA_ROOT = '/tmp/'
+MEDIA_URL = '/media/'

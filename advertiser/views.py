@@ -1,13 +1,21 @@
 # Create your views here.
+from io import BufferedWriter
+
+from io import FileIO
 from rest_framework import generics
-from rest_framework.decorators import permission_classes
+from rest_framework import views
+from rest_framework.decorators import permission_classes, detail_route, parser_classes
+from rest_framework.parsers import MultiPartParser, FormParser, FileUploadParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
+from rest_framework.response import Response
+from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
+from rest_framework.viewsets import ModelViewSet
 
-from advertiser.models import Campaign, Adgroup, Targeting
+from advertiser.models import Campaign, Adgroup, Targeting, Ad
 from advertiser.permissions import IsOwner
 from advertiser.serializers import CampaignSerializer, AdgroupUpdateSerializer, TargetingSerializer, \
-    AdgroupDetailSerializer
+    AdgroupDetailSerializer, AdSerializer
 
 
 @permission_classes((IsAuthenticated, IsOwner))
@@ -48,6 +56,7 @@ class AdgroupDetailView(generics.RetrieveUpdateAPIView):
     def get_queryset(self):
         return Adgroup.objects.filter(campaign__user=self.request.user)
 
+
 class AdgroupReadOnlyDetailView(generics.RetrieveAPIView):
     serializer_class = AdgroupDetailSerializer
     renderer_classes = (JSONRenderer,)
@@ -76,3 +85,19 @@ class TargetingDetailView(generics.RetrieveUpdateAPIView):
     @permission_classes((IsAuthenticated,))
     def get_queryset(self):
         return Targeting.objects.filter(user=self.request.user)
+
+
+@permission_classes((IsAuthenticated, ))
+class AdUploadView(generics.ListCreateAPIView):
+    serializer_class = AdSerializer
+
+    def get_queryset(self):
+        return Ad.objects.filter(adgroup__campaign__user=self.request.user)
+
+
+@permission_classes((IsAuthenticated, ))
+class AdDetailView(generics.RetrieveUpdateAPIView):
+    serializer_class = AdSerializer
+
+    def get_queryset(self):
+        return Ad.objects.filter(adgroup__campaign__user=self.request.user)

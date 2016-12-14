@@ -69,7 +69,10 @@ class Adgroup(BaseModel):
 
 
 class Ad(BaseModel):
+    def content_file_name(instance, filename):
+        return '/'.join(['creatives', str(instance.id)])
+
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     adgroup = models.ForeignKey(Adgroup, related_name='ads')
     name = models.CharField(max_length=200)
-    creativeUrl = models.URLField(max_length=300)
+    creative = models.ImageField(upload_to=content_file_name)

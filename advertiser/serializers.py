@@ -62,12 +62,11 @@ class TargetingSerializer(serializers.ModelSerializer):
 
 
 class AdSerializer(serializers.ModelSerializer):
-    adgroup = UserFilteredPKRelatedField(queryset=Adgroup.objects)
-    creative_url = models.URLField(max_length=300)
+    # adgroup = UserFilteredPKRelatedField(queryset=Adgroup.objects)
 
     class Meta:
         model = Ad
-        fields = ['id', 'adgroup', 'creativeUrl', 'name']
+        fields = ['id', 'adgroup', 'creative', 'name']
         order_by = (('created_on'),)
 
 
