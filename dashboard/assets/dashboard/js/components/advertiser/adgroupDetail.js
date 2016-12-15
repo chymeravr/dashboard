@@ -69,7 +69,6 @@ export class AdgroupDetailView extends React.Component {
 
     }
 
-
     openAgModal() {
         $('.modal').modal();
         $('#agForm').modal('open');
@@ -88,8 +87,17 @@ export class AdgroupDetailView extends React.Component {
     }
 
     postAdAddition(ad) {
-        this.state.adgroup.unshift(ad);
+        $('#adForm').modal('close');
+        this.state.adgroup.ads.unshift(ad);
         this.setState(Object.assign({}, this.state));
+    }
+
+    componentDidMount() {
+        $('.materialboxed').materialbox();
+    }
+
+    componentDidUpdate() {
+        $('.materialboxed').materialbox();
     }
 
     render() {
@@ -144,11 +152,9 @@ export class AdgroupDetailView extends React.Component {
                     adgroup={this.state.adgroup}
                     targeting={this.state.targeting} />
 
-                <AdModal label="Add Ads" saveMethod="POST"
-                    postSave={this.postAdgroupEdit.bind(this)} successStatus="201"
+                <AdModal label="Add Ads"
+                    postSave={this.postAdAddition.bind(this)}
                     adgroupId={this.state.adgroup.id} />
-
-
 
                 <ReactCSSTransitionGroup
                     component="table"
@@ -162,20 +168,20 @@ export class AdgroupDetailView extends React.Component {
                     <thead>
                         <tr>
                             <th>Name</th>
-                            {Object.keys(adHeaders).map(header => <th key={header}>{header}</th>)}
-                            {//<th>Status</th>
-                            }
+                            <th className="right">Creative</th>
                         </tr>
                     </thead>
                     <tbody>
                         {this.state.adgroup.ads.map(ad =>
                             <tr key={ad.id} className="grey-text text-darken-1">
-                                <td>
+                                <td width="50%">
                                     <Link to={'/advertiser/ad/' + ad.id + "/"}>
                                         {ad.name}
                                     </Link>
                                 </td>
-                                {Object.keys(adHeaders).map(key => <td key={key}>{ad[adHeaders[key]]}</td>)}
+                                <td>
+                                    <img className="materialboxed right" src={ad.creative} width="50%" />
+                                </td>
                             </tr>)
                         }
                     </tbody>

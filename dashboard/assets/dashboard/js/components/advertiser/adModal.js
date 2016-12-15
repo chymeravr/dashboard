@@ -1,7 +1,7 @@
 import React, { ReactDOM } from 'react'
 import Modal from 'react-modal'
 import { FormInput, NumberInput } from '../common'
-import { callApiWithJwt, debug } from '../../lib.js'
+import { callRawApiWithJwt, debug } from '../../lib.js'
 import { hashHistory } from 'react-router'
 import { config } from '../../config'
 
@@ -10,13 +10,10 @@ export class AdModal extends React.Component {
         super(props);
         this.state = Object.assign({
             ad: {
-                campaign: props.adgroupId,
+                adgroup: props.adgroupId,
             }
         }, JSON.parse(JSON.stringify(props)));
         this.postSave = props.postSave;
-        this.saveMethod = props.saveMethod;
-        this.label = props.label;
-        this.successStatus = props.successStatus;
     }
 
 
@@ -26,11 +23,11 @@ export class AdModal extends React.Component {
     }
 
     handleChange(key) {
-        return function (e) {
+        return function(e) {
             this.state.ad[key] = e.target.value;
             var newAd = Object.assign({}, this.state.ad);
             newAd[key] = e.target.value;
-            // Required to update state
+            // Reired to update state
             this.setState(Object.assign({}, this.state, { ad: newAd }));
             this.validateState();
         };
@@ -49,29 +46,27 @@ export class AdModal extends React.Component {
         });
     }
 
-    saveAdgroup() {
-        const apiSuffix = this.saveMethod === 'PUT' ? this.state.adgroup.id : '';
-        const apiPath = '/user/api/advertiser/adgroups/' + apiSuffix;
-        if (this.state.targeting) {
-            var body = JSON.stringify(Object.assign({}, this.state.adgroup, { targeting: [this.state.targeting.id] }));
-        } else {
-            var body = JSON.stringify(this.state.adgroup);
-        }
-
-        callApiWithJwt(
-            apiPath,
-            this.saveMethod,
-            body,
-            (response) => {
-                this.postSave(response);
-                $('#agForm').modal('close');
-            },
-            (error) => {
-                throw error;
-                // alert(error);
-            },
-            this.successStatus
-        );
+    saveAd() {
+        const jwtToken = localStorage.getItem(config.jwt.tokenKey);
+        var data = new FormData(); data.append("name", this.state.ad.name);
+        data.append("adgroup", this.state.ad.adgroup);
+        data.append("creative", this.state.ad.creative);
+        fetch('/user/api/advertiser/ad/', {
+            method: 'POST',
+            body: data,
+            headers: {
+                'Authorization': 'JWT ' + jwtToken,
+            }
+        }).then(response => {
+            if (response.status != 201) {
+                throw new Error(response.statusText)
+            }
+            return response.json();
+        }).then(ad => {
+            this.postSave(ad)
+        }).catch(error => {
+            console.info(error)
+        });
     }
 
     componentDidUpdate() {
@@ -82,9 +77,11 @@ export class AdModal extends React.Component {
     setFile() {
         console.info('File path detected');
         var oFReader = new FileReader();
-        oFReader.readAsDataURL(document.getElementById("adPath").files[0]);
-
-        oFReader.onload = function (oFREvent) {
+        const file = document.getElementById("adPath").files[0];
+        this.state.ad.creative = file;
+        this.setState(Object.assign({}, this.state))
+        oFReader.readAsDataURL(file);
+        oFReader.onload = function(oFREvent) {
             document.getElementById("adPreview").src = oFREvent.target.result;
         };
     }
@@ -93,13 +90,13 @@ export class AdModal extends React.Component {
         if (this.state.valid) {
             var saveButton =
                 <a className="modal-action waves-effect waves-green btn-flat teal white-text"
-                    onClick={e => this.saveAdgroup()}>
+                    onClick={e => this.saveAd()}>
                     Save
                 </a>
         } else {
             var saveButton =
                 <a className="modal-action waves-effect waves-green btn-flat teal white-text disabled"
-                    onClick={e => this.saveAdgroup()}>
+                    onClick={e => this.saveAd()}>
                     Save
                 </a>
         }
@@ -136,7 +133,6 @@ export class AdModal extends React.Component {
                             </div>
                         </div>
                     </div>
-
                     <div className="modal-footer">
                         {saveButton}
                     </div>
