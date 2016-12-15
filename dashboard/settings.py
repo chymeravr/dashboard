@@ -155,5 +155,12 @@ WEBPACK_LOADER = {
 
 APPEND_SLASH = True
 
-MEDIA_ROOT = '/tmp/'
-MEDIA_URL = '/media/'
+# MEDIA_ROOT = '/tmp/'
+# MEDIA_URL = '/media/'
+
+# Azure
+DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+AZURE_ACCOUNT_NAME = 'chymcreative'
+AZURE_ACCOUNT_KEY = 'cCjNBweZleJU4FJW1QVyBQ2juRyUt0e6RAsL6u4aFm3mUxk2kwAmtDYKwtzokPoHs+N5HRleUSzferfsBpRhUQ=='
+AZURE_CONTAINER = 'creatives'
+

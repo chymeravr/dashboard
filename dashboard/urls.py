@@ -20,7 +20,7 @@ from django.contrib import admin
 from dashboard import settings
 from dashboard import views
 
-urlpatterns = static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + [
+urlpatterns =  [
     url(r'^admin/', admin.site.urls),
     url(r'^user/', include('chym_user.urls')),
     url(r'^', views.home)
