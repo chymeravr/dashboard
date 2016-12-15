@@ -3,7 +3,6 @@ import { debug, callApiWithJwt } from '../../lib.js'
 import { config } from '../../config.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 import { hashHistory, Link } from 'react-router'
-import { SideBar } from './sidebar'
 import Modal from 'react-modal'
 import { FormInput } from '../common'
 import { AdgroupEditModal } from './adgroupModal'

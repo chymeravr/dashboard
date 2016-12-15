@@ -5,7 +5,6 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 import { hashHistory, Link } from 'react-router'
 import Modal from 'react-modal'
 import { FormInput } from '../common'
-import { CampaignEditModal } from './campaignModal'
 
 
 const customStyles = {
@@ -17,21 +16,18 @@ const customStyles = {
     }
 };
 
-/**
- * Store direct properties of campaigns which can be printed by map
- */
 const headers = {
     //'Name': 'name',
-    'Total Budget': 'totalBudget',
-    'Daily Budget': 'dailyBudget',
-    'Start Date': 'startDate',
-    'End Date': 'endDate'
+    'Name': 'name',
+    'Key': 'id',
+    'URL': 'url',
+    'App Store': 'appStoreName'
 }
 
-export class AdvertiserView extends React.Component {
+export class PublisherView extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { modalIsOpen: false };
+        this.state = {};
         this.openModal = this.openModal.bind(this);
     }
 
@@ -44,12 +40,12 @@ export class AdvertiserView extends React.Component {
     }
 
     componentWillMount() {
-        callApiWithJwt('/user/api/advertiser/campaigns/',
+        callApiWithJwt('/user/api/publisher/apps/',
             'GET',
             null,
             (response) => {
-                response = response.map(cmp => Object.assign(cmp, { key: cmp.id }));
-                this.setState(Object.assign({}, this.state, { campaigns: response }))
+                response = response.map(app => Object.assign(app, { key: app.id, appStoreName: config.appStores[app.appStore] }));
+                this.setState(Object.assign({}, this.state, { apps: response }))
             },
             (error) => {
                 alert(error);
@@ -73,7 +69,7 @@ export class AdvertiserView extends React.Component {
     }
 
     render() {
-        if (!this.state.campaigns) {
+        if (!this.state.apps) {
             return <div></div> // TODO : Spinner
         }
 
@@ -102,21 +98,19 @@ export class AdvertiserView extends React.Component {
                         <tr>
                             <th>Name</th>
                             {Object.keys(headers).map(header => <th key={header}>{header}</th>)}
-                            <th>Campaign Type</th>
                             <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.campaigns.map(campaign =>
-                            <tr key={campaign.key} className="grey-text text-darken-1">
+                        {this.state.apps.map(app =>
+                            <tr key={app.key} className="grey-text text-darken-1">
                                 <td>
-                                    <Link to={'/advertiser/campaigns/' + campaign.id + "/"}>
-                                        {campaign.name}
+                                    <Link to={'/advertiser/apps/' + app.id + "/"}>
+                                        {app.name}
                                     </Link>
                                 </td>
-                                {Object.keys(headers).map(key => <td key={key}>{campaign[headers[key]]}</td>)}
-                                <td>{config.campaignTypes[campaign.campaignType]}</td>
-                                <td>{campaign.status ? "Active" : "Paused"}</td>
+                                {Object.keys(headers).map(key => <td key={key}>{app[headers[key]]}</td>)}
+                                <td>{app.status ? "Active" : "Paused"}</td>
                             </tr>)
                         }
                     </tbody>
@@ -127,8 +121,9 @@ export class AdvertiserView extends React.Component {
                         <i className="large material-icons">add</i>
                     </a>
                 </div>
-
-                <CampaignEditModal label="Create Campaign" saveMethod="POST" postSave={this.postSave.bind(this)} successStatus="201" />
+{//}
+                // <CampaignEditModal label="Create Campaign" saveMethod="POST" postSave={this.postSave.bind(this)} successStatus="201" />
+}
             </div >
         );
     }
