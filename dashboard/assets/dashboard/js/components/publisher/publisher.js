@@ -5,7 +5,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 import { hashHistory, Link } from 'react-router'
 import Modal from 'react-modal'
 import { FormInput } from '../common'
-
+import { AppEditModal } from './appModal'
 
 const customStyles = {
     content: {
@@ -21,7 +21,6 @@ const headers = {
     'Name': 'name',
     'Key': 'id',
     'URL': 'url',
-    'App Store': 'appStoreName'
 }
 
 export class PublisherView extends React.Component {
@@ -44,7 +43,7 @@ export class PublisherView extends React.Component {
             'GET',
             null,
             (response) => {
-                response = response.map(app => Object.assign(app, { key: app.id, appStoreName: config.appStores[app.appStore] }));
+                response = response.map(app => Object.assign(app, { key: app.id }));
                 this.setState(Object.assign({}, this.state, { apps: response }))
             },
             (error) => {
@@ -56,15 +55,15 @@ export class PublisherView extends React.Component {
 
     }
 
-    postSave(campaign) {
-        campaign.key = campaign.id;
-        this.state.campaigns.unshift(campaign);
+    postSave(app) {
+        app.key = app.id;
+        this.state.apps.unshift(app);
         this.setState(Object.assign({}, this.state));
     }
 
     openModal() {
         $('.modal').modal();
-        $('#cmpForm').modal('open');
+        $('#appForm').modal('open');
         this.setState(Object.assign({}, this.state, { modalIsOpen: true }));
     }
 
@@ -98,6 +97,7 @@ export class PublisherView extends React.Component {
                         <tr>
                             <th>Name</th>
                             {Object.keys(headers).map(header => <th key={header}>{header}</th>)}
+                            <th>App Store</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -110,6 +110,7 @@ export class PublisherView extends React.Component {
                                     </Link>
                                 </td>
                                 {Object.keys(headers).map(key => <td key={key}>{app[headers[key]]}</td>)}
+                                <td>{config.appStores[app.appStore]}</td>
                                 <td>{app.status ? "Active" : "Paused"}</td>
                             </tr>)
                         }
@@ -121,9 +122,7 @@ export class PublisherView extends React.Component {
                         <i className="large material-icons">add</i>
                     </a>
                 </div>
-{//}
-                // <CampaignEditModal label="Create Campaign" saveMethod="POST" postSave={this.postSave.bind(this)} successStatus="201" />
-}
+                <AppEditModal label="Create App" saveMethod="POST" postSave={this.postSave.bind(this)} successStatus="201" />
             </div >
         );
     }

@@ -25,7 +25,7 @@ class App(BaseModel):
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     user = models.ForeignKey(User)
     name = models.CharField(max_length=100)
-    url = models.URLField()
+    url = models.CharField(max_length=2000)
     appStore = models.ForeignKey(AppStore)
     approved = models.BooleanField(default=False)
 
