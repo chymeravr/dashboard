@@ -71,6 +71,7 @@ class Adgroup(BaseModel):
 def content_file_name(instance, filename):
     return '/'.join(['creatives', str(instance.id)])
 
+
 class Ad(BaseModel):
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     adgroup = models.ForeignKey(Adgroup, related_name='ads')

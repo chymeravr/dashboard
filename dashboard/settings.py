@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-from chym_user.config import JWT_AUTH
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -40,7 +39,8 @@ INSTALLED_APPS = [
     'chym_user',
     'dashboard',
     'advertiser',
-    'rest_framework'
+    'rest_framework',
+    'publisher'
 ]
 
 MIDDLEWARE = [
@@ -163,4 +163,3 @@ DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
 AZURE_ACCOUNT_NAME = 'chymcreative'
 AZURE_ACCOUNT_KEY = 'cCjNBweZleJU4FJW1QVyBQ2juRyUt0e6RAsL6u4aFm3mUxk2kwAmtDYKwtzokPoHs+N5HRleUSzferfsBpRhUQ=='
 AZURE_CONTAINER = 'creatives'
-
