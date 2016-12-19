@@ -18,3 +18,19 @@
 5. `./node_modules/.bin/webpack --config webpack.config.js` Generate a bundle
 6. `./node_modules/.bin/webpack --config webpack.config.js --watch &` Hot reload
 
+# Setup postgres on an Ubuntu 16.04
+1. `sudo apt-get install postgresql postgresql-contrib`
+2. To start setting up: `sudo -u postgres psql postgres`
+3. `\password postgres`
+4. DB User: ciportaluser, DB: ciportal, Password: SJ Students. Instructions https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04
+5. Add to `/etc/postgresql/9.5/main/pg_hba.conf` : `host    all             all             0.0.0.0/0                 md5`
+6. Add to `/etc/postgresql/9.5/main/postgresql.conf` : `listen_addresses = 'localhost, 10.1.0.4'` (Replace with hostname)
+
+
+# Django PSQL settings
+1. Install `libpq-dev`
+2. Run requirements.txt installation
+3. In django app, makemigrations and run migrate
+
+
+
