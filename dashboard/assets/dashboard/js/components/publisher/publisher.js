@@ -105,7 +105,7 @@ export class PublisherView extends React.Component {
                         {this.state.apps.map(app =>
                             <tr key={app.key} className="grey-text text-darken-1">
                                 <td>
-                                    <Link to={'/advertiser/apps/' + app.id + "/"}>
+                                    <Link to={'/publisher/apps/' + app.id + "/"}>
                                         {app.name}
                                     </Link>
                                 </td>

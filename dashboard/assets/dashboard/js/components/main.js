@@ -14,9 +14,8 @@ import { AdvertiserView } from './advertiser/advertiser'
 import { CampaignDetailView } from './advertiser/campaignDetail'
 import { AdgroupDetailView } from './advertiser/adgroupDetail'
 import { PublisherView } from './publisher/publisher'
-
+import { AppDetailView } from './publisher/appDetail'
 import { debug } from '../lib.js'
-// require('whatwg-fetch')
 
 class AppView extends React.Component {
     constructor(props) {
@@ -77,9 +76,7 @@ render((
             <Route name="campaignDetail" path="/advertiser/campaigns/:campaignId" component={CampaignDetailView} />
             <Route name="adgroupDetail" path="/advertiser/adgroups/:adgroupId" component={AdgroupDetailView} />
             <Route name="publisher" path="/publisher/" component={PublisherView} />
-            {// <Route path="users" component={Users}>
-                // </Route>
-            }
+            <Route name="appDetail" path="/publisher/apps/:appId" component={AppDetailView} />
         </Route>
     </Router>
 ), document.getElementById('root'))
