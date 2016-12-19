@@ -13,8 +13,6 @@
 
 1. `npm init`
 2. `npm install --save-dev jquery react react-dom webpack webpack-bundle-tracker babel-loader babel-core babel-preset-es2015 babel-preset-react`
-3. `mkdir -p assets/js`
-4. `touch assets/js/index.js webpack.config.js`
 5. `./node_modules/.bin/webpack --config webpack.config.js` Generate a bundle
 6. `./node_modules/.bin/webpack --config webpack.config.js --watch &` Hot reload
 
@@ -27,10 +25,12 @@
 6. Add to `/etc/postgresql/9.5/main/postgresql.conf` : `listen_addresses = 'localhost, 10.1.0.4'` (Replace with hostname)
 
 
-# Django PSQL settings
-1. Install `libpq-dev`
+# Django Server settings
+1. PIP install: `sudo apt-get install python-pip libpq-dev`
+2. Virtualenv install: `pip install virtualenv` (Might need to run this http://stackoverflow.com/a/36257050/1404864) 
 2. Run requirements.txt installation
 3. In django app, makemigrations and run migrate
+4. Install npm and run `npm install`
 
 
 
