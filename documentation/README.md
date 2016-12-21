@@ -32,5 +32,14 @@
 3. In django app, makemigrations and run migrate
 4. Install npm and run `npm install`
 
+# Running through docker
+1. Clone the entire repo
+2. Install docker
+3. At the top directory (which has the Dockerfile), run `sudo docker build --build-arg DEBUG=False -t ciportal-prod .` to build the image. (Do not forget the '.' at the end)
+4. After the image has been built, run it using `sudo docker run -t -i  --net=host ciportal-prod`
+
+Docker notes: 
+1. Pass DEBUG=True to setup a local DB and start from scratch
+2. The name could be anything (Ex. while creating prod image, use <name>-prod and while creating dev image, use <name>)
 
 
