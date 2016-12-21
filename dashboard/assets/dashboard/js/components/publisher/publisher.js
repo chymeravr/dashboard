@@ -7,15 +7,6 @@ import Modal from 'react-modal'
 import { FormInput } from '../common'
 import { AppEditModal } from './appModal'
 
-const customStyles = {
-    content: {
-        top: '20%',
-        left: '20%',
-        right: '20%',
-        bottom: '20%',
-    }
-};
-
 const headers = {
     //'Name': 'name',
     'Name': 'name',

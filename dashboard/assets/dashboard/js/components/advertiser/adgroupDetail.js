@@ -9,16 +9,6 @@ import { AdgroupEditModal } from './adgroupModal'
 import { AdModal } from './adModal'
 
 
-const customStyles = {
-    content: {
-        top: '20%',
-        left: '20%',
-        right: '20%',
-        bottom: '20%',
-        // marginRight: '-20%',
-        // transform: 'translate(-20%, -20%)'
-    }
-};
 
 /**
  * Store direct properties of campaigns which can be printed by map

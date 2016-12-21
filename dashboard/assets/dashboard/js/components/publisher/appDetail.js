@@ -8,16 +8,7 @@ import { FormInput } from '../common'
 import { AppEditModal } from './appModal'
 
 
-const customStyles = {
-    content: {
-        top: '20%',
-        left: '20%',
-        right: '20%',
-        bottom: '20%',
-        // marginRight: '-20%',
-        // transform: 'translate(-20%, -20%)'
-    }
-};
+
 
 export class AppDetailView extends React.Component {
     constructor(props) {

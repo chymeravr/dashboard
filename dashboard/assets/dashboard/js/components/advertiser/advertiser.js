@@ -8,15 +8,6 @@ import { FormInput } from '../common'
 import { CampaignEditModal } from './campaignModal'
 
 
-const customStyles = {
-    content: {
-        top: '20%',
-        left: '20%',
-        right: '20%',
-        bottom: '20%',
-    }
-};
-
 /**
  * Store direct properties of campaigns which can be printed by map
  */
