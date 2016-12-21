@@ -29,12 +29,18 @@ WORKDIR $BASE
 # Install dependencies
 RUN npm install
 RUN pip install -r requirements.txt
+RUN npm install --save-dev jquery react react-dom webpack webpack-bundle-tracker babel-loader babel-core babel-preset-es2015 babel-preset-react
 
 # Pass DEBUG value as environment variable. Django debug mode depends on this
 ENV DEBUG=$DEBUG
 
 # Bootstrap dev server if required
 RUN if [ "$DEBUG" = "True" ]; then bash devbootstrap.sh; fi
+
+# Build js bundles
+WORKDIR $BASE/dashboard
+RUN ../node_modules/.bin/webpack --config webpack.config.js
+WORKDIR $BASE
 
 # collect static files
 RUN python manage.py collectstatic --noinput  
