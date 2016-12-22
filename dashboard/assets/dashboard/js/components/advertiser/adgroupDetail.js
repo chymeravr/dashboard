@@ -4,7 +4,7 @@ import { config } from '../../config.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 import { hashHistory, Link } from 'react-router'
 import Modal from 'react-modal'
-import { FormInput } from '../common'
+import { FormInput, spinner } from '../common'
 import { AdgroupEditModal } from './adgroupModal'
 import { AdModal } from './adModal'
 
@@ -91,7 +91,7 @@ export class AdgroupDetailView extends React.Component {
 
     render() {
         if (!this.state.adgroup) {
-            return <div></div> // TODO : Spinner
+            return spinner;
         }
 
         var fabStyle = {

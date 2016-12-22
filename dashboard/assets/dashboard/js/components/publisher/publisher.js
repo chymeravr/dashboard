@@ -4,7 +4,7 @@ import { config } from '../../config.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 import { hashHistory, Link } from 'react-router'
 import Modal from 'react-modal'
-import { FormInput } from '../common'
+import { FormInput, spinner } from '../common'
 import { AppEditModal } from './appModal'
 
 const headers = {
@@ -60,7 +60,7 @@ export class PublisherView extends React.Component {
 
     render() {
         if (!this.state.apps) {
-            return <div></div> // TODO : Spinner
+            return spinner;
         }
 
         var fabStyle = {

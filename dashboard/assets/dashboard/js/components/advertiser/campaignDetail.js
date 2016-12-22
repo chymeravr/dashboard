@@ -4,7 +4,7 @@ import { config } from '../../config.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 import { hashHistory, Link } from 'react-router'
 import Modal from 'react-modal'
-import { FormInput } from '../common'
+import { FormInput, spinner } from '../common'
 import { AdgroupEditModal } from './adgroupModal'
 import { CampaignEditModal } from './campaignModal'
 
@@ -82,9 +82,11 @@ export class CampaignDetailView extends React.Component {
 
     render() {
         if (!this.state.campaign) {
-            return <div></div> // TODO : Spinner
+            return (
+                spinner
+            )
+            // TODO : Spinner
         }
-
         var fabStyle = {
             bottom: '50px',
             right: '50px'
@@ -164,7 +166,7 @@ export class CampaignDetailView extends React.Component {
 
                 <AdgroupEditModal label="Create Adgroup" saveMethod="POST"
                     postSave={this.postAdgoupAddition.bind(this)} successStatus="201"
-                    campaignId={this.state.campaign.id}/>
+                    campaignId={this.state.campaign.id} />
             </div >
         );
     }

@@ -48,7 +48,7 @@ export class NumberInput extends React.Component {
         return (
             <div className="input-field row">
                 <input id={this.fieldName} type="number" min="0" value={this.state.value}
-                    onChange={this.handleChange} className="validate" step="any"/>
+                    onChange={this.handleChange} className="validate" step="any" />
                 <label htmlFor={this.fieldName} data-error="Enter a positive value" className={this.state.value == 0 || this.state.value ? "active" : ""}>
                     {this.label}
                 </label>
@@ -56,3 +56,19 @@ export class NumberInput extends React.Component {
         )
     }
 }
+
+export const spinner = (
+    <div className="container center" style={{ paddingTop: "120px" }}>
+        <div className="preloader-wrapper big active">
+            <div className="spinner-layer spinner-blue-only">
+                <div className="circle-clipper left">
+                    <div className="circle"></div>
+                </div><div className="gap-patch">
+                    <div className="circle"></div>
+                </div><div className="circle-clipper right">
+                    <div className="circle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+)
