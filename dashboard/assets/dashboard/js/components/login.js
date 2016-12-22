@@ -29,7 +29,12 @@ export class LoginForm extends React.Component {
         };
     }
 
+    componentDidMount() {
+        this.refs.loginform.onsubmit = (e) => this.tryLogin(e);
+    }
+
     tryLogin(e) {
+        e.preventDefault();
         var data = new FormData();
         data.append("username", this.state.username);
         data.append("password", this.state.password);
@@ -57,7 +62,7 @@ export class LoginForm extends React.Component {
                 transitionLeaveTimeout={500}
                 transitionAppearTimeout={500}
                 className="center-align container">
-                <form className="row" onSubmit={this.tryLogin.bind(this)}>
+                <form className="row" onSubmit={e => this.tryLogin(e)} method="post" ref="loginform">
                     <div className="col s6 offset-s3">
                         <FormInput
                             fieldName="username"
@@ -70,7 +75,7 @@ export class LoginForm extends React.Component {
                             value={this.state.password}
                             handleChange={this.handleChange('password').bind(this)}
                             type="password" />
-                        <a className="waves-effect waves-light btn right" onClick={this.tryLogin.bind(this)}>
+                        <a className="waves-effect waves-light btn right" onClick={e => this.tryLogin(e)}>
                             Login
                         </a>
                     </div>

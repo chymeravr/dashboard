@@ -25,6 +25,21 @@ class AppView extends React.Component {
 
     componentDidMount() {
         $('.button-collapse').sideNav();
+        $("input").keypress(function (event) {
+            if (event.which == 13) {
+                event.preventDefault();
+                $("form").submit();
+            }
+        });
+    }
+
+    componentDidUpdate() {
+        $("input").keypress(function (event) {
+            if (event.which == 13) {
+                event.preventDefault();
+                $("form").submit();
+            }
+        });
     }
 
     render() {
