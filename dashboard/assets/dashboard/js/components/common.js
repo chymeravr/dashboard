@@ -58,17 +58,7 @@ export class NumberInput extends React.Component {
 }
 
 export const spinner = (
-    <div className="container center" style={{ paddingTop: "120px" }}>
-        <div className="preloader-wrapper big active">
-            <div className="spinner-layer spinner-blue-only">
-                <div className="circle-clipper left">
-                    <div className="circle"></div>
-                </div><div className="gap-patch">
-                    <div className="circle"></div>
-                </div><div className="circle-clipper right">
-                    <div className="circle"></div>
-                </div>
-            </div>
-        </div>
+    <div className="progress blue" style={{top:"-8px", position:"fixed"}}>
+        <div className="indeterminate white"></div>
     </div>
 )
