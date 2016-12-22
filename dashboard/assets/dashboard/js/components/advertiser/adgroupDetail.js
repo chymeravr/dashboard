@@ -72,6 +72,7 @@ export class AdgroupDetailView extends React.Component {
 
 
     postAdgroupEdit(adgroup) {
+        adgroup['ads'] = this.state.adgroup.ads;
         this.setState(Object.assign({}, this.state, { adgroup: adgroup }))
     }
 
