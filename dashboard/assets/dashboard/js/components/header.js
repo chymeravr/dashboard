@@ -34,10 +34,11 @@ class Header extends React.Component {
 
         var Links = (
             <div>
-                <li><a href="sass.html">Sass</a></li>
-                <li><a href="badges.html">Components</a></li>
-                <li><a href="collapsible.html">Javascript</a></li>
-                <li><a href="mobile.html">Mobile</a></li>
+                {// <li><a href="sass.html">Sass</a></li>
+                // <li><a href="badges.html">Components</a></li>
+                // <li><a href="collapsible.html">Javascript</a></li>
+                // <li><a href="mobile.html">Mobile</a></li>
+                }
                 {logoutButton}
             </div>
         );

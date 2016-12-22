@@ -78,6 +78,23 @@ export class AdvertiserView extends React.Component {
             minHeight: '100%',
         }
 
+        if (this.state.campaigns.length == 0) {
+            var noCmpMessage = (
+                <div className="container center">
+                    <div className=" center">
+                        <div className="col s12 m5">
+                            <div className="card-panel blue-grey">
+                                <span className="white-text">
+                                   NO CAMPAIGNS FOUND
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        } else {
+            var noCmpMessage = <div></div>
+        }
         return (
             <div className="container" style={heightStyle} >
                 <ReactCSSTransitionGroup
@@ -112,6 +129,7 @@ export class AdvertiserView extends React.Component {
                         }
                     </tbody>
                 </ReactCSSTransitionGroup>
+                {noCmpMessage}
 
                 <div className="fixed-action-btn" style={fabStyle}>
                     <a className="btn-floating btn-large orange" onClick={this.openModal}>
