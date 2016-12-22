@@ -2,6 +2,7 @@
 var path = require('path')
 var webpack = require('webpack')
 var BundleTracker = require('webpack-bundle-tracker')
+var WebpackCleanupPlugin = require('webpack-cleanup-plugin')
 
 module.exports = {
     //the base directory (absolute path) for resolving the entry option
@@ -23,8 +24,9 @@ module.exports = {
         new BundleTracker({ filename: './webpack-stats.json' }),
         //makes jQuery available in every module
         new webpack.ProvidePlugin({
-           
-        })
+
+        }),
+        new WebpackCleanupPlugin()
     ],
 
     module: {
