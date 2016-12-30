@@ -94,14 +94,14 @@ export class AdvertiserView extends React.Component {
         }
         return (
             <div className="container" style={heightStyle} >
-                <br />
-                <a className="waves-effect waves-light btn-large" onClick={this.openModal}>
-                    <i className="material-icons left">add</i>
-                    Add Campaign
-                </a>
-                <br />
-                <br />
-
+                <div className="row">
+                    <h2 className="thin col">Campaigns</h2>
+                    <br />
+                    <a className="waves-effect waves-light btn-large col right" onClick={this.openModal}>
+                        <i className="material-icons left">add</i>
+                        Add Campaign
+                     </a>
+                </div>
                 <ReactCSSTransitionGroup
                     component="table"
                     transitionName="fadeTransitionFast"
@@ -113,7 +113,7 @@ export class AdvertiserView extends React.Component {
                     className="table highlight grey-text text-darken-4 col s12">
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>Campaign Name</th>
                             {Object.keys(headers).map(header => <th key={header}>{header}</th>)}
                             <th>Campaign Type</th>
                             <th>Status</th>

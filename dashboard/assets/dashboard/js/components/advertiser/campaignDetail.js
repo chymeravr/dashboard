@@ -99,42 +99,41 @@ export class CampaignDetailView extends React.Component {
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col s12">
-                        <div className="card blue-grey darken-1">
-                            <div className="card-content white-text">
-                                <span className="card-title">
-                                    {this.state.campaign.name}
-                                    <a className="right" href="javascript:void(0);" onClick={e => this.openCampaignModal()}>
-                                        <i className="material-icons white-text">edit</i>
-                                    </a>
-                                </span>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Total Budget</th>
-                                            <th>Daily Budget</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr className="white-text text-darken-1">
-                                            <td>{this.state.campaign.totalBudget}</td>
-                                            <td>{this.state.campaign.dailyBudget}</td>
-
-                                        </tr>
-                                    </tbody></table>
-                            </div>
-                        </div>
+                    <div className="row">
+                        <h2 className="thin col">Campaign Details</h2>
+                        <br />
+                        <a className="waves-effect waves-light btn-large col right" onClick={e => this.openAgModal()}>
+                            <i className="material-icons left">add</i>
+                            Add Adgroup
+                        </a>
                     </div>
                 </div>
+                <div className="card blue-grey darken-1">
+                    <div className="card-content white-text">
+                        <span className="card-title">
+                            {this.state.campaign.name}
+                            <a className="right" href="javascript:void(0);" onClick={e => this.openCampaignModal()}>
+                                <i className="material-icons white-text">edit</i>
+                            </a>
+                        </span>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Total Budget</th>
+                                    <th>Daily Budget</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr className="white-text text-darken-1">
+                                    <td>{this.state.campaign.totalBudget}</td>
+                                    <td>{this.state.campaign.dailyBudget}</td>
 
+                                </tr>
+                            </tbody></table>
+                    </div>
+                </div>
                 <CampaignEditModal campaign={this.state.campaign} saveMethod="PUT" label="Edit Campaign"
                     postSave={this.postSave.bind(this)} successStatus="200" />
-                <br />
-                <a className="waves-effect waves-light btn-large" onClick={e => this.openAgModal()}>
-                    <i className="material-icons left">add</i>
-                    Add Adgroup
-                </a>
-                <br />
                 <br />
                 <ReactCSSTransitionGroup
                     component="table"

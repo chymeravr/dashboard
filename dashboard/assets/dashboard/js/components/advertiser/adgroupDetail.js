@@ -107,11 +107,22 @@ export class AdgroupDetailView extends React.Component {
         return (
             <div className="container">
                 <div className="row">
+                    <h2 className="col thin">Adgroup Detail</h2>
+                    <br />
+                    <a className="waves-effect waves-light btn-large col right" onClick={e => this.openAdModal()}>
+                        <i className="material-icons left">add</i>
+                        NEW AD
+                    </a>
+                </div>
+                <div className="row">
                     <div className="col s12">
                         <div className="card blue-grey darken-1">
                             <div className="card-content white-text">
                                 <span className="card-title">
                                     {this.state.adgroup.name}
+                                    <a className="right" href="javascript:void(0);" onClick={e => this.openAgModal()}>
+                                        <i className="material-icons white-text">edit</i>
+                                    </a>
                                 </span>
                                 <table>
                                     <thead>
@@ -127,10 +138,6 @@ export class AdgroupDetailView extends React.Component {
 
                                         </tr>
                                     </tbody></table>
-                            </div>
-                            <div className="card-action">
-                                <a href="javascript:void(0);" onClick={e => this.openAgModal()}>Edit</a>
-                                <a href="javascript:void(0);" onClick={e => this.openAdModal()}>Add Ads</a>
                             </div>
                         </div>
                     </div>
@@ -176,6 +183,8 @@ export class AdgroupDetailView extends React.Component {
                         }
                     </tbody>
                 </ReactCSSTransitionGroup>
+                <br />
+                <br />
             </div >
         );
     }
