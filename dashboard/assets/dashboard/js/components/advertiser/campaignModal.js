@@ -195,7 +195,7 @@ export class CampaignEditModal extends React.Component {
                             <div className="row">
                                 <div className="col s4">
                                     <div className="row">
-                                        <a className='dropdown-button btn tooltipped col'
+                                        <a className={'dropdown-button btn tooltipped col ' + (this.saveMethod == "PUT" ? 'disabled' : '')}
                                             data-position="right" data-delay="50" data-tooltip="Campaign Type"
                                             onClick={e => $('.dropdown-button').dropdown('open')}
                                             data-activates='campaignTypeDropdown'>

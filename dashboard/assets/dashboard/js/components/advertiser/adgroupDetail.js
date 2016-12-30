@@ -109,7 +109,7 @@ export class AdgroupDetailView extends React.Component {
                 <div className="row">
                     <h2 className="col thin">Adgroup Detail</h2>
                     <br />
-                    <a className="waves-effect waves-light btn-large col right" onClick={e => this.openAdModal()}>
+                    <a className="waves-effect waves-light btn-large col right s2" onClick={e => this.openAdModal()}>
                         <i className="material-icons left">add</i>
                         NEW AD
                     </a>

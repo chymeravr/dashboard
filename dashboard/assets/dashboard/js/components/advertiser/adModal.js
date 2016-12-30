@@ -11,7 +11,8 @@ export class AdModal extends React.Component {
         this.state = Object.assign({
             ad: {
                 adgroup: props.adgroupId,
-            }
+            },
+            uploading: false
         }, JSON.parse(JSON.stringify(props)));
         this.postSave = props.postSave;
     }
@@ -23,7 +24,7 @@ export class AdModal extends React.Component {
     }
 
     handleChange(key) {
-        return function(e) {
+        return function (e) {
             this.state.ad[key] = e.target.value;
             var newAd = Object.assign({}, this.state.ad);
             newAd[key] = e.target.value;
@@ -47,6 +48,7 @@ export class AdModal extends React.Component {
     }
 
     saveAd() {
+        this.setState(Object.assign({}, this.state, { uploading: true }));
         const jwtToken = localStorage.getItem(config.jwt.tokenKey);
         var data = new FormData(); data.append("name", this.state.ad.name);
         data.append("adgroup", this.state.ad.adgroup);
@@ -64,8 +66,10 @@ export class AdModal extends React.Component {
             return response.json();
         }).then(ad => {
             this.postSave(ad)
+            this.setState(Object.assign({}, this.state, { uploading: false }));
         }).catch(error => {
             console.info(error)
+            this.setState(Object.assign({}, this.state, { uploading: false }));
         });
     }
 
@@ -81,7 +85,7 @@ export class AdModal extends React.Component {
         this.state.ad.creative = file;
         this.setState(Object.assign({}, this.state))
         oFReader.readAsDataURL(file);
-        oFReader.onload = function(oFREvent) {
+        oFReader.onload = function (oFREvent) {
             document.getElementById("adPreview").src = oFREvent.target.result;
         };
     }
@@ -99,6 +103,22 @@ export class AdModal extends React.Component {
                     onClick={e => this.saveAd()}>
                     Save
                 </a>
+        }
+
+        if (this.state.uploading) {
+            const progressBarStyle = {
+                top: "-10px",
+                margin: 5
+            }
+            var saveButton =
+                <div>
+                    <div className="progress" style={progressBarStyle}>
+                        <div className="indeterminate"></div>
+                    </div>
+                    <div className="container center grey-text">
+                        Uploading
+                    </div>
+                </div>
         }
 
         return (

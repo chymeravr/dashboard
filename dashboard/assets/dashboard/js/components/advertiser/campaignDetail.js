@@ -102,7 +102,7 @@ export class CampaignDetailView extends React.Component {
                     <div className="row">
                         <h2 className="thin col">Campaign Details</h2>
                         <br />
-                        <a className="waves-effect waves-light btn-large col right" onClick={e => this.openAgModal()}>
+                        <a className="waves-effect waves-light btn-large col right s2" onClick={e => this.openAgModal()}>
                             <i className="material-icons left">add</i>
                             Add Adgroup
                         </a>

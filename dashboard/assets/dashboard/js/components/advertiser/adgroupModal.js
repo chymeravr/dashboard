@@ -239,7 +239,8 @@ export class AdgroupEditModal extends React.Component {
             var successStatus = "200";
         }
 
-        const title = saveMethod == "PUT" ? "Edit Adgroup" : "Create Adgroup"
+        const title = this.saveMethod == "PUT" ? "Edit Adgroup" : "Create Adgroup";
+
         return (
             <div>
                 <div id="agForm" className="modal modal-fixed-footer">
@@ -249,6 +250,24 @@ export class AdgroupEditModal extends React.Component {
                             <br />
                             <br />
                             <div className="row">
+                                <a className={'dropdown-button btn tooltipped ' + (this.saveMethod == "PUT" ? 'disabled' : '')}
+                                    data-position="right" data-delay="50" data-tooltip="Pricing"
+                                    onClick={e => $('.dropdown-button').dropdown('open')}
+                                    data-activates='pricingDropdown'>
+                                    {config.pricings[this.state.adgroup.pricing]}
+                                    <i className="material-icons col s1">expand_more</i>
+                                </a>
+                                <ul id='pricingDropdown' className='dropdown-content'>
+                                    {Object.keys(config.pricings).map(id =>
+                                        <li key={id}>
+                                            <a onClick={e => this.setPricing(id)}>
+                                                {config.pricings[id]}
+                                            </a>
+                                        </li>
+                                    )}
+                                </ul>
+                            </div>
+                            <div className="row">
                                 <div className="col s8">
                                     <FormInput
                                         fieldName="name"
@@ -257,22 +276,7 @@ export class AdgroupEditModal extends React.Component {
                                         handleChange={this.handleChange('name').bind(this)} />
                                 </div>
                                 <div className="col s3 right">
-                                    <a className='dropdown-button btn tooltipped'
-                                        data-position="right" data-delay="50" data-tooltip="Pricing"
-                                        onClick={e => $('.dropdown-button').dropdown('open')}
-                                        data-activates='pricingDropdown'>
-                                        {config.pricings[this.state.adgroup.pricing]}
-                                        <i className="material-icons col s1">expand_more</i>
-                                    </a>
-                                    <ul id='pricingDropdown' className='dropdown-content'>
-                                        {Object.keys(config.pricings).map(id =>
-                                            <li key={id}>
-                                                <a onClick={e => this.setPricing(id)}>
-                                                    {config.pricings[id]}
-                                                </a>
-                                            </li>
-                                        )}
-                                    </ul>
+
                                 </div>
                             </div>
                             <div className="row">

@@ -97,7 +97,7 @@ export class AdvertiserView extends React.Component {
                 <div className="row">
                     <h2 className="thin col">Campaigns</h2>
                     <br />
-                    <a className="waves-effect waves-light btn-large col right" onClick={this.openModal}>
+                    <a className="waves-effect waves-light btn-large col right s2" onClick={this.openModal}>
                         <i className="material-icons left">add</i>
                         Add Campaign
                      </a>
