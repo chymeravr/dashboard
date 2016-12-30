@@ -68,15 +68,12 @@ export class AdvertiserView extends React.Component {
             return spinner
         }
 
-        var fabStyle = {
-            bottom: '50px',
-            right: '50px'
-        }
 
         var heightStyle = {
             height: '100%',
             minHeight: '100%',
         }
+
 
         if (this.state.campaigns.length == 0) {
             var noCmpMessage = (
@@ -85,7 +82,7 @@ export class AdvertiserView extends React.Component {
                         <div className="col s12 m5">
                             <div className="card-panel blue-grey">
                                 <span className="white-text">
-                                   NO CAMPAIGNS FOUND
+                                    NO CAMPAIGNS FOUND
                             </span>
                             </div>
                         </div>
@@ -97,6 +94,14 @@ export class AdvertiserView extends React.Component {
         }
         return (
             <div className="container" style={heightStyle} >
+                <br />
+                <a className="waves-effect waves-light btn-large" onClick={this.openModal}>
+                    <i className="material-icons left">add</i>
+                    Add Campaign
+                </a>
+                <br />
+                <br />
+
                 <ReactCSSTransitionGroup
                     component="table"
                     transitionName="fadeTransitionFast"
@@ -128,14 +133,10 @@ export class AdvertiserView extends React.Component {
                             </tr>)
                         }
                     </tbody>
+                    <br />
+                    <br />
                 </ReactCSSTransitionGroup>
                 {noCmpMessage}
-
-                <div className="fixed-action-btn" style={fabStyle}>
-                    <a className="btn-floating btn-large orange" onClick={this.openModal}>
-                        <i className="large material-icons">add</i>
-                    </a>
-                </div>
 
                 <CampaignEditModal label="Create Campaign" saveMethod="POST" postSave={this.postSave.bind(this)} successStatus="201" />
             </div >

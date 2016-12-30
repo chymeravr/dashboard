@@ -129,8 +129,8 @@ export class AdgroupDetailView extends React.Component {
                                     </tbody></table>
                             </div>
                             <div className="card-action">
-                                <a onClick={e => this.openAgModal()}>Edit</a>
-                                <a onClick={e => this.openAdModal()}>Add Ads</a>
+                                <a href="javascript:void(0);" onClick={e => this.openAgModal()}>Edit</a>
+                                <a href="javascript:void(0);" onClick={e => this.openAdModal()}>Add Ads</a>
                             </div>
                         </div>
                     </div>

@@ -135,7 +135,7 @@ export class AppDetailView extends React.Component {
                                     </tbody></table>
                             </div>
                             <div className="card-action">
-                                <a onClick={e => this.openAppModal()}>Edit</a>
+                                <a href="javascript:void(0);" onClick={e => this.openAppModal()}>Edit</a>
                             </div>
                         </div>
                     </div>

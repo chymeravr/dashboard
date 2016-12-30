@@ -104,6 +104,9 @@ export class CampaignDetailView extends React.Component {
                             <div className="card-content white-text">
                                 <span className="card-title">
                                     {this.state.campaign.name}
+                                    <a className="right" href="javascript:void(0);" onClick={e => this.openCampaignModal()}>
+                                        <i className="material-icons white-text">edit</i>
+                                    </a>
                                 </span>
                                 <table>
                                     <thead>
@@ -120,17 +123,19 @@ export class CampaignDetailView extends React.Component {
                                         </tr>
                                     </tbody></table>
                             </div>
-                            <div className="card-action">
-                                <a onClick={e => this.openCampaignModal()}>Edit</a>
-                                <a onClick={e => this.openAgModal()}>Add Adgroup</a>
-                            </div>
                         </div>
                     </div>
                 </div>
 
                 <CampaignEditModal campaign={this.state.campaign} saveMethod="PUT" label="Edit Campaign"
                     postSave={this.postSave.bind(this)} successStatus="200" />
-
+                <br />
+                <a className="waves-effect waves-light btn-large" onClick={e => this.openAgModal()}>
+                    <i className="material-icons left">add</i>
+                    Add Adgroup
+                </a>
+                <br />
+                <br />
                 <ReactCSSTransitionGroup
                     component="table"
                     transitionName="fadeTransitionFast"
