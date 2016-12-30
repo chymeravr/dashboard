@@ -68,13 +68,20 @@ class AppView extends React.Component {
                 dashboard = false;
             }
         }
+
+        var mainStyle = {
+            "flex": "1 1 auto",
+            "overflowY": "auto",
+            "minHeight": "0px"
+        }
+
         return (
-            <div className="page-flexbox-wrapper">
+            <div className="page-flexbox-wrapper" >
                 <Header showLogout={dashboard} />
-                <main className={align}>
+                <main className={align} style={mainStyle}>
                     {this.props.children}
                 </main>
-                {dashboard ? null : <Footer />}
+                <Footer />
             </div>
         );
     }
