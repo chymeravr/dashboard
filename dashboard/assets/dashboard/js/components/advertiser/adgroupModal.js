@@ -239,11 +239,15 @@ export class AdgroupEditModal extends React.Component {
             var successStatus = "200";
         }
 
+        const title = saveMethod == "PUT" ? "Edit Adgroup" : "Create Adgroup"
         return (
             <div>
                 <div id="agForm" className="modal modal-fixed-footer">
                     <div className="modal-content valign-wrapper">
                         <div className="container">
+                            <h5 className="center">{title}</h5>
+                            <br />
+                            <br />
                             <div className="row">
                                 <div className="col s8">
                                     <FormInput
@@ -258,6 +262,7 @@ export class AdgroupEditModal extends React.Component {
                                         onClick={e => $('.dropdown-button').dropdown('open')}
                                         data-activates='pricingDropdown'>
                                         {config.pricings[this.state.adgroup.pricing]}
+                                        <i className="material-icons col s1">expand_more</i>
                                     </a>
                                     <ul id='pricingDropdown' className='dropdown-content'>
                                         {Object.keys(config.pricings).map(id =>
