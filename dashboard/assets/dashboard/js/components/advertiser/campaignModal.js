@@ -23,7 +23,7 @@ export class CampaignEditModal extends React.Component {
         this.saveMethod = props.saveMethod;
         this.label = props.label;
         this.successStatus = props.successStatus;
-        
+
     }
 
 
@@ -193,20 +193,17 @@ export class CampaignEditModal extends React.Component {
                         <br />
                         <div>
                             <div className="row">
-                                <div className="col s8">
-                                    <FormInput
-                                        fieldName="name"
-                                        label="Campaign Name"
-                                        value={this.state.campaign.name}
-                                        handleChange={this.handleChange('name').bind(this)} />
-                                </div>
-                                <div className="col s3 right">
-                                    <a className='dropdown-button btn tooltipped'
-                                        data-position="right" data-delay="50" data-tooltip="Campaign Type"
-                                        onClick={e => $('.dropdown-button').dropdown('open')}
-                                        data-activates='campaignTypeDropdown'>
-                                        {config.campaignTypes[this.state.campaign.campaignType]}
-                                    </a>
+                                <div className="col s4">
+                                    <div className="row">
+                                        <a className='dropdown-button btn tooltipped col'
+                                            data-position="right" data-delay="50" data-tooltip="Campaign Type"
+                                            onClick={e => $('.dropdown-button').dropdown('open')}
+                                            data-activates='campaignTypeDropdown'>
+                                            {config.campaignTypes[this.state.campaign.campaignType]}
+                                            <i className="material-icons col">expand_more</i>
+                                        </a>
+                                    </div>
+
                                     <ul id='campaignTypeDropdown' className='dropdown-content'>
                                         {Object.keys(config.campaignTypes).map(id =>
                                             <li key={id}>
@@ -216,6 +213,15 @@ export class CampaignEditModal extends React.Component {
                                             </li>
                                         )}
                                     </ul>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col s8">
+                                    <FormInput
+                                        fieldName="name"
+                                        label="Campaign Name"
+                                        value={this.state.campaign.name}
+                                        handleChange={this.handleChange('name').bind(this)} />
                                 </div>
                             </div>
                             <div className="row">
