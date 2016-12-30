@@ -23,6 +23,7 @@ export class CampaignEditModal extends React.Component {
         this.saveMethod = props.saveMethod;
         this.label = props.label;
         this.successStatus = props.successStatus;
+        
     }
 
 
@@ -180,67 +181,75 @@ export class CampaignEditModal extends React.Component {
                 </a>
         }
 
+
+        const title = this.saveMethod === 'PUT' ? "Edit Campaign" : "Create Campaign";
+
         return (
             <div id="cmpForm" className="modal modal-fixed-footer">
                 <div className="modal-content valign-wrapper">
                     <div className="container">
-                        <div className="row">
-                            <div className="col s8">
-                                <FormInput
-                                    fieldName="name"
-                                    label="Campaign Name"
-                                    value={this.state.campaign.name}
-                                    handleChange={this.handleChange('name').bind(this)} />
-                            </div>
-                            <div className="col s3 right">
-                                <a className='dropdown-button btn tooltipped'
-                                    data-position="right" data-delay="50" data-tooltip="Campaign Type"
-                                    onClick={e => $('.dropdown-button').dropdown('open')}
-                                    data-activates='campaignTypeDropdown'>
-                                    {config.campaignTypes[this.state.campaign.campaignType]}
-                                </a>
-                                <ul id='campaignTypeDropdown' className='dropdown-content'>
-                                    {Object.keys(config.campaignTypes).map(id =>
-                                        <li key={id}>
-                                            <a onClick={e => this.setCampaignType(id)}>
-                                                {config.campaignTypes[id]}
-                                            </a>
-                                        </li>
-                                    )}
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col s5">
-                                <NumberInput
-                                    fieldName="totalBudget"
-                                    label="Total Budget ($)"
-                                    value={this.state.campaign.totalBudget}
-                                    handleChange={this.handleChange('totalBudget').bind(this)} />
-                            </div>
-                            <div className="col s1">
-                            </div>
-                            <div className="col s5">
-                                <NumberInput
-                                    fieldName="dailyBudget"
-                                    label="Daily Budget ($)"
-                                    value={this.state.campaign.dailyBudget}
-                                    handleChange={this.handleChange('dailyBudget').bind(this)} />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col s5">
-                                <div className="input-field row">
-                                    <label htmlFor="startDate">Start Date</label>
-                                    <input type="date" id="startDate" className="datepicker" label="Start Date" />
+                        <h5 className="center">{title}</h5>
+                        <br />
+                        <br />
+                        <div>
+                            <div className="row">
+                                <div className="col s8">
+                                    <FormInput
+                                        fieldName="name"
+                                        label="Campaign Name"
+                                        value={this.state.campaign.name}
+                                        handleChange={this.handleChange('name').bind(this)} />
+                                </div>
+                                <div className="col s3 right">
+                                    <a className='dropdown-button btn tooltipped'
+                                        data-position="right" data-delay="50" data-tooltip="Campaign Type"
+                                        onClick={e => $('.dropdown-button').dropdown('open')}
+                                        data-activates='campaignTypeDropdown'>
+                                        {config.campaignTypes[this.state.campaign.campaignType]}
+                                    </a>
+                                    <ul id='campaignTypeDropdown' className='dropdown-content'>
+                                        {Object.keys(config.campaignTypes).map(id =>
+                                            <li key={id}>
+                                                <a onClick={e => this.setCampaignType(id)}>
+                                                    {config.campaignTypes[id]}
+                                                </a>
+                                            </li>
+                                        )}
+                                    </ul>
                                 </div>
                             </div>
-                            <div className="col s1">
+                            <div className="row">
+                                <div className="col s5">
+                                    <NumberInput
+                                        fieldName="totalBudget"
+                                        label="Total Budget ($)"
+                                        value={this.state.campaign.totalBudget}
+                                        handleChange={this.handleChange('totalBudget').bind(this)} />
+                                </div>
+                                <div className="col s1">
+                                </div>
+                                <div className="col s5">
+                                    <NumberInput
+                                        fieldName="dailyBudget"
+                                        label="Daily Budget ($)"
+                                        value={this.state.campaign.dailyBudget}
+                                        handleChange={this.handleChange('dailyBudget').bind(this)} />
+                                </div>
                             </div>
-                            <div className="col s5">
-                                <div className="input-field row">
-                                    <label htmlFor="endDate">End Date</label>
-                                    <input type="date" id="endDate" className="datepicker" label="End Date" />
+                            <div className="row">
+                                <div className="col s5">
+                                    <div className="input-field row">
+                                        <label htmlFor="startDate">Start Date</label>
+                                        <input type="date" id="startDate" className="datepicker" label="Start Date" />
+                                    </div>
+                                </div>
+                                <div className="col s1">
+                                </div>
+                                <div className="col s5">
+                                    <div className="input-field row">
+                                        <label htmlFor="endDate">End Date</label>
+                                        <input type="date" id="endDate" className="datepicker" label="End Date" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
