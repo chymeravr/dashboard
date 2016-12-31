@@ -75,6 +75,14 @@ export class PublisherView extends React.Component {
 
         return (
             <div className="container" style={heightStyle} >
+                <div className="row">
+                    <h2 className="thin col">Apps</h2>
+                    <br />
+                    <a className="waves-effect waves-light btn-large col right s2" onClick={this.openModal}>
+                        <i className="material-icons left">add</i>
+                        Add App
+                     </a>
+                </div>
                 <ReactCSSTransitionGroup
                     component="table"
                     transitionName="fadeTransitionFast"
@@ -107,12 +115,6 @@ export class PublisherView extends React.Component {
                         }
                     </tbody>
                 </ReactCSSTransitionGroup>
-
-                <div className="fixed-action-btn" style={fabStyle}>
-                    <a className="btn-floating btn-large orange" onClick={this.openModal}>
-                        <i className="large material-icons">add</i>
-                    </a>
-                </div>
                 <AppEditModal label="Create App" saveMethod="POST" postSave={this.postSave.bind(this)} successStatus="201" />
             </div >
         );

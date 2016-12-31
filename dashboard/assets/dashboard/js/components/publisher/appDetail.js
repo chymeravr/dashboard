@@ -92,13 +92,13 @@ export class AppDetailView extends React.Component {
 
         if (this.state.newPlacement && this.state.newPlacement.length > 0) {
             var saveButton =
-                <a className="modal-action waves-effect waves-green btn-flat teal white-text"
+                <a className="modal-action waves-effect waves-green btn white-text"
                     onClick={e => this.savePlacement()}>
                     Save
                 </a>
         } else {
             var saveButton =
-                <a className="modal-action waves-effect waves-green btn-flat teal white-text disabled"
+                <a className="modal-action waves-effect waves-green btn white-text disabled"
                     onClick={e => this.savePlacement()}>
                     Save
                 </a>
@@ -116,11 +116,22 @@ export class AppDetailView extends React.Component {
         return (
             <div className="container">
                 <div className="row">
+                    <h2 className="thin col">Placements</h2>
+                    <br />
+                    <a className="waves-effect waves-light btn-large col right s2" onClick={this.openPmModal}>
+                        <i className="material-icons left">add</i>
+                        Create Placement
+                     </a>
+                </div>
+                <div className="row">
                     <div className="col s12">
                         <div className="card blue-grey darken-1">
                             <div className="card-content white-text">
                                 <span className="card-title">
                                     {this.state.app.name}
+                                    <a className="right" href="javascript:void(0);" onClick={e => this.openAppModal()}>
+                                        <i className="material-icons white-text">edit</i>
+                                    </a>
                                 </span>
                                 <table>
                                     <thead>
@@ -133,9 +144,6 @@ export class AppDetailView extends React.Component {
                                             <td>0</td>
                                         </tr>
                                     </tbody></table>
-                            </div>
-                            <div className="card-action">
-                                <a href="javascript:void(0);" onClick={e => this.openAppModal()}>Edit</a>
                             </div>
                         </div>
                     </div>
@@ -168,6 +176,8 @@ export class AppDetailView extends React.Component {
                             </tr>)
                         }
                     </tbody>
+                    <br />
+                    <br />
                 </ReactCSSTransitionGroup>
 
                 <AppEditModal label="Create App" saveMethod="POST"
@@ -181,7 +191,7 @@ export class AppDetailView extends React.Component {
                                     <FormInput
                                         fieldName="newPlacement"
                                         label="Placement Name"
-                                        value={this.state.newPlacement.name}
+                                        value={this.state.newPlacement}
                                         handleChange={this.handleChange('newPlacement').bind(this)} />
                                 </div>
                             </div>
@@ -192,11 +202,6 @@ export class AppDetailView extends React.Component {
                         {saveButton}
                     </div >
                 </div >
-                <div className="fixed-action-btn" style={fabStyle}>
-                    <a className="btn-floating btn-large orange" onClick={e => this.openPmModal()}>
-                        <i className="large material-icons">add</i>
-                    </a>
-                </div>
             </div>
         );
     }

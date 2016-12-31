@@ -13,7 +13,9 @@ export class AppEditModal extends React.Component {
 
         this.state = Object.assign({
             valid: false,
-            app: {},
+            app: {
+                appStore: config.defaultAppStore
+            },
         }, JSON.parse(JSON.stringify(props)));
         this.postSave = props.postSave;
         this.saveMethod = props.saveMethod;
@@ -105,13 +107,13 @@ export class AppEditModal extends React.Component {
     render() {
         if (this.state.valid) {
             var saveButton =
-                <a className="modal-action waves-effect waves-green btn-flat teal white-text"
+                <a className="modal-action waves-effect waves-green btn white-text"
                     onClick={e => this.saveApp()}>
                     Save
                 </a>
         } else {
             var saveButton =
-                <a className="modal-action waves-effect waves-green btn-flat teal white-text disabled"
+                <a className="modal-action waves-effect waves-green btn white-text disabled"
                     onClick={e => this.saveApp()}>
                     Save
                 </a>
@@ -135,6 +137,7 @@ export class AppEditModal extends React.Component {
                                     onClick={e => $('.dropdown-button').dropdown('open')}
                                     data-activates='appStoreDropdown'>
                                     {config.appStores[this.state.app.appStore]}
+                                    
                                 </a>
                                 <ul id='appStoreDropdown' className='dropdown-content'>
                                     {Object.keys(config.appStores).map(id =>

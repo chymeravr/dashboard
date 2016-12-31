@@ -36,3 +36,5 @@ config.defaultOperatingSystem = '';
 config.appStores = {
     '1': 'Oculus',
 }
+
+config.defaultAppStore = '1'
