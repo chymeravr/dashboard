@@ -55,17 +55,6 @@ class AppView extends React.Component {
 
     render() {
         var props = {}
-        // switch (this.props.children.props.route.name) {
-        //     case 'login':
-        //         props = {
-        //             assignUser: this.assignUser.bind(this)
-        //         }
-        //         break;
-        //     case 'login':
-        //         break;
-        //     default:
-        //         break;
-        // }
         var currentRoute = this.props.children.props.route.name;
         var align = "";
         var dashboard = true;

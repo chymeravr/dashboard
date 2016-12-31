@@ -169,13 +169,13 @@ export class CampaignEditModal extends React.Component {
     render() {
         if (this.state.valid) {
             var saveButton =
-                <a className="modal-action waves-effect waves-green btn-flat teal white-text"
+                <a className="modal-action waves-effect waves-light btn white-text"
                     onClick={e => this.saveCampaign()}>
                     Save
                 </a>
         } else {
             var saveButton =
-                <a className="modal-action waves-effect waves-green btn-flat teal white-text disabled"
+                <a className="modal-action waves-effect waves-light btn white-text disabled"
                     onClick={e => this.saveCampaign()}>
                     Save
                 </a>

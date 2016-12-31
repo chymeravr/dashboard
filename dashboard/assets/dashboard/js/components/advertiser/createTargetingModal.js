@@ -37,7 +37,7 @@ export class CreateTargetingModal extends React.Component {
     }
 
     handleChange(key) {
-        return function(e) {
+        return function (e) {
             var nextState = Object.assign({}, this.state);
             nextState[key] = e.target.value;
             this.setState(nextState, this.validateState.bind(this));
@@ -101,13 +101,13 @@ export class CreateTargetingModal extends React.Component {
     render() {
         if (this.state.valid) {
             var saveButton =
-                <a className="modal-action waves-effect waves-green btn-flat teal white-text"
+                <a className="modal-action waves-effect waves-light btn white-text"
                     onClick={e => this.saveTargeting()}>
                     Save
                 </a>
         } else {
             var saveButton =
-                <a className="modal-action waves-effect waves-green btn-flat teal white-text disabled"
+                <a className="modal-action waves-effect waves-light btn white-text disabled"
                     onClick={e => this.saveTargeting()}>
                     Save
                 </a>
@@ -132,6 +132,7 @@ export class CreateTargetingModal extends React.Component {
                                         onClick={e => $('#hmdDropdown').dropdown('open')}
                                         data-activates='hmdDropdown'>
                                         {config.hmds[this.state.hmd] ? config.hmds[this.state.hmd] : "All"}
+                                        <i className="material-icons col s1">expand_more</i>
                                     </a>
 
                                     <ul id='hmdDropdown' className='dropdown-content'>
@@ -150,6 +151,7 @@ export class CreateTargetingModal extends React.Component {
                                         onClick={e => $('#osDropdown').dropdown('open')}
                                         data-activates='osDropdown'>
                                         {config.operatingSystems[this.state.os] ? config.operatingSystems[this.state.os] : "ALL"}
+                                        <i className="material-icons col s1">expand_more</i>
                                     </a>
                                     <ul id='osDropdown' className='dropdown-content'>
                                         {Object.keys(config.operatingSystems).map(id =>
