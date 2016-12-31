@@ -15,7 +15,7 @@ import { CampaignDetailView } from './advertiser/campaignDetail'
 import { AdgroupDetailView } from './advertiser/adgroupDetail'
 import { PublisherView } from './publisher/publisher'
 import { AppDetailView } from './publisher/appDetail'
-import { debug } from '../lib.js'
+import { debug, callApiWithJwt } from '../lib.js'
 
 class AppView extends React.Component {
     constructor(props) {
@@ -31,6 +31,17 @@ class AppView extends React.Component {
                 $("form").submit();
             }
         });
+
+        if (this.props.children.props.route.name == 'home') {
+            callApiWithJwt('/user/api/view_profile',
+                'GET',
+                null,
+                (response) => hashHistory.push('/profile/'),
+                (error) => {
+
+                }
+            );
+        }
     }
 
     componentDidUpdate() {
@@ -90,7 +101,7 @@ class AppView extends React.Component {
 render((
     <Router history={hashHistory}>
         <Route path="/" component={AppView}>
-            <IndexRoute component={HomeView} />
+            <IndexRoute name="home" component={HomeView} />
             <Route name="login" path="/login" component={LoginForm} />
             <Route name="profile" path="/profile/"
                 component={ProfileView} />} />
