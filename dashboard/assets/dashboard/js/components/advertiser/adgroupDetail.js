@@ -16,7 +16,9 @@ import { AdModal } from './adModal'
 
 const adHeaders = {
     // 'Name': 'name',
-    'URL': 'creativeUrl'
+    'Impressions': 'impressions',
+    'Clicks': 'clicks',
+    'Burn': 'burn'
 }
 
 export class AdgroupDetailView extends React.Component {
@@ -159,7 +161,9 @@ export class AdgroupDetailView extends React.Component {
                     <thead>
                         <tr>
                             <th>Ad Name</th>
+                            {Object.keys(adHeaders).map(header => <th key={header}>{header}</th>)}
                             <th className="right">Creative</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -168,6 +172,7 @@ export class AdgroupDetailView extends React.Component {
                                 <td width="50%">
                                     {ad.name}
                                 </td>
+                                {Object.keys(adHeaders).map(key => <td key={key}>{ad[adHeaders[key]]}</td>)}
                                 <td>
                                     <img className="materialboxed right" src={ad.creative} height="150px" />
                                 </td>

@@ -9,9 +9,12 @@ import { AppEditModal } from './appModal'
 
 const headers = {
     //'Name': 'name',
-    'Name': 'name',
     'Key': 'id',
     'URL': 'url',
+    'Requests': 'requests',
+    'Impressions': 'impressions',
+    'Clicks': 'clicks',
+    'Earnings': 'earnings'
 }
 
 export class PublisherView extends React.Component {
@@ -89,8 +92,8 @@ export class PublisherView extends React.Component {
                     <thead>
                         <tr>
                             <th>App Name</th>
-                            {Object.keys(headers).map(header => <th key={header}>{header}</th>)}
                             <th>App Store</th>
+                            {Object.keys(headers).map(header => <th key={header}>{header}</th>)}
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -102,8 +105,8 @@ export class PublisherView extends React.Component {
                                         {app.name}
                                     </Link>
                                 </td>
-                                {Object.keys(headers).map(key => <td key={key}>{app[headers[key]]}</td>)}
                                 <td>{config.appStores[app.appStore]}</td>
+                                {Object.keys(headers).map(key => <td key={key}>{app[headers[key]]}</td>)}
                                 <td>{app.status ? "Active" : "Paused"}</td>
                             </tr>)
                         }

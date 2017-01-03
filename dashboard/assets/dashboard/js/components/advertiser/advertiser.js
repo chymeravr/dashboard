@@ -16,7 +16,10 @@ const headers = {
     'Total Budget': 'totalBudget',
     'Daily Budget': 'dailyBudget',
     'Start Date': 'startDate',
-    'End Date': 'endDate'
+    'End Date': 'endDate',
+    'Impressions': 'impressions',
+    'Clicks': 'clicks',
+    'Burn': 'burn'
 }
 
 export class AdvertiserView extends React.Component {

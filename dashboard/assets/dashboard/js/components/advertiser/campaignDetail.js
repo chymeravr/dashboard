@@ -19,7 +19,10 @@ const adgroupHeaders = {
     'Daily Budget': 'dailyBudget',
     'Start Date': 'startDate',
     'End Date': 'endDate',
-    'Bid': 'bid'
+    'Bid': 'bid',
+    'Impressions': 'impressions',
+    'Clicks': 'clicks',
+    'Burn': 'burn'
 }
 
 export class CampaignDetailView extends React.Component {

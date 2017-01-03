@@ -9,6 +9,14 @@ import { AppEditModal } from './appModal'
 
 
 
+const placementHeaders = {
+    'Placement Name': 'name',
+    'Key': 'id',
+    'Requests': 'requests',
+    'Impressions': 'impressions',
+    'Clicks': 'clicks',
+    'Earnings': 'earnings'
+}
 
 export class AppDetailView extends React.Component {
     constructor(props) {
@@ -156,19 +164,13 @@ export class AppDetailView extends React.Component {
                     className="table highlight grey-text text-darken-4 col s12">
                     <thead>
                         <tr>
-                            <th>Placement Name</th>
-                            <th>Key</th>
+                            {Object.keys(placementHeaders).map(header => <th key={header}>{header}</th>)}
                         </tr>
                     </thead>
                     <tbody>
                         {this.state.app.placements.map(placement =>
                             <tr key={placement.id} className="grey-text text-darken-1">
-                                <td>
-                                    {placement.name}
-                                </td>
-                                <td>
-                                    {placement.id}
-                                </td>
+                                {Object.keys(placementHeaders).map(key => <td key={key}>{placement[placementHeaders[key]]}</td>)}
                             </tr>)
                         }
                     </tbody>

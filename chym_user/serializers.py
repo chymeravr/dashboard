@@ -5,8 +5,8 @@ from rest_framework.serializers import ModelSerializer
 
 class UserProfileSerializer(ModelSerializer):
     currency = serializers.CharField(source='profile.currency')
-    advertising_budget = serializers.FloatField(source='profile.advertising_budget')
-    publisher_earnings = serializers.FloatField(source='profile.publisher_earnings')
+    advertising_budget = serializers.FloatField(source='profile.advertising_budget', read_only=True)
+    publisher_earnings = serializers.FloatField(source='profile.publisher_earnings', read_only=True)
 
     class Meta:
         model = User

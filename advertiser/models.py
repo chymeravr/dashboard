@@ -53,6 +53,9 @@ class Campaign(BaseModel):
     startDate = models.DateField()
     endDate = models.DateField()
     status = models.BooleanField(default=False)
+    impressions = models.IntegerField(default=0)
+    clicks = models.IntegerField(default=0)
+    burn = models.IntegerField(default=0)
 
 
 class Adgroup(BaseModel):
@@ -66,6 +69,9 @@ class Adgroup(BaseModel):
     endDate = models.DateField()
     pricing = models.ForeignKey(Pricing)
     targeting = models.ManyToManyField(Targeting, blank=True)
+    impressions = models.IntegerField(default=0)
+    clicks = models.IntegerField(default=0)
+    burn = models.IntegerField(default=0)
 
 
 def content_file_name(instance, filename):
@@ -77,3 +83,6 @@ class Ad(BaseModel):
     adgroup = models.ForeignKey(Adgroup, related_name='ads')
     name = models.CharField(max_length=200)
     creative = models.ImageField(upload_to=content_file_name)
+    impressions = models.IntegerField(default=0)
+    clicks = models.IntegerField(default=0)
+    burn = models.IntegerField(default=0)

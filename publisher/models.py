@@ -28,9 +28,17 @@ class App(BaseModel):
     url = models.CharField(max_length=2000)
     appStore = models.ForeignKey(AppStore)
     approved = models.BooleanField(default=False)
+    requests = models.IntegerField(default=0)
+    impressions = models.IntegerField(default=0)
+    clicks = models.IntegerField(default=0)
+    earnings = models.IntegerField(default=0)
 
 
 class Placement(BaseModel):
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     app = models.ForeignKey(App, related_name='placements')
     name = models.CharField(max_length=100)
+    requests = models.IntegerField(default=0)
+    impressions = models.IntegerField(default=0)
+    clicks = models.IntegerField(default=0)
+    earnings = models.IntegerField(default=0)

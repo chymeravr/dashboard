@@ -31,7 +31,9 @@ class PlacementSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Placement
-        fields = ['id', 'name', 'app']
+        fields = ['id', 'name', 'app',
+                  'requests', 'impressions', 'clicks', 'earnings']
+        read_only_fields = ('requests', 'impressions', 'clicks', 'earnings')
         order_by = (('created_on'),)
 
 
@@ -42,5 +44,7 @@ class AppSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = App
-        fields = ('id', 'user', 'name', 'url', 'appStore', 'approved', 'placements')
+        fields = ('id', 'user', 'name', 'url', 'appStore', 'approved', 'placements',
+                  'requests', 'impressions', 'clicks', 'earnings')
+        read_only_fields = ('requests', 'impressions', 'clicks', 'earnings')
         order_by = (('created_on'),)
