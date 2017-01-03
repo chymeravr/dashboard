@@ -188,7 +188,7 @@ LOGGING = {
         'file': {
             'level': 'ERROR',
             'class': 'logging.FileHandler',
-            'filename': '/home/dashboard_error.log',
+            'filename': '/var/log/dashboard/error.log',
         },
     },
     'loggers': {
