@@ -8,7 +8,9 @@ import { FormInput } from './common'
 export class LoginForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            failed: false
+        };
     }
 
     componentWillMount() {
@@ -16,7 +18,8 @@ export class LoginForm extends React.Component {
             'GET',
             {},
             (response) => hashHistory.push('/profile/'),
-            (error) => ({})
+            (error) => {
+            }
         );
     }
 
@@ -48,11 +51,27 @@ export class LoginForm extends React.Component {
                 hashHistory.push('/profile/');
             },
             (error) => {
-                throw error;
+                this.setState({ failed: true });
             });
     }
 
     render() {
+        const errorMessage = this.state.failed ? (
+            <ReactCSSTransitionGroup
+                component="div"
+                transitionName="fadeTransition"
+                transitionAppear={true}
+                transitionLeave={false}
+                transitionEnterTimeout={500}
+                transitionLeaveTimeout={500}
+                transitionAppearTimeout={500}
+                className="center-align container">
+                <div className="card-panel z-depth-3 red lighten-2 white-text ">
+                    INVALID CREDENTIALS
+                </div>
+            </ReactCSSTransitionGroup>
+        ) : <div></div>
+
         return (
             <ReactCSSTransitionGroup
                 component="div"
@@ -65,6 +84,9 @@ export class LoginForm extends React.Component {
                 className="center-align container">
                 <form className="row" onSubmit={e => this.tryLogin(e)} method="post" ref="loginform">
                     <div className="col s6 offset-s3">
+                        {errorMessage}
+                        <br />
+                        <br />
                         <FormInput
                             fieldName="username"
                             label="Username"
