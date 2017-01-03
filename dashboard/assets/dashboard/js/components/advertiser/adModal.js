@@ -126,6 +126,9 @@ export class AdModal extends React.Component {
                 <div id="adForm" className="modal modal-fixed-footer">
                     <div className="modal-content valign-wrapper">
                         <div className="container">
+                            <h5 className="center">Create Ad</h5>
+                            <br />
+                            <br />
                             <div className="row">
                                 <div className="col s8">
                                     <FormInput
@@ -148,7 +151,7 @@ export class AdModal extends React.Component {
                                 </div>
                             </div>
                             <div className="row">
-                                <img className="materialboxed" id="adPreview" data-caption="Preview" width="100%" />
+                                <img className="materialboxed" id="adPreview" data-caption="Preview" height="200px" />
 
                             </div>
                         </div>

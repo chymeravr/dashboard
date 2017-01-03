@@ -177,7 +177,7 @@ export class AdgroupDetailView extends React.Component {
                                     </Link>
                                 </td>
                                 <td>
-                                    <img className="materialboxed right" src={ad.creative} width="50%" />
+                                    <img className="materialboxed right" src={ad.creative} height="150px" />
                                 </td>
                             </tr>)
                         }
