@@ -180,3 +180,22 @@ AZURE_CONTAINER = 'creatives'
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': timedelta(days=7),
 }
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': '/home/dashboard_error.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
