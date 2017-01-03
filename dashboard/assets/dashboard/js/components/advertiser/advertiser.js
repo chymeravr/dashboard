@@ -133,9 +133,9 @@ export class AdvertiserView extends React.Component {
                             </tr>)
                         }
                     </tbody>
-                    <br />
-                    <br />
                 </ReactCSSTransitionGroup>
+                <br />
+                <br />
                 {noCmpMessage}
 
                 <CampaignEditModal label="Create Campaign" saveMethod="POST" postSave={this.postSave.bind(this)} successStatus="201" />

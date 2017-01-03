@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
-
+import 'fuckadblock'
 import 'whatwg-fetch'
 
 import HomeView from './home'
@@ -42,6 +42,31 @@ class AppView extends React.Component {
                 }
             );
         }
+
+        var isAdBlockDetected;
+        // Function called if AdBlock is not detected
+        function adBlockNotDetected() {
+            isAdBlockDetected = false;
+        }
+        // Function called if AdBlock is detected
+        function adBlockDetected() {
+            isAdBlockDetected = true;
+        }
+
+        // Recommended audit because AdBlock lock the file 'fuckadblock.js' 
+        // If the file is not called, the variable does not exist 'fuckAdBlock'
+        // This means that AdBlock is present
+        if (typeof fuckAdBlock === 'undefined') {
+            adBlockDetected();
+        } else {
+            fuckAdBlock.onDetected(() => this.setAdBlockStatus(true));
+            fuckAdBlock.onNotDetected(() => this.setAdBlockStatus(false));
+        }
+
+    }
+
+    setAdBlockStatus(isAdBlockDetected) {
+        this.setState(Object.assign({}, this.state, { adblock: isAdBlockDetected }));
     }
 
     componentDidUpdate() {
@@ -60,7 +85,7 @@ class AppView extends React.Component {
         var dashboard = true;
         if (!currentRoute
             || currentRoute == 'profile'
-            || currentRoute == '/'
+            || currentRoute == 'home'
             || currentRoute == 'login') {
             align += " valign-wrapper";
 
@@ -75,15 +100,46 @@ class AppView extends React.Component {
             "minHeight": "0px"
         }
 
-        return (
-            <div className="page-flexbox-wrapper" >
-                <Header showLogout={dashboard} />
-                <main className={align} style={mainStyle}>
-                    {this.props.children}
-                </main>
-                <Footer />
-            </div>
-        );
+        if (!this.state.adblock || currentRoute == "home") {
+            return (
+                <div className="page-flexbox-wrapper" >
+                    <Header showLogout={dashboard} />
+                    <main className={align} style={mainStyle}>
+                        {this.props.children}
+                    </main>
+                    <Footer />
+                </div>
+            );
+        } else {
+            return (
+
+
+
+                <div className="page-flexbox-wrapper" >
+                    <Header showLogout={dashboard} />
+                    <main className={align} style={mainStyle}>
+                        <div className="container center-align">
+                            <ReactCSSTransitionGroup
+                                component="div"
+                                transitionName="fadeTransition"
+                                transitionAppear={true}
+                                transitionLeave={false}
+                                transitionEnterTimeout={500}
+                                transitionLeaveTimeout={500}
+                                transitionAppearTimeout={500}
+                                className="center-align container">
+                                <div className="card-panel z-depth-3 red lighten-2 white-text ">
+                                    LOOKS LIKE YOU HAVE ADBLOCK ENABLED. UNFORTUNATELY, ADBLOCK INCORRECTLY DETECTS ANY COMMUNICATION WITH OUR WEBSITE AS AD TRAFFIC AND BLOCKS IT.
+                                <br />
+                                    PLEASE DISABLE ADBLOCK TO CONTINUE USING OUR WEBSITE.
+                            </div>
+                            </ReactCSSTransitionGroup>
+                        </div>
+                    </main>
+                    <Footer />
+                </div>
+            )
+        }
     }
 }
 
