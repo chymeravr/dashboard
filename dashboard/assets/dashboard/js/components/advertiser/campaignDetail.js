@@ -4,7 +4,7 @@ import { config } from '../../config.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 import { hashHistory, Link } from 'react-router'
 import Modal from 'react-modal'
-import { FormInput, spinner } from '../common'
+import { FormInput, spinner, PageHeading } from '../common'
 import { AdgroupEditModal } from './adgroupModal'
 import { CampaignEditModal } from './campaignModal'
 
@@ -48,16 +48,18 @@ export class CampaignDetailView extends React.Component {
         callApiWithJwt('/user/api/advertiser/campaigns/' + this.state.campaignId,
             'GET',
             null,
-            (response) => this.setState(Object.assign({}, this.state, { campaign: response })),
+            (response) => {
+                this.setState(Object.assign({}, this.state, { campaign: response }));
+                document.title = response.name + " | Campaign";
+            },
             (error) => {
                 alert(error);
                 hashHistory.push('/login/')
                 // throw error;
             },
         );
-
-
     }
+
 
     openCampaignModal() {
         $('.modal').modal();
@@ -98,16 +100,7 @@ export class CampaignDetailView extends React.Component {
         }
         return (
             <div className="container">
-                <div className="row">
-                    <div className="row">
-                        <h2 className="thin col">Campaign Details</h2>
-                        <br />
-                        <a className="waves-effect waves-light btn-large col right s2" onClick={e => this.openAgModal()}>
-                            <i className="material-icons left">add</i>
-                            Add Adgroup
-                        </a>
-                    </div>
-                </div>
+                <PageHeading title="Campaign Detail" onClick={e => this.openAgModal()} buttonText="Adgroup" />
                 <div className="card blue-grey darken-1">
                     <div className="card-content white-text">
                         <span className="card-title">
@@ -146,7 +139,7 @@ export class CampaignDetailView extends React.Component {
                     className="table highlight grey-text text-darken-4 col s12">
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>Adgroup Name</th>
                             {Object.keys(adgroupHeaders).map(header => <th key={header}>{header}</th>)}
                             {//<th>Status</th>
                             }

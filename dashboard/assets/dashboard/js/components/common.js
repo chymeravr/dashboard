@@ -58,7 +58,29 @@ export class NumberInput extends React.Component {
 }
 
 export const spinner = (
-    <div className="progress blue" style={{top:"-8px", position:"fixed"}}>
+    <div className="progress blue" style={{ top: "-8px", position: "fixed" }}>
         <div className="indeterminate white"></div>
     </div>
 )
+
+export class PageHeading extends React.Component {
+    constructor(props) {
+        super(props);
+        this.title = props.title;
+        this.buttonText = props.buttonText;
+        this.onClick = props.onClick;
+    }
+
+    render() {
+        return (
+            <div className="row">
+                <h2 className="thin col">{this.title}</h2>
+                <br />
+                <a className="waves-effect waves-light btn-large col right s2" onClick={this.onClick}>
+                    <i className="material-icons left">add</i>
+                    {this.buttonText}
+                </a>
+            </div>
+        )
+    }
+}

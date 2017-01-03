@@ -4,7 +4,7 @@ import { config } from '../../config.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 import { hashHistory, Link } from 'react-router'
 import Modal from 'react-modal'
-import { FormInput, spinner } from '../common'
+import { FormInput, spinner, PageHeading } from '../common'
 import { CampaignEditModal } from './campaignModal'
 
 
@@ -25,6 +25,7 @@ export class AdvertiserView extends React.Component {
         this.state = { modalIsOpen: false };
         this.openModal = this.openModal.bind(this);
     }
+
 
     handleChange(key) {
         return function (e) {
@@ -49,6 +50,10 @@ export class AdvertiserView extends React.Component {
         );
 
 
+    }
+
+    componentDidMount() {
+        document.title = "Advertiser"
     }
 
     postSave(campaign) {
@@ -94,14 +99,7 @@ export class AdvertiserView extends React.Component {
         }
         return (
             <div className="container" style={heightStyle} >
-                <div className="row">
-                    <h2 className="thin col">Campaigns</h2>
-                    <br />
-                    <a className="waves-effect waves-light btn-large col right s2" onClick={this.openModal}>
-                        <i className="material-icons left">add</i>
-                        Add Campaign
-                     </a>
-                </div>
+                <PageHeading title="Campaigns" onClick={this.openModal} buttonText="Campaign" />
                 <ReactCSSTransitionGroup
                     component="table"
                     transitionName="fadeTransitionFast"

@@ -31,6 +31,7 @@ export class LoginForm extends React.Component {
 
     componentDidMount() {
         this.refs.loginform.onsubmit = (e) => this.tryLogin(e);
+        document.title = "Login";
     }
 
     tryLogin(e) {

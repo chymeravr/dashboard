@@ -18,6 +18,10 @@ class HomeView extends React.Component {
         );
     }
 
+    componentDidMount() {
+        document.title = "Chymera VR"
+    }
+
     render() {
         var style = {
             fontWeight: "lighter",

@@ -4,7 +4,7 @@ import { config } from '../../config.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 import { hashHistory, Link } from 'react-router'
 import Modal from 'react-modal'
-import { FormInput, spinner } from '../common'
+import { FormInput, spinner, PageHeading } from '../common'
 import { AdgroupEditModal } from './adgroupModal'
 import { AdModal } from './adModal'
 
@@ -49,6 +49,7 @@ export class AdgroupDetailView extends React.Component {
                 } else {
                     this.setState(Object.assign({}, this.state, { adgroup: response }))
                 }
+                document.title = response.name + " | Adgroup";
             },
             (error) => {
                 throw error;
@@ -106,14 +107,7 @@ export class AdgroupDetailView extends React.Component {
         }
         return (
             <div className="container">
-                <div className="row">
-                    <h2 className="col thin">Adgroup Detail</h2>
-                    <br />
-                    <a className="waves-effect waves-light btn-large col right s2" onClick={e => this.openAdModal()}>
-                        <i className="material-icons left">add</i>
-                        NEW AD
-                    </a>
-                </div>
+                <PageHeading title="Adgroup Detail" onClick={e => this.openAdModal()} buttonText="Ad" />
                 <div className="row">
                     <div className="col s12">
                         <div className="card blue-grey darken-1">
@@ -164,7 +158,7 @@ export class AdgroupDetailView extends React.Component {
                     className="table highlight grey-text text-darken-4 col s12">
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>Ad Name</th>
                             <th className="right">Creative</th>
                         </tr>
                     </thead>
@@ -172,9 +166,7 @@ export class AdgroupDetailView extends React.Component {
                         {this.state.adgroup.ads.map(ad =>
                             <tr key={ad.id} className="grey-text text-darken-1">
                                 <td width="50%">
-                                    <Link to={'/advertiser/ad/' + ad.id + "/"}>
-                                        {ad.name}
-                                    </Link>
+                                    {ad.name}
                                 </td>
                                 <td>
                                     <img className="materialboxed right" src={ad.creative} height="150px" />

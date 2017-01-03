@@ -4,7 +4,7 @@ import { config } from '../../config.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 import { hashHistory, Link } from 'react-router'
 import Modal from 'react-modal'
-import { FormInput, spinner } from '../common'
+import { FormInput, spinner, PageHeading } from '../common'
 import { AppEditModal } from './appModal'
 
 
@@ -33,7 +33,10 @@ export class AppDetailView extends React.Component {
         callApiWithJwt('/user/api/publisher/apps/' + this.state.appId,
             'GET',
             null,
-            (response) => this.setState(Object.assign({}, this.state, { app: response })),
+            (response) => {
+                this.setState(Object.assign({}, this.state, { app: response }));
+                document.title = response.name + " | App"
+            },
             (error) => {
                 alert(error);
                 hashHistory.push('/login/')
@@ -115,14 +118,7 @@ export class AppDetailView extends React.Component {
         }
         return (
             <div className="container">
-                <div className="row">
-                    <h2 className="thin col">Placements</h2>
-                    <br />
-                    <a className="waves-effect waves-light btn-large col right s2" onClick={this.openPmModal}>
-                        <i className="material-icons left">add</i>
-                        Create Placement
-                     </a>
-                </div>
+                <PageHeading title="App Detail" onClick={e => this.openPmModal()} buttonText="Placement" />
                 <div className="row">
                     <div className="col s12">
                         <div className="card blue-grey darken-1">
@@ -160,7 +156,7 @@ export class AppDetailView extends React.Component {
                     className="table highlight grey-text text-darken-4 col s12">
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>Placement Name</th>
                             <th>Key</th>
                         </tr>
                     </thead>
@@ -176,10 +172,10 @@ export class AppDetailView extends React.Component {
                             </tr>)
                         }
                     </tbody>
-                    <br />
-                    <br />
-                </ReactCSSTransitionGroup>
 
+                </ReactCSSTransitionGroup>
+                <br />
+                <br />
                 <AppEditModal label="Create App" saveMethod="POST"
                     postSave={this.postSave.bind(this)} successStatus="200" app={this.state.app} />
 

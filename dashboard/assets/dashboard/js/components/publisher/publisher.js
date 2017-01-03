@@ -4,7 +4,7 @@ import { config } from '../../config.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 import { hashHistory, Link } from 'react-router'
 import Modal from 'react-modal'
-import { FormInput, spinner } from '../common'
+import { FormInput, spinner, PageHeading } from '../common'
 import { AppEditModal } from './appModal'
 
 const headers = {
@@ -35,7 +35,8 @@ export class PublisherView extends React.Component {
             null,
             (response) => {
                 response = response.map(app => Object.assign(app, { key: app.id }));
-                this.setState(Object.assign({}, this.state, { apps: response }))
+                this.setState(Object.assign({}, this.state, { apps: response }));
+                document.title = "Apps"
             },
             (error) => {
                 alert(error);
@@ -75,14 +76,7 @@ export class PublisherView extends React.Component {
 
         return (
             <div className="container" style={heightStyle} >
-                <div className="row">
-                    <h2 className="thin col">Apps</h2>
-                    <br />
-                    <a className="waves-effect waves-light btn-large col right s2" onClick={this.openModal}>
-                        <i className="material-icons left">add</i>
-                        Add App
-                     </a>
-                </div>
+                <PageHeading title="Apps" onClick={e => this.openModal()} buttonText="New App" />
                 <ReactCSSTransitionGroup
                     component="table"
                     transitionName="fadeTransitionFast"
@@ -94,7 +88,7 @@ export class PublisherView extends React.Component {
                     className="table highlight grey-text text-darken-4 col s12">
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>App Name</th>
                             {Object.keys(headers).map(header => <th key={header}>{header}</th>)}
                             <th>App Store</th>
                             <th>Status</th>
