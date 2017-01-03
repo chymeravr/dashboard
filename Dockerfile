@@ -19,6 +19,11 @@ RUN apt-get install -y libpq-dev
 # npm
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 RUN apt-get install -y nodejs
+RUN npm install --save-dev jquery react react-dom webpack webpack-bundle-tracker babel-loader babel-core babel-preset-es2015 babel-preset-react
+
+# nginx and uwsgi
+RUN apt-get install -y nginx
+RUN pip install uwsgi
 
 # Copy all the project files. Excluded files are present in .dockerignore
 COPY . $BASE/
@@ -29,7 +34,6 @@ WORKDIR $BASE
 # Install dependencies
 RUN npm install
 RUN pip install -r requirements.txt
-RUN npm install --save-dev jquery react react-dom webpack webpack-bundle-tracker babel-loader babel-core babel-preset-es2015 babel-preset-react
 
 # Pass DEBUG value as environment variable. Django debug mode depends on this
 ENV DEBUG=$DEBUG
@@ -45,9 +49,7 @@ WORKDIR $BASE
 # collect static files
 RUN python manage.py collectstatic --noinput  
 
-# nginx and uwsgi
-RUN apt-get install -y nginx
-RUN pip install uwsgi
+# nginx config
 COPY server/dashboard_nginx.conf /etc/nginx/sites-enabled
 
 CMD service nginx restart; uwsgi --ini $BASE/server/dashboard.ini
