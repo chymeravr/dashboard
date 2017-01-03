@@ -13,15 +13,16 @@ config.campaignTypes = {
 config.defaultCampaignType = 1;
 
 config.pricings = {
-    '1': 'CPM',
-    '2': 'CPC'
+    '1': 'CPC',
+    '2': 'CPM'
 }
 
 config.defaultPricing = 1;
 
 config.hmds = {
     '': null,
-    '1': 'Gear VR'
+    '1': 'Gear VR',
+    '2': 'Cardboard'
 }
 
 config.defaultHmd = '';
@@ -34,7 +35,8 @@ config.operatingSystems = {
 config.defaultOperatingSystem = '';
 
 config.appStores = {
-    '1': 'Oculus',
+    '1': 'Google Play Store',
+    '2': 'Oculus'
 }
 
 config.defaultAppStore = '1'
