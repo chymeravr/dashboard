@@ -25,6 +25,9 @@ RUN npm install --save-dev jquery react react-dom webpack webpack-bundle-tracker
 RUN apt-get install -y nginx
 RUN pip install uwsgi
 
+# Create logging directory
+RUN mkdir /var/log/dashboard/
+
 # Copy all the project files. Excluded files are present in .dockerignore
 COPY . $BASE/
 
@@ -51,7 +54,6 @@ RUN python manage.py collectstatic --noinput
 
 # nginx config
 COPY server/dashboard_nginx.conf /etc/nginx/sites-enabled
-RUN mkdir /var/log/dashboard/
 
 CMD service nginx restart; uwsgi --ini $BASE/server/dashboard.ini
 
