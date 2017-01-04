@@ -82,7 +82,7 @@ class AdgroupUpdateSerializer(serializers.ModelSerializer):
         fields = ['id', 'campaign', 'name', 'dailyBudget', 'totalBudget',
                   'targeting', 'bid', 'pricing', 'startDate', 'endDate',
                   'ads', 'impressions', 'clicks', 'burn']
-        read_only_fields = ['impressions', 'clicks', 'burn']
+        read_only_fields = ['impressions', 'clicks', 'burn', 'ads']
         order_by = (('created_on'),)
 
 
