@@ -16,6 +16,15 @@ import { AdgroupDetailView } from './advertiser/adgroupDetail'
 import { PublisherView } from './publisher/publisher'
 import { AppDetailView } from './publisher/appDetail'
 import { debug, callApiWithJwt } from '../lib.js'
+import ReactGA from 'react-ga'
+
+ReactGA.initialize('UA-89829978-1');
+
+function logPageView() {
+    console.info('logging to ga : ' + window.location.hash)
+    ReactGA.set({ page: window.location.hash });
+    ReactGA.pageview(window.location.hash);
+}
 
 class AppView extends React.Component {
     constructor(props) {
@@ -144,7 +153,7 @@ class AppView extends React.Component {
 }
 
 render((
-    <Router history={hashHistory}>
+    <Router history={hashHistory} onUpdate={logPageView} >
         <Route path="/" component={AppView}>
             <IndexRoute name="home" component={HomeView} />
             <Route name="login" path="/login" component={LoginForm} />
