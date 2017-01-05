@@ -18,9 +18,9 @@ export class FormInput extends React.Component {
 
     render() {
         return (
-            <div className="input-field row">
+            <div className="input-field">
                 <input id={this.fieldName} type={this.type} value={this.state.value}
-                    onChange={this.handleChange} />
+                    onChange={this.handleChange} className="validate"/>
                 <label htmlFor={this.fieldName} className={this.state.value && this.state.value.length > 0 ? "active" : ""}>
                     {this.label}
                 </label>
@@ -46,7 +46,7 @@ export class NumberInput extends React.Component {
 
     render() {
         return (
-            <div className="input-field row">
+            <div className="input-field">
                 <input id={this.fieldName} type="number" min="0" value={this.state.value}
                     onChange={this.handleChange} className="validate" step="any" />
                 <label htmlFor={this.fieldName} data-error="Enter a positive value" className={this.state.value == 0 || this.state.value ? "active" : ""}>

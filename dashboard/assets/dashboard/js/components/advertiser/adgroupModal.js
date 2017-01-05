@@ -140,6 +140,9 @@ export class AdgroupEditModal extends React.Component {
             }
         });
 
+        $('select').material_select();
+        $('#pricingTypeSelect').on('change', e => this.setPricing(e.target.value)).bind(this);
+
     }
 
     saveAdgroup() {
@@ -240,7 +243,6 @@ export class AdgroupEditModal extends React.Component {
         }
 
         const title = this.saveMethod == "PUT" ? "Edit Adgroup" : "Create Adgroup";
-
         return (
             <div>
                 <div id="agForm" className="modal modal-fixed-footer">
@@ -250,33 +252,26 @@ export class AdgroupEditModal extends React.Component {
                             <br />
                             <br />
                             <div className="row">
-                                <a className={'dropdown-button btn tooltipped ' + (this.saveMethod == "PUT" ? 'disabled' : '')}
-                                    data-position="right" data-delay="50" data-tooltip="Pricing"
-                                    onClick={e => $('.dropdown-button').dropdown('open')}
-                                    data-activates='pricingDropdown'>
-                                    {config.pricings[this.state.adgroup.pricing]}
-                                    <i className="material-icons col s1">expand_more</i>
-                                </a>
-                                <ul id='pricingDropdown' className='dropdown-content'>
-                                    {Object.keys(config.pricings).map(id =>
-                                        <li key={id}>
-                                            <a onClick={e => this.setPricing(id)}>
-                                                {config.pricings[id]}
-                                            </a>
-                                        </li>
-                                    )}
-                                </ul>
+                                <div className="col s4">
+                                    <div className="input-field">
+                                        <select id="pricingTypeSelect" defaultValue={config.defaultPricing}>
+                                            {Object.keys(config.pricings).map(id =>
+                                                <option key={id} value={id}>{config.pricings[id]}</option>
+
+
+                                            )}
+                                        </select>
+                                        <label>Pricing Type</label>
+                                    </div>
+                                </div>
                             </div>
                             <div className="row">
-                                <div className="col s8">
+                                <div className="col s4">
                                     <FormInput
                                         fieldName="name"
                                         label="Adgroup Name"
                                         value={this.state.adgroup.name}
                                         handleChange={this.handleChange('name').bind(this)} />
-                                </div>
-                                <div className="col s3 right">
-
                                 </div>
                             </div>
                             <div className="row">
@@ -307,16 +302,16 @@ export class AdgroupEditModal extends React.Component {
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="col s3">
-                                    <div className="input-field row">
+                                <div className="col s4">
+                                    <div className="input-field">
                                         <label htmlFor="agStartDate">Start Date</label>
                                         <input type="date" id="agStartDate" className="datepicker" label="Start Date" />
                                     </div>
                                 </div>
                                 <div className="col s1">
                                 </div>
-                                <div className="col s3">
-                                    <div className="input-field row">
+                                <div className="col s4">
+                                    <div className="input-field">
                                         <label htmlFor="agEndDate">End Date</label>
                                         <input type="date" id="agEndDate" className="datepicker" label="End Date" />
                                     </div>

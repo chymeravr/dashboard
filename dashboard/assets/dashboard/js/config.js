@@ -7,7 +7,7 @@ config.jwt = {
 
 config.campaignTypes = {
     '1': 'Image 360',
-    '2': 'Video 360'
+    // '2': 'Video 360'
 }
 
 config.defaultCampaignType = 1;
