@@ -121,7 +121,7 @@ export class AppEditModal extends React.Component {
                 </a>
         }
 
-        const title = this.saveMethod == "PUT" ? 'Edit Ad' : 'Create Ad';
+        const title = this.saveMethod == "PUT" ? 'Edit App' : 'Create App';
         return (
             <div id="appForm" className="modal modal-fixed-footer">
                 <div className="modal-content valign-wrapper">

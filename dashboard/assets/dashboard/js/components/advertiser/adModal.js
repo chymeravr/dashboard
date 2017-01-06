@@ -130,14 +130,11 @@ export class AdModal extends React.Component {
                             <br />
                             <br />
                             <div className="row">
-                                <div className="col s8">
-                                    <FormInput
-                                        fieldName="name"
-                                        label="Ad Name"
-                                        value={this.state.ad.name}
-                                        handleChange={this.handleChange('name').bind(this)} />
-                                </div>
-
+                                <FormInput
+                                    fieldName="name"
+                                    label="Ad Name"
+                                    value={this.state.ad.name}
+                                    handleChange={this.handleChange('name').bind(this)} />
                             </div>
                             <div className="row">
                                 <div className="file-field input-field">
