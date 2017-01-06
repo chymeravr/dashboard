@@ -53,7 +53,8 @@ export class PublisherView extends React.Component {
     postSave(app) {
         app.key = app.id;
         this.state.apps.unshift(app);
-        this.setState(Object.assign({}, this.state));
+        $('#appForm').modal('close');
+        this.setState(Object.assign({}, this.state, { timestamp: Date.now() }));
     }
 
     openModal() {
@@ -112,7 +113,8 @@ export class PublisherView extends React.Component {
                         }
                     </tbody>
                 </ReactCSSTransitionGroup>
-                <AppEditModal label="Create App" saveMethod="POST" postSave={this.postSave.bind(this)} successStatus="201" />
+                <AppEditModal label="Create App" saveMethod="POST" postSave={this.postSave.bind(this)} successStatus="201"
+                    key={this.state.timestamp} />
             </div >
         );
     }

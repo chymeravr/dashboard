@@ -72,7 +72,7 @@ export class AppDetailView extends React.Component {
     postPlacementAddition(placement) {
         this.state.app.placements.unshift(placement);
         this.state.newPlacement = '';
-        this.setState(Object.assign({}, this.state));
+        this.setState(Object.assign({}, this.state, { timestamp: Date.now() }));
     }
 
     savePlacement() {
@@ -181,7 +181,7 @@ export class AppDetailView extends React.Component {
                 <AppEditModal label="Create App" saveMethod="POST"
                     postSave={this.postSave.bind(this)} successStatus="200" app={this.state.app} />
 
-                <div id="placementForm" className="modal modal-fixed-footer">
+                <div id="placementForm" className="modal modal-fixed-footer" key={this.state.timestamp}>
                     <div className="modal-content valign-wrapper">
                         <div className="container">
                             <div className="row">
