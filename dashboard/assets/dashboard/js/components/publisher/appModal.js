@@ -82,7 +82,9 @@ export class AppEditModal extends React.Component {
         });
 
         $('.tooltipped').tooltip({ delay: 50 });
-        // Set end date element first. Swapping leads to loss of formatting
+
+        $('select').material_select();
+        $('#appStoreSelect').on('change', e => this.setAppStore(e.target.value)).bind(this);
     }
 
 
@@ -119,47 +121,37 @@ export class AppEditModal extends React.Component {
                 </a>
         }
 
+        const title = this.saveMethod == "PUT" ? 'Edit Ad' : 'Create Ad';
         return (
             <div id="appForm" className="modal modal-fixed-footer">
                 <div className="modal-content valign-wrapper">
                     <div className="container">
+                        <h5 className="center">{title}</h5>
+                        <br />
+                        <br />
                         <div className="row">
-                            <div className="col s8">
-                                <FormInput
-                                    fieldName="name"
-                                    label="App Name"
-                                    value={this.state.app.name}
-                                    handleChange={this.handleChange('name').bind(this)} />
-                            </div>
-                            <div className="col s3 right">
-                                <a className='dropdown-button btn tooltipped'
-                                    data-position="right" data-delay="50" data-tooltip="App Store"
-                                    onClick={e => $('.dropdown-button').dropdown('open')}
-                                    data-activates='appStoreDropdown'>
-                                    {config.appStores[this.state.app.appStore]}
-                                    
-                                </a>
-                                <ul id='appStoreDropdown' className='dropdown-content'>
+                            <FormInput
+                                fieldName="name"
+                                label="App Name"
+                                value={this.state.app.name}
+                                handleChange={this.handleChange('name').bind(this)} />
+                        </div>
+                        <div className="row">
+                            <div className="input-field">
+                                <select id="appStoreSelect" defaultValue={config.appStores}>
                                     {Object.keys(config.appStores).map(id =>
-                                        <li key={id}>
-                                            <a onClick={e => this.setAppStore(id)}>
-                                                {config.appStores[id]}
-                                            </a>
-                                        </li>
+                                        <option key={id} value={id}>{config.appStores[id]}</option>
                                     )}
-                                </ul>
+                                </select>
+                                <label>App Store</label>
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col s5">
-                                <FormInput
-                                    fieldName="url"
-                                    label="App URL"
-                                    value={this.state.app.url}
-                                    handleChange={this.handleChange('url').bind(this)} />
-                            </div>
-                            <div className="col s1">
-                            </div>
+                            <FormInput
+                                fieldName="url"
+                                label="App URL"
+                                value={this.state.app.url}
+                                handleChange={this.handleChange('url').bind(this)} />
                         </div>
                     </div>
                 </div>

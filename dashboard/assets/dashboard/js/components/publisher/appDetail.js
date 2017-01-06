@@ -178,7 +178,7 @@ export class AppDetailView extends React.Component {
                 </ReactCSSTransitionGroup>
                 <br />
                 <br />
-                <AppEditModal label="Create App" saveMethod="POST"
+                <AppEditModal label="Create App" saveMethod="PUT"
                     postSave={this.postSave.bind(this)} successStatus="200" app={this.state.app} />
 
                 <div id="placementForm" className="modal modal-fixed-footer" key={this.state.timestamp}>
