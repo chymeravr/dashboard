@@ -137,6 +137,9 @@ export class CampaignEditModal extends React.Component {
             }
         });
 
+        $('select').material_select();
+        $('#campaignTypeSelect').on('change', e => this.setCampaignType(e.target.value)).bind(this);
+
     }
 
     setCampaignType(type) {
@@ -183,7 +186,7 @@ export class CampaignEditModal extends React.Component {
 
 
         const title = this.saveMethod === 'PUT' ? "Edit Campaign" : "Create Campaign";
-
+        console.info(this.state.campaign);
         return (
             <div id="cmpForm" className="modal modal-fixed-footer">
                 <div className="modal-content valign-wrapper">
@@ -194,25 +197,14 @@ export class CampaignEditModal extends React.Component {
                         <div>
                             <div className="row">
                                 <div className="col s4">
-                                    <div className="row">
-                                        <a className={'dropdown-button btn tooltipped col ' + (this.saveMethod == "PUT" ? 'disabled' : '')}
-                                            data-position="right" data-delay="50" data-tooltip="Campaign Type"
-                                            onClick={e => $('.dropdown-button').dropdown('open')}
-                                            data-activates='campaignTypeDropdown'>
-                                            {config.campaignTypes[this.state.campaign.campaignType]}
-                                            <i className="material-icons col">expand_more</i>
-                                        </a>
+                                    <div className="input-field">
+                                        <select id="campaignTypeSelect" defaultValue={config.defaultCampaignType}>
+                                            {Object.keys(config.campaignTypes).map(id =>
+                                                <option key={id} value={id}>{config.campaignTypes[id]}</option>
+                                            )}
+                                        </select>
+                                        <label>Campaign Type</label>
                                     </div>
-
-                                    <ul id='campaignTypeDropdown' className='dropdown-content'>
-                                        {Object.keys(config.campaignTypes).map(id =>
-                                            <li key={id}>
-                                                <a onClick={e => this.setCampaignType(id)}>
-                                                    {config.campaignTypes[id]}
-                                                </a>
-                                            </li>
-                                        )}
-                                    </ul>
                                 </div>
                             </div>
                             <div className="row">
@@ -244,7 +236,7 @@ export class CampaignEditModal extends React.Component {
                             </div>
                             <div className="row">
                                 <div className="col s5">
-                                    <div className="input-field row">
+                                    <div className="input-field">
                                         <label htmlFor="startDate">Start Date</label>
                                         <input type="date" id="startDate" className="datepicker" label="Start Date" />
                                     </div>
@@ -252,7 +244,7 @@ export class CampaignEditModal extends React.Component {
                                 <div className="col s1">
                                 </div>
                                 <div className="col s5">
-                                    <div className="input-field row">
+                                    <div className="input-field">
                                         <label htmlFor="endDate">End Date</label>
                                         <input type="date" id="endDate" className="datepicker" label="End Date" />
                                     </div>
