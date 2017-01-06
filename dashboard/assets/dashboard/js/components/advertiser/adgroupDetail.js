@@ -82,7 +82,7 @@ export class AdgroupDetailView extends React.Component {
     postAdAddition(ad) {
         $('#adForm').modal('close');
         this.state.adgroup.ads.unshift(ad);
-        this.setState(Object.assign({}, this.state));
+        this.setState(Object.assign({}, this.state, { timestamp: Date.now() }));
     }
 
     componentDidMount() {
@@ -147,7 +147,8 @@ export class AdgroupDetailView extends React.Component {
 
                 <AdModal label="Add Ads"
                     postSave={this.postAdAddition.bind(this)}
-                    adgroupId={this.state.adgroup.id} />
+                    adgroupId={this.state.adgroup.id}
+                    key={this.state.timestamp} />
 
                 <ReactCSSTransitionGroup
                     component="table"
