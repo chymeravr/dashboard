@@ -81,8 +81,10 @@ export class CampaignDetailView extends React.Component {
     }
 
     postAdgoupAddition(adgroup) {
+        $('#agForm').modal('close');
         this.state.campaign.adgroups.unshift(adgroup);
-        this.setState(Object.assign({}, this.state));
+	// To reset state of modal
+        this.setState(Object.assign({}, this.state, { timestamp: Date.now() }));
     }
 
     render() {
@@ -166,7 +168,8 @@ export class CampaignDetailView extends React.Component {
 
                 <AdgroupEditModal label="Create Adgroup" saveMethod="POST"
                     postSave={this.postAdgoupAddition.bind(this)} successStatus="201"
-                    campaignId={this.state.campaign.id} />
+                    campaignId={this.state.campaign.id}
+                    key={this.state.timestamp} />
             </div >
         );
     }

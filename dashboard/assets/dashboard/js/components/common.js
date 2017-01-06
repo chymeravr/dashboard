@@ -74,9 +74,9 @@ export class PageHeading extends React.Component {
     render() {
         return (
             <div className="row">
-                <h2 className="thin col">{this.title}</h2>
+                <h4 className=" right">{this.title}</h4>
                 <br />
-                <a className="waves-effect waves-light btn-large col right s2" onClick={this.onClick}>
+                <a className="waves-effect waves-light btn-large s2" onClick={this.onClick}>
                     <i className="material-icons left">add</i>
                     {this.buttonText}
                 </a>

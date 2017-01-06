@@ -111,13 +111,13 @@ export class AdvertiserView extends React.Component {
                     transitionEnterTimeout={150}
                     transitionLeaveTimeout={150}
                     transitionAppearTimeout={150}
-                    className="table highlight grey-text text-darken-4 col s12">
+                    className="table highlight grey-text text-darken-4 col s12 centered">
                     <thead>
                         <tr>
-                            <th>Campaign Name</th>
-                            {Object.keys(headers).map(header => <th key={header}>{header}</th>)}
-                            <th>Campaign Type</th>
-                            <th>Status</th>
+                            <th className="grey-text text-darken-2">Campaign Name</th>
+                            {Object.keys(headers).map(header => <th className="grey-text text-darken-2" key={header}>{header}</th>)}
+                            <th className="grey-text text-darken-2">Campaign Type</th>
+                            <th className="grey-text text-darken-2">Status</th>
                         </tr>
                     </thead>
                     <tbody>

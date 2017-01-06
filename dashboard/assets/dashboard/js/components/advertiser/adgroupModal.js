@@ -1,4 +1,4 @@
-import React, { ReactDOM } from 'react'
+import React from 'react'
 import Modal from 'react-modal'
 import { FormInput, NumberInput } from '../common'
 import { callApiWithJwt, debug } from '../../lib.js'
@@ -16,6 +16,7 @@ export class AdgroupEditModal extends React.Component {
                 pricing: config.defaultPricing,
             }
         }, JSON.parse(JSON.stringify(props)));
+        this.campaignId = props.campaignId;
         this.postSave = props.postSave;
         this.saveMethod = props.saveMethod;
         this.label = props.label;
@@ -76,6 +77,50 @@ export class AdgroupEditModal extends React.Component {
     }
 
     componentDidMount() {
+        this.initializeDateFields();
+        $('.modal').modal();
+        $('select').material_select();
+        $('#pricingTypeSelect').on('change', e => this.setPricing(e.target.value)).bind(this);
+
+    }
+
+    componentDidUpdate() {
+        $('.tooltipped').tooltip({ delay: 25 });
+        $('.modal').modal();
+        this.initializeDateFields();
+        $('select').material_select();
+        $('#pricingTypeSelect').on('change', e => this.setPricing(e.target.value)).bind(this);
+
+    }
+
+
+    saveAdgroup() {
+        const apiSuffix = this.saveMethod === 'PUT' ? this.state.adgroup.id : '';
+        const apiPath = '/user/api/advertiser/adgroups/' + apiSuffix;
+        if (this.state.targeting) {
+            var body = JSON.stringify(Object.assign({}, this.state.adgroup, { targeting: [this.state.targeting.id] }));
+        } else {
+            var body = JSON.stringify(this.state.adgroup);
+        }
+
+        callApiWithJwt(
+            apiPath,
+            this.saveMethod,
+            body,
+            (response) => {
+                this.postSave(response);
+                $('#agForm').modal('close');
+            },
+            (error) => {
+                throw error;
+                // alert(error);
+            },
+            this.successStatus
+        );
+    }
+
+
+    initializeDateFields() {
         const that = this;
         $('.dropdown-button').dropdown({
             inDuration: 300,
@@ -139,40 +184,6 @@ export class AdgroupEditModal extends React.Component {
                 }
             }
         });
-
-        $('select').material_select();
-        $('#pricingTypeSelect').on('change', e => this.setPricing(e.target.value)).bind(this);
-
-    }
-
-    saveAdgroup() {
-        const apiSuffix = this.saveMethod === 'PUT' ? this.state.adgroup.id : '';
-        const apiPath = '/user/api/advertiser/adgroups/' + apiSuffix;
-        if (this.state.targeting) {
-            var body = JSON.stringify(Object.assign({}, this.state.adgroup, { targeting: [this.state.targeting.id] }));
-        } else {
-            var body = JSON.stringify(this.state.adgroup);
-        }
-
-        callApiWithJwt(
-            apiPath,
-            this.saveMethod,
-            body,
-            (response) => {
-                this.postSave(response);
-                $('#agForm').modal('close');
-            },
-            (error) => {
-                throw error;
-                // alert(error);
-            },
-            this.successStatus
-        );
-    }
-
-    componentDidUpdate() {
-        $('.tooltipped').tooltip({ delay: 25 });
-
     }
 
     openSelectTargetingModal() {
