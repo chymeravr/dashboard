@@ -62,7 +62,9 @@ export class AdvertiserView extends React.Component {
     postSave(campaign) {
         campaign.key = campaign.id;
         this.state.campaigns.unshift(campaign);
-        this.setState(Object.assign({}, this.state));
+        $('#cmpForm').modal('close');
+        this.setState(Object.assign({}, this.state, { timestamp: Date.now() }));
+
     }
 
     openModal() {
@@ -139,7 +141,8 @@ export class AdvertiserView extends React.Component {
                 <br />
                 {noCmpMessage}
 
-                <CampaignEditModal label="Create Campaign" saveMethod="POST" postSave={this.postSave.bind(this)} successStatus="201" />
+                <CampaignEditModal label="Create Campaign" saveMethod="POST" postSave={this.postSave.bind(this)} successStatus="201"
+                    key={this.state.timestamp} />
             </div >
         );
     }
