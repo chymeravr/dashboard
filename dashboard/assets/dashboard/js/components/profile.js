@@ -5,14 +5,28 @@ import { hashHistory, Link } from 'react-router';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 
 class Offering extends React.Component {
+    constructor(props) {
+        super(props);
+        this.balance = props.balance;
+        this.offering = props.offering;
+        this.message = props.message;
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.balance = nextProps.balance;
+        this.offering = nextProps.offering;
+        this.message = nextProps.message;
+    }
+
     render() {
+        console.info(this.balance);
         const offeringLinkStyle = {
             fontWeight: 'bold',
             fontSize: '30px',
             textAlign: 'center',
             color: '#eeeeee',
         }
-        switch (this.props.offering) {
+        switch (this.offering) {
             case 'Advertise':
                 var message = "Funds available"
                 var linkTo = "/advertiser/"
@@ -27,12 +41,12 @@ class Offering extends React.Component {
                 <div className="col s12 m6">
                     <div className="card blue-grey lighten-2">
                         <div className="card-content white-text">
-                            <span className="card-title">$ {this.props.balance}</span>
+                            <span className="card-title">$ {this.balance}</span>
                             <p>{message}</p>
                         </div>
                         <div className="card-action blue-grey center-align">
                             <Link to={linkTo} style={offeringLinkStyle}>
-                                {this.props.offering}
+                                {this.offering}
                             </Link>
                         </div>
                     </div>
@@ -53,8 +67,9 @@ export class ProfileView extends React.Component {
             'GET',
             null,
             (response) => {
-                this.setState(response);
-                document.title = response.username;
+                // List of users will have exacatly 1 element
+                this.setState(response[0]);
+                document.title = response[0].username;
             },
             (error) => {
                 hashHistory.push('/login/');
@@ -63,9 +78,10 @@ export class ProfileView extends React.Component {
     }
 
     render() {
+        console.info(this.state);
         var advertisingMessage = "Funds available";
         var publisherMessage = "Earnings available";
-        if (this.state.username) {
+        if (this.state.user && this.state.user.username) {
             var body = (
                 // Key is important for transitions
                 <div key="loaded" className="row">

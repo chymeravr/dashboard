@@ -81,7 +81,7 @@ export class LoginForm extends React.Component {
                 transitionEnterTimeout={500}
                 transitionLeaveTimeout={500}
                 transitionAppearTimeout={500}
-                className="center-align container">
+                className="container">
                 <form className="row" onSubmit={e => this.tryLogin(e)} method="post" ref="loginform">
                     <div className="col s6 offset-s3">
                         {errorMessage}

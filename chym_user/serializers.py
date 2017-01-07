@@ -1,22 +1,38 @@
 from django.contrib.auth.models import User
-from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
+from chym_user.models import Profile
 
-class UserProfileSerializer(ModelSerializer):
-    currency = serializers.CharField(source='profile.currency')
-    advertising_budget = serializers.FloatField(source='profile.advertising_budget', read_only=True)
-    publisher_earnings = serializers.FloatField(source='profile.publisher_earnings', read_only=True)
 
+class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'id',
             'username',
             'email',
+            'password'
+        )
+        extra_kwargs = {
+            'password': {'write_only': True},
+            'email': {'write_only': True},
+        }
+
+
+class UserProfileSerializer(ModelSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model = Profile
+        fields = (
+            'id',
+            'user',
             'advertising_budget',
             'publisher_earnings',
             'currency'
         )
+        read_only_fields = ('advertising_budget', 'publisher_earnings')
 
-        read_only_fields = ('created_at', 'updated_at',)
+    def create(self, validated_data):
+        user_data = validated_data.pop('user')
+        user = User.objects.create_user(**user_data)
+        return Profile.objects.create(user=user, **validated_data)
