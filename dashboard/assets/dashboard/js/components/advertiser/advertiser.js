@@ -73,6 +73,22 @@ export class AdvertiserView extends React.Component {
         this.setState(Object.assign({}, this.state, { modalIsOpen: true }));
     }
 
+    setCampaignStatus(index, status) {
+        console.info(status);
+        const campaignId = this.state.campaigns[index].id;
+        callApiWithJwt('/user/api/advertiser/campaigns/' + campaignId,
+            'PATCH',
+            JSON.stringify({ status: status }),
+            (response) => {
+                this.state.campaigns[index].status = status
+                this.setState(Object.assign({}, this.state));
+            },
+            (error) => {
+                alert(error)
+            },
+        );
+    }
+
     render() {
         if (!this.state.campaigns) {
             return spinner
@@ -119,11 +135,11 @@ export class AdvertiserView extends React.Component {
                             <th className="grey-text text-darken-2">Campaign Name</th>
                             {Object.keys(headers).map(header => <th className="grey-text text-darken-2" key={header}>{header}</th>)}
                             <th className="grey-text text-darken-2">Campaign Type</th>
-                            <th className="grey-text text-darken-2">Status</th>
+                            <th className="grey-text text-darken-2">Active</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.campaigns.map(campaign =>
+                        {this.state.campaigns.map((campaign, idx) =>
                             <tr key={campaign.key} className="grey-text text-darken-1">
                                 <td>
                                     <Link to={'/advertiser/campaigns/' + campaign.id + "/"}>
@@ -132,7 +148,16 @@ export class AdvertiserView extends React.Component {
                                 </td>
                                 {Object.keys(headers).map(key => <td key={key}>{campaign[headers[key]]}</td>)}
                                 <td>{config.campaignTypes[campaign.campaignType]}</td>
-                                <td>{campaign.status ? "Active" : "Paused"}</td>
+                                <td>
+                                    <div className="switch">
+                                        <label>
+                                            <input type="checkbox"
+                                                checked={campaign.status ? "checked" : ""}
+                                                onChange={e => this.setCampaignStatus(idx, e.target.checked)} />
+                                            <span className="lever"></span>
+                                        </label>
+                                    </div>
+                                </td>
                             </tr>)
                         }
                     </tbody>
