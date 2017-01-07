@@ -10,11 +10,16 @@ class UserSerializer(ModelSerializer):
         fields = (
             'username',
             'email',
-            'password'
+            'password',
+            'email'
         )
+
+        read_only_fields = (
+            'email',
+        )
+        
         extra_kwargs = {
             'password': {'write_only': True},
-            'email': {'write_only': True},
         }
 
 
