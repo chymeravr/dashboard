@@ -66,9 +66,9 @@ class AdSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Ad
-        fields = ['id', 'adgroup', 'creative', 'name', 'impressions', 'clicks', 'burn']
+        fields = ['id', 'adgroup', 'creative', 'name',
+                  'impressions', 'clicks', 'burn', 'status']
         read_only_fields = ['impressions', 'clicks', 'burn']
-        order_by = (('created_on'),)
 
 
 class AdgroupUpdateSerializer(serializers.ModelSerializer):
@@ -81,9 +81,8 @@ class AdgroupUpdateSerializer(serializers.ModelSerializer):
         model = Adgroup
         fields = ['id', 'campaign', 'name', 'dailyBudget', 'totalBudget',
                   'targeting', 'bid', 'pricing', 'startDate', 'endDate',
-                  'ads', 'impressions', 'clicks', 'burn']
+                  'ads', 'impressions', 'clicks', 'burn', 'status']
         read_only_fields = ['impressions', 'clicks', 'burn', 'ads']
-        order_by = (('created_on'),)
 
 
 class AdgroupDetailSerializer(serializers.ModelSerializer):
@@ -97,9 +96,8 @@ class AdgroupDetailSerializer(serializers.ModelSerializer):
         model = Adgroup
         fields = ['id', 'campaign', 'name', 'dailyBudget', 'totalBudget',
                   'targeting', 'bid', 'pricing', 'startDate', 'endDate',
-                  'ads', 'impressions', 'clicks', 'burn']
+                  'ads', 'impressions', 'clicks', 'burn', 'status']
         read_only_fields = ['impressions', 'clicks', 'burn']
-        order_by = (('created_on'),)
 
 
 class CampaignSerializer(serializers.ModelSerializer):
@@ -111,6 +109,5 @@ class CampaignSerializer(serializers.ModelSerializer):
         model = Campaign
         fields = ('user', 'id', 'name', 'campaignType', 'totalBudget',
                   'dailyBudget', 'startDate', 'endDate',
-                  'status', 'adgroups', 'impressions', 'clicks', 'burn')
-        read_only_fields = ('impressions', 'clicks', 'burn')
-        order_by = (('created_on'),)
+                  'status', 'adgroups', 'impressions', 'clicks', 'burn', 'modified_date')
+        read_only_fields = ('impressions', 'clicks', 'burn', 'modified_date')

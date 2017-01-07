@@ -83,8 +83,24 @@ export class CampaignDetailView extends React.Component {
     postAdgroupAddition(adgroup) {
         $('#agForm').modal('close');
         this.state.campaign.adgroups.unshift(adgroup);
-	    // To reset state of modal
+        // To reset state of modal
         this.setState(Object.assign({}, this.state, { timestamp: Date.now() }));
+    }
+
+    setAdgroupStatus(index, status) {
+        console.info(status);
+        const adgroupId = this.state.campaign.adgroups[index].id;
+        callApiWithJwt('/user/api/advertiser/adgroups/' + adgroupId,
+            'PATCH',
+            JSON.stringify({ status: status }),
+            (response) => {
+                this.state.campaign.adgroups[index].status = status
+                this.setState(Object.assign({}, this.state));
+            },
+            (error) => {
+                alert(error)
+            },
+        );
     }
 
     render() {
@@ -146,12 +162,11 @@ export class CampaignDetailView extends React.Component {
                         <tr>
                             <th>Adgroup Name</th>
                             {Object.keys(adgroupHeaders).map(header => <th key={header}>{header}</th>)}
-                            {//<th>Status</th>
-                            }
+                            <th>Active</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.campaign.adgroups.map(adgroup =>
+                        {this.state.campaign.adgroups.map((adgroup, idx) =>
                             <tr key={adgroup.id} className="grey-text text-darken-1">
                                 <td>
                                     <Link to={'/advertiser/adgroups/' + adgroup.id + "/"}>
@@ -159,8 +174,17 @@ export class CampaignDetailView extends React.Component {
                                     </Link>
                                 </td>
                                 {Object.keys(adgroupHeaders).map(key => <td key={key}>{adgroup[adgroupHeaders[key]]}</td>)}
-                                {//<td>{campaign.status ? "Active" : "Paused"}</td>
-                                }
+
+                                <td>
+                                    <div className="switch">
+                                        <label>
+                                            <input type="checkbox"
+                                                checked={adgroup.status ? "checked" : ""}
+                                                onChange={e => this.setAdgroupStatus(idx, e.target.checked)} />
+                                            <span className="lever"></span>
+                                        </label>
+                                    </div>
+                                </td>
                             </tr>)
                         }
                     </tbody>

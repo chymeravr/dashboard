@@ -1,5 +1,5 @@
 # Create your views here.
-
+from rest_framework import filters
 from rest_framework import generics
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -15,6 +15,9 @@ from advertiser.serializers import CampaignSerializer, AdgroupUpdateSerializer, 
 class CampaignView(generics.ListCreateAPIView):
     serializer_class = CampaignSerializer
     renderer_classes = (JSONRenderer,)
+    filter_backends = (filters.OrderingFilter,)
+    ordering_fields = ('modified_date', 'created_date')
+    ordering = ('-modified_date',)
 
     def get_queryset(self):
         return Campaign.objects.filter(user=self.request.user)
@@ -35,6 +38,8 @@ class CampaignDetailView(generics.RetrieveUpdateAPIView):
 class AdgroupView(generics.ListCreateAPIView):
     serializer_class = AdgroupUpdateSerializer
     renderer_classes = (JSONRenderer,)
+    ordering_fields = ('modified_date', 'created_date')
+    ordering = ('-modified_date',)
 
     @permission_classes((IsAuthenticated,))
     def get_queryset(self):
@@ -83,6 +88,8 @@ class TargetingDetailView(generics.RetrieveUpdateAPIView):
 @permission_classes((IsAuthenticated,))
 class AdUploadView(generics.ListCreateAPIView):
     serializer_class = AdSerializer
+    ordering_fields = ('modified_date', 'created_date')
+    ordering = ('-modified_date',)
 
     def get_queryset(self):
         return Ad.objects.filter(adgroup__campaign__user=self.request.user)

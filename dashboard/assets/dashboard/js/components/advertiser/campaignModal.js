@@ -186,7 +186,6 @@ export class CampaignEditModal extends React.Component {
 
 
         const title = this.saveMethod === 'PUT' ? "Edit Campaign" : "Create Campaign";
-        console.info(this.state.campaign);
         return (
             <div id="cmpForm" className="modal modal-fixed-footer">
                 <div className="modal-content valign-wrapper">

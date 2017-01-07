@@ -74,7 +74,6 @@ export class AdvertiserView extends React.Component {
     }
 
     setCampaignStatus(index, status) {
-        console.info(status);
         const campaignId = this.state.campaigns[index].id;
         callApiWithJwt('/user/api/advertiser/campaigns/' + campaignId,
             'PATCH',

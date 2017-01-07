@@ -57,8 +57,21 @@ export class AdgroupDetailView extends React.Component {
                 throw error;
             },
         );
+    }
 
-
+    setAdStatus(index, status) {
+        const adId = this.state.adgroup.ads[index].id;
+        callApiWithJwt('/user/api/advertiser/ad/' + adId,
+            'PATCH',
+            JSON.stringify({ status: status }),
+            (response) => {
+                this.state.adgroup.ads[index].status = status
+                this.setState(Object.assign({}, this.state));
+            },
+            (error) => {
+                alert(error)
+            },
+        );
     }
 
     openAgModal() {
@@ -163,17 +176,26 @@ export class AdgroupDetailView extends React.Component {
                         <tr>
                             <th>Ad Name</th>
                             {Object.keys(adHeaders).map(header => <th key={header}>{header}</th>)}
-                            <th className="right">Creative</th>
-
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.adgroup.ads.map(ad =>
+                        {this.state.adgroup.ads.map((ad, idx) =>
                             <tr key={ad.id} className="grey-text text-darken-1">
                                 <td width="50%">
                                     {ad.name}
                                 </td>
                                 {Object.keys(adHeaders).map(key => <td key={key}>{ad[adHeaders[key]]}</td>)}
+                                <td>
+                                    <div className="switch">
+                                        <label>
+                                            <input type="checkbox"
+                                                checked={ad.status ? "checked" : ""}
+                                                onChange={e => this.setAdStatus(idx, e.target.checked)} />
+                                            <span className="lever"></span>
+                                        </label>
+                                    </div>
+                                </td>
                                 <td>
                                     <img className="materialboxed right" src={ad.creative} height="150px" />
                                 </td>
