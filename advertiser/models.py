@@ -55,8 +55,8 @@ class Campaign(BaseModel):
     status = models.BooleanField(default=False)
     impressions = models.IntegerField(default=0)
     clicks = models.IntegerField(default=0)
-    totalBurn = models.FloatField(validators=[MinValueValidator(0.0)])
-    todayBurn = models.FloatField(validators=[MinValueValidator(0.0)])
+    totalBurn = models.FloatField(validators=[MinValueValidator(0.0)], default=0)
+    todayBurn = models.FloatField(validators=[MinValueValidator(0.0)], default=0)
 
 class Adgroup(BaseModel):
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
@@ -72,8 +72,8 @@ class Adgroup(BaseModel):
     targeting = models.ManyToManyField(Targeting, blank=True)
     impressions = models.IntegerField(default=0)
     clicks = models.IntegerField(default=0)
-    totalBurn = models.FloatField(validators=[MinValueValidator(0.0)])
-    todayBurn = models.FloatField(validators=[MinValueValidator(0.0)])
+    totalBurn = models.FloatField(validators=[MinValueValidator(0.0)], default=0)
+    todayBurn = models.FloatField(validators=[MinValueValidator(0.0)], default=0)
 
 
 
