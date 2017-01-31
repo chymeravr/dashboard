@@ -172,8 +172,8 @@ APPEND_SLASH = True
 
 # Azure
 DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
-AZURE_ACCOUNT_NAME = 'chymcreative'
-AZURE_ACCOUNT_KEY = 'cCjNBweZleJU4FJW1QVyBQ2juRyUt0e6RAsL6u4aFm3mUxk2kwAmtDYKwtzokPoHs+N5HRleUSzferfsBpRhUQ=='
+AZURE_ACCOUNT_NAME = 'chymerastatic'
+AZURE_ACCOUNT_KEY = 'UkE++CX1LVy9xYGmS2799JZmUthkTBV6b4fBaX352BlKtLANJyxa0GU0skOMyt2HZiW/uW9c+vOLWc8Nf8rR0Q=='
 AZURE_CONTAINER = 'creatives'
 
 

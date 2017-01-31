@@ -43,4 +43,7 @@
 1. Pass DEBUG=True to setup a local DB and start from scratch
 2. The name could be anything (Ex. while creating prod image, use <name>-prod and while creating dev image, use <name>)
 
+## Using Azure Storage
+http://django-storages.readthedocs.io/en/latest/backends/azure.html
+
 
