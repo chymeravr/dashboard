@@ -89,4 +89,5 @@ class Ad(BaseModel):
     status = models.BooleanField(default=False)
     impressions = models.IntegerField(default=0)
     clicks = models.IntegerField(default=0)
-    burn = models.IntegerField(default=0)
+    totalBurn = models.FloatField(validators=[MinValueValidator(0.0)], default=0)
+    todayBurn = models.FloatField(validators=[MinValueValidator(0.0)], default=0)
