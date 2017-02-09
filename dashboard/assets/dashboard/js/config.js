@@ -20,19 +20,19 @@ config.pricings = {
 config.defaultPricing = 1;
 
 config.hmds = {
-    '': null,
+    '-1': null,
     '1': 'Gear VR',
     '2': 'Cardboard'
 }
 
-config.defaultHmd = '';
+config.defaultHmd = '-1';
 
 config.operatingSystems = {
-    '': null,
+    '-1': null,
     '1': 'Android'
 }
 
-config.defaultOperatingSystem = '';
+config.defaultOperatingSystem = '-1';
 
 config.appStores = {
     '1': 'Google Play Store',
