@@ -25,6 +25,7 @@ def load_os(apps, schema_editor):
     Os = apps.get_model("advertiser", "Os")
     Os.objects.using(db_alias).bulk_create([
         Os(id=1, name="Android", version=0),
+        Os(id=-1, name="All", version=0)
     ])
 
 
@@ -49,6 +50,7 @@ def load_hmd(apps, schema_editor):
     Hmd.objects.using(db_alias).bulk_create([
         Hmd(id=1, name="Gear VR"),
         Hmd(id=2, name="Cardboard"),
+        Hmd(id=-1, name="All")
     ])
 
 
