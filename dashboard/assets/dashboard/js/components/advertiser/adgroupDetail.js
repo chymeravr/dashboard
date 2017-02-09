@@ -18,7 +18,8 @@ const adHeaders = {
     // 'Name': 'name',
     'Impressions': 'impressions',
     'Clicks': 'clicks',
-    'Burn': 'burn'
+    'Total Burn': 'totalBurn',
+    'Today Burn': 'todayBurn'
 }
 
 export class AdgroupDetailView extends React.Component {
