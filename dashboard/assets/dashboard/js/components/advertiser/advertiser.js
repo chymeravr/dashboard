@@ -19,7 +19,8 @@ const headers = {
     'End Date': 'endDate',
     'Impressions': 'impressions',
     'Clicks': 'clicks',
-    'Burn': 'burn'
+    'Total Burn': 'totalBurn',
+    'Today Burn': 'todayBurn'
 }
 
 export class AdvertiserView extends React.Component {
