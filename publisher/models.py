@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 import uuid
 
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator
 from django.db import models
 
 
@@ -31,7 +32,7 @@ class App(BaseModel):
     requests = models.IntegerField(default=0)
     impressions = models.IntegerField(default=0)
     clicks = models.IntegerField(default=0)
-    earnings = models.IntegerField(default=0)
+    earnings = models.FloatField(validators=[MinValueValidator(0.0)], default=0)
 
 
 class Placement(BaseModel):
@@ -41,4 +42,4 @@ class Placement(BaseModel):
     requests = models.IntegerField(default=0)
     impressions = models.IntegerField(default=0)
     clicks = models.IntegerField(default=0)
-    earnings = models.IntegerField(default=0)
+    earnings = models.FloatField(validators=[MinValueValidator(0.0)], default=0)
