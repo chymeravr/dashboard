@@ -73,7 +73,6 @@ export class AdgroupEditModal extends React.Component {
         });
         this.setState(Object.assign({}, this.state, { adgroup: newAdgroup }));
         this.validateState();
-        $('.dropdown-button').dropdown('close')
     }
 
     componentDidMount() {

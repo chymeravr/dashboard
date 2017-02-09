@@ -108,7 +108,7 @@ export class PublisherView extends React.Component {
                                 </td>
                                 <td>{config.appStores[app.appStore]}</td>
                                 {Object.keys(headers).map(key => <td key={key}>{app[headers[key]]}</td>)}
-                                <td>{app.status ? "Active" : "Paused"}</td>
+                                <td>{app.approved ? "Active" : "Paused"}</td>
                             </tr>)
                         }
                     </tbody>
