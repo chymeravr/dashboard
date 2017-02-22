@@ -28,28 +28,15 @@ export class CampaignEditModal extends React.Component {
 
 
     validateState() {
-        var valid = this.state.campaign;
-
-        // Campaign should be present
-        if (!valid) {
-            this.setState(Object.assign({}, this.state, { valid: false }));
-            return;
-        }
         var campaign = this.state.campaign;
-
+        var valid = campaign;
         // Campaign fields should be present
-        valid = campaign.name && campaign.startDate && campaign.endDate
-            && campaign.totalBudget &&
-            campaign.campaignType && campaign.dailyBudget;
+        valid = campaign && campaign.name && campaign.startDate && campaign.endDate && campaign.totalBudget &&
+                campaign.campaignType && campaign.dailyBudget;
 
-        if (!valid) {
-            this.setState(Object.assign({}, this.state, { valid: false }));
-            return;
-        }
 
         // Campaign fields should be in bounds
-        valid = +campaign.totalBudget >= 0 && +campaign.dailyBudget >= 0
-            && campaign.name.length > 0;
+        valid = valid && (+campaign.totalBudget >= 0 && +campaign.dailyBudget >= 0 && campaign.name.length > 0);
         this.setState(Object.assign({}, this.state, { valid: valid }));
     }
 
@@ -188,13 +175,13 @@ export class CampaignEditModal extends React.Component {
         const title = this.saveMethod === 'PUT' ? "Edit Campaign" : "Create Campaign";
         return (
             <div id="cmpForm" className="modal modal-fixed-footer">
-                <div className="modal-content valign-wrapper">
+                <div className="modal-content">
                     <div className="container">
                         <h5 className="center">{title}</h5>
                         <br />
                         <br />
                         <div>
-                            <div className="row">
+                            {/*<div className="row">
                                 <div className="col s4">
                                     <div className="input-field">
                                         <select id="campaignTypeSelect" defaultValue={config.defaultCampaignType}>
@@ -205,27 +192,41 @@ export class CampaignEditModal extends React.Component {
                                         <label>Campaign Type</label>
                                     </div>
                                 </div>
-                            </div>
+                            </div>*/}
                             <div className="row">
-                                <div className="col s8">
+                                <div className="col s6">
                                     <FormInput
                                         fieldName="name"
                                         label="Campaign Name"
                                         value={this.state.campaign.name}
                                         handleChange={this.handleChange('name').bind(this)} />
                                 </div>
+                                 <div className="col s6">
+                                    <FormInput
+                                        fieldName="appName"
+                                        label="Promoted App Name"
+                                        value={this.state.campaign.appName}
+                                        handleChange={this.handleChange('appName').bind(this)} />
+                                </div>
                             </div>
                             <div className="row">
-                                <div className="col s5">
+                                <div className="col s12">
+                                    <FormInput
+                                        fieldName="appUrl"
+                                        label="Promoted App Market Url"
+                                        value={this.state.campaign.appUrl}
+                                        handleChange={this.handleChange('appUrl').bind(this)} />
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col s6">
                                     <NumberInput
                                         fieldName="totalBudget"
                                         label="Total Budget ($)"
                                         value={this.state.campaign.totalBudget}
                                         handleChange={this.handleChange('totalBudget').bind(this)} />
                                 </div>
-                                <div className="col s1">
-                                </div>
-                                <div className="col s5">
+                                <div className="col s6">
                                     <NumberInput
                                         fieldName="dailyBudget"
                                         label="Daily Budget ($)"
@@ -234,15 +235,13 @@ export class CampaignEditModal extends React.Component {
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="col s5">
+                                <div className="col s6">
                                     <div className="input-field">
                                         <label htmlFor="startDate">Start Date</label>
                                         <input type="date" id="startDate" className="datepicker" label="Start Date" />
                                     </div>
                                 </div>
-                                <div className="col s1">
-                                </div>
-                                <div className="col s5">
+                                <div className="col s6">
                                     <div className="input-field">
                                         <label htmlFor="endDate">End Date</label>
                                         <input type="date" id="endDate" className="datepicker" label="End Date" />

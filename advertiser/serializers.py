@@ -109,5 +109,6 @@ class CampaignSerializer(serializers.ModelSerializer):
         model = Campaign
         fields = ('user', 'id', 'name', 'campaignType', 'totalBudget',
                   'dailyBudget', 'startDate', 'endDate',
-                  'status', 'adgroups', 'impressions', 'clicks', 'totalBurn', 'todayBurn', 'modified_date')
+                  'status', 'adgroups', 'impressions', 'clicks', 'totalBurn',
+                  'todayBurn', 'modified_date', 'appName', 'appUrl')
         read_only_fields = ('impressions', 'clicks', 'totalBurn', 'todayBurn', 'modified_date')

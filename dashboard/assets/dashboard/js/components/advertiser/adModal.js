@@ -19,7 +19,8 @@ export class AdModal extends React.Component {
 
 
     validateState() {
-        var valid = true; // TODO
+        var valid = this.state.ad && this.state.ad.creative && this.state.ad.landingPage && this.state.ad.name;
+        valid = valid && (this.state.ad.creative.length > 0 && this.state.ad.creative.landingPage.length > 0)
         this.setState(Object.assign({}, this.state, { valid: valid }));
     }
 

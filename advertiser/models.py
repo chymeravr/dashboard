@@ -47,6 +47,8 @@ class Campaign(BaseModel):
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     user = models.ForeignKey(User)
     name = models.CharField(max_length=100)
+    appName = models.CharField(max_length=150, null=True, blank=True)
+    appUrl = models.CharField(max_length=500, null=True, blank=True)
     campaignType = models.ForeignKey(CampaignType)
     totalBudget = models.FloatField(validators=[MinValueValidator(0.0)])
     dailyBudget = models.FloatField(validators=[MinValueValidator(0.0)])
@@ -57,6 +59,7 @@ class Campaign(BaseModel):
     clicks = models.IntegerField(default=0)
     totalBurn = models.FloatField(validators=[MinValueValidator(0.0)], default=0)
     todayBurn = models.FloatField(validators=[MinValueValidator(0.0)], default=0)
+
 
 class Adgroup(BaseModel):
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
@@ -74,7 +77,6 @@ class Adgroup(BaseModel):
     clicks = models.IntegerField(default=0)
     totalBurn = models.FloatField(validators=[MinValueValidator(0.0)], default=0)
     todayBurn = models.FloatField(validators=[MinValueValidator(0.0)], default=0)
-
 
 
 def content_file_name(instance, filename):
