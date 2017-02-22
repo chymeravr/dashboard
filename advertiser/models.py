@@ -86,6 +86,7 @@ class Ad(BaseModel):
     adgroup = models.ForeignKey(Adgroup, related_name='ads')
     name = models.CharField(max_length=200)
     creative = models.ImageField(upload_to=content_file_name)
+    landingPage = models.CharField(max_length=1000)
     status = models.BooleanField(default=False)
     impressions = models.IntegerField(default=0)
     clicks = models.IntegerField(default=0)

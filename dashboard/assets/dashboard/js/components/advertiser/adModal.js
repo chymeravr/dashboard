@@ -53,6 +53,7 @@ export class AdModal extends React.Component {
         var data = new FormData(); data.append("name", this.state.ad.name);
         data.append("adgroup", this.state.ad.adgroup);
         data.append("creative", this.state.ad.creative);
+        data.append("landingPage", this.state.ad.landingPage);
         fetch('/user/api/advertiser/ad/', {
             method: 'POST',
             body: data,
@@ -147,8 +148,15 @@ export class AdModal extends React.Component {
                                     </div>
                                 </div>
                             </div>
+                             <div className="row">
+                                <FormInput
+                                    fieldName="landingPage"
+                                    label="Landing Page"
+                                    value={this.state.ad.landingPage}
+                                    handleChange={this.handleChange('landingPage').bind(this)} />
+                            </div>
                             <div className="row">
-                                <img className="materialboxed" id="adPreview" data-caption="Preview" height="200px" />
+                                <img className="materialboxed" id="adPreview" data-caption="Preview" height="100px" />
 
                             </div>
                         </div>

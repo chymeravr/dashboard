@@ -67,7 +67,7 @@ class AdSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ad
         fields = ['id', 'adgroup', 'creative', 'name',
-                  'impressions', 'clicks', 'totalBurn', 'todayBurn', 'status']
+                  'impressions', 'clicks', 'totalBurn', 'todayBurn', 'status', 'landingPage']
         read_only_fields = ['impressions', 'clicks', 'totalBurn', 'todayBurn']
 
 
