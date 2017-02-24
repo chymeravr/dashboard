@@ -8,15 +8,16 @@ class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = { showHeader: props.showLogout, activeItem: 'home' }
-        this.handleItemClick = this.handleItemClick.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({ showHeader: nextProps.showLogout });
     }
 
-    handleItemClick(e, name) {
-        this.setState({ activeItem: name })
+    handleNavigation(name, path) {
+        return () => {
+            this.setState({ activeItem: name }, hashHistory.push(path))
+        }
     }
 
     handleLogout() {
@@ -49,15 +50,17 @@ class Header extends React.Component {
         const { activeItem } = this.state
 
         return (
-
-            <Menu secondary>
-                <Menu.Item name='home' active={activeItem === 'home'} onClick={() => hashHistory.push('/')} />
-                <Menu.Item name='messages' active={activeItem === 'messages'} onClick={this.handleItemClick} />
-                <Menu.Item name='friends' active={activeItem === 'friends'} onClick={this.handleItemClick} />
-                <Menu.Menu position='right'>
-                    {logoutButton}
-                </Menu.Menu>
-            </Menu>
+            <Segment inverted color='blue'>
+                <Menu inverted borderless size='massive' color='blue'>
+                    <Menu.Item header onClick={this.handleNavigation('home', '/')}>Chymera VR</Menu.Item>
+                    <Menu.Item name='profile' active={activeItem === 'profile'} onClick={this.handleNavigation('profile', '/profile/')} />
+                    <Menu.Item name='advertisers' active={activeItem === 'advertisers'}onClick={this.handleNavigation('advertisers', '/advertiser/')} />
+                    <Menu.Item name='publishers' active={activeItem === 'publishers'} onClick={this.handleNavigation('publishers', '/publisher/')} />
+                    <Menu.Menu position='right'>
+                        {logoutButton}
+                    </Menu.Menu>
+                </Menu>
+            </Segment>
 
         );
     }
