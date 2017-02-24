@@ -2,32 +2,34 @@ var React = require('react')
 import { hashHistory } from 'react-router'
 import { logout } from '../lib'
 import { config } from '../config'
+import { Menu, Segment } from 'semantic-ui-react'
 
 class Header extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { showHeader: props.showLogout }
+        this.state = { showHeader: props.showLogout, activeItem: 'home' }
+        this.handleItemClick = this.handleItemClick.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({showHeader: nextProps.showLogout});
+        this.setState({ showHeader: nextProps.showLogout });
     }
 
+    handleItemClick(e, name) {
+        this.setState({ activeItem: name })
+    }
+
+    handleLogout() {
+        logout(hashHistory);
+    }
     render() {
         var style = {
             fontWeight: "lighter",
-            color: '#ffffff',
-            fontFamily: 'Cantora One'
+            // fontFamily: 'Cantora One'
         }
 
         if (this.state.showHeader && localStorage.getItem(config.jwt.tokenKey)) {
-            var logoutButton = (
-                <li>
-                    <a className="modal-action waves-effect waves-blue btn-flat white blue-text"
-                        onClick={e => logout(hashHistory)}>
-                        Logout
-                    </a>
-                </li>)
+            var logoutButton = <Menu.Item name='logout' onClick={this.handleLogout} />
         } else {
             var logoutButton = ""
         }
@@ -36,30 +38,27 @@ class Header extends React.Component {
         var Links = (
             <div>
                 {// <li><a href="sass.html">Sass</a></li>
-                // <li><a href="badges.html">Components</a></li>
-                // <li><a href="collapsible.html">Javascript</a></li>
-                // <li><a href="mobile.html">Mobile</a></li>
+                    // <li><a href="badges.html">Components</a></li>
+                    // <li><a href="collapsible.html">Javascript</a></li>
+                    // <li><a href="mobile.html">Mobile</a></li>
                 }
                 {logoutButton}
             </div>
         );
+
+        const { activeItem } = this.state
+
         return (
-            <header>
-                <nav>
-                    <div className="nav-wrapper container">
-                        <a href="/" className="brand-logo" style={style}>Chymera <strong>VR</strong></a>
-                        <a href="#" data-activates="mobile-demo" className="button-collapse"
-                            ref={select => this._select = select}>
-                            <i className="material-icons">menu</i></a>
-                        <ul className="right hide-on-med-and-down">
-                            {Links}
-                        </ul>
-                        <ul className="side-nav" id="mobile-demo">
-                            {Links}
-                        </ul>
-                    </div>
-                </nav>
-            </header>
+
+            <Menu secondary>
+                <Menu.Item name='home' active={activeItem === 'home'} onClick={() => hashHistory.push('/')} />
+                <Menu.Item name='messages' active={activeItem === 'messages'} onClick={this.handleItemClick} />
+                <Menu.Item name='friends' active={activeItem === 'friends'} onClick={this.handleItemClick} />
+                <Menu.Menu position='right'>
+                    {logoutButton}
+                </Menu.Menu>
+            </Menu>
+
         );
     }
 }

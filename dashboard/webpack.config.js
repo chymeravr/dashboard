@@ -44,7 +44,19 @@ module.exports = {
                     //specify that we will be dealing with React code
                     presets: ['react', 'stage-2', 'es2015']
                 }
-            }
+            },
+            { 
+                test: /\.(png|woff|woff2|eot|ttf|svg)$/, 
+                loader: 'url-loader?limit=100000',
+                exclude: /node_modules/,
+            },
+            {
+                test: /\.css$/,
+                include: path.resolve(__dirname, '../semantic/dist'),
+                loader: 'style-loader!css-loader!postcss-loader', // whatever I put here doesn't matter
+                exclude: /node_modules/,
+
+            },
         ]
     },
 

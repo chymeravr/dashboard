@@ -1693,7 +1693,7 @@ input:-webkit-autofill {
  *    without disabling user zoom.
  */
 html {
-  font-family: 'Cantora One' ;
+  font-family: 'Cantora One';
   /* 1 */
   -ms-text-size-adjust: 100%;
   /* 2 */

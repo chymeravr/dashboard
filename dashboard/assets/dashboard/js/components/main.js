@@ -17,6 +17,7 @@ import { PublisherView } from './publisher/publisher'
 import { AppDetailView } from './publisher/appDetail'
 import { debug, callApiWithJwt } from '../lib.js'
 import ReactGA from 'react-ga'
+import '../../../../../semantic/dist/semantic.min.css';
 
 ReactGA.initialize('UA-89829978-1');
 
