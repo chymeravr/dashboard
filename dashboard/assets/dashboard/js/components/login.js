@@ -66,18 +66,21 @@ export class LoginForm extends React.Component {
         ) : <div></div>
 
         return (
-            <Grid centered stretched verticalAlign='middle' columns={4}>
-                <Grid.Row verticalAlign='middle'>
-                    <Grid.Column verticalAlign='middle'>
-                        {errorMessage}
-                        <Form>
-                            <Form.Input placeholder='Username' onChange={(e, d) => this.handleChange('username')(e, d)} />
-                            <Form.Input placeholder='Password' type='password' onChange={(e, d) => this.handleChange('password')(e, d)} />
-                            <Button color='orange' type='submit' onClick={(e) => this.tryLogin(e)}>Login</Button>
-                        </Form>
-                    </Grid.Column>
-                </Grid.Row>
-            </Grid>
+            <main className="Site-content ui center aligned grid" style={{ backgroundColor: '#2185d0' }}>
+
+                <Grid centered stretched verticalAlign='middle' columns={4}>
+                    <Grid.Row verticalAlign='middle'>
+                        <Grid.Column verticalAlign='middle'>
+                            {errorMessage}
+                            <Form>
+                                <Form.Input placeholder='Username' onChange={(e, d) => this.handleChange('username')(e, d)} />
+                                <Form.Input placeholder='Password' type='password' onChange={(e, d) => this.handleChange('password')(e, d)} />
+                                <Button color='orange' type='submit' onClick={(e) => this.tryLogin(e)}>Login</Button>
+                            </Form>
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
+            </main>
         );
     }
 }

@@ -6,7 +6,7 @@ import { Grid, Segment, List, Menu, Image, Header, Icon, Dimmer } from 'semantic
 class Footer extends React.Component {
     render() {
         var style = {
-            color: '#ffffff'
+            color: '#ffffff',
         }
 
         return (

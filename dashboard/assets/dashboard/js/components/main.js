@@ -113,9 +113,8 @@ class AppView extends React.Component {
             return (
                 <div className="Site">
                     <Header showLogout={dashboard} currentPath={this.props.location.pathname} />
-                    <main className={"Site-content" + align}>
+                   
                         {this.props.children}
-                    </main>
                     <Footer />
                 </div>
             );

@@ -28,7 +28,7 @@ class Header extends React.Component {
         }
 
         if (this.state.showHeader && localStorage.getItem(config.jwt.tokenKey)) {
-            var logoutButton = <Menu.Item name='logout' onClick={this.handleLogout} />
+            var logoutButton = <Menu.Item position="right" name='logout' onClick={this.handleLogout} />
         } else {
             var logoutButton = ""
         }
@@ -57,15 +57,15 @@ class Header extends React.Component {
         }
 
         return (
-            <Menu borderless size='massive' floated='right'>
+            <Menu attached secondary inverted size='massive' floated='right' color='blue' style={{ padding: '20px 10px 20px 20px', margin: 0 }} verticalAlign='bottom' >
                 <Menu.Item />
-                <Image size='small' src='/static/img/Logo.png' href='/' />
+                <Image src="/static/img/Logo.png" size="tiny" as={Link} to="/" style={{marginBottom:-10}}/>
+                <Menu.Item />
                 <Menu.Item name='profile' active={activeItem === 'profile'} as={Link} to='/profile/' />
                 <Menu.Item name='advertisers' active={activeItem === 'advertiser'} as={Link} to='/advertiser/' />
                 <Menu.Item name='publishers' active={activeItem === 'publisher'} as={Link} to='/publisher/' />
-                <Menu.Item position='right'>
-                    {logoutButton}
-                </Menu.Item>
+                {logoutButton}
+                <Menu.Item />
             </Menu>
 
         );
