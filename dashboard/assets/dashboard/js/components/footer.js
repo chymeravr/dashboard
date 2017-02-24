@@ -3,13 +3,11 @@ var React = require('react')
 class Footer extends React.Component {
     render() {
         var style = {
-            fontWeight: "lighter",
-            color: '#ffffff',
-            marginTop: '0px'
+           
         }
 
         return (
-            <footer className="page-footer" style={style}>
+            <footer style={style}>
                 <div className="container">
                     <div className="row">
                         <div className="col s6">

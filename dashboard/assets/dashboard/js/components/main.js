@@ -18,6 +18,7 @@ import { AppDetailView } from './publisher/appDetail'
 import { debug, callApiWithJwt } from '../lib.js'
 import ReactGA from 'react-ga'
 import '../../../../../semantic/dist/semantic.min.css';
+import { Grid, Container } from 'semantic-ui-react'
 
 ReactGA.initialize('UA-89829978-1');
 
@@ -105,28 +106,23 @@ class AppView extends React.Component {
         }
 
         var mainStyle = {
-            "flex": "1 1 auto",
-            "overflowY": "auto",
-            "minHeight": "0px"
+
         }
 
         if (!this.state.adblock || currentRoute == "home") {
             return (
-                <div className="page-flexbox-wrapper" >
-                    <Header showLogout={dashboard} />
-                    <main className={align} style={mainStyle}>
+                <div className="Site">
+                    <Header showLogout={dashboard} currentPath={this.props.location.pathname} />
+                    <Grid>
                         {this.props.children}
-                    </main>
+                    </Grid>
                     <Footer />
                 </div>
             );
         } else {
             return (
-
-
-
                 <div className="page-flexbox-wrapper" >
-                    <Header showLogout={dashboard} />
+                    <Header showLogout={dashboard} currentPath={this.props.location.pathname} />
                     <main className={align} style={mainStyle}>
                         <div className="container center-align">
                             <ReactCSSTransitionGroup
@@ -158,8 +154,7 @@ render((
         <Route path="/" component={AppView}>
             <IndexRoute name="home" component={HomeView} />
             <Route name="login" path="/login" component={LoginForm} />
-            <Route name="profile" path="/profile/"
-                component={ProfileView} />} />
+            <Route name="profile" path="/profile/" component={ProfileView} />} />
             <Route name="advertiser" path="/advertiser/" component={AdvertiserView} />
             <Route name="campaignDetail" path="/advertiser/campaigns/:campaignId" component={CampaignDetailView} />
             <Route name="adgroupDetail" path="/advertiser/adgroups/:adgroupId" component={AdgroupDetailView} />

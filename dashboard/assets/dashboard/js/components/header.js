@@ -1,23 +1,21 @@
 var React = require('react')
-import { hashHistory } from 'react-router'
+import { Link, hashHistory } from 'react-router'
 import { logout } from '../lib'
 import { config } from '../config'
-import { Menu, Segment } from 'semantic-ui-react'
+import { Menu, Segment, Image } from 'semantic-ui-react'
 
 class Header extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { showHeader: props.showLogout, activeItem: 'home' }
+        this.state = {
+            showHeader: props.showLogout,
+            currentPath: props.currentPath
+        }
+        console.info(this.state)
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({ showHeader: nextProps.showLogout });
-    }
-
-    handleNavigation(name, path) {
-        return () => {
-            this.setState({ activeItem: name }, hashHistory.push(path))
-        }
+        this.setState({ showHeader: nextProps.showLogout, currentPath: nextProps.currentPath });
     }
 
     handleLogout() {
@@ -47,15 +45,25 @@ class Header extends React.Component {
             </div>
         );
 
-        const { activeItem } = this.state
+        const currentPath = this.state.currentPath
+        console.info(currentPath)
+        var activeItem = '';
+        if (currentPath.match('publisher')) {
+            activeItem = 'publisher';
+        } else if (currentPath.match('advertiser')) {
+            activeItem = 'advertiser';
+        } else if (currentPath.match('profile')) {
+            activeItem = 'profile';
+        }
 
         return (
             <Segment inverted color='blue'>
                 <Menu inverted borderless size='massive' color='blue'>
-                    <Menu.Item header onClick={this.handleNavigation('home', '/')}>Chymera VR</Menu.Item>
-                    <Menu.Item name='profile' active={activeItem === 'profile'} onClick={this.handleNavigation('profile', '/profile/')} />
-                    <Menu.Item name='advertisers' active={activeItem === 'advertisers'}onClick={this.handleNavigation('advertisers', '/advertiser/')} />
-                    <Menu.Item name='publishers' active={activeItem === 'publishers'} onClick={this.handleNavigation('publishers', '/publisher/')} />
+                    <Image size='tiny' src='/static/img/Logo.png' href='/'/>
+                    <Menu.Item />
+                    <Menu.Item name='profile' active={activeItem === 'profile'} as={Link} to='/profile/' />
+                    <Menu.Item name='advertisers' active={activeItem === 'advertiser'} as={Link} to='/advertiser/' />
+                    <Menu.Item name='publishers' active={activeItem === 'publisher'} as={Link} to='/publisher/' />
                     <Menu.Menu position='right'>
                         {logoutButton}
                     </Menu.Menu>

@@ -4,6 +4,7 @@ import { hashHistory } from 'react-router';
 import { callRawApiWithJwt, callApiWithJwt, debug } from '../lib.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 import { FormInput } from './common'
+import { Button, Form, Container, Grid, Message } from 'semantic-ui-react'
 
 export class LoginForm extends React.Component {
     constructor(props) {
@@ -25,15 +26,15 @@ export class LoginForm extends React.Component {
 
 
     handleChange(key) {
-        return function (e) {
+        return (e, d) => {
             var state = {};
-            state[key] = e.target.value;
-            this.setState(Object.assign({}, this.state, state));
+            state[key] = d.value;
+            this.setState(Object.assign({}, this.state, state), console.info(this.state));
         };
+
     }
 
     componentDidMount() {
-        this.refs.loginform.onsubmit = (e) => this.tryLogin(e);
         document.title = "Login";
     }
 
@@ -57,53 +58,26 @@ export class LoginForm extends React.Component {
 
     render() {
         const errorMessage = this.state.failed ? (
-            <ReactCSSTransitionGroup
-                component="div"
-                transitionName="fadeTransition"
-                transitionAppear={true}
-                transitionLeave={false}
-                transitionEnterTimeout={500}
-                transitionLeaveTimeout={500}
-                transitionAppearTimeout={500}
-                className="center-align container">
-                <div className="card-panel z-depth-3 red lighten-2 white-text ">
-                    INVALID CREDENTIALS
-                </div>
-            </ReactCSSTransitionGroup>
+            <Message
+                error
+                header='Invalid credentials'
+                content='Username and Password are case sensitive'
+                />
         ) : <div></div>
 
         return (
-            <ReactCSSTransitionGroup
-                component="div"
-                transitionName="fadeTransition"
-                transitionAppear={true}
-                transitionLeave={false}
-                transitionEnterTimeout={500}
-                transitionLeaveTimeout={500}
-                transitionAppearTimeout={500}
-                className="container">
-                <form className="row" onSubmit={e => this.tryLogin(e)} method="post" ref="loginform">
-                    <div className="col s6 offset-s3">
+            <Grid centered stretched={true} verticalAlign='middle' columns={4}>
+                <Grid.Row>
+                    <Grid.Column>
                         {errorMessage}
-                        <br />
-                        <br />
-                        <FormInput
-                            fieldName="username"
-                            label="Username"
-                            value={this.state.username}
-                            handleChange={this.handleChange('username').bind(this)} />
-                        <FormInput
-                            fieldName="password"
-                            label="Password"
-                            value={this.state.password}
-                            handleChange={this.handleChange('password').bind(this)}
-                            type="password" />
-                        <a className="waves-effect waves-light btn right" onClick={e => this.tryLogin(e)}>
-                            Login
-                        </a>
-                    </div>
-                </form>
-            </ReactCSSTransitionGroup>
+                        <Form>
+                            <Form.Input placeholder='Username' onChange={(e, d) => this.handleChange('username')(e, d)} />
+                            <Form.Input placeholder='Password' type='password' onChange={(e, d) => this.handleChange('password')(e, d)} />
+                            <Button color='orange' type='submit' onClick={(e) => this.tryLogin(e)}>Login</Button>
+                        </Form>
+                    </Grid.Column>
+                </Grid.Row>
+            </Grid>
         );
     }
 }
