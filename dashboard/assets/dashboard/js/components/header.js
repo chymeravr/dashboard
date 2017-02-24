@@ -57,9 +57,9 @@ class Header extends React.Component {
         }
 
         return (
-            <Segment inverted color='blue'>
-                <Menu inverted borderless size='massive' color='blue'>
-                    <Image size='tiny' src='/static/img/Logo.png' href='/'/>
+            <Segment>
+                <Image size='tiny' src='/static/img/Logo.png' href='/' />
+                <Menu borderless size='massive' floated='right'>
                     <Menu.Item />
                     <Menu.Item name='profile' active={activeItem === 'profile'} as={Link} to='/profile/' />
                     <Menu.Item name='advertisers' active={activeItem === 'advertiser'} as={Link} to='/advertiser/' />

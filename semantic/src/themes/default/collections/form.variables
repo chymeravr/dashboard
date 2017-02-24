@@ -34,7 +34,7 @@
 @inputPadding: (@inputVerticalPadding + ((1em - @inputLineHeight) / 2)) @inputHorizontalPadding;
 @inputBorder: 1px solid @borderColor;
 @inputBorderRadius: @absoluteBorderRadius;
-@inputColor: @textColor;
+@inputColor: #666666;
 @inputTransition:
   color @defaultDuration @defaultEasing,
   border-color @defaultDuration @defaultEasing
@@ -48,7 +48,7 @@
 @selectPadding: 0.62em @inputHorizontalPadding;
 @selectBoxShadow: @inputBoxShadow;
 @selectTransition: @inputTransition;
-@selectColor: @inputColor;
+@selectColor: #666666;
 
 /* Text Area */
 @textAreaPadding: @inputVerticalPadding @inputHorizontalPadding;

@@ -1,28 +1,57 @@
 var React = require('react')
+import { Link } from 'react-router'
+import { Grid, Segment, List, Menu, Image, Header, Icon, Dimmer } from 'semantic-ui-react'
+
 
 class Footer extends React.Component {
     render() {
         var style = {
-           
+            color: '#ffffff'
         }
 
         return (
             <footer style={style}>
-                <div className="container">
-                    <div className="row">
-                        <div className="col s6">
-                            <h5 className="white-text">Links</h5>
-                            <ul>
-                                <li><a className="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                                <li><a className="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                            </ul>
-                        </div>
-                         <div className="col s6 offset-6">
-                            <a className="grey-text text-lighten-4 right" href="#!">© 2016 Copyright</a>
-                        </div>
-                    </div>
-                </div>
-
+                <Segment inverted attached padded>
+                    <Grid columns={16}>
+                        <Grid.Row>
+                            <Grid.Column width={1} />
+                            <Grid.Column width={6} verticalAlign='bottom'>
+                                <List inverted>
+                                    <List.Item>
+                                        <Image src='/static/img/Logo.png' size='small' inline={true}>
+                                        </Image>
+                                    </List.Item>
+                                    <List.Item disabled  href='/'>© Chymera VR, Inc.</List.Item>
+                                </List>
+                            </Grid.Column>
+                            <Grid.Column width={4} />
+                            <Grid.Column width={2}>
+                                <List link inverted>
+                                    <List.Item><Header>Links</Header></List.Item>
+                                    <List.Item as='a'>Contact Us</List.Item>
+                                    <List.Item as='a'>Blog</List.Item>
+                                    <List.Item as='a'>Careers</List.Item>
+                                    <List.Item as='a'>Press</List.Item>
+                                </List>
+                            </Grid.Column>
+                            <Grid.Column width={2}>
+                                <List link inverted>
+                                    <List.Item><Header>Socials</Header></List.Item>
+                                    <List.Item as='a'>
+                                        <Icon name='facebook' /> Facebook
+                                    </List.Item>
+                                    <List.Item as='a'>
+                                        <Icon name='linkedin' /> LinkedIn
+                                    </List.Item>
+                                    <List.Item as='a'>
+                                        <Icon name='twitter' /> Twitter
+                                    </List.Item>
+                                </List>
+                            </Grid.Column>
+                        </Grid.Row>
+                        
+                    </Grid>
+                </Segment>
             </footer>
         );
     }

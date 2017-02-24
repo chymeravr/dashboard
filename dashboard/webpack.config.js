@@ -55,7 +55,6 @@ module.exports = {
                 include: path.resolve(__dirname, '../semantic/dist'),
                 loader: 'style-loader!css-loader!postcss-loader', // whatever I put here doesn't matter
                 exclude: /node_modules/,
-
             },
         ]
     },

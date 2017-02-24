@@ -10,13 +10,13 @@
 @verticalMargin: @medium;
 @horizontalMargin: 0em;
 @margin: @verticalMargin @horizontalMargin;
-@background: #FFFFFF;
+@background: #008FCB;
 @fontFamily: @pageFont;
 @itemBackground: none;
 @fontWeight: normal;
-@borderWidth: 1px;
+@borderWidth: 0px;
 @border: @borderWidth solid @borderColor;
-@boxShadow: @subtleShadow;
+@boxShadow: none;
 @borderRadius: @defaultBorderRadius;
 @minHeight: (@itemVerticalPadding * 2) + 1em;
 
@@ -168,22 +168,22 @@
 
 /* Active Item */
 @activeItemBackground: @transparentBlack;
-@activeItemTextColor: @selectedTextColor;
+@activeItemTextColor: #FFF;
 @activeItemFontWeight: normal;
 @activeIconOpacity: 1;
 @activeItemBoxShadow: none;
 
 /* Active Hovered Item */
 @activeHoverItemBackground: @transparentBlack;
-@activeHoverItemColor: @selectedTextColor;
+@activeHoverItemColor: #FFF;
 
 /* Selected Dropdown */
 @dropdownSelectedItemBackground: @transparentBlack;
-@dropdownSelectedItemColor: @selectedTextColor;
+@dropdownSelectedItemColor: #FFF;
 
 /* Active Dropdown */
 @dropdownActiveItemBackground: @subtleTransparentBlack;
-@dropdownActiveItemColor: @selectedTextColor;
+@dropdownActiveItemColor: #FFF;
 @dropdownActiveItemFontWeight: bold;
 
 /* Active Sub Menu */

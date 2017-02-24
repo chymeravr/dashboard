@@ -66,9 +66,9 @@ export class LoginForm extends React.Component {
         ) : <div></div>
 
         return (
-            <Grid centered stretched={true} verticalAlign='middle' columns={4}>
-                <Grid.Row>
-                    <Grid.Column>
+            <Grid centered stretched verticalAlign='middle' columns={4}>
+                <Grid.Row verticalAlign='middle'>
+                    <Grid.Column verticalAlign='middle'>
                         {errorMessage}
                         <Form>
                             <Form.Input placeholder='Username' onChange={(e, d) => this.handleChange('username')(e, d)} />

@@ -98,7 +98,7 @@ class AppView extends React.Component {
             || currentRoute == 'profile'
             || currentRoute == 'home'
             || currentRoute == 'login') {
-            align += " valign-wrapper";
+            align += "  ui center aligned grid";
 
             if (currentRoute != 'profile') { // Center profile but show logout button as well
                 dashboard = false;
@@ -113,9 +113,9 @@ class AppView extends React.Component {
             return (
                 <div className="Site">
                     <Header showLogout={dashboard} currentPath={this.props.location.pathname} />
-                    <Grid>
+                    <main className={"Site-content" + align}>
                         {this.props.children}
-                    </Grid>
+                    </main>
                     <Footer />
                 </div>
             );

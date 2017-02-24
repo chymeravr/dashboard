@@ -6,16 +6,16 @@
        Element
 --------------------*/
 
-@background: @white;
-@borderWidth: 1px;
+@background: @primaryColor;
+@borderWidth: 0px;
 @border: @borderWidth solid @borderColor;
 
-@boxShadow: @subtleShadow;
+@boxShadow: none;
 @verticalPadding: 1em;
 @horizontalPadding: 1em;
 @padding: @verticalPadding @horizontalPadding;
 
-@verticalMargin: 1rem;
+@verticalMargin: 0rem;
 @horizontalMargin: 0em;
 @margin: @verticalMargin @horizontalMargin;
 @borderRadius: @defaultBorderRadius;
@@ -26,7 +26,7 @@
 
 @groupedMargin: @margin;
 @groupedBorder: @border;
-@groupedBoxShadow: @boxShadow;
+@groupedBoxShadow: none;
 @groupedBorderRadius: @borderRadius;
 
 @nestedGroupMargin: @verticalMargin @verticalMargin;

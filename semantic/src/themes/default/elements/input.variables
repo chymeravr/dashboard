@@ -70,13 +70,13 @@
 /* Down */
 @downBorderColor: rgba(0, 0, 0, 0.3);
 @downBackground: #FAFAFA;
-@downColor: @textColor;
+@downColor: #666666;
 @downBoxShadow: none;
 
 /* Focus */
 @focusBorderColor: @focusedFormBorderColor;
 @focusBackground: @background;
-@focusColor: @hoveredTextColor;
+@focusColor: #666666;
 @focusBoxShadow: none;
 
 /* Error */
