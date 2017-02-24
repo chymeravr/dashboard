@@ -25,10 +25,10 @@
 --------------------*/
 
 /* This is the single variable that controls them all */
-@emSize   : 16px;
+@emSize   : 14px;
 
 /* The size of page text  */
-@fontSize : 16px;
+@fontSize : 14px;
 
 
 /*-------------------
@@ -47,7 +47,7 @@
     Brand Colors
 --------------------*/
 
-@primaryColor        : #008FCB;
+@primaryColor        : @blue;
 @secondaryColor      : @black;
 
 @lightPrimaryColor   : @lightBlue;
@@ -77,9 +77,9 @@
 @inputPadding           : @inputVerticalPadding @inputHorizontalPadding;
 
 /* Input Text Color */
-@inputColor: #666666;
-@inputPlaceholderColor: #666666;
-@inputPlaceholderFocusColor: #666666;
+@inputColor: @textColor;
+@inputPlaceholderColor: lighten(@inputColor, 75);
+@inputPlaceholderFocusColor: lighten(@inputColor, 45);
 
 /* Line Height Default For Inputs in Browser (Descendors are 17px at 14px base em) */
 @inputLineHeight: unit((17 / 14), em);
@@ -117,11 +117,11 @@
         Page
 --------------------*/
 
-@pageBackground      : #008FCB;
+@pageBackground      : #FFFFFF;
 @pageOverflowX       : hidden;
 
 @lineHeight          : 1.4285em;
-@textColor           : rgba(255, 255, 255, 1);
+@textColor           : rgba(0, 0, 0, 0.87);
 
 /*-------------------
       Paragraph
@@ -134,7 +134,7 @@
        Links
 --------------------*/
 
-@linkColor           : #FFFFFF;
+@linkColor           : #4183C4;
 @linkUnderline       : none;
 @linkHoverColor      : darken(saturate(@linkColor, 20), 15, relative);
 @linkHoverUnderline  : @linkUnderline;
@@ -406,9 +406,9 @@
 @lightTextColor              : rgba(0, 0, 0, 0.4);
 
 @unselectedTextColor         : rgba(0, 0, 0, 0.4);
-@hoveredTextColor            : rgba(255, 255, 255, 1);
+@hoveredTextColor            : rgba(0, 0, 0, 0.8);
 @pressedTextColor            : rgba(0, 0, 0, 0.9);
-@selectedTextColor           : rgba(102, 102, 102, 1);
+@selectedTextColor           : rgba(0, 0, 0, 0.95);
 @disabledTextColor           : rgba(0, 0, 0, 0.2);
 
 @invertedTextColor           : rgba(255, 255, 255, 0.9);
