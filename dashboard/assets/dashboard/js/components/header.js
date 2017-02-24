@@ -57,18 +57,16 @@ class Header extends React.Component {
         }
 
         return (
-            <Segment>
-                <Image size='tiny' src='/static/img/Logo.png' href='/' />
-                <Menu borderless size='massive' floated='right'>
-                    <Menu.Item />
-                    <Menu.Item name='profile' active={activeItem === 'profile'} as={Link} to='/profile/' />
-                    <Menu.Item name='advertisers' active={activeItem === 'advertiser'} as={Link} to='/advertiser/' />
-                    <Menu.Item name='publishers' active={activeItem === 'publisher'} as={Link} to='/publisher/' />
-                    <Menu.Menu position='right'>
-                        {logoutButton}
-                    </Menu.Menu>
-                </Menu>
-            </Segment>
+            <Menu borderless size='massive' floated='right'>
+                <Menu.Item />
+                <Image size='small' src='/static/img/Logo.png' href='/' />
+                <Menu.Item name='profile' active={activeItem === 'profile'} as={Link} to='/profile/' />
+                <Menu.Item name='advertisers' active={activeItem === 'advertiser'} as={Link} to='/advertiser/' />
+                <Menu.Item name='publishers' active={activeItem === 'publisher'} as={Link} to='/publisher/' />
+                <Menu.Item position='right'>
+                    {logoutButton}
+                </Menu.Item>
+            </Menu>
 
         );
     }
