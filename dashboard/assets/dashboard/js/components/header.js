@@ -17,6 +17,7 @@ class Header extends React.Component {
         var style = {
             fontWeight: "lighter",
             color: '#ffffff',
+            fontFamily: 'Cantora One'
         }
 
         if (this.state.showHeader && localStorage.getItem(config.jwt.tokenKey)) {
