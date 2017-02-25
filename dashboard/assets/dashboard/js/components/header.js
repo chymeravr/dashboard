@@ -28,7 +28,7 @@ class Header extends React.Component {
         }
 
         if (this.state.showHeader && localStorage.getItem(config.jwt.tokenKey)) {
-            var logoutButton = <Menu.Item position="right" name='logout' onClick={this.handleLogout} />
+            var logoutButton = <Menu.Item  position="right" name='logout' onClick={this.handleLogout} />
         } else {
             var logoutButton = ""
         }

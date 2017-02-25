@@ -5,58 +5,6 @@ import { hashHistory, Link } from 'react-router';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 import { Button, Form, Container, Grid, Message, Card, Image, Statistic, Icon } from 'semantic-ui-react'
 
-class Offering extends React.Component {
-    constructor(props) {
-        super(props);
-        this.balance = props.balance;
-        this.offering = props.offering;
-        this.message = props.message;
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.balance = nextProps.balance;
-        this.offering = nextProps.offering;
-        this.message = nextProps.message;
-    }
-
-    render() {
-        console.info(this.balance);
-        const offeringLinkStyle = {
-            fontWeight: 'bold',
-            fontSize: '30px',
-            textAlign: 'center',
-            color: '#eeeeee',
-        }
-        switch (this.offering) {
-            case 'Advertise':
-                var message = "Funds available"
-                var linkTo = "/advertiser/"
-                break;
-            case 'Monetise':
-                var message = "Earnings available"
-                var linkTo = "/publisher/"
-                break
-        }
-        return (
-            <div>
-                <div className="col s12 m6">
-                    <div className="card blue-grey lighten-2">
-                        <div className="card-content white-text">
-                            <span className="card-title">$ {this.balance}</span>
-                            <p>{message}</p>
-                        </div>
-                        <div className="card-action blue-grey center-align">
-                            <Link to={linkTo} style={offeringLinkStyle}>
-                                {this.offering}
-                            </Link>
-                        </div>
-                    </div>
-                </div >
-            </div >
-        );
-    }
-}
-
 export class ProfileView extends React.Component {
     constructor(props) {
         super(props);
@@ -122,7 +70,7 @@ export class ProfileView extends React.Component {
             var body = <div key="notloaded"></div>
         }
         return (
-            <main className="Site-content ui center aligned grid" style={{ backgroundColor: '#2185d0' }}>
+            <main className="Site-content ui center aligned grid" style={{ backgroundColor: '#2185d0', height: '100vh' }}>
                 {body}
             </main>
         );

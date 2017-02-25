@@ -15,7 +15,6 @@ import { DateRangePicker } from 'react-dates';
  * Store direct properties of campaigns which can be printed by map
  */
 const headers = {
-    //'Name': 'name',
     'Total Budget': 'totalBudget',
     'Daily Budget': 'dailyBudget',
     'Start Date': 'startDate',
@@ -32,6 +31,7 @@ export class AdvertiserView extends React.Component {
         this.state = { modalIsOpen: false };
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
 
@@ -40,7 +40,7 @@ export class AdvertiserView extends React.Component {
             var state = {};
             state[key] = e.target.value;
             this.setState(Object.assign({}, this.state, state));
-        }.bind(this);
+        };
     }
 
     componentWillMount() {
@@ -61,7 +61,7 @@ export class AdvertiserView extends React.Component {
     }
 
     componentDidMount() {
-        document.title = "Advertiser"
+        document.title = "Campaigns"
     }
 
     postSave(campaign) {
@@ -100,34 +100,8 @@ export class AdvertiserView extends React.Component {
             return spinner
         }
 
-
-        var heightStyle = {
-            height: '100%',
-            minHeight: '100%',
-        }
-
-        if (this.state.campaigns.length == 0) {
-            var noCmpMessage = (
-                <div className="container center">
-                    <div className=" center">
-                        <div className="col s12 m5">
-                            <div className="card-panel blue-grey">
-                                <span className="white-text">
-                                    NO CAMPAIGNS FOUND
-                            </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )
-        } else {
-            var noCmpMessage = <div></div>
-        }
-
-        const { focusedInput, startDate, endDate } = this.state;
-
         return (
-            <main className="Site-content ui center aligned grid">
+            <main className="Site-content ui center aligned grid" style={{ height: '92vh' }}>
                 <Grid centered columns={16} style={{ margin: 0 }} >
                     <Grid.Row columns={1}>
                         <Grid.Column width={2}>

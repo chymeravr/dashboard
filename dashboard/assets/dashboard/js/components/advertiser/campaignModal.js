@@ -75,10 +75,6 @@ export class CampaignEditModal extends React.Component {
         this.setState(Object.assign({}, this.state, { valid: valid }), console.info(this.state));
     }
 
-    componentDidMount() {
-
-    }
-
     saveCampaign() {
         const apiSuffix = this.saveMethod === 'PUT' ? this.state.campaign.id : '';
         const apiPath = '/user/api/advertiser/campaigns/' + apiSuffix;
