@@ -75,7 +75,7 @@ export class LoginForm extends React.Component {
                             <Form>
                                 <Form.Input placeholder='Username' onChange={(e, d) => this.handleChange('username')(e, d)} />
                                 <Form.Input placeholder='Password' type='password' onChange={(e, d) => this.handleChange('password')(e, d)} />
-                                <Button color='orange' type='submit' onClick={(e) => this.tryLogin(e)}>Login</Button>
+                                <Button type='submit' onClick={(e) => this.tryLogin(e)}>Login</Button>
                             </Form>
                         </Grid.Column>
                     </Grid.Row>

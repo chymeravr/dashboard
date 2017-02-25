@@ -3,6 +3,7 @@ import { debug, callApiWithJwt } from '../lib.js'
 import { config } from '../config.js'
 import { hashHistory, Link } from 'react-router';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
+import { Button, Form, Container, Grid, Message, Card, Image, Statistic, Icon } from 'semantic-ui-react'
 
 class Offering extends React.Component {
     constructor(props) {
@@ -85,12 +86,33 @@ export class ProfileView extends React.Component {
             var body = (
                 // Key is important for transitions
                 <div key="loaded" className="row">
-                    <div className="col s8 offset-s2">
-                        <Offering offering="Advertise"
-                            balance={this.state.advertising_budget} />
-                        <Offering offering="Monetise"
-                            balance={this.state.publisher_earnings} />
-                    </div>
+                    <Grid centered stretched verticalAlign='middle' columns={4}>
+                        <Grid.Row verticalAlign='middle'>
+                            <Grid.Column verticalAlign='middle'>
+                                <Card>
+                                    <Card.Content>
+                                        <Card.Header>{this.state.user.username}</Card.Header>
+                                        <Card.Description>
+                                            <Statistic>
+                                                <Statistic.Label>Funds</Statistic.Label>
+                                                <Statistic.Value>{this.state.advertising_budget}<Icon name="dollar" size="mini" /></Statistic.Value>
+                                            </Statistic>
+                                            <Statistic>
+                                                <Statistic.Label>Earnings</Statistic.Label>
+                                                <Statistic.Value>{this.state.publisher_earnings}<Icon name="dollar" size="mini" /></Statistic.Value>
+                                            </Statistic>
+                                        </Card.Description>
+                                    </Card.Content>
+                                    <Card.Content extra>
+                                        <div className='ui two buttons'>
+                                            <Button color='blue' as={Link} to='/advertiser/'>Advertise</Button>
+                                            <Button inverted color='blue' as={Link} to='/publisher/'>Monetize</Button>
+                                        </div>
+                                    </Card.Content>
+                                </Card>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
                 </div>
             )
         } else {
@@ -100,16 +122,9 @@ export class ProfileView extends React.Component {
             var body = <div key="notloaded"></div>
         }
         return (
-            <ReactCSSTransitionGroup
-                transitionName="fadeTransition"
-                transitionAppear={true}
-                transitionLeave={false}
-                transitionEnterTimeout={500}
-                transitionLeaveTimeout={500}
-                transitionAppearTimeout={500}
-                className="container">
+            <main className="Site-content ui center aligned grid" style={{ backgroundColor: '#2185d0' }}>
                 {body}
-            </ReactCSSTransitionGroup>
+            </main>
         );
     }
 }
