@@ -31,6 +31,7 @@ export class AdvertiserView extends React.Component {
         super(props);
         this.state = { modalIsOpen: false };
         this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
 
 
@@ -66,15 +67,16 @@ export class AdvertiserView extends React.Component {
     postSave(campaign) {
         campaign.key = campaign.id;
         this.state.campaigns.unshift(campaign);
-        $('#cmpForm').modal('close');
-        this.setState(Object.assign({}, this.state, { timestamp: Date.now() }));
+        this.setState(Object.assign({}, this.state, { timestamp: Date.now() }), this.closeModal);
 
     }
 
     openModal() {
-        $('.modal').modal();
-        $('#cmpForm').modal('open');
         this.setState(Object.assign({}, this.state, { modalIsOpen: true }));
+    }
+
+    closeModal() {
+        this.setState(Object.assign({}, this.state, { modalIsOpen: false }));
     }
 
     setCampaignStatus(index, status) {
@@ -125,53 +127,51 @@ export class AdvertiserView extends React.Component {
         const { focusedInput, startDate, endDate } = this.state;
 
         return (
-            <div>
-                <main className="Site-content ui center aligned grid">
-                    <Grid centered columns={16} style={{ margin: 0 }} >
-                        <Grid.Row columns={1}>
-                            <Grid.Column width={2}>
-                                <Button positive icon={<Icon inverted name="add" />} labelPosition='right' content='Add Campaign' />
-                            </Grid.Column>
-                            <Grid.Column width={11} />
-                        </Grid.Row>
-                        <Grid.Row columns={1}>
-                            <Grid.Column width={13}>
-                                <Table>
-                                    <Table.Header>
-                                        <Table.Row>
-                                            <Table.HeaderCell>Campaign Name</Table.HeaderCell>
-                                            {Object.keys(headers).map(header => <Table.HeaderCell key={header}>{header}</Table.HeaderCell>)}
-                                            <Table.HeaderCell>Campaign Type</Table.HeaderCell>
-                                            <Table.HeaderCell>Campaign Active</Table.HeaderCell>
-                                        </Table.Row>
-                                    </Table.Header>
+            <main className="Site-content ui center aligned grid">
+                <Grid centered columns={16} style={{ margin: 0 }} >
+                    <Grid.Row columns={1}>
+                        <Grid.Column width={2}>
+                            <Button positive icon={<Icon inverted name="add" />} labelPosition='right' content='Add Campaign' onClick={this.openModal} />
+                        </Grid.Column>
+                        <Grid.Column width={11} />
+                    </Grid.Row>
+                    <Grid.Row columns={1}>
+                        <Grid.Column width={13}>
+                            <Table>
+                                <Table.Header>
+                                    <Table.Row>
+                                        <Table.HeaderCell>Campaign Name</Table.HeaderCell>
+                                        {Object.keys(headers).map(header => <Table.HeaderCell key={header}>{header}</Table.HeaderCell>)}
+                                        <Table.HeaderCell>Campaign Type</Table.HeaderCell>
+                                        <Table.HeaderCell>Campaign Active</Table.HeaderCell>
+                                    </Table.Row>
+                                </Table.Header>
 
-                                    <Table.Body>
-                                        {this.state.campaigns.map((campaign, idx) =>
-                                            <Table.Row key={campaign.key}>
-                                                <Table.Cell>
-                                                    <Link to={'/advertiser/campaigns/' + campaign.id + "/"}>
-                                                        {campaign.name}
-                                                    </Link>
-                                                </Table.Cell>
-                                                {Object.keys(headers).map(key => <Table.Cell key={key}>{campaign[headers[key]]}</Table.Cell>)}
-                                                <Table.Cell>{config.campaignTypes[campaign.campaignType]}</Table.Cell>
-                                                <td>
-                                                    <Checkbox toggle
-                                                        checked={campaign.status}
-                                                        onChange={(e, d) => { this.setCampaignStatus(idx, d.checked) } } />
+                                <Table.Body>
+                                    {this.state.campaigns.map((campaign, idx) =>
+                                        <Table.Row key={campaign.key}>
+                                            <Table.Cell>
+                                                <Link to={'/advertiser/campaigns/' + campaign.id + "/"}>
+                                                    {campaign.name}
+                                                </Link>
+                                            </Table.Cell>
+                                            {Object.keys(headers).map(key => <Table.Cell key={key}>{campaign[headers[key]]}</Table.Cell>)}
+                                            <Table.Cell>{config.campaignTypes[campaign.campaignType]}</Table.Cell>
+                                            <td>
+                                                <Checkbox toggle
+                                                    checked={campaign.status}
+                                                    onChange={(e, d) => { this.setCampaignStatus(idx, d.checked) } } />
 
-                                                </td>
-                                            </Table.Row>)
-                                        }
-                                    </Table.Body>
-                                </Table>
-                            </Grid.Column>
-                        </Grid.Row>
-                    </Grid>
-                </main>
-                <CampaignEditModal />
-            </div>
+                                            </td>
+                                        </Table.Row>)
+                                    }
+                                </Table.Body>
+                            </Table>
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
+                <CampaignEditModal saveMethod="POST" postSave={this.postSave.bind(this)} open={this.state.modalIsOpen} closeModal={this.closeModal} />
+            </main>
 
         );
     }

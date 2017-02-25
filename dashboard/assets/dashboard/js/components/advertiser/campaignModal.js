@@ -11,23 +11,29 @@ import 'react-dates/lib/css/_datepicker.css';
 
 export class CampaignEditModal extends React.Component {
     constructor(props) {
+        console.info("New modal")
         super(props);
         var defaultCampaignType = '1';
-
         this.state = Object.assign({
             valid: false,
             campaign: {
                 campaignType: config.defaultCampaignType,
-                open: props.open
-            }
+            },
+            open: false,
         }, JSON.parse(JSON.stringify(props)));
         this.postSave = props.postSave;
+        this.closeModal = props.closeModal;
         this.saveMethod = props.saveMethod;
         this.label = props.label;
-        this.successStatus = props.successStatus;
+        this.successStatus = this.saveMethod === 'POST' ? 201 : 200;
         this.onDatesChange = this.onDatesChange.bind(this);
         this.onFocusChange = this.onFocusChange.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.validateState = this.validateState.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState(Object.assign({}, this.state, nextProps));
     }
 
     onDatesChange({ startDate, endDate }) {
@@ -36,11 +42,21 @@ export class CampaignEditModal extends React.Component {
         delete nextState.focusedInput;
         console.info("Next state");
         console.info(nextState)
-        this.setState(nextState);
+        this.setState(nextState, this.validateState);
     }
 
     onFocusChange(focusedInput) {
-        this.setState(Object.assign({}, this.state, { focusedInput: focusedInput }));
+        this.setState(Object.assign({}, this.state, { focusedInput: focusedInput }), this.validateState);
+    }
+
+    handleChange(key) {
+        return (e, d) => {
+            this.state.campaign[key] = e.target.value;
+            var newCampaign = Object.assign({}, this.state.campaign);
+            newCampaign[key] = e.target.value;
+            // Required to update state
+            this.setState(Object.assign({}, this.state, { campaign: newCampaign }), this.validateState);
+        };
     }
 
 
@@ -54,41 +70,27 @@ export class CampaignEditModal extends React.Component {
 
         // Campaign fields should be in bounds
         valid = valid && (+campaign.totalBudget >= 0 && +campaign.dailyBudget >= 0 && campaign.name.length > 0);
-        this.setState(Object.assign({}, this.state, { valid: valid }));
+        console.info("Setting state");
+        console.info(valid);
+        this.setState(Object.assign({}, this.state, { valid: valid }), console.info(this.state));
     }
-
-    handleChange(key) {
-        return (e, d) => {
-            this.state.campaign[key] = e.target.value;
-            var newCampaign = Object.assign({}, this.state.campaign);
-            newCampaign[key] = e.target.value;
-            // Required to update state
-            this.setState(Object.assign({}, this.state, { campaign: newCampaign }));
-            this.validateState();
-        };
-    }
-
 
     componentDidMount() {
 
     }
 
-    setCampaignType(type) {
-        var campaign = Object.assign(this.state.campaign, {
-            campaignType: type
-        });
-        this.setState(Object.assign({}, this.state, { campaign: campaign }));
-        this.validateState();
-        $('.dropdown-button').dropdown('close')
-    }
-
     saveCampaign() {
         const apiSuffix = this.saveMethod === 'PUT' ? this.state.campaign.id : '';
         const apiPath = '/user/api/advertiser/campaigns/' + apiSuffix;
+        const campaignState = Object.assign({}, this.state.campaign);
+        
+        campaignState.startDate = campaignState.startDate.format('YYYY-MM-DD')
+        campaignState.endDate = campaignState.endDate.format('YYYY-MM-DD')
+
         callApiWithJwt(
             apiPath,
             this.saveMethod,
-            JSON.stringify(this.state.campaign),
+            JSON.stringify(campaignState),
             (response) => {
                 this.postSave(response);
                 $('#cmpForm').modal('close');
@@ -101,29 +103,14 @@ export class CampaignEditModal extends React.Component {
     }
 
     render() {
-        console.info(this.state);
+        console.info(this.state.valid);
         const { startDate, endDate } = this.state.campaign;
         const { focusedInput } = this.state;
-
-        if (this.state.valid) {
-            var saveButton =
-                <a className="modal-action waves-effect waves-light btn white-text"
-                    onClick={e => this.saveCampaign()}>
-                    Save
-                </a>
-        } else {
-            var saveButton =
-                <a className="modal-action waves-effect waves-light btn white-text disabled"
-                    onClick={e => this.saveCampaign()}>
-                    Save
-                </a>
-        }
-
 
         const title = this.saveMethod === 'PUT' ? "Edit Campaign" : "Create Campaign";
 
         return (
-            <Modal open={true} onClose={this.close}>
+            <Modal open={this.state.open} onClose={this.closeModal}>
                 <Modal.Header>Create Campaign</Modal.Header>
                 <Modal.Content>
                     <Form>
@@ -142,14 +129,13 @@ export class CampaignEditModal extends React.Component {
                             focusedInput={focusedInput}
                             startDate={startDate}
                             endDate={endDate}
-                            numberOfMonths={1}
+                            numberOfMonths={2}
                             displayFormat="YYYY-MMM-DD"
                             />
                     </Form>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button color='black' onClick={this.close}>Nope</Button>
-                    <Button positive icon='checkmark' labelPosition='right' content="Yep, that's me" onClick={this.close} />
+                    <Button positive content="Create" disabled={!this.state.valid} onClick={this.saveCampaign.bind(this)} />
                 </Modal.Actions>
             </Modal>
         )
