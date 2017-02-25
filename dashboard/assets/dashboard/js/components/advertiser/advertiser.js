@@ -3,10 +3,12 @@ import { debug, callApiWithJwt } from '../../lib.js'
 import { config } from '../../config.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 import { hashHistory, Link } from 'react-router'
-import Modal from 'react-modal'
 import { FormInput, spinner, PageHeading } from '../common'
 import { CampaignEditModal } from './campaignModal'
-import { Grid, Card, Table, Checkbox } from 'semantic-ui-react'
+import { Grid, Card, Table, Checkbox, Button, Icon, Header, Modal, Form, Input, Select, Radio } from 'semantic-ui-react'
+import 'react-dates/lib/css/_datepicker.css';
+import { DateRangePicker } from 'react-dates';
+
 
 
 /**
@@ -91,6 +93,7 @@ export class AdvertiserView extends React.Component {
     }
 
     render() {
+        console.info(this.state)
         if (!this.state.campaigns) {
             return spinner
         }
@@ -100,7 +103,6 @@ export class AdvertiserView extends React.Component {
             height: '100%',
             minHeight: '100%',
         }
-
 
         if (this.state.campaigns.length == 0) {
             var noCmpMessage = (
@@ -119,45 +121,57 @@ export class AdvertiserView extends React.Component {
         } else {
             var noCmpMessage = <div></div>
         }
+
+        const { focusedInput, startDate, endDate } = this.state;
+
         return (
-            <main className="Site-content ui center aligned grid">
-                <Grid centered columns={16} style={{ margin: 0 }} >
-                    <Grid.Row columns={1}>
-                        <Grid.Column width={13}>
-                            <Table>
-                                <Table.Header>
-                                    <Table.Row>
-                                        <Table.HeaderCell>Campaign Name</Table.HeaderCell>
-                                        {Object.keys(headers).map(header => <Table.HeaderCell key={header}>{header}</Table.HeaderCell>)}
-                                        <Table.HeaderCell>Campaign Type</Table.HeaderCell>
-                                        <Table.HeaderCell>Campaign Active</Table.HeaderCell>
-                                    </Table.Row>
-                                </Table.Header>
+            <div>
+                <main className="Site-content ui center aligned grid">
+                    <Grid centered columns={16} style={{ margin: 0 }} >
+                        <Grid.Row columns={1}>
+                            <Grid.Column width={2}>
+                                <Button positive icon={<Icon inverted name="add" />} labelPosition='right' content='Add Campaign' />
+                            </Grid.Column>
+                            <Grid.Column width={11} />
+                        </Grid.Row>
+                        <Grid.Row columns={1}>
+                            <Grid.Column width={13}>
+                                <Table>
+                                    <Table.Header>
+                                        <Table.Row>
+                                            <Table.HeaderCell>Campaign Name</Table.HeaderCell>
+                                            {Object.keys(headers).map(header => <Table.HeaderCell key={header}>{header}</Table.HeaderCell>)}
+                                            <Table.HeaderCell>Campaign Type</Table.HeaderCell>
+                                            <Table.HeaderCell>Campaign Active</Table.HeaderCell>
+                                        </Table.Row>
+                                    </Table.Header>
 
-                                <Table.Body>
-                                    {this.state.campaigns.map((campaign, idx) =>
-                                        <Table.Row key={campaign.key}>
-                                            <Table.Cell>
-                                                <Link to={'/advertiser/campaigns/' + campaign.id + "/"}>
-                                                    {campaign.name}
-                                                </Link>
-                                            </Table.Cell>
-                                            {Object.keys(headers).map(key => <Table.Cell key={key}>{campaign[headers[key]]}</Table.Cell>)}
-                                            <Table.Cell>{config.campaignTypes[campaign.campaignType]}</Table.Cell>
-                                            <td>
-                                                <Checkbox toggle
-                                                    checked={campaign.status}
-                                                    onChange={(e, d) => { this.setCampaignStatus(idx, d.checked) } } />
+                                    <Table.Body>
+                                        {this.state.campaigns.map((campaign, idx) =>
+                                            <Table.Row key={campaign.key}>
+                                                <Table.Cell>
+                                                    <Link to={'/advertiser/campaigns/' + campaign.id + "/"}>
+                                                        {campaign.name}
+                                                    </Link>
+                                                </Table.Cell>
+                                                {Object.keys(headers).map(key => <Table.Cell key={key}>{campaign[headers[key]]}</Table.Cell>)}
+                                                <Table.Cell>{config.campaignTypes[campaign.campaignType]}</Table.Cell>
+                                                <td>
+                                                    <Checkbox toggle
+                                                        checked={campaign.status}
+                                                        onChange={(e, d) => { this.setCampaignStatus(idx, d.checked) } } />
 
-                                            </td>
-                                        </Table.Row>)
-                                    }
-                                </Table.Body>
-                            </Table>
-                        </Grid.Column>
-                    </Grid.Row>
-                </Grid>
-            </main>
+                                                </td>
+                                            </Table.Row>)
+                                        }
+                                    </Table.Body>
+                                </Table>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+                </main>
+                <CampaignEditModal />
+            </div>
 
         );
     }

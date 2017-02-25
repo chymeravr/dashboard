@@ -45,20 +45,25 @@ module.exports = {
                     presets: ['react', 'stage-2', 'es2015']
                 }
             },
-            { 
-                test: /\.(png|woff|woff2|eot|ttf|svg)$/, 
+            {
+                test: /\.(png|woff|woff2|eot|ttf|svg)$/,
                 loader: 'url-loader?limit=100000',
                 exclude: /node_modules/,
             },
             {
                 test: /\.css$/,
                 include: path.resolve(__dirname, '../semantic/dist'),
-                loader: 'style-loader!css-loader!postcss-loader', 
+                loader: 'style-loader!css-loader!postcss-loader',
                 exclude: /node_modules/,
             },
-             {
+            {
                 test: /\.css$/,
                 include: path.resolve(__dirname, 'assets/dashboard/css'),
+                loader: 'style-loader!css-loader!postcss-loader',
+            },
+            {
+                test: /\.css$/,
+                include: path.resolve(__dirname, '../node_modules/react-dates/lib/css/'),
                 loader: 'style-loader!css-loader!postcss-loader',
             },
         ]

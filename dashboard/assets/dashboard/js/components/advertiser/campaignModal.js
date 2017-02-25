@@ -1,29 +1,46 @@
 import React, { ReactDOM } from 'react'
-import Modal from 'react-modal'
 import { FormInput, NumberInput } from '../common'
 import { callApiWithJwt, debug } from '../../lib.js'
 import { hashHistory } from 'react-router'
 import { config } from '../../config'
 
+import { Grid, Card, Table, Checkbox, Button, Icon, Header, Modal, Form, Input, Select, Radio } from 'semantic-ui-react'
+import { DateRangePicker } from 'react-dates';
 
+import 'react-dates/lib/css/_datepicker.css';
 
 export class CampaignEditModal extends React.Component {
     constructor(props) {
         super(props);
         var defaultCampaignType = '1';
-        // Initialise state if not initialised in props
 
         this.state = Object.assign({
             valid: false,
             campaign: {
                 campaignType: config.defaultCampaignType,
+                open: props.open
             }
         }, JSON.parse(JSON.stringify(props)));
         this.postSave = props.postSave;
         this.saveMethod = props.saveMethod;
         this.label = props.label;
         this.successStatus = props.successStatus;
+        this.onDatesChange = this.onDatesChange.bind(this);
+        this.onFocusChange = this.onFocusChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
 
+    onDatesChange({ startDate, endDate }) {
+        var newCampaign = Object.assign({}, this.state.campaign, { startDate, endDate });
+        const nextState = Object.assign({}, this.state, { campaign: newCampaign });
+        delete nextState.focusedInput;
+        console.info("Next state");
+        console.info(nextState)
+        this.setState(nextState);
+    }
+
+    onFocusChange(focusedInput) {
+        this.setState(Object.assign({}, this.state, { focusedInput: focusedInput }));
     }
 
 
@@ -32,7 +49,7 @@ export class CampaignEditModal extends React.Component {
         var valid = campaign;
         // Campaign fields should be present
         valid = campaign && campaign.name && campaign.startDate && campaign.endDate && campaign.totalBudget &&
-                campaign.campaignType && campaign.dailyBudget;
+            campaign.campaignType && campaign.dailyBudget;
 
 
         // Campaign fields should be in bounds
@@ -41,7 +58,7 @@ export class CampaignEditModal extends React.Component {
     }
 
     handleChange(key) {
-        return function (e) {
+        return (e, d) => {
             this.state.campaign[key] = e.target.value;
             var newCampaign = Object.assign({}, this.state.campaign);
             newCampaign[key] = e.target.value;
@@ -51,81 +68,8 @@ export class CampaignEditModal extends React.Component {
         };
     }
 
-    setDate(key, date) {
-        var dateString = [date.year, date.month + 1, date.date].join('-');
-        this.state.campaign[key] = dateString;
-        this.setState(Object.assign({}, this.state));
-        this.validateState();
-    }
 
     componentDidMount() {
-        const that = this;
-        $('.dropdown-button').dropdown({
-            inDuration: 300,
-            outDuration: 225,
-            constrain_width: true, // Does not change width of dropdown to that of the activator
-            hover: false, // Activate on hover
-            gutter: 0, // Spacing from edge
-            belowOrigin: true, // Displays dropdown below the button
-            alignment: 'left' // Displays dropdown with edge aligned to the left of button
-        });
-
-        $('.tooltipped').tooltip({ delay: 50 });
-        // Set end date element first. Swapping leads to loss of formatting
-        $('#endDate').pickadate({
-            selectMonths: true,
-            selectYears: 5,
-            format: 'yyyy-mm-dd',
-            min: new Date(),
-            onStart: () => {
-                var endInput = $('#endDate').pickadate(),
-                    endPicker = endInput.pickadate('picker')
-                if (this.state.campaign.endDate) {
-                    endPicker.set('select', that.state.campaign.endDate, { format: 'yyyy-mm-dd' });
-                }
-            },
-            onSet: function (arg) {
-                if ('select' in arg) { // Do not close on selection of month/year
-                    var toInput = $('#endDate').pickadate(),
-                        toPicker = toInput.pickadate('picker');
-                    var toDate = toPicker.get('select');
-                    that.setDate('endDate', toDate);
-                    toPicker.close();
-                }
-            }
-        });
-
-        $('#startDate').pickadate({
-            selectMonths: true,
-            selectYears: 5,
-            format: 'yyyy-mm-dd',
-            min: new Date(),
-            onStart: () => {
-                var fromInput = $('#startDate').pickadate(),
-                    fromPicker = fromInput.pickadate('picker')
-                if (this.state.campaign.startDate) {
-                    fromPicker.set('select', that.state.campaign.startDate, { format: 'yyyy-mm-dd' });
-                }
-            },
-            onSet: arg => {
-                // Set minDate of endDate to startDate
-                if ('select' in arg) {
-                    var fromInput = $('#startDate').pickadate()
-                    var fromPicker = fromInput.pickadate('picker')
-
-                    var toInput = $('#endDate').pickadate()
-                    var toPicker = toInput.pickadate('picker');
-
-                    var fromDate = fromPicker.get('select');
-                    toPicker.set('min', fromDate);
-                    that.setDate('startDate', fromDate);
-                    fromPicker.close();
-                }
-            }
-        });
-
-        $('select').material_select();
-        $('#campaignTypeSelect').on('change', e => this.setCampaignType(e.target.value)).bind(this);
 
     }
 
@@ -157,6 +101,10 @@ export class CampaignEditModal extends React.Component {
     }
 
     render() {
+        console.info(this.state);
+        const { startDate, endDate } = this.state.campaign;
+        const { focusedInput } = this.state;
+
         if (this.state.valid) {
             var saveButton =
                 <a className="modal-action waves-effect waves-light btn white-text"
@@ -173,88 +121,37 @@ export class CampaignEditModal extends React.Component {
 
 
         const title = this.saveMethod === 'PUT' ? "Edit Campaign" : "Create Campaign";
+
         return (
-            <div id="cmpForm" className="modal modal-fixed-footer">
-                <div className="modal-content">
-                    <div className="container">
-                        <h5 className="center">{title}</h5>
-                        <br />
-                        <br />
-                        <div>
-                            {/*<div className="row">
-                                <div className="col s4">
-                                    <div className="input-field">
-                                        <select id="campaignTypeSelect" defaultValue={config.defaultCampaignType}>
-                                            {Object.keys(config.campaignTypes).map(id =>
-                                                <option key={id} value={id}>{config.campaignTypes[id]}</option>
-                                            )}
-                                        </select>
-                                        <label>Campaign Type</label>
-                                    </div>
-                                </div>
-                            </div>*/}
-                            <div className="row">
-                                <div className="col s6">
-                                    <FormInput
-                                        fieldName="name"
-                                        label="Campaign Name"
-                                        value={this.state.campaign.name}
-                                        handleChange={this.handleChange('name').bind(this)} />
-                                </div>
-                                 <div className="col s6">
-                                    <FormInput
-                                        fieldName="appName"
-                                        label="Promoted App Name"
-                                        value={this.state.campaign.appName}
-                                        handleChange={this.handleChange('appName').bind(this)} />
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col s12">
-                                    <FormInput
-                                        fieldName="appUrl"
-                                        label="Promoted App Market Url"
-                                        value={this.state.campaign.appUrl}
-                                        handleChange={this.handleChange('appUrl').bind(this)} />
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col s6">
-                                    <NumberInput
-                                        fieldName="totalBudget"
-                                        label="Total Budget ($)"
-                                        value={this.state.campaign.totalBudget}
-                                        handleChange={this.handleChange('totalBudget').bind(this)} />
-                                </div>
-                                <div className="col s6">
-                                    <NumberInput
-                                        fieldName="dailyBudget"
-                                        label="Daily Budget ($)"
-                                        value={this.state.campaign.dailyBudget}
-                                        handleChange={this.handleChange('dailyBudget').bind(this)} />
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col s6">
-                                    <div className="input-field">
-                                        <label htmlFor="startDate">Start Date</label>
-                                        <input type="date" id="startDate" className="datepicker" label="Start Date" />
-                                    </div>
-                                </div>
-                                <div className="col s6">
-                                    <div className="input-field">
-                                        <label htmlFor="endDate">End Date</label>
-                                        <input type="date" id="endDate" className="datepicker" label="End Date" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="modal-footer">
-                    {saveButton}
-                </div>
-            </div >
+            <Modal open={true} onClose={this.close}>
+                <Modal.Header>Create Campaign</Modal.Header>
+                <Modal.Content>
+                    <Form>
+                        <Form.Group widths='equal'>
+                            <Form.Field control={Input} label='Campaign name' placeholder='Campaign name' onChange={this.handleChange('name')} />
+                            <Form.Field control={Input} label='App name' placeholder='App name' onChange={this.handleChange('appName')} />
+                        </Form.Group>
+                        <Form.Field control={Input} label='App URL' placeholder='URL of the Advertised App' onChange={this.handleChange('appUrl')} />
+                        <Form.Group widths='equal'>
+                            <Form.Field control={Input} label='Total Budget' type='number' placeholder='Total Budget' onChange={this.handleChange('totalBudget')} />
+                            <Form.Field control={Input} label='Daily Budget' type='number' placeholder='Daily Budget' onChange={this.handleChange('dailyBudget')} />
+                        </Form.Group>
+                        <DateRangePicker
+                            onDatesChange={this.onDatesChange}
+                            onFocusChange={this.onFocusChange}
+                            focusedInput={focusedInput}
+                            startDate={startDate}
+                            endDate={endDate}
+                            numberOfMonths={1}
+                            displayFormat="YYYY-MMM-DD"
+                            />
+                    </Form>
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button color='black' onClick={this.close}>Nope</Button>
+                    <Button positive icon='checkmark' labelPosition='right' content="Yep, that's me" onClick={this.close} />
+                </Modal.Actions>
+            </Modal>
         )
     }
 }
