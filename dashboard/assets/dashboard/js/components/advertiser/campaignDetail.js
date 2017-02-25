@@ -77,20 +77,23 @@ export class CampaignDetailView extends React.Component {
     }
 
     openAgModal() {
-        $('.modal').modal();
-        $('#agForm').modal('open');
         this.setState(Object.assign({}, this.state, { agModalIsOpen: true }));
     }
 
+    closeAgModal() {
+        this.setState(Object.assign({}, this.state, { agModalIsOpen: false }));
+    }
+
     postSave(campaign) {
-        this.setState(Object.assign({}, this.state, { campaign: campaign }))
+        campaign.startDate = moment(campaign.startDate, 'YYYY-MM-DD');
+        campaign.endDate = moment(campaign.endDate, 'YYYY-MM-DD')
+        this.setState(Object.assign({}, this.state, { campaign: campaign }), this.closeCampaignModal)
     }
 
     postAdgroupAddition(adgroup) {
-        $('#agForm').modal('close');
         this.state.campaign.adgroups.unshift(adgroup);
         // To reset state of modal
-        this.setState(Object.assign({}, this.state, { timestamp: Date.now() }));
+        this.setState(Object.assign({}, this.state, ), this.closeAgModal);
     }
 
     setAdgroupStatus(index, status) {

@@ -19,7 +19,7 @@ export class CampaignEditModal extends React.Component {
                 campaignType: config.defaultCampaignType,
             },
             open: false,
-        }, JSON.parse(JSON.stringify(props)));
+        }, props);
 
         this.postSave = props.postSave;
         this.closeModal = props.closeModal;
@@ -72,8 +72,6 @@ export class CampaignEditModal extends React.Component {
 
         // Campaign fields should be in bounds
         valid = valid && (+campaign.totalBudget >= 0 && +campaign.dailyBudget >= 0 && campaign.name.length > 0);
-        console.info("Setting state");
-        console.info(valid);
         this.setState(Object.assign({}, this.state, { valid: valid }), console.info(this.state));
     }
 
@@ -91,7 +89,6 @@ export class CampaignEditModal extends React.Component {
             JSON.stringify(campaignState),
             (response) => {
                 this.postSave(response);
-                $('#cmpForm').modal('close');
             },
             (error) => {
                 alert(error);

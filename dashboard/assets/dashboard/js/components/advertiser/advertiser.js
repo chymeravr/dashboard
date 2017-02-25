@@ -8,7 +8,7 @@ import { CampaignEditModal } from './campaignModal'
 import { Grid, Card, Table, Checkbox, Button, Icon, Header, Modal, Form, Input, Select, Radio } from 'semantic-ui-react'
 import 'react-dates/lib/css/_datepicker.css';
 import { DateRangePicker } from 'react-dates';
-
+import moment from 'moment'
 
 
 /**
@@ -67,7 +67,7 @@ export class AdvertiserView extends React.Component {
     postSave(campaign) {
         campaign.key = campaign.id;
         this.state.campaigns.unshift(campaign);
-        this.setState(Object.assign({}, this.state, { timestamp: Date.now() }), this.closeModal);
+        this.setState(Object.assign({}, this.state), this.closeModal);
 
     }
 
@@ -99,6 +99,8 @@ export class AdvertiserView extends React.Component {
         if (!this.state.campaigns) {
             return spinner
         }
+
+        const campaigns = this.state.campaigns;
 
         return (
             <main className="Site-content ui center aligned grid" style={{ height: '92vh' }}>
