@@ -6,6 +6,7 @@ import { hashHistory, Link } from 'react-router'
 import Modal from 'react-modal'
 import { FormInput, spinner, PageHeading } from '../common'
 import { CampaignEditModal } from './campaignModal'
+import { Grid, Card, Table, Checkbox } from 'semantic-ui-react'
 
 
 /**
@@ -119,56 +120,45 @@ export class AdvertiserView extends React.Component {
             var noCmpMessage = <div></div>
         }
         return (
-            <div className="container" style={heightStyle} >
-                <PageHeading title="Campaigns" onClick={this.openModal} buttonText="Campaign" />
-                <ReactCSSTransitionGroup
-                    component="table"
-                    transitionName="fadeTransitionFast"
-                    transitionAppear={true}
-                    transitionLeave={false}
-                    transitionEnterTimeout={150}
-                    transitionLeaveTimeout={150}
-                    transitionAppearTimeout={150}
-                    className="table highlight grey-text text-darken-4 col s12 centered">
-                    <thead>
-                        <tr>
-                            <th className="grey-text text-darken-2">Campaign Name</th>
-                            {Object.keys(headers).map(header => <th className="grey-text text-darken-2" key={header}>{header}</th>)}
-                            <th className="grey-text text-darken-2">Campaign Type</th>
-                            <th className="grey-text text-darken-2">Active</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.campaigns.map((campaign, idx) =>
-                            <tr key={campaign.key} className="grey-text text-darken-1">
-                                <td>
-                                    <Link to={'/advertiser/campaigns/' + campaign.id + "/"}>
-                                        {campaign.name}
-                                    </Link>
-                                </td>
-                                {Object.keys(headers).map(key => <td key={key}>{campaign[headers[key]]}</td>)}
-                                <td>{config.campaignTypes[campaign.campaignType]}</td>
-                                <td>
-                                    <div className="switch">
-                                        <label>
-                                            <input type="checkbox"
-                                                checked={campaign.status ? "checked" : ""}
-                                                onChange={e => this.setCampaignStatus(idx, e.target.checked)} />
-                                            <span className="lever"></span>
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>)
-                        }
-                    </tbody>
-                </ReactCSSTransitionGroup>
-                <br />
-                <br />
-                {noCmpMessage}
+            <main className="Site-content ui center aligned grid">
+                <Grid centered columns={16} style={{ margin: 0 }} >
+                    <Grid.Row columns={1}>
+                        <Grid.Column width={13}>
+                            <Table>
+                                <Table.Header>
+                                    <Table.Row>
+                                        <Table.HeaderCell>Campaign Name</Table.HeaderCell>
+                                        {Object.keys(headers).map(header => <Table.HeaderCell key={header}>{header}</Table.HeaderCell>)}
+                                        <Table.HeaderCell>Campaign Type</Table.HeaderCell>
+                                        <Table.HeaderCell>Campaign Active</Table.HeaderCell>
+                                    </Table.Row>
+                                </Table.Header>
 
-                <CampaignEditModal label="Create Campaign" saveMethod="POST" postSave={this.postSave.bind(this)} successStatus="201"
-                    key={this.state.timestamp} />
-            </div >
+                                <Table.Body>
+                                    {this.state.campaigns.map((campaign, idx) =>
+                                        <Table.Row key={campaign.key}>
+                                            <Table.Cell>
+                                                <Link to={'/advertiser/campaigns/' + campaign.id + "/"}>
+                                                    {campaign.name}
+                                                </Link>
+                                            </Table.Cell>
+                                            {Object.keys(headers).map(key => <Table.Cell key={key}>{campaign[headers[key]]}</Table.Cell>)}
+                                            <Table.Cell>{config.campaignTypes[campaign.campaignType]}</Table.Cell>
+                                            <td>
+                                                <Checkbox toggle
+                                                    checked={campaign.status}
+                                                    onChange={(e, d) => { this.setCampaignStatus(idx, d.checked) } } />
+
+                                            </td>
+                                        </Table.Row>)
+                                    }
+                                </Table.Body>
+                            </Table>
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
+            </main>
+
         );
     }
 }
