@@ -133,12 +133,12 @@ export class AdvertiserView extends React.Component {
                                             </Table.Cell>
                                             {Object.keys(headers).map(key => <Table.Cell key={key}>{campaign[headers[key]]}</Table.Cell>)}
                                             <Table.Cell>{config.campaignTypes[campaign.campaignType]}</Table.Cell>
-                                            <td>
+                                            <Table.Cell>
                                                 <Checkbox toggle
                                                     checked={campaign.status}
                                                     onChange={(e, d) => { this.setCampaignStatus(idx, d.checked) } } />
 
-                                            </td>
+                                            </Table.Cell>
                                         </Table.Row>)
                                     }
                                 </Table.Body>

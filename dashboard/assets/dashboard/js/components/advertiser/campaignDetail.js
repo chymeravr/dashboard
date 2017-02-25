@@ -7,7 +7,7 @@ import Modal from 'react-modal'
 import { FormInput, spinner, PageHeading } from '../common'
 import { AdgroupEditModal } from './adgroupModal'
 import { CampaignEditModal } from './campaignModal'
-import { Image as ImageComponent, Item, Grid, Card, Statistic, Icon, Button, Divider } from 'semantic-ui-react'
+import { Image as ImageComponent, Item, Grid, Card, Statistic, Icon, Button, Divider, Table, Checkbox } from 'semantic-ui-react'
 import moment from 'moment'
 
 /**
@@ -18,12 +18,10 @@ const adgroupHeaders = {
     // 'Name': 'name',
     'Total Budget': 'totalBudget',
     'Daily Budget': 'dailyBudget',
-    'Start Date': 'startDate',
-    'End Date': 'endDate',
     'Bid': 'bid',
     'Impressions': 'impressions',
     'Clicks': 'clicks',
-    'Burn': 'burn'
+    'Burn': 'totalBurn'
 }
 
 export class CampaignDetailView extends React.Component {
@@ -54,15 +52,19 @@ export class CampaignDetailView extends React.Component {
             'GET',
             null,
             (response) => {
+                console.info(response)
                 response.startDate = moment(response.startDate, 'YYYY-MM-DD');
                 response.endDate = moment(response.endDate, 'YYYY-MM-DD');
+                response.adgroups.forEach(adgroup => {
+                    adgroup.startDate = moment(adgroup.startDate, 'YYYY-MM-DD');
+                    adgroup.endDate = moment(adgroup.endDate, 'YYYY-MM-DD');
+                })
                 this.setState(Object.assign({}, this.state, { campaign: response }));
                 document.title = response.name + " | Campaign";
             },
             (error) => {
                 alert(error);
-                hashHistory.push('/login/')
-                // throw error;
+                throw error;
             },
         );
     }
@@ -91,9 +93,10 @@ export class CampaignDetailView extends React.Component {
     }
 
     postAdgroupAddition(adgroup) {
+        adgroup.startDate = moment(adgroup.startDate, 'YYYY-MM-DD');
+        adgroup.endDate = moment(adgroup.endDate, 'YYYY-MM-DD')
         this.state.campaign.adgroups.unshift(adgroup);
-        // To reset state of modal
-        this.setState(Object.assign({}, this.state, ), this.closeAgModal);
+        this.setState(Object.assign({}, this.state), this.closeAgModal);
     }
 
     setAdgroupStatus(index, status) {
@@ -104,6 +107,11 @@ export class CampaignDetailView extends React.Component {
             JSON.stringify({ status: status }),
             (response) => {
                 this.state.campaign.adgroups[index].status = status
+                this.state.campaign.adgroups.foreach(adgroup => {
+                    adgroup.startDate = moment(adgroup.startDate, 'YYYY-MM-DD');
+                    adgroup.endDate = moment(adgroup.endDate, 'YYYY-MM-DD');
+                })
+                console.info(this.state.campaign.adgroups)
                 this.setState(Object.assign({}, this.state));
             },
             (error) => {
@@ -113,35 +121,35 @@ export class CampaignDetailView extends React.Component {
     }
 
     render() {
+        console.info(this.state)
         if (!this.state.campaign) {
             return (
                 spinner
             )
             // TODO : Spinner
         }
-        var fabStyle = {
-            bottom: '50px',
-            right: '50px'
-        }
 
-        var heightStyle = {
-            height: '100%',
-            minHeight: '100%',
-        }
         return (
             <main className="Site-content ui center aligned grid" style={{ height: '100vh' }}>
                 <Grid centered columns={16} style={{ margin: 0 }} >
+                    <Grid.Row columns={3}>
+                        <Grid.Column width={4} />
+                        <Grid.Column width={2}>
+                            <Button positive icon={<Icon inverted name="add" />} labelPosition='right' content='Add Adgroup' onClick={this.openAgModal} />
+                        </Grid.Column >
+                        <Grid.Column width={10} />
+                    </Grid.Row>
                     <Grid.Row columns={1}>
                         <Grid centered stretched verticalAlign='middle' columns={16}>
                             <Grid.Row verticalAlign='middle'>
-                                <Grid.Column verticalAlign='middle' width={10}>
+                                <Grid.Column verticalAlign='middle' width={8}>
                                     <Card fluid>
                                         <Card.Content>
                                             <Card.Header>
                                                 <Grid>
                                                     <Grid.Row columns={16}>
-                                                        <Grid.Column width={2}>{this.state.campaign.name}</Grid.Column>
-                                                        <Grid.Column width={12} />
+                                                        <Grid.Column width={6}>{this.state.campaign.name}</Grid.Column>
+                                                        <Grid.Column width={6} />
                                                         <Grid.Column width={1}><Button color='blue' onClick={this.openCampaignModal}>Edit</Button></Grid.Column>
                                                     </Grid.Row>
                                                 </Grid>
@@ -171,79 +179,48 @@ export class CampaignDetailView extends React.Component {
                             </Grid.Row>
                         </Grid>
                     </Grid.Row>
-                    <PageHeading title="Campaign Detail" onClick={e => this.openAgModal()} buttonText="Adgroup" />
-                    <div className="card blue-grey darken-1">
-                        <div className="card-content white-text">
-                            <span className="card-title">
-                                {this.state.campaign.name}
-                                <a className="right" href="javascript:void(0);" onClick={e => this.openCampaignModal()}>
-                                    <i className="material-icons white-text">edit</i>
-                                </a>
-                            </span>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Total Budget</th>
-                                        <th>Daily Budget</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr className="white-text text-darken-1">
-                                        <td>{this.state.campaign.totalBudget}</td>
-                                        <td>{this.state.campaign.dailyBudget}</td>
+                    <Grid.Row columns={1}>
+                        <Grid.Column width={13}>
+                            <Table>
+                                <Table.Header>
+                                    <Table.Row>
+                                        <Table.HeaderCell>Adgroup Name</Table.HeaderCell>
+                                        <Table.HeaderCell>Start Date</Table.HeaderCell>
+                                        <Table.HeaderCell>End Date</Table.HeaderCell>
+                                        {Object.keys(adgroupHeaders).map(header => <th key={header}>{header}</th>)}
+                                        <Table.HeaderCell>Active</Table.HeaderCell>
+                                    </Table.Row>
+                                </Table.Header>
 
-                                    </tr>
-                                </tbody></table>
-                        </div>
-                    </div>
+                                <Table.Body>
+                                    {this.state.campaign.adgroups.map((adgroup, idx) =>
+                                        <Table.Row key={adgroup.id}>
+                                            <Table.Cell>
+                                                <Link to={'/advertiser/adgroups/' + adgroup.id + "/"}>
+                                                    {adgroup.name}
+                                                </Link>
+                                            </Table.Cell>
+                                            <Table.Cell>{adgroup.startDate.format('YYYY-MM-DD')}</Table.Cell>
+                                            <Table.Cell>{adgroup.endDate.format('YYYY-MM-DD')}</Table.Cell>
+                                            {Object.keys(adgroupHeaders).map(key => <Table.Cell key={key}>{adgroup[adgroupHeaders[key]]}</Table.Cell>)}
+
+
+                                            <Table.Cell>
+                                                <Checkbox toggle
+                                                    checked={adgroup.status}
+                                                    onChange={(e, d) => { this.setAdgroupStatus(idx, d.checked) } } />
+
+                                            </Table.Cell>
+                                        </Table.Row>)
+                                    }
+                                </Table.Body>
+                            </Table>
+                        </Grid.Column>
+                    </Grid.Row>
                     <CampaignEditModal saveMethod="PUT" postSave={this.postSave.bind(this)} open={this.state.cmpModalIsOpen} closeModal={this.closeCampaignModal} campaign={this.state.campaign} />
-
-                    <br />
-                    <ReactCSSTransitionGroup
-                        component="table"
-                        transitionName="fadeTransitionFast"
-                        transitionAppear={true}
-                        transitionLeave={false}
-                        transitionEnterTimeout={150}
-                        transitionLeaveTimeout={150}
-                        transitionAppearTimeout={150}
-                        className="table highlight grey-text text-darken-4 col s12">
-                        <thead>
-                            <tr>
-                                <th>Adgroup Name</th>
-                                {Object.keys(adgroupHeaders).map(header => <th key={header}>{header}</th>)}
-                                <th>Active</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.campaign.adgroups.map((adgroup, idx) =>
-                                <tr key={adgroup.id} className="grey-text text-darken-1">
-                                    <td>
-                                        <Link to={'/advertiser/adgroups/' + adgroup.id + "/"}>
-                                            {adgroup.name}
-                                        </Link>
-                                    </td>
-                                    {Object.keys(adgroupHeaders).map(key => <td key={key}>{adgroup[adgroupHeaders[key]]}</td>)}
-
-                                    <td>
-                                        <div className="switch">
-                                            <label>
-                                                <input type="checkbox"
-                                                    checked={adgroup.status ? "checked" : ""}
-                                                    onChange={e => this.setAdgroupStatus(idx, e.target.checked)} />
-                                                <span className="lever"></span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                </tr>)
-                            }
-                        </tbody>
-                    </ReactCSSTransitionGroup>
-
                     <AdgroupEditModal label="Create Adgroup" saveMethod="POST"
                         postSave={this.postAdgroupAddition.bind(this)} successStatus="201"
-                        campaignId={this.state.campaign.id}
-                        key={this.state.timestamp} />
+                        campaignId={this.state.campaign.id} open={this.state.agModalIsOpen} closeModal={this.closeAgModal} />
                 </Grid >
             </main>
         );

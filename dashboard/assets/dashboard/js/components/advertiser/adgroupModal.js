@@ -1,15 +1,19 @@
 import React from 'react'
-import Modal from 'react-modal'
 import { FormInput, NumberInput } from '../common'
 import { callApiWithJwt, debug } from '../../lib.js'
 import { hashHistory } from 'react-router'
 import { config } from '../../config'
 import { CreateTargetingModal } from './createTargetingModal'
+import { Grid, Card, Table, Checkbox, Button, Icon, Header, Modal, Form, Input, Select, Radio } from 'semantic-ui-react'
+import { DateRangePicker } from 'react-dates';
+import moment from 'moment';
+import 'react-dates/lib/css/_datepicker.css';
 
 export class AdgroupEditModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = Object.assign({
+            open: false,
             targetingModalOpen: false,
             adgroup: {
                 campaign: props.campaignId,
@@ -21,8 +25,26 @@ export class AdgroupEditModal extends React.Component {
         this.saveMethod = props.saveMethod;
         this.label = props.label;
         this.successStatus = props.successStatus;
+        this.onDatesChange = this.onDatesChange.bind(this);
+        this.onFocusChange = this.onFocusChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.closeModal = props.closeModal;
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState(Object.assign({}, this.state, nextProps));
+    }
+
+    onDatesChange({ startDate, endDate }) {
+        var newAdgroup = Object.assign({}, this.state.adgroup, { startDate, endDate });
+        const nextState = Object.assign({}, this.state, { adgroup: newAdgroup });
+        delete nextState.focusedInput;
+        this.setState(nextState, this.validateState);
+    }
+
+    onFocusChange(focusedInput) {
+        this.setState(Object.assign({}, this.state, { focusedInput: focusedInput }), this.validateState);
+    }
 
     validateState() {
         var valid = this.state.adgroup;
@@ -50,7 +72,7 @@ export class AdgroupEditModal extends React.Component {
     }
 
     handleChange(key) {
-        return function (e) {
+        return (e, d) => {
             this.state.adgroup[key] = e.target.value;
             var newAdgroup = Object.assign({}, this.state.adgroup);
             newAdgroup[key] = e.target.value;
@@ -60,12 +82,6 @@ export class AdgroupEditModal extends React.Component {
         };
     }
 
-    setDate(key, date) {
-        var dateString = [date.year, date.month + 1, date.date].join('-');
-        this.state.adgroup[key] = dateString;
-        this.setState(Object.assign({}, this.state));
-        this.validateState();
-    }
 
     setPricing(id) {
         var newAdgroup = Object.assign(this.state.adgroup, {
@@ -75,31 +91,19 @@ export class AdgroupEditModal extends React.Component {
         this.validateState();
     }
 
-    componentDidMount() {
-        this.initializeDateFields();
-        $('.modal').modal();
-        $('select').material_select();
-        $('#pricingTypeSelect').on('change', e => this.setPricing(e.target.value)).bind(this);
-
-    }
-
-    componentDidUpdate() {
-        $('.tooltipped').tooltip({ delay: 25 });
-        $('.modal').modal();
-        this.initializeDateFields();
-        $('select').material_select();
-        $('#pricingTypeSelect').on('change', e => this.setPricing(e.target.value)).bind(this);
-
-    }
-
 
     saveAdgroup() {
         const apiSuffix = this.saveMethod === 'PUT' ? this.state.adgroup.id : '';
         const apiPath = '/user/api/advertiser/adgroups/' + apiSuffix;
+        const adgroup = Object.assign({}, this.state.adgroup);
+
+        adgroup.startDate = adgroup.startDate.format('YYYY-MM-DD');
+        adgroup.endDate = adgroup.endDate.format('YYYY-MM-DD');
+
         if (this.state.targeting) {
-            var body = JSON.stringify(Object.assign({}, this.state.adgroup, { targeting: [this.state.targeting.id] }));
+            var body = JSON.stringify(Object.assign({}, adgroup, { targeting: [this.state.targeting.id] }));
         } else {
-            var body = JSON.stringify(this.state.adgroup);
+            var body = JSON.stringify(adgroup);
         }
 
         callApiWithJwt(
@@ -108,7 +112,6 @@ export class AdgroupEditModal extends React.Component {
             body,
             (response) => {
                 this.postSave(response);
-                $('#agForm').modal('close');
             },
             (error) => {
                 throw error;
@@ -118,90 +121,11 @@ export class AdgroupEditModal extends React.Component {
         );
     }
 
-
-    initializeDateFields() {
-        const that = this;
-        $('.dropdown-button').dropdown({
-            inDuration: 300,
-            outDuration: 225,
-            constrain_width: true, // Does not change width of dropdown to that of the activator
-            hover: false, // Activate on hover
-            gutter: 0, // Spacing from edge
-            belowOrigin: true, // Displays dropdown below the button
-            alignment: 'left' // Displays dropdown with edge aligned to the left of button
-        });
-
-        // Set end date element first. Swapping leads to loss of formatting
-        $('#agEndDate').pickadate({
-            selectMonths: true,
-            selectYears: 5,
-            format: 'yyyy-mm-dd',
-            min: new Date(),
-            onStart: () => {
-                var endInput = $('#agEndDate').pickadate(),
-                    endPicker = endInput.pickadate('picker')
-                if (this.state.adgroup.endDate) {
-                    endPicker.set('select', that.state.adgroup.endDate, { format: 'yyyy-mm-dd' });
-                }
-            },
-            onSet: function (arg) {
-                if ('select' in arg) { // Do not close on selection of month/year
-                    var toInput = $('#agEndDate').pickadate(),
-                        toPicker = toInput.pickadate('picker');
-                    var toDate = toPicker.get('select');
-                    that.setDate('endDate', toDate);
-                    toPicker.close();
-                }
-            }
-        });
-
-        $('#agStartDate').pickadate({
-            selectMonths: true,
-            selectYears: 5,
-            format: 'yyyy-mm-dd',
-            min: new Date(),
-            onStart: () => {
-                var fromInput = $('#agStartDate').pickadate(),
-                    fromPicker = fromInput.pickadate('picker')
-                if (this.state.adgroup.startDate) {
-                    fromPicker.set('select', that.state.adgroup.startDate, { format: 'yyyy-mm-dd' });
-                }
-            },
-            onSet: arg => {
-                // Set minDate of agEndDate to agStartDate
-                if ('select' in arg) {
-                    var fromInput = $('#agStartDate').pickadate()
-                    var fromPicker = fromInput.pickadate('picker')
-
-                    var toInput = $('#agEndDate').pickadate()
-                    var toPicker = toInput.pickadate('picker');
-
-                    var fromDate = fromPicker.get('select');
-                    toPicker.set('min', fromDate);
-                    that.setDate('startDate', fromDate);
-                    fromPicker.close();
-                }
-            }
-        });
-    }
-
-    openSelectTargetingModal() {
-        $('.modal').modal();
-        $('#selectTargetingForm').modal('open');
-        this.setState(Object.assign({}, this.state, { targetingModalOpen: true }));
-    }
-
-    openCreateTargetingModal() {
-        $('.modal').modal();
-        $('#createTargetingForm').modal('open');
-        this.setState(Object.assign({}, this.state, { targetingModalOpen: true }));
-    }
-
-    postTargetingSave(targeting) {
-        this.setState(Object.assign({}, this.state, { targeting: targeting }))
-    }
-
     render() {
+        console.info(this.state)
+        const { startDate, endDate } = this.state.adgroup;
+        const { focusedInput } = this.state;
+
         if (this.state.valid) {
             var saveButton =
                 <a className="modal-action waves-effect waves-light btn white-text"
@@ -216,129 +140,38 @@ export class AdgroupEditModal extends React.Component {
                 </a>
         }
 
-
-        if (!this.state.targeting) {
-            var targetingBody =
-                <div className="row">
-                    <a className="modal-action waves-effect waves-green btn-flat teal white-text"
-                        onClick={e => this.openCreateTargetingModal()}>
-                        ADD TARGETING
-                    </a>
-                </div>
-            var saveMethod = "POST";
-            var successStatus = "201";
-        } else {
-            var targetingBody =
-                <div className="row">
-                    <h5 className="lighter" ></h5>
-
-                    <blockquote>
-                        <div className="chip tooltipped" data-position="bottom" data-tooltip="HMD">
-                            {config.hmds[this.state.targeting.hmd] ? config.hmds[this.state.targeting.hmd] : "ALL"}
-                        </div>
-                        <div className="chip tooltipped" data-position="bottom" data-tooltip="Minimum RAM">
-                            {this.state.targeting.ram}GB
-                        </div>
-                        <div className="chip tooltipped" data-position="bottom" data-tooltip="OS">
-                            {config.operatingSystems[this.state.targeting.os] ? config.operatingSystems[this.state.targeting.os] : "ALL"}
-                        </div>
-                        <a className="modal-action waves-effect waves-green btn-flat teal white-text right"
-                            onClick={e => this.openCreateTargetingModal()}>
-                            EDIT TARGETING
-                          </a>
-                    </blockquote>
-                </div>
-            var saveMethod = "PUT";
-            var successStatus = "200";
-        }
-
         const title = this.saveMethod == "PUT" ? "Edit Adgroup" : "Create Adgroup";
+        const adgroup = this.state.adgroup;
+
         return (
             <div>
-                <div id="agForm" className="modal modal-fixed-footer">
-                    <div className="modal-content valign-wrapper">
-                        <div className="container">
-                            <h5 className="center">{title}</h5>
-                            <br />
-                            <br />
-                            <div className="row">
-                                <div className="col s4">
-                                    <div className="input-field">
-                                        <select id="pricingTypeSelect" defaultValue={config.defaultPricing}>
-                                            {Object.keys(config.pricings).map(id =>
-                                                <option key={id} value={id}>{config.pricings[id]}</option>
-
-
-                                            )}
-                                        </select>
-                                        <label>Pricing Type</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col s4">
-                                    <FormInput
-                                        fieldName="name"
-                                        label="Adgroup Name"
-                                        value={this.state.adgroup.name}
-                                        handleChange={this.handleChange('name').bind(this)} />
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col s4">
-                                    <NumberInput
-                                        fieldName="totalBudget"
-                                        label="Total Budget ($)"
-                                        value={this.state.adgroup.totalBudget}
-                                        handleChange={this.handleChange('totalBudget').bind(this)} />
-                                </div>
-                                <div className="col s1">
-                                </div>
-                                <div className="col s4">
-                                    <NumberInput
-                                        fieldName="dailyBudget"
-                                        label="Daily Budget ($)"
-                                        value={this.state.adgroup.dailyBudget}
-                                        handleChange={this.handleChange('dailyBudget').bind(this)} />
-                                </div>
-                                <div className="col s1">
-                                </div>
-                                <div className="col s2">
-                                    <NumberInput
-                                        fieldName="bid"
-                                        label="Bid ($)"
-                                        value={this.state.adgroup.bid}
-                                        handleChange={this.handleChange('bid').bind(this)} />
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col s4">
-                                    <div className="input-field">
-                                        <label htmlFor="agStartDate">Start Date</label>
-                                        <input type="date" id="agStartDate" className="datepicker" label="Start Date" />
-                                    </div>
-                                </div>
-                                <div className="col s1">
-                                </div>
-                                <div className="col s4">
-                                    <div className="input-field">
-                                        <label htmlFor="agEndDate">End Date</label>
-                                        <input type="date" id="agEndDate" className="datepicker" label="End Date" />
-                                    </div>
-                                </div>
-                            </div>
-                            {targetingBody}
-                        </div>
-                    </div>
-
-                    <div className="modal-footer">
-                        {saveButton}
-                    </div>
-                </div >
-                <CreateTargetingModal saveMethod={saveMethod}
-                    successStatus={successStatus}
-                    postSave={this.postTargetingSave.bind(this)}
-                    initialState={this.state.targeting} />
+                <Modal open={this.state.open} onClose={this.closeModal} dimmer='blurring'>
+                    <Modal.Header>Create Campaign</Modal.Header>
+                    <Modal.Content>
+                        <Form>
+                            <Form.Group widths='equal'>
+                                <Form.Field control={Input} label='Adgroup name' placeholder='Adgroup name' onChange={this.handleChange('name')} value={adgroup.name} />
+                            </Form.Group>
+                            <Form.Group widths='equal'>
+                                <Form.Field control={Input} label='Total Budget' type='number' placeholder='Total Budget' onChange={this.handleChange('totalBudget')} value={adgroup.totalBudget} />
+                                <Form.Field control={Input} label='Daily Budget' type='number' placeholder='Daily Budget' onChange={this.handleChange('dailyBudget')} value={adgroup.dailyBudget} />
+                                <Form.Field control={Input} label='Cost Per Click' type='number' placeholder='Cost Per Click' onChange={this.handleChange('bid')} value={adgroup.bid} />
+                            </Form.Group>
+                            <DateRangePicker
+                                onDatesChange={this.onDatesChange}
+                                onFocusChange={this.onFocusChange}
+                                focusedInput={focusedInput}
+                                startDate={startDate}
+                                endDate={endDate}
+                                numberOfMonths={2}
+                                displayFormat="YYYY-MMM-DD"
+                                />
+                        </Form>
+                    </Modal.Content>
+                    <Modal.Actions>
+                        <Button positive content="Create" disabled={!this.state.valid} onClick={this.saveAdgroup.bind(this)} />
+                    </Modal.Actions>
+                </Modal>
             </div>
         )
     }
