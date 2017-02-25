@@ -53,8 +53,13 @@ module.exports = {
             {
                 test: /\.css$/,
                 include: path.resolve(__dirname, '../semantic/dist'),
-                loader: 'style-loader!css-loader!postcss-loader', // whatever I put here doesn't matter
+                loader: 'style-loader!css-loader!postcss-loader', 
                 exclude: /node_modules/,
+            },
+             {
+                test: /\.css$/,
+                include: path.resolve(__dirname, 'assets/dashboard/css'),
+                loader: 'style-loader!css-loader!postcss-loader',
             },
         ]
     },
