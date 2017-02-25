@@ -21,14 +21,6 @@ export class CampaignEditModal extends React.Component {
             open: false,
         }, JSON.parse(JSON.stringify(props)));
 
-        if (this.state.campaign.startDate) {
-            this.state.campaign.startDate = moment(this.state.campaign.startDate, 'YYYY-MM-DD');
-        }
-
-        if (this.state.campaign.endDate) {
-            this.state.campaign.endDate = moment(this.state.campaign.endDate, 'YYYY-MM-DD');
-        }
-
         this.postSave = props.postSave;
         this.closeModal = props.closeModal;
         this.saveMethod = props.saveMethod;
@@ -45,14 +37,6 @@ export class CampaignEditModal extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const campaign = nextProps.campaign;
-        if (campaign.startDate) {
-            campaign.startDate = moment(campaign.startDate, 'YYYY-MM-DD');
-        }
-
-        if (campaign.endDate) {
-            campaign.endDate = moment(campaign.endDate, 'YYYY-MM-DD');
-        }
         this.setState(Object.assign({}, this.state, nextProps));
     }
 

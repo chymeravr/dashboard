@@ -8,7 +8,7 @@ import { FormInput, spinner, PageHeading } from '../common'
 import { AdgroupEditModal } from './adgroupModal'
 import { CampaignEditModal } from './campaignModal'
 import { Image as ImageComponent, Item, Grid, Card, Statistic, Icon, Button, Divider } from 'semantic-ui-react'
-
+import moment from 'moment'
 
 /**
  * Store direct properties of campaigns which can be printed by map
@@ -54,6 +54,8 @@ export class CampaignDetailView extends React.Component {
             'GET',
             null,
             (response) => {
+                response.startDate = moment(response.startDate, 'YYYY-MM-DD');
+                response.endDate = moment(response.endDate, 'YYYY-MM-DD');
                 this.setState(Object.assign({}, this.state, { campaign: response }));
                 document.title = response.name + " | Campaign";
             },
