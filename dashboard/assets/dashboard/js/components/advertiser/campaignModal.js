@@ -110,7 +110,7 @@ export class CampaignEditModal extends React.Component {
         const title = this.saveMethod === 'PUT' ? "Edit Campaign" : "Create Campaign";
 
         return (
-            <Modal open={this.state.open} onClose={this.closeModal}>
+            <Modal open={this.state.open} onClose={this.closeModal} dimmer='blurring'>
                 <Modal.Header>Create Campaign</Modal.Header>
                 <Modal.Content>
                     <Form>
