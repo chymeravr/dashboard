@@ -203,13 +203,10 @@ export class CampaignDetailView extends React.Component {
                                             <Table.Cell>{adgroup.startDate.format('YYYY-MM-DD')}</Table.Cell>
                                             <Table.Cell>{adgroup.endDate.format('YYYY-MM-DD')}</Table.Cell>
                                             {Object.keys(adgroupHeaders).map(key => <Table.Cell key={key}>{adgroup[adgroupHeaders[key]]}</Table.Cell>)}
-
-
                                             <Table.Cell>
                                                 <Checkbox toggle
                                                     checked={adgroup.status}
                                                     onChange={(e, d) => { this.setAdgroupStatus(idx, d.checked) } } />
-
                                             </Table.Cell>
                                         </Table.Row>)
                                     }

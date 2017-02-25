@@ -19,7 +19,8 @@ export class AdgroupEditModal extends React.Component {
                 campaign: props.campaignId,
                 pricing: config.defaultPricing,
             }
-        }, JSON.parse(JSON.stringify(props)));
+        });
+        Object.assign(this.state, props.adgroup);
         this.campaignId = props.campaignId;
         this.postSave = props.postSave;
         this.saveMethod = props.saveMethod;
@@ -100,11 +101,7 @@ export class AdgroupEditModal extends React.Component {
         adgroup.startDate = adgroup.startDate.format('YYYY-MM-DD');
         adgroup.endDate = adgroup.endDate.format('YYYY-MM-DD');
 
-        if (this.state.targeting) {
-            var body = JSON.stringify(Object.assign({}, adgroup, { targeting: [this.state.targeting.id] }));
-        } else {
-            var body = JSON.stringify(adgroup);
-        }
+        var body = JSON.stringify(adgroup);
 
         callApiWithJwt(
             apiPath,
