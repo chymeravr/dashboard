@@ -36,6 +36,7 @@ export class CampaignDetailView extends React.Component {
             campaignId: this.props.params.campaignId
         };
         this.openCampaignModal = this.openCampaignModal.bind(this);
+        this.closeCampaignModal = this.closeCampaignModal.bind(this);
         this.openAgModal = this.openAgModal.bind(this);
 
     }
@@ -66,9 +67,11 @@ export class CampaignDetailView extends React.Component {
 
 
     openCampaignModal() {
-        $('.modal').modal();
-        $('#cmpForm').modal('open');
         this.setState(Object.assign({}, this.state, { cmpModalIsOpen: true }));
+    }
+
+    closeCampaignModal() {
+        this.setState(Object.assign({}, this.state, { cmpModalIsOpen: false }));
     }
 
     openAgModal() {
@@ -127,14 +130,14 @@ export class CampaignDetailView extends React.Component {
                         <Grid centered stretched verticalAlign='middle' columns={16}>
                             <Grid.Row verticalAlign='middle'>
                                 <Grid.Column verticalAlign='middle' width={10}>
-                                    <Card fluid align='left'>
-                                        <Card.Content centered>
+                                    <Card fluid>
+                                        <Card.Content>
                                             <Card.Header>
                                                 <Grid>
                                                     <Grid.Row columns={16}>
                                                         <Grid.Column width={2}>{this.state.campaign.name}</Grid.Column>
-                                                        <Grid.Column width={12}/>
-                                                        <Grid.Column width={1}><Button color='blue' >Edit</Button></Grid.Column>
+                                                        <Grid.Column width={12} />
+                                                        <Grid.Column width={1}><Button color='blue' onClick={this.openCampaignModal}>Edit</Button></Grid.Column>
                                                     </Grid.Row>
                                                 </Grid>
                                             </Card.Header>
@@ -157,8 +160,6 @@ export class CampaignDetailView extends React.Component {
                                                     <Statistic.Label>Clicks</Statistic.Label>
                                                 </Statistic>
                                             </Card.Description>
-                                        </Card.Content>
-                                        <Card.Content extra>
                                         </Card.Content>
                                     </Card>
                                 </Grid.Column>
@@ -190,8 +191,8 @@ export class CampaignDetailView extends React.Component {
                                 </tbody></table>
                         </div>
                     </div>
-                    <CampaignEditModal campaign={this.state.campaign} saveMethod="PUT" label="Edit Campaign"
-                        postSave={this.postSave.bind(this)} successStatus="200" />
+                    <CampaignEditModal saveMethod="PUT" postSave={this.postSave.bind(this)} open={this.state.cmpModalIsOpen} closeModal={this.closeCampaignModal} campaign={this.state.campaign} />
+
                     <br />
                     <ReactCSSTransitionGroup
                         component="table"
