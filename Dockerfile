@@ -44,8 +44,12 @@ ENV DEBUG=$DEBUG
 # Bootstrap dev server if required
 RUN if [ "$DEBUG" = "True" ]; then bash devbootstrap.sh; fi
 
+WORKDIR $BASE/semantic
+RUN gulp install
+
 # Build js bundles
 WORKDIR $BASE/dashboard
+
 RUN ../node_modules/.bin/webpack --config webpack.config.js
 WORKDIR $BASE
 
