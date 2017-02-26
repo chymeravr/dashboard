@@ -19,7 +19,8 @@ RUN apt-get install -y libpq-dev
 # npm
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 RUN apt-get install -y nodejs
-RUN npm install --save-dev jquery react react-dom webpack webpack-bundle-tracker babel-loader babel-core babel-preset-es2015 babel-preset-react
+RUN npm install jquery react react-dom webpack webpack-bundle-tracker babel-loader babel-core babel-preset-es2015 babel-preset-react
+RUN npm install -g gulp
 
 # nginx and uwsgi
 RUN apt-get install -y nginx
@@ -45,7 +46,7 @@ ENV DEBUG=$DEBUG
 RUN if [ "$DEBUG" = "True" ]; then bash devbootstrap.sh; fi
 
 WORKDIR $BASE/semantic
-RUN gulp install
+RUN gulp build
 
 # Build js bundles
 WORKDIR $BASE/dashboard
