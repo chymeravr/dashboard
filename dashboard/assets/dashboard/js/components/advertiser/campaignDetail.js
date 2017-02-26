@@ -36,6 +36,7 @@ export class CampaignDetailView extends React.Component {
         this.openCampaignModal = this.openCampaignModal.bind(this);
         this.closeCampaignModal = this.closeCampaignModal.bind(this);
         this.openAgModal = this.openAgModal.bind(this);
+        this.closeAgModal = this.closeAgModal.bind(this);
 
     }
 
@@ -130,7 +131,7 @@ export class CampaignDetailView extends React.Component {
         }
 
         return (
-            <main className="Site-content ui center aligned grid" style={{ height: '100vh' }}>
+            <main className="Site-content ui center aligned grid" style={{ minHeight: '100vh' }}>
                 <Grid centered columns={16} style={{ margin: 0 }} >
                     <Grid.Row columns={3}>
                         <Grid.Column width={4} />

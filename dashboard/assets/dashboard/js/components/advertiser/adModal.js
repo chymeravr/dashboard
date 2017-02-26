@@ -1,9 +1,9 @@
 import React, { ReactDOM } from 'react'
-import Modal from 'react-modal'
 import { FormInput, NumberInput } from '../common'
 import { callRawApiWithJwt, debug } from '../../lib.js'
 import { hashHistory } from 'react-router'
 import { config } from '../../config'
+import { Grid, Card, Table, Checkbox, Button, Icon, Header, Modal, Form, Input, Select, Radio, Dimmer, Loader } from 'semantic-ui-react'
 
 export class AdModal extends React.Component {
     constructor(props) {
@@ -12,26 +12,35 @@ export class AdModal extends React.Component {
             ad: {
                 adgroup: props.adgroupId,
             },
-            uploading: false
+            uploading: false,
+            open: props.open
         }, JSON.parse(JSON.stringify(props)));
         this.postSave = props.postSave;
+        this.closeModal = props.closeModal;
+        this.setFile = this.setFile.bind(this)
+        this.saveAd = this.saveAd.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.validateState = this.validateState.bind(this);
     }
 
 
+    componentWillReceiveProps(nextProps) {
+        this.setState(Object.assign({}, this.state, { open: nextProps.open }))
+    }
     validateState() {
         var valid = this.state.ad && this.state.ad.creative && this.state.ad.landingPage && this.state.ad.name;
-        valid = valid && (this.state.ad.creative.length > 0 && this.state.ad.creative.landingPage.length > 0)
+        valid = valid && this.state.ad.landingPage.length > 0
+        console.info(valid)
         this.setState(Object.assign({}, this.state, { valid: valid }));
     }
 
     handleChange(key) {
-        return function (e) {
+        return (e, d) => {
             this.state.ad[key] = e.target.value;
             var newAd = Object.assign({}, this.state.ad);
             newAd[key] = e.target.value;
             // Reired to update state
-            this.setState(Object.assign({}, this.state, { ad: newAd }));
-            this.validateState();
+            this.setState(Object.assign({}, this.state, { ad: newAd }), this.validateState);
         };
     }
 
@@ -75,98 +84,44 @@ export class AdModal extends React.Component {
         });
     }
 
-    componentDidUpdate() {
-        $('.tooltipped').tooltip({ delay: 25 });
-
-    }
-
     setFile() {
         console.info('File path detected');
         var oFReader = new FileReader();
-        const file = document.getElementById("adPath").files[0];
+        console.info(document.getElementById("adPath"))
+        const file = document.getElementById("adPath").children[0].files[0];
         this.state.ad.creative = file;
-        this.setState(Object.assign({}, this.state))
         oFReader.readAsDataURL(file);
         oFReader.onload = function (oFREvent) {
             document.getElementById("adPreview").src = oFREvent.target.result;
         };
+        this.setState(Object.assign({}, this.state), this.validateState)
+
     }
 
     render() {
-        if (this.state.valid) {
-            var saveButton =
-                <a className="modal-action waves-effect waves-green btn-flat teal white-text"
-                    onClick={e => this.saveAd()}>
-                    Save
-                </a>
-        } else {
-            var saveButton =
-                <a className="modal-action waves-effect waves-green btn-flat teal white-text disabled"
-                    onClick={e => this.saveAd()}>
-                    Save
-                </a>
-        }
-
-        if (this.state.uploading) {
-            const progressBarStyle = {
-                top: "-10px",
-                margin: 5
-            }
-            var saveButton =
-                <div>
-                    <div className="progress" style={progressBarStyle}>
-                        <div className="indeterminate"></div>
-                    </div>
-                    <div className="container center grey-text">
-                        Uploading
-                    </div>
-                </div>
-        }
+        console.info(this.state);
+        const ad = this.state.ad;
 
         return (
-            <div>
-                <div id="adForm" className="modal modal-fixed-footer">
-                    <div className="modal-content valign-wrapper">
-                        <div className="container">
-                            <h5 className="center">Create Ad</h5>
-                            <br />
-                            <br />
-                            <div className="row">
-                                <FormInput
-                                    fieldName="name"
-                                    label="Ad Name"
-                                    value={this.state.ad.name}
-                                    handleChange={this.handleChange('name').bind(this)} />
-                            </div>
-                            <div className="row">
-                                <div className="file-field input-field">
-                                    <div className="btn">
-                                        <span>Creative File</span>
-                                        <input id="adPath" type="file" onChange={e => this.setFile()} />
-                                    </div>
-                                    <div className="file-path-wrapper">
-                                        <input className="file-path validate" type="text" />
-                                    </div>
-                                </div>
-                            </div>
-                             <div className="row">
-                                <FormInput
-                                    fieldName="landingPage"
-                                    label="Landing Page"
-                                    value={this.state.ad.landingPage}
-                                    handleChange={this.handleChange('landingPage').bind(this)} />
-                            </div>
-                            <div className="row">
-                                <img className="materialboxed" id="adPreview" data-caption="Preview" height="100px" />
-
-                            </div>
-                        </div>
-                    </div>
-                    <div className="modal-footer">
-                        {saveButton}
-                    </div>
-                </div >
-            </div>
+            <Modal open={this.state.open} onClose={this.closeModal} dimmer='blurring'>
+                <Modal.Header>{this.label}</Modal.Header>
+                <Modal.Content>
+                    <Form>
+                        <Form.Field control={Input} label='Ad name' placeholder='Ad name' onChange={this.handleChange('name')} value={ad.name} />
+                        <Form.Field control={Input} label='Landing URL' placeholder='URL to redirect clicks to' onChange={this.handleChange('landingPage')} value={ad.landingPage} />
+                        <Form.Field id="adPath" control={Input} label='Upload File' type='file' onChange={this.setFile} placeholder='Creative' value={ad.adPath} />
+                        <Grid centered>
+                            <img className="ui image" id="adPreview" data-caption="Preview" height="150px" />
+                        </Grid>
+                    </Form>
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button positive content="Create" disabled={!this.state.valid} onClick={this.saveAd} />
+                </Modal.Actions>
+                <Dimmer active={this.state.uploading} inverted>
+                    <Loader>Uploading File..</Loader>
+                </Dimmer>
+            </Modal>
         )
     }
 }

@@ -143,7 +143,7 @@ export class AdgroupEditModal extends React.Component {
         return (
             <div>
                 <Modal open={this.state.open} onClose={this.closeModal} dimmer='blurring'>
-                    <Modal.Header>Create Campaign</Modal.Header>
+                    <Modal.Header>{this.label}</Modal.Header>
                     <Modal.Content>
                         <Form>
                             <Form.Group widths='equal'>

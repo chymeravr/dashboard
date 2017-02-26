@@ -105,10 +105,8 @@ export class AdgroupDetailView extends React.Component {
     }
 
     postAdAddition(ad) {
-        adgroup.startDate = moment(adgroup.startDate, 'YYYY-MM-DD');
-        adgroup.endDate = moment(adgroup.endDate, 'YYYY-MM-DD')
         this.state.adgroup.ads.unshift(ad);
-        this.setState(Object.assign({}, this.state, { timestamp: Date.now() }));
+        this.setState(Object.assign({}, this.state ), this.closeAdModal);
     }
 
     render() {
@@ -120,7 +118,7 @@ export class AdgroupDetailView extends React.Component {
             // TODO : Spinner
         }
         return (
-            <main className="Site-content ui center aligned grid" style={{ height: '100vh' }}>
+            <main className="Site-content ui center aligned grid" style={{ minHeight: '100vh' }}>
                 <Grid centered columns={16} style={{ margin: 0 }} >
                     <Grid.Row columns={3}>
                         <Grid.Column width={4} />
@@ -191,7 +189,7 @@ export class AdgroupDetailView extends React.Component {
                                                     onChange={(e, d) => { this.setAdStatus(idx, d.checked) } } />
 
                                             </Table.Cell>
-                                            <Table.Cell><Image src={ad.creative} /></Table.Cell>
+                                            <Table.Cell><img src={ad.creative} width="100px"/></Table.Cell>
                                         </Table.Row>)
                                     }
                                 </Table.Body>
@@ -201,6 +199,7 @@ export class AdgroupDetailView extends React.Component {
                     <AdgroupEditModal label="Create Adgroup" saveMethod="PUT"
                         postSave={this.postAdgroupEdit.bind(this)} successStatus="200"
                         campaignId={this.state.adgroup.campaignId} open={this.state.agModalIsOpen} closeModal={this.closeAgModal} adgroup={this.state.adgroup} />
+                    <AdModal postSave={this.postAdAddition.bind(this)} adgroupId={this.state.adgroup.id} open={this.state.adModalIsOpen} closeModal={this.closeAdModal}/>
                 </Grid >
             </main>
 
