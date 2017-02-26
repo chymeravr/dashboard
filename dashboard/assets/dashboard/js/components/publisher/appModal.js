@@ -1,18 +1,20 @@
 import React, { ReactDOM } from 'react'
-import Modal from 'react-modal'
 import { FormInput, NumberInput } from '../common'
 import { callApiWithJwt, debug } from '../../lib.js'
 import { hashHistory } from 'react-router'
 import { config } from '../../config'
+import { Image as ImageComponent, Item, Grid, Card, Statistic, Icon, Button, Divider, Table, Checkbox, Form, Input, Dropdown, Modal } from 'semantic-ui-react'
 
 
 
 export class AppEditModal extends React.Component {
+
     constructor(props) {
         super(props);
 
         this.state = Object.assign({
             valid: false,
+            open: props.open,
             app: {
                 appStore: config.defaultAppStore
             },
@@ -20,9 +22,17 @@ export class AppEditModal extends React.Component {
         this.postSave = props.postSave;
         this.saveMethod = props.saveMethod;
         this.label = props.label;
+        this.closeModal = props.closeModal;
         this.successStatus = props.successStatus;
+        this.handleChange = this.handleChange.bind(this);
+        this.validateState = this.validateState.bind(this);
+        this.setAppStore = this.setAppStore.bind(this);
+        this.saveApp = this.saveApp.bind(this);
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState(Object.assign({}, this.state, { open: nextProps.open }))
+    }
 
     validateState() {
         var valid = this.state.app;
@@ -48,45 +58,22 @@ export class AppEditModal extends React.Component {
     }
 
     handleChange(key) {
-        return function (e) {
+        return (e, d) => {
             this.state.app[key] = e.target.value;
             var newApp = Object.assign({}, this.state.app);
             newApp[key] = e.target.value;
             // Required to update state
-            this.setState(Object.assign({}, this.state, { app: newApp }));
-            this.validateState();
+            this.setState(Object.assign({}, this.state, { app: newApp }), this.validateState);
         };
     }
 
 
-    setAppStore(type) {
+    setAppStore(e, d) {
         var app = Object.assign(this.state.app, {
-            appStore: type
+            appStore: d.value
         });
-        this.setState(Object.assign({}, this.state, { app: app }));
-        this.validateState();
-        $('#appStoreDropdown').dropdown('close')
+        this.setState(Object.assign({}, this.state, { app: app }), this.validateState);
     }
-
-
-    componentDidMount() {
-        const that = this;
-        $('.dropdown-button').dropdown({
-            inDuration: 300,
-            outDuration: 225,
-            constrain_width: true, // Does not change width of dropdown to that of the activator
-            hover: false, // Activate on hover
-            gutter: 0, // Spacing from edge
-            belowOrigin: true, // Displays dropdown below the button
-            alignment: 'left' // Displays dropdown with edge aligned to the left of button
-        });
-
-        $('.tooltipped').tooltip({ delay: 50 });
-
-        $('select').material_select();
-        $('#appStoreSelect').on('change', e => this.setAppStore(e.target.value)).bind(this);
-    }
-
 
     saveApp() {
         const apiSuffix = this.saveMethod === 'PUT' ? this.state.app.id : '';
@@ -97,7 +84,6 @@ export class AppEditModal extends React.Component {
             JSON.stringify(this.state.app),
             (response) => {
                 this.postSave(response);
-                $('#appForm').modal('close');
             },
             (error) => {
                 alert(error);
@@ -107,58 +93,28 @@ export class AppEditModal extends React.Component {
     }
 
     render() {
-        if (this.state.valid) {
-            var saveButton =
-                <a className="modal-action waves-effect waves-green btn white-text"
-                    onClick={e => this.saveApp()}>
-                    Save
-                </a>
-        } else {
-            var saveButton =
-                <a className="modal-action waves-effect waves-green btn white-text disabled"
-                    onClick={e => this.saveApp()}>
-                    Save
-                </a>
-        }
+        console.info(this.state)
+        const appStores = config.appStores;
+        const appStoreOptions = Object.keys(appStores).map(appStoreId => {
+            return { key: appStoreId, text: appStores[appStoreId], value: appStoreId };
+        });
 
+        const app = this.state.app;
         const title = this.saveMethod == "PUT" ? 'Edit App' : 'Create App';
         return (
-            <div id="appForm" className="modal modal-fixed-footer">
-                <div className="modal-content valign-wrapper">
-                    <div className="container">
-                        <h5 className="center">{title}</h5>
-                        <br />
-                        <br />
-                        <div className="row">
-                            <FormInput
-                                fieldName="name"
-                                label="App Name"
-                                value={this.state.app.name}
-                                handleChange={this.handleChange('name').bind(this)} />
-                        </div>
-                        <div className="row">
-                            <div className="input-field">
-                                <select id="appStoreSelect" defaultValue={config.appStores}>
-                                    {Object.keys(config.appStores).map(id =>
-                                        <option key={id} value={id}>{config.appStores[id]}</option>
-                                    )}
-                                </select>
-                                <label>App Store</label>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <FormInput
-                                fieldName="url"
-                                label="App URL"
-                                value={this.state.app.url}
-                                handleChange={this.handleChange('url').bind(this)} />
-                        </div>
-                    </div>
-                </div>
-                <div className="modal-footer">
-                    {saveButton}
-                </div>
-            </div >
+            <Modal open={this.state.open} onClose={this.closeModal} dimmer='blurring'>
+                <Modal.Header>{this.label}</Modal.Header>
+                <Modal.Content>
+                    <Form>
+                        <Form.Field control={Input} label='App name' placeholder='App name' onChange={this.handleChange('name')} value={app.name} />
+                        <Form.Field control={Dropdown} selection label='AppStore' options={appStoreOptions} placeholder='AppStore' onChange={this.setAppStore} value={app.appStore+''}/>
+                        <Form.Field control={Input} label='App Url' placeholder='Market Url' onChange={this.handleChange('url')} value={app.url} />
+                    </Form>
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button positive content="Create" disabled={!this.state.valid} onClick={this.saveApp} />
+                </Modal.Actions>
+            </Modal>
         )
     }
 }

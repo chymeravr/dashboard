@@ -3,10 +3,9 @@ import { debug, callApiWithJwt } from '../../lib.js'
 import { config } from '../../config.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 import { hashHistory, Link } from 'react-router'
-import Modal from 'react-modal'
 import { FormInput, spinner, PageHeading } from '../common'
 import { AppEditModal } from './appModal'
-
+import { Image as ImageComponent, Item, Grid, Card, Statistic, Icon, Button, Divider, Table, Checkbox, Form, Input, Modal } from 'semantic-ui-react'
 
 
 const placementHeaders = {
@@ -26,7 +25,10 @@ export class AppDetailView extends React.Component {
             newPlacement: '',
         };
         this.openAppModal = this.openAppModal.bind(this);
-
+        this.closeAppModal = this.closeAppModal.bind(this);
+        this.openPmModal = this.openPmModal.bind(this);
+        this.closePmModal = this.closePmModal.bind(this);
+        this.savePlacement = this.savePlacement.bind(this);
     }
 
     handleChange(key) {
@@ -56,28 +58,33 @@ export class AppDetailView extends React.Component {
     }
 
     openAppModal() {
-        $('.modal').modal();
-        $('#appForm').modal('open');
+        this.setState(Object.assign({}, this.state, { isAppModalOpen: true }))
+    }
+
+    closeAppModal() {
+        this.setState(Object.assign({}, this.state, { isAppModalOpen: false }))
     }
 
     openPmModal() {
-        $('.modal').modal();
-        $('#placementForm').modal('open');
+        this.setState(Object.assign({}, this.state, { isPmModalOpen: true }))
+    }
+
+    closePmModal() {
+        this.setState(Object.assign({}, this.state, { isPmModalOpen: false }))
     }
 
     postSave(app) {
-        this.setState(Object.assign({}, this.state, { app: app }))
+        this.setState(Object.assign({}, this.state, { app: app }), this.closeAppModal)
     }
 
     postPlacementAddition(placement) {
         this.state.app.placements.unshift(placement);
         this.state.newPlacement = '';
-        this.setState(Object.assign({}, this.state, { timestamp: Date.now() }));
+        this.setState(Object.assign({}, this.state), this.closePmModal);
     }
 
     savePlacement() {
-        const apiSuffix = this.saveMethod === 'PUT' ? this.state.app.id : '';
-        const apiPath = '/user/api/publisher/placements/' + apiSuffix;
+        const apiPath = '/user/api/publisher/placements/';
         callApiWithJwt(
             apiPath,
             'POST',
@@ -86,11 +93,10 @@ export class AppDetailView extends React.Component {
                 app: this.state.appId
             }),
             (response) => {
-                $('#placementForm').modal('close');
                 this.postPlacementAddition(response);
             },
             (error) => {
-                alert(error);
+                throw error;
             },
             201
         );
@@ -101,106 +107,91 @@ export class AppDetailView extends React.Component {
             return spinner
         }
 
-        if (this.state.newPlacement && this.state.newPlacement.length > 0) {
-            var saveButton =
-                <a className="modal-action waves-effect waves-green btn white-text"
-                    onClick={e => this.savePlacement()}>
-                    Save
-                </a>
-        } else {
-            var saveButton =
-                <a className="modal-action waves-effect waves-green btn white-text disabled"
-                    onClick={e => this.savePlacement()}>
-                    Save
-                </a>
-        }
-
-        var fabStyle = {
-            bottom: '50px',
-            right: '50px'
-        }
-
-        var heightStyle = {
-            height: '100%',
-            minHeight: '100%',
-        }
+        console.info(this.state)
         return (
-            <div className="container">
-                <PageHeading title="App Detail" onClick={e => this.openPmModal()} buttonText="Placement" />
-                <div className="row">
-                    <div className="col s12">
-                        <div className="card blue-grey darken-1">
-                            <div className="card-content white-text">
-                                <span className="card-title">
-                                    {this.state.app.name}
-                                    <a className="right" href="javascript:void(0);" onClick={e => this.openAppModal()}>
-                                        <i className="material-icons white-text">edit</i>
-                                    </a>
-                                </span>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Total Earnings</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr className="white-text text-darken-1">
-                                            <td>0</td>
-                                        </tr>
-                                    </tbody></table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <main className="Site-content ui center aligned grid" style={{ minHeight: '100vh' }}>
+                <Grid centered columns={16} style={{ margin: 0 }} >
+                    <Grid.Row columns={3}>
+                        <Grid.Column width={4} />
+                        <Grid.Column width={2}>
+                            <Button positive icon={<Icon inverted name="add" />} labelPosition='right' content='Add Placement' onClick={this.openPmModal} />
+                        </Grid.Column >
+                        <Grid.Column width={10} />
+                    </Grid.Row>
+                    <Grid.Row columns={1}>
+                        <Grid centered stretched verticalAlign='middle' columns={16}>
+                            <Grid.Row verticalAlign='middle'>
+                                <Grid.Column verticalAlign='middle' width={8}>
+                                    <Card fluid>
+                                        <Card.Content>
+                                            <Card.Header>
+                                                <Grid>
+                                                    <Grid.Row columns={16}>
+                                                        <Grid.Column width={6}>{this.state.app.name}</Grid.Column>
+                                                        <Grid.Column width={6} />
+                                                        <Grid.Column width={1}><Button color='blue' onClick={this.openAppModal}>Edit</Button></Grid.Column>
+                                                    </Grid.Row>
+                                                </Grid>
+                                            </Card.Header>
+                                            <Divider />
+                                            <Card.Description>
+                                                <Statistic>
+                                                    <Statistic.Value>{this.state.app.earnings}<Icon name="dollar" size="mini" /></Statistic.Value>
+                                                    <Statistic.Label>Earnings</Statistic.Label>
+                                                </Statistic>
+                                                <Statistic>
+                                                    <Statistic.Value>{this.state.app.impressions}</Statistic.Value>
+                                                    <Statistic.Label>Impressions</Statistic.Label>
+                                                </Statistic>
+                                                <Statistic>
+                                                    <Statistic.Value>{this.state.app.clicks}</Statistic.Value>
+                                                    <Statistic.Label>Clicks</Statistic.Label>
+                                                </Statistic>
+                                                <Statistic>
+                                                    <Statistic.Value>{this.state.app.requests}</Statistic.Value>
+                                                    <Statistic.Label>Requests</Statistic.Label>
+                                                </Statistic>
+                                            </Card.Description>
+                                        </Card.Content>
+                                    </Card>
+                                </Grid.Column>
+                            </Grid.Row>
+                        </Grid>
+                    </Grid.Row>
+                    <Grid.Row columns={1}>
+                        <Grid.Column width={13}>
+                            <Table>
+                                <Table.Header>
+                                    <Table.Row>
+                                        {Object.keys(placementHeaders).map(header => <Table.Cell key={header}>{header}</Table.Cell>)}
+                                    </Table.Row>
+                                </Table.Header>
+                                <Table.Body>
+                                    {this.state.app.placements.map(placement =>
+                                        <Table.Row key={placement.id}>
+                                            {Object.keys(placementHeaders).map(key => <Table.Cell key={key}>{placement[placementHeaders[key]]}</Table.Cell>)}
+                                        </Table.Row>)
+                                    }
+                                </Table.Body>
+                            </Table>
+                        </Grid.Column>
+                    </Grid.Row>
+                    <AppEditModal label="Edit App" saveMethod="PUT" postSave={this.postSave.bind(this)} successStatus="200"
+                        closeModal={this.closeAppModal} open={this.state.isAppModalOpen} app={this.state.app} />
 
-                <ReactCSSTransitionGroup
-                    component="table"
-                    transitionName="fadeTransitionFast"
-                    transitionAppear={true}
-                    transitionLeave={false}
-                    transitionEnterTimeout={150}
-                    transitionLeaveTimeout={150}
-                    transitionAppearTimeout={150}
-                    className="table highlight grey-text text-darken-4 col s12">
-                    <thead>
-                        <tr>
-                            {Object.keys(placementHeaders).map(header => <th key={header}>{header}</th>)}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.app.placements.map(placement =>
-                            <tr key={placement.id} className="grey-text text-darken-1">
-                                {Object.keys(placementHeaders).map(key => <td key={key}>{placement[placementHeaders[key]]}</td>)}
-                            </tr>)
-                        }
-                    </tbody>
-
-                </ReactCSSTransitionGroup>
-                <br />
-                <br />
-                <AppEditModal label="Create App" saveMethod="PUT"
-                    postSave={this.postSave.bind(this)} successStatus="200" app={this.state.app} />
-
-                <div id="placementForm" className="modal modal-fixed-footer" key={this.state.timestamp}>
-                    <div className="modal-content valign-wrapper">
-                        <div className="container">
-                            <div className="row">
-                                <div className="col s8">
-                                    <FormInput
-                                        fieldName="newPlacement"
-                                        label="Placement Name"
-                                        value={this.state.newPlacement}
-                                        handleChange={this.handleChange('newPlacement').bind(this)} />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="modal-footer">
-                        {saveButton}
-                    </div >
-                </div >
-            </div>
+                    <Modal size="small" open={this.state.isPmModalOpen} onClose={this.closePmModal} dimmer='blurring'>
+                        <Modal.Header>Add Placement</Modal.Header>
+                        <Modal.Content>
+                            <Form>
+                                <Form.Field control={Input} label='Placement name' placeholder='Placement name' onChange={this.handleChange('newPlacement')} value={this.state.newPlacement} />
+                            </Form>
+                        </Modal.Content>
+                        <Modal.Actions>
+                            <Button positive icon='checkmark' labelPosition='right' content='Create' onClick={this.savePlacement} />
+                        </Modal.Actions>
+                    </Modal>
+                </Grid >
+            </main>
         );
     }
 }

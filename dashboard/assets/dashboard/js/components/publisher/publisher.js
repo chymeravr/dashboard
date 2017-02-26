@@ -6,6 +6,7 @@ import { hashHistory, Link } from 'react-router'
 import Modal from 'react-modal'
 import { FormInput, spinner, PageHeading } from '../common'
 import { AppEditModal } from './appModal'
+import { Image as ImageComponent, Item, Grid, Card, Statistic, Icon, Button, Divider, Table, Checkbox } from 'semantic-ui-react'
 
 const headers = {
     //'Name': 'name',
@@ -22,6 +23,7 @@ export class PublisherView extends React.Component {
         super(props);
         this.state = {};
         this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
 
     handleChange(key) {
@@ -53,14 +55,15 @@ export class PublisherView extends React.Component {
     postSave(app) {
         app.key = app.id;
         this.state.apps.unshift(app);
-        $('#appForm').modal('close');
-        this.setState(Object.assign({}, this.state, { timestamp: Date.now() }));
+        this.setState(Object.assign({}, this.state), this.closeModal);
     }
 
     openModal() {
-        $('.modal').modal();
-        $('#appForm').modal('open');
         this.setState(Object.assign({}, this.state, { modalIsOpen: true }));
+    }
+
+    closeModal() {
+        this.setState(Object.assign({}, this.state, { modalIsOpen: false }));
     }
 
     render() {
@@ -79,43 +82,46 @@ export class PublisherView extends React.Component {
         }
 
         return (
-            <div className="container" style={heightStyle} >
-                <PageHeading title="Apps" onClick={e => this.openModal()} buttonText="New App" />
-                <ReactCSSTransitionGroup
-                    component="table"
-                    transitionName="fadeTransitionFast"
-                    transitionAppear={true}
-                    transitionLeave={false}
-                    transitionEnterTimeout={150}
-                    transitionLeaveTimeout={150}
-                    transitionAppearTimeout={150}
-                    className="table highlight grey-text text-darken-4 col s12">
-                    <thead>
-                        <tr>
-                            <th>App Name</th>
-                            <th>App Store</th>
-                            {Object.keys(headers).map(header => <th key={header}>{header}</th>)}
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.apps.map(app =>
-                            <tr key={app.key} className="grey-text text-darken-1">
-                                <td>
-                                    <Link to={'/publisher/apps/' + app.id + "/"}>
-                                        {app.name}
-                                    </Link>
-                                </td>
-                                <td>{config.appStores[app.appStore]}</td>
-                                {Object.keys(headers).map(key => <td key={key}>{app[headers[key]]}</td>)}
-                                <td>{app.approved ? "Active" : "Paused"}</td>
-                            </tr>)
-                        }
-                    </tbody>
-                </ReactCSSTransitionGroup>
-                <AppEditModal label="Create App" saveMethod="POST" postSave={this.postSave.bind(this)} successStatus="201"
-                    key={this.state.timestamp} />
-            </div >
+            <main className="Site-content ui center aligned grid" style={{ minHeight: '100vh' }}>
+                <Grid centered columns={16} style={{ margin: 0 }} >
+                    <Grid.Row columns={1}>
+                        <Grid.Column width={2}>
+                            <Button positive icon={<Icon inverted name="add" />} labelPosition='right' content='Add App' onClick={this.openModal} />
+                        </Grid.Column>
+                        <Grid.Column width={11} />
+                    </Grid.Row>
+                    <Grid.Row columns={1}>
+                        <Grid.Column width={13}>
+                            <Table>
+                                <Table.Header>
+                                    <Table.Row>
+                                        <Table.HeaderCell>App Name</Table.HeaderCell>
+                                        <Table.HeaderCell>App Store</Table.HeaderCell>
+                                        {Object.keys(headers).map(header => <Table.HeaderCell key={header}>{header}</Table.HeaderCell>)}
+                                        <Table.HeaderCell>App Status</Table.HeaderCell>
+                                    </Table.Row>
+                                </Table.Header>
+
+                                <Table.Body>
+                                    {this.state.apps.map((app, idx) =>
+                                        <Table.Row key={app.key}>
+                                            <Table.Cell>
+                                                <Link to={'/publisher/apps/' + app.id + "/"}>
+                                                    {app.name}
+                                                </Link>
+                                            </Table.Cell>
+                                            <Table.Cell>{config.appStores[app.appStore]}</Table.Cell>
+                                            {Object.keys(headers).map(key => <Table.Cell key={key}>{app[headers[key]]}</Table.Cell>)}
+                                            <Table.Cell>{app.approved ? "Pending Approval" : "Approved"}</Table.Cell>
+                                        </Table.Row>)
+                                    }
+                                </Table.Body>
+                            </Table>
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
+                <AppEditModal label="Create App" saveMethod="POST" postSave={this.postSave.bind(this)} successStatus="201" closeModal={this.closeModal} open={this.state.modalIsOpen} />
+            </main>
         );
     }
 }
