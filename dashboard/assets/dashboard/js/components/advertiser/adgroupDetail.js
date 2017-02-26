@@ -106,17 +106,15 @@ export class AdgroupDetailView extends React.Component {
 
     postAdAddition(ad) {
         this.state.adgroup.ads.unshift(ad);
-        this.setState(Object.assign({}, this.state ), this.closeAdModal);
+        this.setState(Object.assign({}, this.state), this.closeAdModal);
     }
 
     render() {
         console.info(this.state)
         if (!this.state.adgroup) {
-            return (
-                spinner
-            )
-            // TODO : Spinner
+            return <main className="Site-content ui center aligned grid" style={{ minHeight: '100vh' }} />
         }
+
         return (
             <main className="Site-content ui center aligned grid" style={{ minHeight: '100vh' }}>
                 <Grid centered columns={16} style={{ margin: 0 }} >
@@ -175,6 +173,7 @@ export class AdgroupDetailView extends React.Component {
                                         <Table.HeaderCell>Ad Name</Table.HeaderCell>
                                         {Object.keys(adHeaders).map(header => <th key={header}>{header}</th>)}
                                         <Table.HeaderCell>Active</Table.HeaderCell>
+                                        <Table.HeaderCell>Creative</Table.HeaderCell>
                                     </Table.Row>
                                 </Table.Header>
 
@@ -189,7 +188,7 @@ export class AdgroupDetailView extends React.Component {
                                                     onChange={(e, d) => { this.setAdStatus(idx, d.checked) } } />
 
                                             </Table.Cell>
-                                            <Table.Cell><img src={ad.creative} width="100px"/></Table.Cell>
+                                            <Table.Cell><img src={ad.creative} width="100px" /></Table.Cell>
                                         </Table.Row>)
                                     }
                                 </Table.Body>
@@ -199,7 +198,7 @@ export class AdgroupDetailView extends React.Component {
                     <AdgroupEditModal label="Create Adgroup" saveMethod="PUT"
                         postSave={this.postAdgroupEdit.bind(this)} successStatus="200"
                         campaignId={this.state.adgroup.campaignId} open={this.state.agModalIsOpen} closeModal={this.closeAgModal} adgroup={this.state.adgroup} />
-                    <AdModal postSave={this.postAdAddition.bind(this)} adgroupId={this.state.adgroup.id} open={this.state.adModalIsOpen} closeModal={this.closeAdModal}/>
+                    <AdModal postSave={this.postAdAddition.bind(this)} adgroupId={this.state.adgroup.id} open={this.state.adModalIsOpen} closeModal={this.closeAdModal} />
                 </Grid >
             </main>
 

@@ -104,7 +104,7 @@ export class AppDetailView extends React.Component {
 
     render() {
         if (!this.state.app) {
-            return spinner
+            return <main className="Site-content ui center aligned grid" style={{ minHeight: '100vh' }} />
         }
 
         console.info(this.state)

@@ -97,13 +97,13 @@ export class AdvertiserView extends React.Component {
     render() {
         console.info(this.state)
         if (!this.state.campaigns) {
-            return spinner
+            return <main className="Site-content ui center aligned grid" style={{ minHeight: '100vh' }} />
         }
 
         const campaigns = this.state.campaigns;
 
         return (
-            <main className="Site-content ui center aligned grid" style={{ minHeight: '92vh' }}>
+            <main className="Site-content ui center aligned grid" style={{ minHeight: '100vh' }}>
                 <Grid centered columns={16} style={{ margin: 0 }} >
                     <Grid.Row columns={1}>
                         <Grid.Column width={2}>

@@ -124,10 +124,7 @@ export class CampaignDetailView extends React.Component {
     render() {
         console.info(this.state)
         if (!this.state.campaign) {
-            return (
-                spinner
-            )
-            // TODO : Spinner
+            return <main className="Site-content ui center aligned grid" style={{ minHeight: '100vh' }} />
         }
 
         return (

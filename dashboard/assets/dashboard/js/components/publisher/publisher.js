@@ -68,17 +68,7 @@ export class PublisherView extends React.Component {
 
     render() {
         if (!this.state.apps) {
-            return spinner;
-        }
-
-        var fabStyle = {
-            bottom: '50px',
-            right: '50px'
-        }
-
-        var heightStyle = {
-            height: '100%',
-            minHeight: '100%',
+            return <main className="Site-content ui center aligned grid" style={{ minHeight: '100vh' }} />
         }
 
         return (
