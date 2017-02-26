@@ -93,7 +93,7 @@ else:
             'NAME': 'ciportal',
             'USER': 'ciportaluser',
             'PASSWORD': 'ciportal',
-            'HOST': '13.88.8.15',
+            'HOST': '13.93.217.168',
             'PORT': '5432',
         },
     }
