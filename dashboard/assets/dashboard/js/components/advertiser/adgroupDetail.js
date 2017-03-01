@@ -195,9 +195,8 @@ export class AdgroupDetailView extends React.Component {
                             </Table>
                         </Grid.Column>
                     </Grid.Row>
-                    <AdgroupEditModal label="Create Adgroup" saveMethod="PUT"
-                        postSave={this.postAdgroupEdit.bind(this)} successStatus="200"
-                        campaignId={this.state.adgroup.campaignId} open={this.state.agModalIsOpen} closeModal={this.closeAgModal} adgroup={this.state.adgroup} />
+                    <AdgroupEditModal postSave={this.postAdgroupEdit.bind(this)} campaignId={this.state.adgroup.campaignId}
+                        open={this.state.agModalIsOpen} closeModal={this.closeAgModal} adgroup={this.state.adgroup} />
                     <AdModal postSave={this.postAdAddition.bind(this)} adgroupId={this.state.adgroup.id} open={this.state.adModalIsOpen} closeModal={this.closeAdModal} />
                 </Grid >
             </main>
