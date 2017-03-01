@@ -89,7 +89,12 @@ export class CampaignDetailView extends React.Component {
 
     postSave(campaign) {
         campaign.startDate = moment(campaign.startDate, 'YYYY-MM-DD');
-        campaign.endDate = moment(campaign.endDate, 'YYYY-MM-DD')
+        campaign.endDate = moment(campaign.endDate, 'YYYY-MM-DD');
+        console.info(campaign.adgroups)
+        campaign.adgroups.forEach(adgroup => {
+            adgroup.startDate = moment(adgroup.startDate, 'YYYY-MM-DD');
+            adgroup.endDate = moment(adgroup.endDate, 'YYYY-MM-DD');
+        })
         this.setState(Object.assign({}, this.state, { campaign: campaign }), this.closeCampaignModal)
     }
 
@@ -108,7 +113,7 @@ export class CampaignDetailView extends React.Component {
             JSON.stringify({ status: status }),
             (response) => {
                 this.state.campaign.adgroups[index].status = status
-                this.state.campaign.adgroups.foreach(adgroup => {
+                this.state.campaign.adgroups.forEach(adgroup => {
                     adgroup.startDate = moment(adgroup.startDate, 'YYYY-MM-DD');
                     adgroup.endDate = moment(adgroup.endDate, 'YYYY-MM-DD');
                 })
@@ -116,7 +121,7 @@ export class CampaignDetailView extends React.Component {
                 this.setState(Object.assign({}, this.state));
             },
             (error) => {
-                alert(error)
+                throw error;
             },
         );
     }

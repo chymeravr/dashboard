@@ -30,6 +30,10 @@ export class ProfileView extends React.Component {
         console.info(this.state);
         var advertisingMessage = "Funds available";
         var publisherMessage = "Earnings available";
+
+        const funds = this.state.advertising_funds - this.state.advertising_burn;
+        const earnings = this.state.publisher_earnings - this.state.publisher_payout;
+
         if (this.state.user && this.state.user.username) {
             var body = (
                 <Grid centered stretched verticalAlign='middle' columns={1}>
@@ -42,11 +46,11 @@ export class ProfileView extends React.Component {
                                     <Card.Description>
                                         <Statistic>
                                             <Statistic.Label>Funds</Statistic.Label>
-                                            <Statistic.Value>{this.state.advertising_budget}<Icon name="dollar" size="mini" /></Statistic.Value>
+                                            <Statistic.Value style={{ color: funds < 10 ? 'red' : 'white' }}>{funds}<Icon name="dollar" size="mini" /></Statistic.Value>
                                         </Statistic>
                                         <Statistic>
                                             <Statistic.Label>Earnings</Statistic.Label>
-                                            <Statistic.Value>{this.state.publisher_earnings}<Icon name="dollar" size="mini" /></Statistic.Value>
+                                            <Statistic.Value>{earnings}<Icon name="dollar" size="mini" /></Statistic.Value>
                                         </Statistic>
                                     </Card.Description>
                                 </Card.Content>

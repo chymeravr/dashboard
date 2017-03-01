@@ -18,7 +18,7 @@ import { AppDetailView } from './publisher/appDetail'
 import { debug, callApiWithJwt } from '../lib.js'
 import ReactGA from 'react-ga'
 import '../../../../../semantic/dist/semantic.min.css';
-import { Grid, Container } from 'semantic-ui-react'
+import { Grid, Container, Message } from 'semantic-ui-react'
 
 ReactGA.initialize('UA-89829978-1');
 
@@ -113,34 +113,26 @@ class AppView extends React.Component {
             return (
                 <div className="Site">
                     <Header showLogout={dashboard} currentPath={this.props.location.pathname} />
-                   
-                        {this.props.children}
+                    {this.props.children}
                     <Footer />
                 </div>
             );
         } else {
             return (
-                <div className="page-flexbox-wrapper" >
+                <div className="Site">
                     <Header showLogout={dashboard} currentPath={this.props.location.pathname} />
-                    <main className={align} style={mainStyle}>
-                        <div className="container center-align">
-                            <ReactCSSTransitionGroup
-                                component="div"
-                                transitionName="fadeTransition"
-                                transitionAppear={true}
-                                transitionLeave={false}
-                                transitionEnterTimeout={500}
-                                transitionLeaveTimeout={500}
-                                transitionAppearTimeout={500}
-                                className="center-align container">
-                                <div className="card-panel z-depth-3 red lighten-2 white-text ">
-                                    LOOKS LIKE YOU HAVE ADBLOCK ENABLED. UNFORTUNATELY, ADBLOCK INCORRECTLY DETECTS ANY COMMUNICATION WITH OUR WEBSITE AS AD TRAFFIC AND BLOCKS IT.
-                                <br />
-                                    PLEASE DISABLE ADBLOCK TO CONTINUE USING OUR WEBSITE.
-                            </div>
-                            </ReactCSSTransitionGroup>
-                        </div>
-                    </main>
+                    <main className="Site-content ui center aligned grid" style={{ backgroundColor: '#2185d0' }}>
+                        <Grid centered columns={16} style={{ margin: 0 }} verticalAlign='middle'>
+                            <Grid.Row columns={16} verticalAlign='middle' style={{ height: '92vh' }}>
+                                <Grid.Column width={10}>
+                                    <Message negative>
+                                        <Message.Header>Disable AdBlock</Message.Header>
+                                        <p>Please turn off AdBlock to navigate the site. Adblock falsely marks our API requests as Ads</p>
+                                    </Message>
+                                </Grid.Column>
+                            </Grid.Row>
+                        </Grid>
+                    </main >
                     <Footer />
                 </div>
             )

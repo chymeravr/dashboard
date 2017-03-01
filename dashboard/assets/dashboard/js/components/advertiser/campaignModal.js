@@ -91,7 +91,7 @@ export class CampaignEditModal extends React.Component {
                 this.postSave(response);
             },
             (error) => {
-                alert(error);
+                throw error;
             },
             this.successStatus
         );

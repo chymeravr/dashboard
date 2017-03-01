@@ -31,11 +31,13 @@ class UserProfileSerializer(ModelSerializer):
         fields = (
             'id',
             'user',
-            'advertising_budget',
+            'advertising_funds',
+            'advertising_burn',
             'publisher_earnings',
+            'publisher_payout',
             'currency'
         )
-        read_only_fields = ('advertising_budget', 'publisher_earnings')
+        read_only_fields = ('advertising_budget', 'publisher_earnings', 'advertising_burn', 'publisher_payout')
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
