@@ -163,7 +163,7 @@ export class AppDetailView extends React.Component {
                             <Table>
                                 <Table.Header>
                                     <Table.Row>
-                                        {Object.keys(placementHeaders).map(header => <Table.Cell key={header}>{header}</Table.Cell>)}
+                                        {Object.keys(placementHeaders).map(header => <Table.HeaderCell key={header}>{header}</Table.HeaderCell>)}
                                     </Table.Row>
                                 </Table.Header>
                                 <Table.Body>
