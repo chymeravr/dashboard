@@ -95,7 +95,7 @@ export class AdvertiserView extends React.Component {
     }
 
     render() {
-        console.info(this.state)
+        debug("advertiser", this.state);
         if (!this.state.campaigns) {
             return <main className="Site-content ui center aligned grid" style={{ minHeight: '100vh' }} />
         }

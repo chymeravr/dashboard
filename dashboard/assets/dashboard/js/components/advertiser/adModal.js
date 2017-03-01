@@ -30,7 +30,6 @@ export class AdModal extends React.Component {
     validateState() {
         var valid = this.state.ad && this.state.ad.creative && this.state.ad.landingPage && this.state.ad.name;
         valid = valid && this.state.ad.landingPage.length > 0
-        console.info(valid)
         this.setState(Object.assign({}, this.state, { valid: valid }));
     }
 
@@ -42,19 +41,6 @@ export class AdModal extends React.Component {
             // Reired to update state
             this.setState(Object.assign({}, this.state, { ad: newAd }), this.validateState);
         };
-    }
-
-    componentDidMount() {
-        const that = this;
-        $('.dropdown-button').dropdown({
-            inDuration: 300,
-            outDuration: 225,
-            constrain_width: true, // Does not change width of dropdown to that of the activator
-            hover: false, // Activate on hover
-            gutter: 0, // Spacing from edge
-            belowOrigin: true, // Displays dropdown below the button
-            alignment: 'left' // Displays dropdown with edge aligned to the left of button
-        });
     }
 
     saveAd() {
@@ -85,9 +71,7 @@ export class AdModal extends React.Component {
     }
 
     setFile() {
-        console.info('File path detected');
         var oFReader = new FileReader();
-        console.info(document.getElementById("adPath"))
         const file = document.getElementById("adPath").children[0].files[0];
         this.state.ad.creative = file;
         oFReader.readAsDataURL(file);
@@ -99,7 +83,7 @@ export class AdModal extends React.Component {
     }
 
     render() {
-        console.info(this.state);
+        debug("adModal", this.state);
         const ad = this.state.ad;
 
         return (

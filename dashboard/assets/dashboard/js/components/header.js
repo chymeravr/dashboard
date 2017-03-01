@@ -1,6 +1,6 @@
 var React = require('react')
 import { Link, hashHistory } from 'react-router'
-import { logout } from '../lib'
+import { logout, debug } from '../lib'
 import { config } from '../config'
 import { Menu, Segment, Image } from 'semantic-ui-react'
 
@@ -11,7 +11,6 @@ class Header extends React.Component {
             showHeader: props.showLogout,
             currentPath: props.currentPath
         }
-        console.info(this.state)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -22,13 +21,14 @@ class Header extends React.Component {
         logout(hashHistory);
     }
     render() {
+        debug("header", this.state);
         var style = {
             fontWeight: "lighter",
             // fontFamily: 'Cantora One'
         }
 
         if (this.state.showHeader && localStorage.getItem(config.jwt.tokenKey)) {
-            var logoutButton = <Menu.Item  position="right" name='logout' onClick={this.handleLogout} />
+            var logoutButton = <Menu.Item position="right" name='logout' onClick={this.handleLogout} />
         } else {
             var logoutButton = ""
         }
@@ -46,7 +46,6 @@ class Header extends React.Component {
         );
 
         const currentPath = this.state.currentPath
-        console.info(currentPath)
         var activeItem = '';
         if (currentPath.match('publisher')) {
             activeItem = 'publisher';
@@ -59,7 +58,7 @@ class Header extends React.Component {
         return (
             <Menu attached secondary inverted size='massive' floated='right' color='blue' style={{ padding: '20px 10px 20px 20px', margin: 0 }} >
                 <Menu.Item />
-                <Image src="/static/img/Logo.png" size="tiny" as={Link} to="/" style={{marginBottom:-10}}/>
+                <Image src="/static/img/Logo.png" size="tiny" as={Link} to="/" style={{ marginBottom: -10 }} />
                 <Menu.Item />
                 <Menu.Item name='profile' active={activeItem === 'profile'} as={Link} to='/profile/' />
                 <Menu.Item name='advertisers' active={activeItem === 'advertiser'} as={Link} to='/advertiser/' />

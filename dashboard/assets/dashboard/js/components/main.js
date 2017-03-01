@@ -23,7 +23,6 @@ import { Grid, Container, Message } from 'semantic-ui-react'
 ReactGA.initialize('UA-89829978-1');
 
 function logPageView() {
-    console.info('logging to ga : ' + window.location.hash)
     ReactGA.set({ page: window.location.hash });
     ReactGA.pageview(window.location.hash);
 }
@@ -35,14 +34,6 @@ class AppView extends React.Component {
     }
 
     componentDidMount() {
-        $('.button-collapse').sideNav();
-        $("input").keypress(function (event) {
-            if (event.which == 13) {
-                event.preventDefault();
-                $("form").submit();
-            }
-        });
-
         if (this.props.children.props.route.name == 'home') {
             callApiWithJwt('/user/api/view_profile',
                 'GET',
@@ -80,16 +71,8 @@ class AppView extends React.Component {
         this.setState(Object.assign({}, this.state, { adblock: isAdBlockDetected }));
     }
 
-    componentDidUpdate() {
-        $("input").keypress(function (event) {
-            if (event.which == 13) {
-                event.preventDefault();
-                $("form").submit();
-            }
-        });
-    }
-
     render() {
+        debug("main", this.state);
         var props = {}
         var currentRoute = this.props.children.props.route.name;
         var align = "";

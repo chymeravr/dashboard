@@ -28,7 +28,7 @@ export class CampaignEditModal extends React.Component {
         this.label = this.isEditModal ? "Edit Campaign" : "Create Campaign";
         this.saveMethod = this.isEditModal ? "PUT" : "POST";
         this.successStatus = this.isEditModal ? 200 : 201;
-        
+
         this.onDatesChange = this.onDatesChange.bind(this);
         this.onFocusChange = this.onFocusChange.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -75,7 +75,7 @@ export class CampaignEditModal extends React.Component {
 
         // Campaign fields should be in bounds
         valid = valid && (+campaign.totalBudget >= 0 && +campaign.dailyBudget >= 0 && campaign.name.length > 0);
-        this.setState(Object.assign({}, this.state, { valid: valid }), console.info(this.state));
+        this.setState(Object.assign({}, this.state, { valid: valid }));
     }
 
     saveCampaign() {
@@ -101,7 +101,7 @@ export class CampaignEditModal extends React.Component {
     }
 
     render() {
-        console.info(this.state);
+        debug("campaignModal", this.state);
         const { startDate, endDate } = this.state.campaign;
         const { focusedInput } = this.state;
         const campaign = this.state.campaign;

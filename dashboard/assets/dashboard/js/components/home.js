@@ -48,7 +48,7 @@ class HomeView extends React.Component {
                                 <Grid.Row>
                                     <Grid.Column width={4} />
                                     <Grid.Column width={9} >
-                                        <Form stretched>
+                                        <Form>
                                             <Input action='Get in touch' placeholder='Email' />
                                         </Form>
                                     </Grid.Column>

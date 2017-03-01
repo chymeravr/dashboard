@@ -103,11 +103,11 @@ export class AppDetailView extends React.Component {
     }
 
     render() {
+        debug("appDetail", this.state);
         if (!this.state.app) {
             return <main className="Site-content ui center aligned grid" style={{ minHeight: '100vh' }} />
         }
 
-        console.info(this.state)
         return (
             <main className="Site-content ui center aligned grid" style={{ minHeight: '100vh' }}>
                 <Grid centered columns={16} style={{ margin: 0 }} >
@@ -159,7 +159,7 @@ export class AppDetailView extends React.Component {
                         </Grid>
                     </Grid.Row>
                     <Grid.Row columns={1}>
-                        <Grid.Column width={13}>
+                        <Grid.Column width={13} >
                             <Table>
                                 <Table.Header>
                                     <Table.Row>

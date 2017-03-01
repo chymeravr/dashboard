@@ -126,7 +126,7 @@ export class AdgroupEditModal extends React.Component {
     }
 
     render() {
-        console.info(this.state)
+        debug("adgroupModal", this.state);
         const { startDate, endDate } = this.state.adgroup;
         const { focusedInput } = this.state;
 

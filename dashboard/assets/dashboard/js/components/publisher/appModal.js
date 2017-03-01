@@ -93,7 +93,7 @@ export class AppEditModal extends React.Component {
     }
 
     render() {
-        console.info(this.state)
+        debug("appModal", this.state);
         const appStores = config.appStores;
         const appStoreOptions = Object.keys(appStores).map(appStoreId => {
             return { key: appStoreId, text: appStores[appStoreId], value: appStoreId };
@@ -107,7 +107,7 @@ export class AppEditModal extends React.Component {
                 <Modal.Content>
                     <Form>
                         <Form.Field control={Input} label='App name' placeholder='App name' onChange={this.handleChange('name')} value={app.name} />
-                        <Form.Field control={Dropdown} selection label='AppStore' options={appStoreOptions} placeholder='AppStore' onChange={this.setAppStore} value={app.appStore+''}/>
+                        <Form.Field control={Dropdown} selection label='AppStore' options={appStoreOptions} placeholder='AppStore' onChange={this.setAppStore} value={app.appStore + ''} />
                         <Form.Field control={Input} label='App Url' placeholder='Market Url' onChange={this.handleChange('url')} value={app.url} />
                     </Form>
                 </Modal.Content>

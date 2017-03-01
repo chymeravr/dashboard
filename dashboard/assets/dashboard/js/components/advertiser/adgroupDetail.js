@@ -46,7 +46,6 @@ export class AdgroupDetailView extends React.Component {
     }
 
     componentWillMount() {
-        console.info("Mounting")
         callApiWithJwt('/user/api/advertiser/adgroups/view/' + this.state.adgroupId,
             'GET',
             null,
@@ -110,7 +109,7 @@ export class AdgroupDetailView extends React.Component {
     }
 
     render() {
-        console.info(this.state)
+        debug("adgroupDetail", this.state);
         if (!this.state.adgroup) {
             return <main className="Site-content ui center aligned grid" style={{ minHeight: '100vh' }} />
         }

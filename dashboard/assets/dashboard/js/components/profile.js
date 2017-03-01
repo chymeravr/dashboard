@@ -27,7 +27,7 @@ export class ProfileView extends React.Component {
     }
 
     render() {
-        console.info(this.state);
+        debug("profile", this.state);
         var advertisingMessage = "Funds available";
         var publisherMessage = "Earnings available";
 

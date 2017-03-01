@@ -47,35 +47,12 @@ export class CreateTargetingModal extends React.Component {
 
     setOs(id) {
         this.setState(Object.assign({}, this.state, { os: id }), this.validateState.bind(this));
-        $('#osDropdown').dropdown('close')
     }
 
     setHmd(id) {
         this.setState(Object.assign({}, this.state, { hmd: id }), this.validateState.bind(this));
-        $('#hmdDropdown').dropdown('close')
     }
 
-    componentDidMount() {
-        $('#osDropdown').dropdown({
-            inDuration: 300,
-            outDuration: 225,
-            constrain_width: false, // Does not change width of dropdown to that of the activator
-            hover: false, // Activate on hover
-            gutter: 0, // Spacing from edge
-            belowOrigin: true, // Displays dropdown below the button
-            alignment: 'left' // Displays dropdown with edge aligned to the left of button
-        });
-
-        $('#hmdDropdown').dropdown({
-            inDuration: 300,
-            outDuration: 225,
-            constrain_width: false, // Does not change width of dropdown to that of the activator
-            hover: false, // Activate on hover
-            gutter: 0, // Spacing from edge
-            belowOrigin: true, // Displays dropdown below the button
-            alignment: 'left' // Displays dropdown with edge aligned to the left of button
-        });
-    }
 
     saveTargeting() {
         const apiSuffix = this.saveMethod === 'PUT' ? this.state.id : '';
@@ -86,7 +63,6 @@ export class CreateTargetingModal extends React.Component {
             JSON.stringify(this.state),
             (response) => {
                 this.postSave(response);
-                $('#createTargetingForm').modal('close');
             },
             (error) => {
                 throw error;

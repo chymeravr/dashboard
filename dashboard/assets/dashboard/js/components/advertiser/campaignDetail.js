@@ -53,7 +53,6 @@ export class CampaignDetailView extends React.Component {
             'GET',
             null,
             (response) => {
-                console.info(response)
                 response.startDate = moment(response.startDate, 'YYYY-MM-DD');
                 response.endDate = moment(response.endDate, 'YYYY-MM-DD');
                 response.adgroups.forEach(adgroup => {
@@ -90,7 +89,6 @@ export class CampaignDetailView extends React.Component {
     postSave(campaign) {
         campaign.startDate = moment(campaign.startDate, 'YYYY-MM-DD');
         campaign.endDate = moment(campaign.endDate, 'YYYY-MM-DD');
-        console.info(campaign.adgroups)
         campaign.adgroups.forEach(adgroup => {
             adgroup.startDate = moment(adgroup.startDate, 'YYYY-MM-DD');
             adgroup.endDate = moment(adgroup.endDate, 'YYYY-MM-DD');
@@ -106,7 +104,6 @@ export class CampaignDetailView extends React.Component {
     }
 
     setAdgroupStatus(index, status) {
-        console.info(status);
         const adgroupId = this.state.campaign.adgroups[index].id;
         callApiWithJwt('/user/api/advertiser/adgroups/' + adgroupId,
             'PATCH',
@@ -117,7 +114,6 @@ export class CampaignDetailView extends React.Component {
                     adgroup.startDate = moment(adgroup.startDate, 'YYYY-MM-DD');
                     adgroup.endDate = moment(adgroup.endDate, 'YYYY-MM-DD');
                 })
-                console.info(this.state.campaign.adgroups)
                 this.setState(Object.assign({}, this.state));
             },
             (error) => {
@@ -127,7 +123,7 @@ export class CampaignDetailView extends React.Component {
     }
 
     render() {
-        console.info(this.state)
+        debug("campaignDetail", this.state);
         if (!this.state.campaign) {
             return <main className="Site-content ui center aligned grid" style={{ minHeight: '100vh' }} />
         }

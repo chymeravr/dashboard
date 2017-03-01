@@ -29,7 +29,7 @@ export class LoginForm extends React.Component {
         return (e, d) => {
             var state = {};
             state[key] = d.value;
-            this.setState(Object.assign({}, this.state, state), console.info(this.state));
+            this.setState(Object.assign({}, this.state, state));
         };
 
     }
