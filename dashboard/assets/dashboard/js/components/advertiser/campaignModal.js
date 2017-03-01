@@ -12,7 +12,8 @@ import 'react-dates/lib/css/_datepicker.css';
 export class CampaignEditModal extends React.Component {
     constructor(props) {
         super(props);
-        var defaultCampaignType = '1';
+        this.isEditModal = props.campaign;
+
         this.state = Object.assign({
             valid: false,
             campaign: {
@@ -23,13 +24,14 @@ export class CampaignEditModal extends React.Component {
 
         this.postSave = props.postSave;
         this.closeModal = props.closeModal;
-        this.saveMethod = props.saveMethod;
-        this.label = props.label;
-        this.successStatus = this.saveMethod === 'POST' ? 201 : 200;
         this.onDatesChange = this.onDatesChange.bind(this);
         this.onFocusChange = this.onFocusChange.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.validateState = this.validateState.bind(this);
+
+        this.label = this.isEditModal ? "Edit Campaign" : "Create Campaign";
+        this.saveMethod = this.isEditModal ? "PUT" : "POST";
+        this.successStatus = this.isEditModal ? 200 : 201;
     }
 
     componentDidMount() {
@@ -76,7 +78,7 @@ export class CampaignEditModal extends React.Component {
     }
 
     saveCampaign() {
-        const apiSuffix = this.saveMethod === 'PUT' ? this.state.campaign.id : '';
+        const apiSuffix = this.isEditModal ? this.state.campaign.id : '';
         const apiPath = '/user/api/advertiser/campaigns/' + apiSuffix;
         const campaignState = Object.assign({}, this.state.campaign);
 
@@ -104,11 +106,10 @@ export class CampaignEditModal extends React.Component {
         const campaign = this.state.campaign;
         const appName = campaign.appName ? campaign.appName : '';
         const appUrl = campaign.appUrl ? campaign.appUrl : '';
-        const title = this.saveMethod === 'PUT' ? "Edit Campaign" : "Create Campaign";
 
         return (
             <Modal open={this.state.open} onClose={this.closeModal} dimmer='blurring'>
-                <Modal.Header>Create Campaign</Modal.Header>
+                <Modal.Header>{this.label}</Modal.Header>
                 <Modal.Content>
                     <Form>
                         <Form.Group widths='equal'>
@@ -120,19 +121,20 @@ export class CampaignEditModal extends React.Component {
                             <Form.Field control={Input} label='Total Budget' type='number' placeholder='Total Budget' onChange={this.handleChange('totalBudget')} value={campaign.totalBudget} />
                             <Form.Field control={Input} label='Daily Budget' type='number' placeholder='Daily Budget' onChange={this.handleChange('dailyBudget')} value={campaign.dailyBudget} />
                         </Form.Group>
-                        <DateRangePicker
-                            onDatesChange={this.onDatesChange}
-                            onFocusChange={this.onFocusChange}
-                            focusedInput={focusedInput}
-                            startDate={startDate}
-                            endDate={endDate}
-                            numberOfMonths={2}
-                            displayFormat="YYYY-MMM-DD"
-                            />
+
                     </Form>
+                    <DateRangePicker
+                        onDatesChange={this.onDatesChange}
+                        onFocusChange={this.onFocusChange}
+                        focusedInput={focusedInput}
+                        startDate={startDate}
+                        endDate={endDate}
+                        numberOfMonths={2}
+                        displayFormat="YYYY-MMM-DD"
+                        />
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button positive content="Create" disabled={!this.state.valid} onClick={this.saveCampaign.bind(this)} />
+                    <Button positive content="Save" disabled={!this.state.valid} onClick={this.saveCampaign.bind(this)} />
                 </Modal.Actions>
             </Modal>
         )

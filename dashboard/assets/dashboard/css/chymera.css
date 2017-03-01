@@ -8,3 +8,11 @@
 .Site-content {
   flex: 1;
 }
+
+.DateRangePicker__picker, .SingleDatePicker__picker {
+    bottom: 72px !important;
+    top: auto !important;
+}
+
+
+

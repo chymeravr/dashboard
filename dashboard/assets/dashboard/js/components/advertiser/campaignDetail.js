@@ -217,7 +217,7 @@ export class CampaignDetailView extends React.Component {
                             </Table>
                         </Grid.Column>
                     </Grid.Row>
-                    <CampaignEditModal saveMethod="PUT" postSave={this.postSave.bind(this)} open={this.state.cmpModalIsOpen} closeModal={this.closeCampaignModal} campaign={this.state.campaign} />
+                    <CampaignEditModal postSave={this.postSave.bind(this)} open={this.state.cmpModalIsOpen} closeModal={this.closeCampaignModal} campaign={this.state.campaign} />
                     <AdgroupEditModal label="Create Adgroup" saveMethod="POST"
                         postSave={this.postAdgroupAddition.bind(this)} successStatus="201"
                         campaignId={this.state.campaign.id} open={this.state.agModalIsOpen} closeModal={this.closeAgModal} />
