@@ -199,3 +199,6 @@ LOGGING = {
         },
     },
 }
+
+# Sendgrid
+SENDGRID_API_KEY='SG.9I5__tjvRIyPIYmBOztGcw.jyrPEFa_BJYm0eZBO1jPyF2dSB00nE5e-nYv_C9GCy8'
