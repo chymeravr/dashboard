@@ -85,7 +85,7 @@ export class AdModal extends React.Component {
     render() {
         debug("adModal", this.state);
         const ad = this.state.ad;
-
+        
         return (
             <Modal open={this.state.open} onClose={this.closeModal} dimmer='blurring'>
                 <Modal.Header>{this.label}</Modal.Header>

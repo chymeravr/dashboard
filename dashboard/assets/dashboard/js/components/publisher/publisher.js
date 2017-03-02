@@ -3,7 +3,6 @@ import { debug, callApiWithJwt } from '../../lib.js'
 import { config } from '../../config.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 import { hashHistory, Link } from 'react-router'
-import Modal from 'react-modal'
 import { FormInput, spinner, PageHeading } from '../common'
 import { AppEditModal } from './appModal'
 import { Image as ImageComponent, Item, Grid, Card, Statistic, Icon, Button, Divider, Table, Checkbox } from 'semantic-ui-react'
