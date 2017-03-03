@@ -137,45 +137,43 @@ export class CampaignDetailView extends React.Component {
                         </Grid.Column >
                         <Grid.Column width={10} />
                     </Grid.Row>
-                    <Grid.Row columns={1}>
-                        <Grid centered stretched verticalAlign='middle' columns={16}>
-                            <Grid.Row verticalAlign='middle' style={{ padding: '0px' }}>
-                                <Grid.Column verticalAlign='middle' width={8}>
-                                    <Card fluid >
-                                        <Card.Content>
-                                            <Card.Header>
-                                                <Grid>
-                                                    <Grid.Row columns={16}>
-                                                        <Grid.Column width={6}>{this.state.campaign.name}</Grid.Column>
-                                                        <Grid.Column width={6} />
-                                                        <Grid.Column width={1}><Button color='blue' onClick={this.openCampaignModal}>Edit</Button></Grid.Column>
-                                                    </Grid.Row>
-                                                </Grid>
-                                            </Card.Header>
-                                            <Divider />
-                                            <Card.Description>
-                                                <Statistic>
-                                                    <Statistic.Value>{this.state.campaign.dailyBudget}<Icon name="dollar" size="mini" /></Statistic.Value>
-                                                    <Statistic.Label>Total Budget</Statistic.Label>
-                                                </Statistic>
-                                                <Statistic>
-                                                    <Statistic.Value>{this.state.campaign.dailyBudget}<Icon name="dollar" size="mini" /></Statistic.Value>
-                                                    <Statistic.Label>Daily Budget</Statistic.Label>
-                                                </Statistic>
-                                                <Statistic>
-                                                    <Statistic.Value>{this.state.campaign.impressions}</Statistic.Value>
-                                                    <Statistic.Label>Impressions</Statistic.Label>
-                                                </Statistic>
-                                                <Statistic>
-                                                    <Statistic.Value>{this.state.campaign.clicks}</Statistic.Value>
-                                                    <Statistic.Label>Clicks</Statistic.Label>
-                                                </Statistic>
-                                            </Card.Description>
-                                        </Card.Content>
-                                    </Card>
-                                </Grid.Column>
-                            </Grid.Row>
-                        </Grid>
+                    <Grid.Row verticalAlign='middle' columns={3}>
+                        <Grid.Column width={4} />
+                        <Grid.Column verticalAlign='middle' width={8}>
+                            <Card fluid >
+                                <Card.Content>
+                                    <Card.Header>
+                                        <Grid>
+                                            <Grid.Row columns={16}>
+                                                <Grid.Column width={4}>{this.state.campaign.name}</Grid.Column>
+                                                <Grid.Column width={8} />
+                                                <Grid.Column width={1}><Button color='blue' onClick={this.openCampaignModal}>Edit</Button></Grid.Column>
+                                            </Grid.Row>
+                                        </Grid>
+                                    </Card.Header>
+                                    <Divider />
+                                    <Card.Description>
+                                        <Statistic>
+                                            <Statistic.Value>{this.state.campaign.dailyBudget}<Icon name="dollar" size="mini" /></Statistic.Value>
+                                            <Statistic.Label>Total Budget</Statistic.Label>
+                                        </Statistic>
+                                        <Statistic>
+                                            <Statistic.Value>{this.state.campaign.dailyBudget}<Icon name="dollar" size="mini" /></Statistic.Value>
+                                            <Statistic.Label>Daily Budget</Statistic.Label>
+                                        </Statistic>
+                                        <Statistic>
+                                            <Statistic.Value>{this.state.campaign.impressions}</Statistic.Value>
+                                            <Statistic.Label>Impressions</Statistic.Label>
+                                        </Statistic>
+                                        <Statistic>
+                                            <Statistic.Value>{this.state.campaign.clicks}</Statistic.Value>
+                                            <Statistic.Label>Clicks</Statistic.Label>
+                                        </Statistic>
+                                    </Card.Description>
+                                </Card.Content>
+                            </Card>
+                        </Grid.Column>
+                        <Grid.Column width={4} />
                     </Grid.Row>
                     <Grid.Row columns={1}>
                         <Grid.Column width={13}>
