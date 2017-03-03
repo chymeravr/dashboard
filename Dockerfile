@@ -34,13 +34,14 @@ COPY package.json $BASE/
 COPY requirements.txt $BASE/
 COPY semantic $BASE/
 
-WORKDIR $BASE/semantic
-RUN gulp build
-
 WORKDIR $BASE
 RUN npm install
 RUN pip install -r requirements.txt
 
+WORKDIR $BASE/semantic
+RUN gulp build
+
+WORKDIR $BASE
 COPY . $BASE/
 
 # Pass DEBUG value as environment variable. Django debug mode depends on this
