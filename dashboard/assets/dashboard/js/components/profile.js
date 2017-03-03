@@ -45,12 +45,12 @@ export class ProfileView extends React.Component {
                                     <Card.Header>{this.state.user.username}</Card.Header>
                                     <Card.Description>
                                         <Statistic>
+                                            <Statistic.Value style={{ color: funds < 10 ? 'red' : 'green' }}>{funds}<Icon name="dollar" size="mini" /></Statistic.Value>
                                             <Statistic.Label>Funds</Statistic.Label>
-                                            <Statistic.Value style={{ color: funds < 10 ? 'red' : 'white' }}>{funds}<Icon name="dollar" size="mini" /></Statistic.Value>
                                         </Statistic>
                                         <Statistic>
-                                            <Statistic.Label>Earnings</Statistic.Label>
                                             <Statistic.Value>{earnings}<Icon name="dollar" size="mini" /></Statistic.Value>
+                                            <Statistic.Label>Earnings</Statistic.Label>
                                         </Statistic>
                                     </Card.Description>
                                 </Card.Content>
