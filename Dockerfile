@@ -30,23 +30,24 @@ RUN pip install uwsgi
 RUN mkdir /var/log/dashboard/
 
 # Copy all the project files. Excluded files are present in .dockerignore
-COPY . $BASE/
+COPY package.json $BASE/
+COPY requirements.txt $BASE/
+COPY semantic $BASE/
 
-# Change directory to project root
+WORKDIR $BASE/semantic
+RUN gulp build
+
 WORKDIR $BASE
-
-# Install dependencies
 RUN npm install
 RUN pip install -r requirements.txt
+
+COPY . $BASE/
 
 # Pass DEBUG value as environment variable. Django debug mode depends on this
 ENV DEBUG=$DEBUG
 
 # Bootstrap dev server if required
 RUN if [ "$DEBUG" = "True" ]; then bash devbootstrap.sh; fi
-
-WORKDIR $BASE/semantic
-RUN gulp build
 
 # Build js bundles
 WORKDIR $BASE/dashboard
