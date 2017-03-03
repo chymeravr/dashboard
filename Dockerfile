@@ -33,6 +33,7 @@ RUN mkdir /var/log/dashboard/
 COPY package.json $BASE/
 COPY requirements.txt $BASE/
 COPY semantic $BASE/
+COPY semantic.json $BASE/
 
 WORKDIR $BASE
 RUN npm install
