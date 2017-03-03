@@ -32,7 +32,7 @@ RUN mkdir /var/log/dashboard/
 # Copy all the project files. Excluded files are present in .dockerignore
 COPY package.json $BASE/
 COPY requirements.txt $BASE/
-COPY semantic $BASE/
+COPY semantic $BASE/semantic
 COPY semantic.json $BASE/
 
 WORKDIR $BASE
