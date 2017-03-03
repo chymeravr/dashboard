@@ -9,7 +9,7 @@ import { Image as ImageComponent, Item, Grid, Card, Statistic, Icon, Button, Div
 
 const headers = {
     //'Name': 'name',
-    'Key': 'id',
+    'AppId': 'id',
     'URL': 'url',
     'Requests': 'requests',
     'Impressions': 'impressions',

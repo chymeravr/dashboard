@@ -1,5 +1,5 @@
 import { config } from './config.js'
-const DEBUG = false;
+const DEBUG = true;
 export function debug(message, props) {
     if (DEBUG) {
         console.info(message);
@@ -43,4 +43,11 @@ export function callRawApiWithJwt(path, method, body, onSuccess, onError, status
 export function logout(hashHistory) {
     localStorage.removeItem(config.jwt.tokenKey);
     hashHistory.push('/login/');
+}
+
+export function addHttp(url) {
+    if (!/^(?:f|ht)tps?\:\/\//.test(url)) {
+        url = "http://" + url;
+    }
+    return url;
 }

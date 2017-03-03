@@ -1,10 +1,10 @@
 import React, { ReactDOM } from 'react'
 import { FormInput, NumberInput } from '../common'
-import { callApiWithJwt, debug } from '../../lib.js'
+import { callApiWithJwt, debug, addHttp } from '../../lib.js'
 import { hashHistory } from 'react-router'
 import { config } from '../../config'
 
-import { Grid, Card, Table, Checkbox, Button, Icon, Header, Modal, Form, Input, Select, Radio } from 'semantic-ui-react'
+import { Grid, Card, Table, Checkbox, Button, Icon, Header, Modal, Form, Input, Select, Radio, Message } from 'semantic-ui-react'
 import { DateRangePicker } from 'react-dates';
 import moment from 'moment';
 import 'react-dates/lib/css/_datepicker.css';
@@ -16,6 +16,7 @@ export class CampaignEditModal extends React.Component {
 
         this.state = Object.assign({
             valid: false,
+            validAppUrl: true,
             campaign: {
                 campaignType: config.defaultCampaignType,
             },
@@ -79,25 +80,32 @@ export class CampaignEditModal extends React.Component {
     }
 
     saveCampaign() {
-        const apiSuffix = this.isEditModal ? this.state.campaign.id : '';
-        const apiPath = '/user/api/advertiser/campaigns/' + apiSuffix;
-        const campaignState = Object.assign({}, this.state.campaign);
+        fetch(addHttp(this.state.campaign.appUrl), {
+            method: 'HEAD',
+            mode: 'no-cors'
+        }).then(
+            () => {
+                const apiSuffix = this.isEditModal ? this.state.campaign.id : '';
+                const apiPath = '/user/api/advertiser/campaigns/' + apiSuffix;
+                const campaignState = Object.assign({}, this.state.campaign);
 
-        campaignState.startDate = campaignState.startDate.format('YYYY-MM-DD')
-        campaignState.endDate = campaignState.endDate.format('YYYY-MM-DD')
+                campaignState.startDate = campaignState.startDate.format('YYYY-MM-DD')
+                campaignState.endDate = campaignState.endDate.format('YYYY-MM-DD')
 
-        callApiWithJwt(
-            apiPath,
-            this.saveMethod,
-            JSON.stringify(campaignState),
-            (response) => {
-                this.postSave(response);
-            },
-            (error) => {
-                throw error;
-            },
-            this.successStatus
-        );
+
+                callApiWithJwt(
+                    apiPath,
+                    this.saveMethod,
+                    JSON.stringify(campaignState),
+                    (response) => {
+                        this.postSave(response);
+                    },
+                    (error) => {
+                        throw error;
+                    },
+                    this.successStatus
+                );
+            }).catch((ex) => { this.setState(Object.assign({}, this.state, { valid: false, validAppUrl: false })) });
     }
 
     render() {
@@ -117,7 +125,13 @@ export class CampaignEditModal extends React.Component {
                             <Form.Field control={Input} label='Campaign name' placeholder='Campaign name' onChange={this.handleChange('name')} value={campaign.name} />
                             <Form.Field control={Input} label='App name' placeholder='App name' onChange={this.handleChange('appName')} value={appName} />
                         </Form.Group>
-                        <Form.Field control={Input} label='App URL' placeholder='URL of the Advertised App' onChange={this.handleChange('appUrl')} value={appUrl} />
+                        <Form.Field control={Input} error={!this.state.validAppUrl} label='App URL' placeholder='URL of the Advertised App'
+                            onChange={this.handleChange('appUrl')} value={appUrl} />
+                        {this.state.validAppUrl ? '' : (
+                            <Message negative>
+                                <p>URL does not exist</p>
+                            </Message>
+                        )}
                         <Form.Group widths='equal'>
                             <Form.Field control={Input} label='Total Budget ($)' type='number' placeholder='Total Budget' onChange={this.handleChange('totalBudget')} value={campaign.totalBudget} />
                             <Form.Field control={Input} label='Daily Budget ($)' type='number' placeholder='Daily Budget' onChange={this.handleChange('dailyBudget')} value={campaign.dailyBudget} />

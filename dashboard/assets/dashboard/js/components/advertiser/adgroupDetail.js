@@ -173,6 +173,7 @@ export class AdgroupDetailView extends React.Component {
                                         {Object.keys(adHeaders).map(header => <th key={header}>{header}</th>)}
                                         <Table.HeaderCell>Active</Table.HeaderCell>
                                         <Table.HeaderCell>Creative</Table.HeaderCell>
+                                        <Table.HeaderCell>Landing URL</Table.HeaderCell>
                                     </Table.Row>
                                 </Table.Header>
 
@@ -188,6 +189,7 @@ export class AdgroupDetailView extends React.Component {
 
                                             </Table.Cell>
                                             <Table.Cell><img src={ad.creative} width="100px" /></Table.Cell>
+                                            <Table.Cell><a href={"http://" + ad.landingPage} target='_blank' ><Icon name="external" /></a></Table.Cell>
                                         </Table.Row>)
                                     }
                                 </Table.Body>

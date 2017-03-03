@@ -10,7 +10,7 @@ import { Image as ImageComponent, Item, Grid, Card, Statistic, Icon, Button, Div
 
 const placementHeaders = {
     'Placement Name': 'name',
-    'Key': 'id',
+    'Placement Id': 'id',
     'Requests': 'requests',
     'Impressions': 'impressions',
     'Clicks': 'clicks',
