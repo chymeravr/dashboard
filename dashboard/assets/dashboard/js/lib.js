@@ -1,5 +1,5 @@
 import { config } from './config.js'
-const DEBUG = true;
+const DEBUG = false;
 export function debug(message, props) {
     if (DEBUG) {
         console.info(message);

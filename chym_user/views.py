@@ -66,8 +66,8 @@ def preview_register(request):
         if not user:
             user = InterestedUser(email=user_email)
             user.save()
-            return HttpResponse(status=200, content_type='application/json')
+            return HttpResponse(status=201, content='{}', content_type='application/json')
         # User already exists
-        return HttpResponse(status=409, content_type='application/json')
+        return HttpResponse(status=409, content='{}', content_type='application/json')
     else:
-        return HttpResponse(status=400, content_type='application/json')
+        return HttpResponse(status=400, content='{}', content_type='application/json')
