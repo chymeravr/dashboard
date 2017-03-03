@@ -157,10 +157,13 @@ export class AdgroupEditModal extends React.Component {
                                 <Form.Field control={Input} label='Adgroup name' placeholder='Adgroup name' onChange={this.handleChange('name')} value={adgroup.name} />
                             </Form.Group>
                             <Form.Group widths='equal'>
-                                <Form.Field control={Input} label='Total Budget' type='number' placeholder='Total Budget' onChange={this.handleChange('totalBudget')} value={adgroup.totalBudget} />
-                                <Form.Field control={Input} label='Daily Budget' type='number' placeholder='Daily Budget' onChange={this.handleChange('dailyBudget')} value={adgroup.dailyBudget} />
-                                <Form.Field control={Input} label='Cost Per Click' type='number' placeholder='Cost Per Click' onChange={this.handleChange('bid')} value={adgroup.bid} />
+                                <Form.Field control={Input} label='Total Budget ($)' type='number' placeholder='Total Budget' onChange={this.handleChange('totalBudget')} value={adgroup.totalBudget} />
+                                <Form.Field control={Input} label='Daily Budget ($)' type='number' placeholder='Daily Budget' onChange={this.handleChange('dailyBudget')} value={adgroup.dailyBudget} />
+                                <Form.Field control={Input} label='Cost Per Click ($)' type='number' placeholder='Cost Per Click' onChange={this.handleChange('bid')} value={adgroup.bid} />
                             </Form.Group>
+                            <Form.Field>
+                                <label>Schedule</label>
+                            </Form.Field>
                             <DateRangePicker
                                 onDatesChange={this.onDatesChange}
                                 onFocusChange={this.onFocusChange}

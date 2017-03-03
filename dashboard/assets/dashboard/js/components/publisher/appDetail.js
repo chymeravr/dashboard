@@ -120,7 +120,7 @@ export class AppDetailView extends React.Component {
                     </Grid.Row>
                     <Grid.Row columns={1}>
                         <Grid centered stretched verticalAlign='middle' columns={16}>
-                            <Grid.Row verticalAlign='middle'>
+                            <Grid.Row verticalAlign='middle' style={{ padding: '0px' }}>
                                 <Grid.Column verticalAlign='middle' width={8}>
                                     <Card fluid>
                                         <Card.Content>

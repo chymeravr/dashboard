@@ -13,6 +13,17 @@ CURRENCY = (
     (INR, 'INR'),
 )
 
+SIGNED_UP = 'SIGNED_UP'
+EMAILED = 'EMAILED'
+REGISTERED = 'REGISTERED'
+CONVERTED = 'CONVERTED'
+
+STATUS = (
+    (SIGNED_UP, SIGNED_UP),
+    (EMAILED, EMAILED),
+    (REGISTERED, REGISTERED),
+    (CONVERTED, CONVERTED)
+)
 
 # Create your models here.
 class Profile(models.Model):
@@ -23,5 +34,11 @@ class Profile(models.Model):
     advertising_burn = models.FloatField(default=0)
     publisher_earnings = models.FloatField(default=0)
     publisher_payout = models.FloatField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+class InterestedUser(models.Model):
+    email = models.CharField(max_length=100, primary_key=True)
+    status = models.CharField(choices=STATUS, default=SIGNED_UP, max_length=20)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

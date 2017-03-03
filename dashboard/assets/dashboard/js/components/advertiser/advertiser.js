@@ -15,14 +15,14 @@ import moment from 'moment'
  * Store direct properties of campaigns which can be printed by map
  */
 const headers = {
-    'Total Budget': 'totalBudget',
-    'Daily Budget': 'dailyBudget',
+    'Total Budget ($)': 'totalBudget',
+    'Daily Budget ($)': 'dailyBudget',
     'Start Date': 'startDate',
     'End Date': 'endDate',
     'Impressions': 'impressions',
     'Clicks': 'clicks',
-    'Total Burn': 'totalBurn',
-    'Today Burn': 'todayBurn'
+    'Total Burn ($)': 'totalBurn',
+    'Today Burn ($)': 'todayBurn'
 }
 
 export class AdvertiserView extends React.Component {

@@ -119,20 +119,23 @@ export class CampaignEditModal extends React.Component {
                         </Form.Group>
                         <Form.Field control={Input} label='App URL' placeholder='URL of the Advertised App' onChange={this.handleChange('appUrl')} value={appUrl} />
                         <Form.Group widths='equal'>
-                            <Form.Field control={Input} label='Total Budget' type='number' placeholder='Total Budget' onChange={this.handleChange('totalBudget')} value={campaign.totalBudget} />
-                            <Form.Field control={Input} label='Daily Budget' type='number' placeholder='Daily Budget' onChange={this.handleChange('dailyBudget')} value={campaign.dailyBudget} />
+                            <Form.Field control={Input} label='Total Budget ($)' type='number' placeholder='Total Budget' onChange={this.handleChange('totalBudget')} value={campaign.totalBudget} />
+                            <Form.Field control={Input} label='Daily Budget ($)' type='number' placeholder='Daily Budget' onChange={this.handleChange('dailyBudget')} value={campaign.dailyBudget} />
                         </Form.Group>
-
+                        <Form.Field>
+                            <label>Schedule</label>
+                        </Form.Field>
+                        <DateRangePicker
+                            onDatesChange={this.onDatesChange}
+                            onFocusChange={this.onFocusChange}
+                            focusedInput={focusedInput}
+                            startDate={startDate}
+                            endDate={endDate}
+                            numberOfMonths={2}
+                            displayFormat="YYYY-MMM-DD"
+                            />
                     </Form>
-                    <DateRangePicker
-                        onDatesChange={this.onDatesChange}
-                        onFocusChange={this.onFocusChange}
-                        focusedInput={focusedInput}
-                        startDate={startDate}
-                        endDate={endDate}
-                        numberOfMonths={2}
-                        displayFormat="YYYY-MMM-DD"
-                        />
+
                 </Modal.Content>
                 <Modal.Actions>
                     <Button positive content="Save" disabled={!this.state.valid} onClick={this.saveCampaign.bind(this)} />
