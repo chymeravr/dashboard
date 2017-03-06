@@ -9,8 +9,8 @@ from rest_framework.renderers import JSONRenderer
 from sendgrid import Email
 from sendgrid.helpers.mail import Content, Mail, Personalization
 
-from chym_user.models import Profile, InterestedUser
-from chym_user.serializers import UserProfileSerializer
+from chym_user.models import Profile, InterestedUser, TestDevice
+from chym_user.serializers import UserProfileSerializer, TestDeviceSerializer
 from dashboard import settings
 
 RECEPIENTS = map(lambda x: x + '@chymeravr.com', ['rubbal', 'smeet', 'sushil', 'robin'])
@@ -36,6 +36,16 @@ class ProfileView(ListCreateAPIView):
     @permission_classes((IsAuthenticated,))
     def get_queryset(self):
         return Profile.objects.filter(user=self.request.user)
+
+
+@permission_classes((IsAuthenticated,))
+class TestDeviceView(ListCreateAPIView):
+    renderer_classes = (JSONRenderer,)
+    serializer_class = TestDeviceSerializer
+
+    @permission_classes((IsAuthenticated,))
+    def get_queryset(self):
+        return TestDevice.objects.filter(user=self.request.user)
 
 
 def send_welcome_mail(email):

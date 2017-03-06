@@ -25,6 +25,7 @@ STATUS = (
     (CONVERTED, CONVERTED)
 )
 
+
 # Create your models here.
 class Profile(models.Model):
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
@@ -37,8 +38,15 @@ class Profile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
 class InterestedUser(models.Model):
     email = models.CharField(max_length=100, primary_key=True)
     status = models.CharField(choices=STATUS, default=SIGNED_UP, max_length=20)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+class TestDevice(models.Model):
+    deviceId = models.CharField(max_length=100)
+    user = models.ForeignKey(User)
+    status = models.BooleanField(default=True)
