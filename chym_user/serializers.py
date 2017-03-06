@@ -48,7 +48,7 @@ class UserProfileSerializer(ModelSerializer):
 class TestDeviceSerializer(ModelSerializer):
     class Meta:
         model = TestDevice
-        fields = ('deviceId', 'status')
+        fields = ('id', 'deviceId', 'status')
 
     def create(self, validated_data):
         validated_data['user'] = self.context['request'].user

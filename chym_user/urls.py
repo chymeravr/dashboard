@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^api/login/?$', obtain_jwt_token),
     url(r'^api/view_profile/?$', ProfileView.as_view()),
     url(r'^api/testDevices/?$', TestDeviceView.as_view()),
+    url(r'^api/testDevices/(?P<pk>[0-9]+)/?$', view=TestDeviceView.as_view()),
     url(r'^api/preview_register/?$', preview_register),
     url(r'^api/advertiser/', include('advertiser.urls')),
     url(r'^api/publisher/', include('publisher.urls'))

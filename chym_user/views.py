@@ -3,7 +3,7 @@ import json
 import sendgrid
 from django.http import HttpResponse
 from rest_framework.decorators import permission_classes
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
 from sendgrid import Email
@@ -39,7 +39,7 @@ class ProfileView(ListCreateAPIView):
 
 
 @permission_classes((IsAuthenticated,))
-class TestDeviceView(ListCreateAPIView):
+class TestDeviceView(ListCreateAPIView, RetrieveUpdateAPIView):
     renderer_classes = (JSONRenderer,)
     serializer_class = TestDeviceSerializer
 
