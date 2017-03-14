@@ -103,16 +103,32 @@ export class AdModal extends React.Component {
                         <Form.Field control={Input} label='Ad name' placeholder='Ad name' onChange={this.handleChange('name')} value={ad.name} />
                         <Form.Field control={Input} label='Landing URL' placeholder='URL to redirect clicks to' onChange={this.handleChange('landingPage')} value={ad.landingPage} />
 
-                        <div className="ui fluid action input">
-                            <input type="text" readOnly
-                                onClick={() => this.fileInput.click()}
-                                ref={input => this.fileNameInput = input}
-                                value={this.state.fileName} />
-                            <input type="file" ref={input => this.fileInput = input} onChange={e => this.setFileName(e)} />
-                            <div className="ui icon button" onClick={() => this.fileInput.click()}>
-                                <i className="cloud upload icon"></i>
-                            </div>
-                        </div>
+                        <Grid celled centered columns={16}>
+                            <Grid.Row columns={3}>
+                                <Grid.Column onClick={() => this.fileInput.click()}>
+                                    <img className="ui image" id="adPreview" data-caption="Preview" height="150px"
+                                        onClick={() => this.fileInput.click()}
+                                        ref={input => this.fileNameInput = input}
+                                        value={this.state.fileName} />
+                                    <span >Left</span>
+                                    <input type="file" ref={input => this.fileInput = input} onChange={e => this.setFileName(e)} />
+                                </Grid.Column>
+                                <Grid.Column>
+                                    <img className="ui image" id="adPreview" data-caption="Preview" height="150px"
+                                        onClick={() => this.fileInput.click()}
+                                        ref={input => this.fileNameInput = input}
+                                        value={this.state.fileName} />
+                                    <input type="file" ref={input => this.fileInput = input} onChange={e => this.setFileName(e)} />
+                                </Grid.Column>
+                                <Grid.Column>
+                                    <img className="ui image" id="adPreview" data-caption="Preview" height="150px"
+                                        onClick={() => this.fileInput.click()}
+                                        ref={input => this.fileNameInput = input}
+                                        value={this.state.fileName} />
+                                    <input type="file" ref={input => this.fileInput = input} onChange={e => this.setFileName(e)} />
+                                </Grid.Column>
+                            </Grid.Row>
+                        </Grid>
 
                         <Grid centered>
                             <img className="ui image" id="adPreview" data-caption="Preview" height="150px" />

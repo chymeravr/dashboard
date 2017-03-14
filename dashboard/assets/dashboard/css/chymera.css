@@ -14,7 +14,7 @@
     top: auto !important;
 }
 
-.ui.action.input input[type="file"] {
+.ui.form input[type="file"] {
     display: none;
 }
 
