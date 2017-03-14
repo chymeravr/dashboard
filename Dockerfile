@@ -23,6 +23,7 @@ RUN npm install jquery react react-dom webpack webpack-bundle-tracker babel-load
 RUN npm install -g gulp
 
 # nginx and uwsgi
+RUN apt-get update
 RUN apt-get install -y nginx
 RUN pip install uwsgi
 

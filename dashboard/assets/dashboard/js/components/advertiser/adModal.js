@@ -21,12 +21,17 @@ export class AdModal extends React.Component {
         this.saveAd = this.saveAd.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.validateState = this.validateState.bind(this);
+        this.setFileName = this.setFileName.bind(this);
     }
 
+    componentDidMount() {
+
+    }
 
     componentWillReceiveProps(nextProps) {
         this.setState(Object.assign({}, this.state, { open: nextProps.open }))
     }
+
     validateState() {
         var valid = this.state.ad && this.state.ad.creative && this.state.ad.landingPage && this.state.ad.name;
         valid = valid && this.state.ad.landingPage.length > 0
@@ -70,9 +75,8 @@ export class AdModal extends React.Component {
         });
     }
 
-    setFile() {
+    setFile(file) {
         var oFReader = new FileReader();
-        const file = document.getElementById("adPath").children[0].files[0];
         this.state.ad.creative = file;
         oFReader.readAsDataURL(file);
         oFReader.onload = function (oFREvent) {
@@ -82,10 +86,15 @@ export class AdModal extends React.Component {
 
     }
 
+    setFileName(e) {
+        this.setFile(e.target.files[0]);
+        this.setState(Object.assign({}, { fileName: e.target.files[0].name }))
+    }
+
     render() {
         debug("adModal", this.state);
         const ad = this.state.ad;
-        
+
         return (
             <Modal open={this.state.open} onClose={this.closeModal} dimmer='blurring'>
                 <Modal.Header>{this.label}</Modal.Header>
@@ -93,7 +102,18 @@ export class AdModal extends React.Component {
                     <Form>
                         <Form.Field control={Input} label='Ad name' placeholder='Ad name' onChange={this.handleChange('name')} value={ad.name} />
                         <Form.Field control={Input} label='Landing URL' placeholder='URL to redirect clicks to' onChange={this.handleChange('landingPage')} value={ad.landingPage} />
-                        <Form.Field id="adPath" control={Input} label='Upload File' type='file' onChange={this.setFile} placeholder='Creative' value={ad.adPath} />
+
+                        <div className="ui fluid action input">
+                            <input type="text" readOnly
+                                onClick={() => this.fileInput.click()}
+                                ref={input => this.fileNameInput = input}
+                                value={this.state.fileName} />
+                            <input type="file" ref={input => this.fileInput = input} onChange={e => this.setFileName(e)} />
+                            <div className="ui icon button" onClick={() => this.fileInput.click()}>
+                                <i className="cloud upload icon"></i>
+                            </div>
+                        </div>
+
                         <Grid centered>
                             <img className="ui image" id="adPreview" data-caption="Preview" height="150px" />
                         </Grid>
