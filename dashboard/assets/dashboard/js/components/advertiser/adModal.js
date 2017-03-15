@@ -4,6 +4,8 @@ import { callRawApiWithJwt, debug } from '../../lib.js'
 import { hashHistory } from 'react-router'
 import { config } from '../../config'
 import { Grid, Card, Table, Checkbox, Button, Icon, Header, Modal, Form, Input, Select, Radio, Dimmer, Loader } from 'semantic-ui-react'
+import { ImgUploadColumn } from '../imageUpload'
+import { CubeMonoFormat } from './formats/cubeMono'
 
 export class AdModal extends React.Component {
     constructor(props) {
@@ -75,20 +77,24 @@ export class AdModal extends React.Component {
         });
     }
 
-    setFile(file) {
+    setFile(file, label) {
         var oFReader = new FileReader();
         this.state.ad.creative = file;
         oFReader.readAsDataURL(file);
         oFReader.onload = function (oFREvent) {
-            document.getElementById("adPreview").src = oFREvent.target.result;
+            document.getElementById(label).src = oFREvent.target.result;
         };
         this.setState(Object.assign({}, this.state), this.validateState)
 
     }
 
-    setFileName(e) {
-        this.setFile(e.target.files[0]);
-        this.setState(Object.assign({}, { fileName: e.target.files[0].name }))
+    setFileName(label) {
+        return e => {
+            this.setFile(e.target.files[0], label);
+            const fileObject = {}
+            fileObject[label] = e.target.files[0];
+            this.setState(Object.assign({}, this.state, fileObject))
+        };
     }
 
     render() {
@@ -103,35 +109,9 @@ export class AdModal extends React.Component {
                         <Form.Field control={Input} label='Ad name' placeholder='Ad name' onChange={this.handleChange('name')} value={ad.name} />
                         <Form.Field control={Input} label='Landing URL' placeholder='URL to redirect clicks to' onChange={this.handleChange('landingPage')} value={ad.landingPage} />
 
-                        <Grid celled centered columns={16}>
-                            <Grid.Row columns={3}>
-                                <Grid.Column onClick={() => this.fileInput.click()}>
-                                    <img className="ui image" id="adPreview" data-caption="Preview" height="150px"
-                                        onClick={() => this.fileInput.click()}
-                                        ref={input => this.fileNameInput = input}
-                                        value={this.state.fileName} />
-                                    <span >Left</span>
-                                    <input type="file" ref={input => this.fileInput = input} onChange={e => this.setFileName(e)} />
-                                </Grid.Column>
-                                <Grid.Column>
-                                    <img className="ui image" id="adPreview" data-caption="Preview" height="150px"
-                                        onClick={() => this.fileInput.click()}
-                                        ref={input => this.fileNameInput = input}
-                                        value={this.state.fileName} />
-                                    <input type="file" ref={input => this.fileInput = input} onChange={e => this.setFileName(e)} />
-                                </Grid.Column>
-                                <Grid.Column>
-                                    <img className="ui image" id="adPreview" data-caption="Preview" height="150px"
-                                        onClick={() => this.fileInput.click()}
-                                        ref={input => this.fileNameInput = input}
-                                        value={this.state.fileName} />
-                                    <input type="file" ref={input => this.fileInput = input} onChange={e => this.setFileName(e)} />
-                                </Grid.Column>
-                            </Grid.Row>
-                        </Grid>
 
                         <Grid centered>
-                            <img className="ui image" id="adPreview" data-caption="Preview" height="150px" />
+                            <CubeMonoFormat onCreativeAddition={() => console.info("done")} />
                         </Grid>
                     </Form>
                 </Modal.Content>
