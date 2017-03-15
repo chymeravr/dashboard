@@ -36,6 +36,13 @@ export class CubeMonoFormat extends React.Component {
         };
     }
 
+    scaleToSize(x) {
+        x = Math.round((1 + x) * 512);
+        x = Math.min(x, 1023);
+        x = Math.max(0, x);
+        return x;
+    }
+
     convertToEqui() {
         var c = document.getElementById("workingCanvas");
         var ctx = c.getContext("2d");
@@ -89,6 +96,7 @@ export class CubeMonoFormat extends React.Component {
             height = 2048,
             buffer = new Uint8ClampedArray(width * height * 4);
 
+        var total = 1024 * 1024 * 4;
         var min = 10000
         var max = 0
         for (var j = 0; j < height; j++) {
@@ -116,32 +124,23 @@ export class CubeMonoFormat extends React.Component {
                 const pi = Math.PI;
 
                 var canvasPosition = (j * width + i) * 4; // position in buffer based on x and y
-                var position = {}
                 var coordinate;
                 var origData;
                 if (fy >= fx && fy >= fz) {
                     origData = y < 0 ? rightImageData : leftImageData;
-                    position.z = z / fy
-                    position.x = x / fy
-                    position.x = Math.round((1 + position.x) * 512);
-                    position.z = Math.round((1 + position.z) * 512);
-                    min = Math.min(min, position.x)
-                    max = Math.max(max, position.x)
-                    coordinate = (position.x * 1024 + position.z) * 4;
+                    z = this.scaleToSize(z / fy);
+                    x = this.scaleToSize(x / fy);
+                    coordinate = y < 0 ? total - (z * 1024 - x) * 4 : total - (z * 1024 + x) * 4;
                 } else if (fx >= fy && fx >= fz) {
                     origData = x < 0 ? frontImageData : backImageData;
-                    position.z = z / fx
-                    position.y = y / fx
-                    position.y = Math.round((1 + position.y) * 512);
-                    position.z = Math.round((1 + position.z) * 512);
-                    coordinate = (position.y * 1024 + position.z) * 4;
+                    z = this.scaleToSize(z / fx);
+                    y = this.scaleToSize(y / fx);
+                    coordinate = x < 0 ? total - (z * 1024 + y) * 4 : total - (z * 1024 - y) * 4;
                 } else {
                     origData = z > 0 ? topImageData : bottomImageData;
-                    position.x = x / fz
-                    position.y = y / fz
-                    position.x = Math.round((1 + position.x) * 512);
-                    position.y = Math.round((1 + position.y) * 512);
-                    coordinate = (position.y * 1024 + position.x) * 4;
+                    y = this.scaleToSize(y / fz);
+                    x = this.scaleToSize(x / fz);
+                    coordinate = z > 0 ? total - (x * 1024 + y) * 4 : (x * 1024 - y) * 4;
                 }
 
                 buffer[canvasPosition] = origData[coordinate];
@@ -163,8 +162,8 @@ export class CubeMonoFormat extends React.Component {
         var previewContext = previewCanvas.getContext("2d");
         var previewImg = new Image();
         previewImg.src = c.toDataURL();
-        previewContext.drawImage(previewImg, 0, 0, 4096, 4096, 0, 0, 600, 600)
-
+        ctx.drawImage(previewImg, 0, 0, 4096, 4096, 0, 0, 4096, 4096)
+        var image = c.toDataURL("image/png").replace("image/png", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
         console.info(this.state)
     }
 
