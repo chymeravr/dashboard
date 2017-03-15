@@ -58,30 +58,62 @@ export class CubeMonoFormat extends React.Component {
         var m_theta = 0;
         for (var j = 0; j < height; j++) {
             for (var i = 0; i < width; i++) {
-                var x = 2 * i / width - 1;
+                var x = 2 * i / width;
                 var y = j / height;
 
 
                 var phi = x * Math.PI
                 var theta = y * Math.PI
-                m_theta = Math.max(m_theta, theta)
-                var p_x = Math.cos(phi) * Math.sin(theta)
-                var p_y = Math.sin(phi) * Math.sin(theta)
-                var p_z = Math.cos(phi)
+
+                var x = Math.cos(phi) * Math.sin(theta)
+                var y = Math.sin(phi) * Math.sin(theta)
+                var z = Math.cos(theta)
+
+                var fx = Math.abs(x);
+                var fy = Math.abs(y);
+                var fz = Math.abs(z);
 
                 const pi = Math.PI;
 
                 var pos = (j * width + i) * 4; // position in buffer based on x and y
 
-                if (pi / 4 < theta && theta < 3 * pi / 4) {
-                    if (phi > - pi / 4 && phi < pi / 4) buffer[pos] = 0;
-                    else if (phi > pi / 4 && phi < 3 * pi / 4) buffer[pos] = 100;
-                    else if (phi > - 3 * pi / 4 && phi < -pi / 4) buffer[pos] = 200;
-                    else buffer[pos] = 220;
-                } else {
-                    buffer[pos + 1] = 220;
-                }
+                // if (pi / 4 < theta && theta < 3 * pi / 4) {
+                //     if (phi > - pi / 4 && phi < pi / 4) buffer[pos] = 0;
+                //     else if (phi > pi / 4 && phi < 3 * pi / 4) buffer[pos] = 100;
+                //     else if (phi > - 3 * pi / 4 && phi < -pi / 4) buffer[pos] = 200;
+                //     else buffer[pos] = 220;
+                // } else {
+                //     buffer[pos + 1] = 220;
+                // }
 
+                if (fy >= fx && fy >= fz) {
+                    if (y > 0) {
+                        // top face
+                        buffer[pos] = 0;
+                    } else {
+                        // bottom face
+                        buffer[pos] = 0;
+
+                    }
+                } else if (fx >= fy && fx >= fz) {
+                    if (x > 0) {
+                        // right face
+                        buffer[pos + 1] = 200;
+                    } else {
+                        // left face
+                        buffer[pos + 1] = 200;
+                    }
+                } else {
+                    if (z > 0) {
+                        // front face
+                        buffer[pos] = 100;
+
+                    } else {
+                        // back face
+                        buffer[pos] = 100;
+
+                    }
+                }
                 buffer[pos + 3] = 255;           // set alpha channel
 
             }
