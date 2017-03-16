@@ -80,7 +80,7 @@ class Adgroup(BaseModel):
 
 
 def content_file_name(instance, filename):
-    return '/'.join(['creatives', str(instance.id)])
+    return '/'.join(['creatives', str(instance.id) + '.jpg'])
 
 
 class Ad(BaseModel):

@@ -15,10 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.views.static import serve
 
+from dashboard import settings
 from dashboard import views
 
 urlpatterns = [
+    url(r'^creatives/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     url(r'^admin/', admin.site.urls),
     url(r'^user/', include('chym_user.urls')),
     url(r'^', views.home)

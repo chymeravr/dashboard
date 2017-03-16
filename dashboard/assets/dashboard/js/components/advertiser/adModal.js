@@ -19,11 +19,10 @@ export class AdModal extends React.Component {
         }, JSON.parse(JSON.stringify(props)));
         this.postSave = props.postSave;
         this.closeModal = props.closeModal;
-        this.setFile = this.setFile.bind(this)
         this.saveAd = this.saveAd.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.validateState = this.validateState.bind(this);
-        this.setFileName = this.setFileName.bind(this);
+        this.setCreative = this.setCreative.bind(this);
     }
 
     componentDidMount() {
@@ -53,7 +52,8 @@ export class AdModal extends React.Component {
     saveAd() {
         this.setState(Object.assign({}, this.state, { uploading: true }));
         const jwtToken = localStorage.getItem(config.jwt.tokenKey);
-        var data = new FormData(); data.append("name", this.state.ad.name);
+        var data = new FormData();
+        data.append("name", this.state.ad.name);
         data.append("adgroup", this.state.ad.adgroup);
         data.append("creative", this.state.ad.creative);
         data.append("landingPage", this.state.ad.landingPage);
@@ -77,24 +77,9 @@ export class AdModal extends React.Component {
         });
     }
 
-    setFile(file, label) {
-        var oFReader = new FileReader();
-        this.state.ad.creative = file;
-        oFReader.readAsDataURL(file);
-        oFReader.onload = function (oFREvent) {
-            document.getElementById(label).src = oFREvent.target.result;
-        };
+    setCreative(imgData) {
+        this.state.ad.creative = imgData;
         this.setState(Object.assign({}, this.state), this.validateState)
-
-    }
-
-    setFileName(label) {
-        return e => {
-            this.setFile(e.target.files[0], label);
-            const fileObject = {}
-            fileObject[label] = e.target.files[0];
-            this.setState(Object.assign({}, this.state, fileObject))
-        };
     }
 
     render() {
@@ -107,11 +92,10 @@ export class AdModal extends React.Component {
                 <Modal.Content>
                     <Form>
                         <Form.Field control={Input} label='Ad name' placeholder='Ad name' onChange={this.handleChange('name')} value={ad.name} />
-                        <Form.Field control={Input} label='Landing URL' placeholder='URL to redirect clicks to' onChange={this.handleChange('landingPage')} value={ad.landingPage} />
-
-
+                        <Form.Field control={Input} label='Landing URL' placeholder='URL to redirect clicks to'
+                            onChange={this.handleChange('landingPage')} value={ad.landingPage} />
                         <Grid centered>
-                            <CubeMonoFormat onCreativeAddition={() => console.info("done")} />
+                            <CubeMonoFormat onCreativeAddition={(img) => this.setCreative(img)} />
                         </Grid>
                     </Form>
                 </Modal.Content>

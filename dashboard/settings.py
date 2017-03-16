@@ -171,11 +171,14 @@ APPEND_SLASH = True
 # MEDIA_URL = '/media/'
 
 # Azure
-DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
-AZURE_ACCOUNT_NAME = 'chymerastatic'
-AZURE_ACCOUNT_KEY = 'UkE++CX1LVy9xYGmS2799JZmUthkTBV6b4fBaX352BlKtLANJyxa0GU0skOMyt2HZiW/uW9c+vOLWc8Nf8rR0Q=='
-AZURE_CONTAINER = 'creatives'
+if not DEBUG:
+    DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+    AZURE_ACCOUNT_NAME = 'chymerastatic'
+    AZURE_ACCOUNT_KEY = 'UkE++CX1LVy9xYGmS2799JZmUthkTBV6b4fBaX352BlKtLANJyxa0GU0skOMyt2HZiW/uW9c+vOLWc8Nf8rR0Q=='
+    AZURE_CONTAINER = 'creatives'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'creatives/')
+MEDIA_URL = '/creatives/'
 
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': timedelta(days=7),
@@ -201,4 +204,4 @@ LOGGING = {
 }
 
 # Sendgrid
-SENDGRID_API_KEY='SG.9I5__tjvRIyPIYmBOztGcw.jyrPEFa_BJYm0eZBO1jPyF2dSB00nE5e-nYv_C9GCy8'
+SENDGRID_API_KEY = 'SG.9I5__tjvRIyPIYmBOztGcw.jyrPEFa_BJYm0eZBO1jPyF2dSB00nE5e-nYv_C9GCy8'
