@@ -94,8 +94,15 @@ export class AdModal extends React.Component {
                         <Form.Field control={Input} label='Ad name' placeholder='Ad name' onChange={this.handleChange('name')} value={ad.name} />
                         <Form.Field control={Input} label='Landing URL' placeholder='URL to redirect clicks to'
                             onChange={this.handleChange('landingPage')} value={ad.landingPage} />
-                        <Grid centered>
-                            <CubeMonoFormat onCreativeAddition={(img) => this.setCreative(img)} />
+                        <Grid collapsing>
+                            <Grid.Row columns={1}>
+                                <Grid.Column centered width={16}>
+                                    <Form.Field>
+                                        <label>Creative</label>
+                                    </Form.Field>
+                                    <CubeMonoFormat onCreativeAddition={(img) => this.setCreative(img)} />
+                                </Grid.Column>
+                            </Grid.Row>
                         </Grid>
                     </Form>
                 </Modal.Content>

@@ -20,7 +20,6 @@ export class CubeMonoFormat extends React.Component {
         var oFReader = new FileReader();
         oFReader.readAsDataURL(file);
         oFReader.onload = function (oFREvent) {
-            document.getElementById(label).src = oFREvent.target.result;
             that.state[label + "ImageData"] = oFREvent.target.result;
             that.setState(Object.assign({}, this.state), this.validateState)
         };
@@ -188,23 +187,23 @@ export class CubeMonoFormat extends React.Component {
 
         return (
             <div>
-                <Table celled collapsing padded={false} style={{ padding: 0 }}>
+                <Table compact basic collapsing celled padded={false} style={{ padding: 0, margin: '0px auto' }}>
                     <Table.Body>
-                        <Table.Row>
-                            <ImgUploadColumn label="top" onImgFileChange={e => this.setFileName("top")(e)} />
-                            <ImgUploadColumn label="left" onImgFileChange={e => this.setFileName("left")(e)} />
-                            <ImgUploadColumn label="front" onImgFileChange={e => this.setFileName("front")(e)} />
+                        <Table.Row textAlign='center'>
+                            <ImgUploadColumn label="top" onImgFileChange={e => this.setFileName("top")(e)} src={this.state.topImageData} />
+                            <ImgUploadColumn label="left" onImgFileChange={e => this.setFileName("left")(e)} src={this.state.leftImageData} />
+                            <ImgUploadColumn label="front" onImgFileChange={e => this.setFileName("front")(e)} src={this.state.frontImageData} />
                         </Table.Row>
-                        <Table.Row>
-                            <ImgUploadColumn label="bottom" onImgFileChange={e => this.setFileName("bottom")(e)} />
-                            <ImgUploadColumn label="right" onImgFileChange={e => this.setFileName("right")(e)} />
-                            <ImgUploadColumn label="back" onImgFileChange={e => this.setFileName("back")(e)} />
+                        <Table.Row textAlign='center'>
+                            <ImgUploadColumn label="bottom" onImgFileChange={e => this.setFileName("bottom")(e)} src={this.state.bottomImageData} />
+                            <ImgUploadColumn label="right" onImgFileChange={e => this.setFileName("right")(e)} src={this.state.rightImageData} />
+                            <ImgUploadColumn label="back" onImgFileChange={e => this.setFileName("back")(e)} src={this.state.backImageData} />
                         </Table.Row>
                     </Table.Body>
                 </Table>
                 <Button positive content="Convert" onClick={this.convertToEqui} />
                 <canvas id="workingCanvas" height="2048" width="4096" style={{ display: "none" }} />
-                <canvas id="previewCanvas" height="600" width="600" />
+                <canvas id="previewCanvas" height="300" width="600" />
             </div>
         );
     }
