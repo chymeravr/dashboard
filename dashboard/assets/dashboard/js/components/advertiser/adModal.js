@@ -7,6 +7,7 @@ import { Grid, Card, Table, Checkbox, Button, Icon, Header, Modal, Form, Input, 
 import { ImgUploadColumn } from '../imageUpload'
 import { CubeMonoFormat } from './formats/cubeMono'
 import { EquiMonoFormat } from './formats/equiMono'
+import { CubeStereoFormat } from './formats/cubeStereo'
 
 
 const creativeFormatOptions = Object.keys(config.creativeFormats).map(id => {
@@ -122,7 +123,6 @@ export class AdModal extends React.Component {
     }
 
     render() {
-        debug("adModal", this.state);
         const ad = this.state.ad;
         var adInput;
         switch (ad.creativeFormat) {
@@ -130,12 +130,15 @@ export class AdModal extends React.Component {
                 adInput = <EquiMonoFormat onCreativeAddition={(img) => this.setCreative(img)} />
                 break;
             case '1':
-                adInput = <CubeMonoFormat onCreativeAddition={(img) => this.setCreative(img)} />
+                switch (ad.vision) {
+                    case '0': adInput = <CubeMonoFormat onCreativeAddition={(img) => this.setCreative(img)} />; break
+                    case '1': adInput = <CubeStereoFormat onCreativeAddition={(img) => this.setCreative(img)} />; break
+                }
                 break;
         }
 
         return (
-            <Modal size="fullscreen" open={this.state.open} onClose={this.closeModal} dimmer='blurring'>
+            <Modal  open={this.state.open} onClose={this.closeModal} dimmer='blurring'>
                 <Modal.Header>{this.label}</Modal.Header>
                 <Modal.Content>
                     <Form>
@@ -151,9 +154,9 @@ export class AdModal extends React.Component {
                             <Form.Field control={Dropdown} selection label='Vision' options={visionOptions} placeholder='Vision'
                                 onChange={this.setVision} value={ad.vision + ''} />
                         </Form.Group>
-                        <Grid collapsing>
+                        <Grid>
                             <Grid.Row columns={1}>
-                                <Grid.Column centered width={16}>
+                                <Grid.Column width={16}>
                                     <Form.Field>
                                         <label>Creative</label>
                                     </Form.Field>

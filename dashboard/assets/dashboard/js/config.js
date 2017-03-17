@@ -56,4 +56,4 @@ config.vision = {
     '0': 'Monoscopic',
     '1': 'Stereoscopic'
 }
-config.defaultVision = '0'
+config.defaultVision = '1'

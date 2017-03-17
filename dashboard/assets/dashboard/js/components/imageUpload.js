@@ -19,7 +19,7 @@ export class ImgUploadColumn extends React.Component {
     }
 
     render() {
-        debug("imageUpload", this.state);
+        // debug("imageUpload", this.state);
 
 
         return (
