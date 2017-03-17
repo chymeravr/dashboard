@@ -1,5 +1,9 @@
 export var config = {}
 
+/**
+ * 
+ * Never change IDs in this class. Changing anything here will lead to changes everywhere the field is consumed
+ */
 
 config.jwt = {
     tokenKey: 'chym_token'
@@ -40,3 +44,16 @@ config.appStores = {
 }
 
 config.defaultAppStore = '1'
+
+config.creativeFormats = {
+    '0': 'Equirectangular',
+    '1': 'Cubemap'
+}
+
+config.defaultCreativeFormat = '0'
+
+config.vision = {
+    '0': 'Monoscopic',
+    '1': 'Stereoscopic'
+}
+config.defaultVision = '0'

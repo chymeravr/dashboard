@@ -3,16 +3,32 @@ import { FormInput, NumberInput } from '../common'
 import { callRawApiWithJwt, debug } from '../../lib.js'
 import { hashHistory } from 'react-router'
 import { config } from '../../config'
-import { Grid, Card, Table, Checkbox, Button, Icon, Header, Modal, Form, Input, Select, Radio, Dimmer, Loader } from 'semantic-ui-react'
+import { Grid, Card, Table, Checkbox, Button, Icon, Header, Modal, Form, Input, Select, Radio, Dimmer, Loader, Dropdown } from 'semantic-ui-react'
 import { ImgUploadColumn } from '../imageUpload'
 import { CubeMonoFormat } from './formats/cubeMono'
+import { EquiMonoFormat } from './formats/equiMono'
+
+
+const creativeFormatOptions = Object.keys(config.creativeFormats).map(id => {
+    return { key: id, text: config.creativeFormats[id], value: id };
+});
+
+
+const visionOptions = Object.keys(config.vision).map(id => {
+    return { key: id, text: config.vision[id], value: id };
+});
+
 
 export class AdModal extends React.Component {
     constructor(props) {
         super(props);
+        this.adgroupId = props.adgroupId;
         this.state = Object.assign({
             ad: {
                 adgroup: props.adgroupId,
+                stereo: config.defaultStereo,
+                creativeFormat: config.defaultCreativeFormat,
+                vision: config.defaultVision
             },
             uploading: false,
             open: props.open
@@ -23,11 +39,10 @@ export class AdModal extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.validateState = this.validateState.bind(this);
         this.setCreative = this.setCreative.bind(this);
+        this.setCreativeFormat = this.setCreativeFormat.bind(this);
+        this.setVision = this.setVision.bind(this);
     }
 
-    componentDidMount() {
-
-    }
 
     componentWillReceiveProps(nextProps) {
         this.setState(Object.assign({}, this.state, { open: nextProps.open }))
@@ -69,10 +84,20 @@ export class AdModal extends React.Component {
             }
             return response.json();
         }).then(ad => {
-            this.postSave(ad)
-            this.setState(Object.assign({}, this.state, { uploading: false }));
+            this.postSave(ad);
+            // Clear ad data
+            this.state.ad = {
+                adgroup: this.adgroupId,
+                stereo: config.defaultStereo,
+                creativeFormat: config.defaultCreativeFormat,
+                vision: config.defaultVision
+            };
+
+            this.setState(Object.assign({}, this.state, {
+                uploading: false
+            }));
         }).catch(error => {
-            console.info(error)
+            console.error(error)
             this.setState(Object.assign({}, this.state, { uploading: false }));
         });
     }
@@ -82,25 +107,57 @@ export class AdModal extends React.Component {
         this.setState(Object.assign({}, this.state), this.validateState)
     }
 
+    setCreativeFormat(e, d) {
+        var ad = Object.assign(this.state.ad, {
+            creativeFormat: d.value
+        });
+        this.setState(Object.assign({}, this.state, { ad: ad }), this.validateState);
+    }
+
+    setVision(e, d) {
+        var ad = Object.assign(this.state.ad, {
+            vision: d.value
+        });
+        this.setState(Object.assign({}, this.state, { ad: ad }), this.validateState);
+    }
+
     render() {
         debug("adModal", this.state);
         const ad = this.state.ad;
+        var adInput;
+        switch (ad.creativeFormat) {
+            case '0':
+                adInput = <EquiMonoFormat onCreativeAddition={(img) => this.setCreative(img)} />
+                break;
+            case '1':
+                adInput = <CubeMonoFormat onCreativeAddition={(img) => this.setCreative(img)} />
+                break;
+        }
 
         return (
-            <Modal open={this.state.open} onClose={this.closeModal} dimmer='blurring'>
+            <Modal size="fullscreen" open={this.state.open} onClose={this.closeModal} dimmer='blurring'>
                 <Modal.Header>{this.label}</Modal.Header>
                 <Modal.Content>
                     <Form>
                         <Form.Field control={Input} label='Ad name' placeholder='Ad name' onChange={this.handleChange('name')} value={ad.name} />
                         <Form.Field control={Input} label='Landing URL' placeholder='URL to redirect clicks to'
                             onChange={this.handleChange('landingPage')} value={ad.landingPage} />
+                        <Form.Group>
+
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Field control={Dropdown} selection label='Creative Format' options={creativeFormatOptions} placeholder='Creative Format'
+                                onChange={this.setCreativeFormat} value={ad.creativeFormat + ''} />
+                            <Form.Field control={Dropdown} selection label='Vision' options={visionOptions} placeholder='Vision'
+                                onChange={this.setVision} value={ad.vision + ''} />
+                        </Form.Group>
                         <Grid collapsing>
                             <Grid.Row columns={1}>
                                 <Grid.Column centered width={16}>
                                     <Form.Field>
                                         <label>Creative</label>
                                     </Form.Field>
-                                    <CubeMonoFormat onCreativeAddition={(img) => this.setCreative(img)} />
+                                    {adInput}
                                 </Grid.Column>
                             </Grid.Row>
                         </Grid>
