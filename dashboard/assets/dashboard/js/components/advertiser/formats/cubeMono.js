@@ -1,5 +1,5 @@
 var React = require('react')
-import { Table, Button } from 'semantic-ui-react'
+import { Table, Button, Dimmer, Loader, Segment } from 'semantic-ui-react'
 import { debug, dataURItoBlob } from '../../../lib'
 import { ImgUploadColumn } from '../../imageUpload'
 
@@ -9,10 +9,9 @@ export class CubeMonoFormat extends React.Component {
     constructor(props) {
         super(props);
         this.onCreativeAddition = props.onCreativeAddition;
-        this.state = {
-
-        }
+        this.state = {}
         this.convertToEqui = this.convertToEqui.bind(this);
+        this.convertToEquiWrapper = this.convertToEquiWrapper.bind(this);
         this.setFile = this.setFile.bind(this);
         this.setFileName = this.setFileName.bind(this);
         this.getImageData = this.getImageData.bind(this);
@@ -67,6 +66,10 @@ export class CubeMonoFormat extends React.Component {
     validateImageData() {
         const { topImageData, bottomImageData, leftImageData, rightImageData, frontImageData, backImageData } = this.state;
         this.setState(Object.assign({}, this.state, { valid: topImageData && bottomImageData && leftImageData && rightImageData && frontImageData && backImageData }));
+    }
+
+    convertToEquiWrapper() {
+        this.setState(Object.assign({}, this.state, { converting: true }), this.convertToEqui)
     }
 
     convertToEqui() {
@@ -146,9 +149,8 @@ export class CubeMonoFormat extends React.Component {
         previewContext.drawImage(previewImg, 0, 0, 4096, 2048, 0, 0, 600, 300);
 
         var image = c.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
-        console.info(this.state);
-        window.open(image, "toDataURL() image", "width=600, height=200");
         this.onCreativeAddition(dataURItoBlob(image));
+        this.setState(Object.assign({}, this.state, { converting: false }))
     }
 
     render() {
@@ -156,7 +158,7 @@ export class CubeMonoFormat extends React.Component {
 
         return (
             <div>
-                <Table compact basic collapsing celled padded={false} style={{ padding: 0, margin: '0px auto' }}>
+                <Table compact basic collapsing celled padded={false} style={{ padding: 0, margin: '0px auto' }} >
                     <Table.Body>
                         <Table.Row textAlign='center'>
                             <ImgUploadColumn label="top" onImgFileChange={e => this.setFileName("top")(e)} src={this.state.topImageData} />
@@ -169,10 +171,19 @@ export class CubeMonoFormat extends React.Component {
                             <ImgUploadColumn label="back" onImgFileChange={e => this.setFileName("back")(e)} src={this.state.backImageData} />
                         </Table.Row>
                     </Table.Body>
+                    <Table.Footer fullWidth>
+                        <Table.Row>
+                            <Table.HeaderCell colSpan='4'>
+                                <Button floated="right" positive content="Convert" onClick={this.convertToEquiWrapper} disabled={!this.state.valid} />
+                            </Table.HeaderCell>
+                        </Table.Row>
+                    </Table.Footer>
                 </Table>
-                <Button positive content="Convert" onClick={this.convertToEqui} disabled={!this.state.valid} />
                 <canvas id="workingCanvas" height="2048" width="4096" style={{ display: "none" }} />
-                <canvas id="previewCanvas" height="300" width="600" />
+                <Segment basic textAlign="center"><canvas className="ui" id="previewCanvas" height="300" width="600" /></Segment>
+                <Dimmer active={this.state.converting} inverted>
+                    <Loader>Converting File..</Loader>
+                </Dimmer>
             </div>
         );
     }

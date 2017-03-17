@@ -50,7 +50,7 @@ config.creativeFormats = {
     '1': 'Cubemap'
 }
 
-config.defaultCreativeFormat = '0'
+config.defaultCreativeFormat = '1'
 
 config.vision = {
     '0': 'Monoscopic',
