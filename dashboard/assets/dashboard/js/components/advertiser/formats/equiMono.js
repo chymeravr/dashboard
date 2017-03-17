@@ -29,7 +29,7 @@ export class EquiMonoFormat extends React.Component {
                 } else {
                     that.state["imageData"] = oFREvent.target.result;
                     that.onCreativeAddition(dataURItoBlob(oFREvent.target.result));
-                    that.setState(Object.assign({}, this.state, { valid: true }))
+                    that.setState(Object.assign({}, that.state, { valid: true }))
                 }
             };
         };

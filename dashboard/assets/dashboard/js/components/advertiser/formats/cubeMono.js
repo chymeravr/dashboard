@@ -3,6 +3,8 @@ import { Table, Button } from 'semantic-ui-react'
 import { debug, dataURItoBlob } from '../../../lib'
 import { ImgUploadColumn } from '../../imageUpload'
 
+const imgWidth = 1024;
+
 export class CubeMonoFormat extends React.Component {
     constructor(props) {
         super(props);
@@ -13,6 +15,8 @@ export class CubeMonoFormat extends React.Component {
         this.convertToEqui = this.convertToEqui.bind(this);
         this.setFile = this.setFile.bind(this);
         this.setFileName = this.setFileName.bind(this);
+        this.getImageData = this.getImageData.bind(this);
+        this.validateImageData = this.validateImageData.bind(this);
     }
 
     setFile(file, label) {
@@ -20,8 +24,18 @@ export class CubeMonoFormat extends React.Component {
         var oFReader = new FileReader();
         oFReader.readAsDataURL(file);
         oFReader.onload = function (oFREvent) {
-            that.state[label + "ImageData"] = oFREvent.target.result;
-            that.setState(Object.assign({}, this.state), this.validateState)
+            var image = new Image();
+            image.src = oFREvent.target.result;
+
+            image.onload = function () {
+                console.info(this.height, this.width)
+                if (this.height != 1024 || this.width != 1024) {
+                    alert("Please upload 1024x1024 images")
+                } else {
+                    that.state[label + "ImageData"] = oFREvent.target.result;
+                    that.setState(Object.assign({}, that.state), that.validateImageData)
+                }
+            };
         };
 
     }
@@ -42,51 +56,32 @@ export class CubeMonoFormat extends React.Component {
         return x;
     }
 
+    getImageData(context, canvas, label) {
+        var img = new Image();
+        img.src = this.state[label + "ImageData"];
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(img, 0, 0, imgWidth, imgWidth);
+        return context.getImageData(0, 0, imgWidth, imgWidth).data;
+    }
+
+    validateImageData() {
+        const { topImageData, bottomImageData, leftImageData, rightImageData, frontImageData, backImageData } = this.state;
+        this.setState(Object.assign({}, this.state, { valid: topImageData && bottomImageData && leftImageData && rightImageData && frontImageData && backImageData }));
+    }
 
     convertToEqui() {
-        const imgWidth = 1024;
         var c = document.getElementById("workingCanvas");
         var ctx = c.getContext("2d");
 
-        var img = new Image();
-        img.src = this.state.topImageData;
-        ctx.clearRect(0, 0, c.width, c.height);
+        var topImageData = this.getImageData(ctx, c, "top")
+        var bottomImageData = this.getImageData(ctx, c, "bottom")
+        var leftImageData = this.getImageData(ctx, c, "left")
+        var rightImageData = this.getImageData(ctx, c, "right")
+        var frontImageData = this.getImageData(ctx, c, "front")
+        var backImageData = this.getImageData(ctx, c, "back")
 
-        ctx.drawImage(img, 0, 0, imgWidth, imgWidth);
-        var topImageData = ctx.getImageData(0, 0, imgWidth, imgWidth).data;
-
-        img = new Image();
-        img.src = this.state.bottomImageData;
-        ctx.clearRect(0, 0, c.width, c.height);
-        ctx.drawImage(img, 0, 0, imgWidth, imgWidth);
-        var bottomImageData = ctx.getImageData(0, 0, imgWidth, imgWidth).data;
-
-        img = new Image();
-        img.src = this.state.frontImageData;
-        ctx.clearRect(0, 0, c.width, c.height);
-        ctx.drawImage(img, 0, 0, imgWidth, imgWidth);
-        var frontImageData = ctx.getImageData(0, 0, imgWidth, imgWidth).data;
-
-        img = new Image();
-        img.src = this.state.backImageData;
-        ctx.clearRect(0, 0, c.width, c.height);
-        ctx.drawImage(img, 0, 0, imgWidth, imgWidth);
-        var backImageData = ctx.getImageData(0, 0, imgWidth, imgWidth).data;
-
-        img = new Image();
-        img.src = this.state.rightImageData;
-        ctx.clearRect(0, 0, c.width, c.height);
-        ctx.drawImage(img, 0, 0, imgWidth, imgWidth);
-        var rightImageData = ctx.getImageData(0, 0, imgWidth, imgWidth).data;
-
-        img = new Image();
-        img.src = this.state.leftImageData;
-        ctx.clearRect(0, 0, c.width, c.height);
-        ctx.drawImage(img, 0, 0, imgWidth, imgWidth);
-        var leftImageData = ctx.getImageData(0, 0, imgWidth, imgWidth).data;
-
-        var width = 4096,
-            height = 2048,
+        var width = imgWidth * 4,
+            height = imgWidth * 2,
             buffer = new Uint8ClampedArray(width * height * 4);
 
         var total = imgWidth * imgWidth * 4;
@@ -175,7 +170,7 @@ export class CubeMonoFormat extends React.Component {
                         </Table.Row>
                     </Table.Body>
                 </Table>
-                <Button positive content="Convert" onClick={this.convertToEqui} />
+                <Button positive content="Convert" onClick={this.convertToEqui} disabled={!this.state.valid} />
                 <canvas id="workingCanvas" height="2048" width="4096" style={{ display: "none" }} />
                 <canvas id="previewCanvas" height="300" width="600" />
             </div>
