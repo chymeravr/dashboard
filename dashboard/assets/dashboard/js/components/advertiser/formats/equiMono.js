@@ -47,8 +47,6 @@ export class EquiMonoFormat extends React.Component {
 
 
     render() {
-        debug("equiMono", this.state);
-
         return (
             <div>
                 <Table compact basic collapsing celled padded={false} style={{ padding: 0, margin: '0px auto' }}>

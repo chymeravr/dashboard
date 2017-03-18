@@ -6,11 +6,15 @@ import { ImgUploadColumn } from '../../imageUpload'
 const imgWidth = 4096;
 const imgHeight = 2048;
 
+const INITIAL = 'initial';
+const STARTED = 'started';
+const CONVERTED = 'converted';
+
 export class EquiStereoFormat extends React.Component {
     constructor(props) {
         super(props);
         this.onCreativeAddition = props.onCreativeAddition;
-        this.state = {}
+        this.state = { converted: false }
         this.stitchEye = this.stitchEye.bind(this);
         this.stitch = this.stitch.bind(this);
         this.setFile = this.setFile.bind(this);
@@ -74,6 +78,8 @@ export class EquiStereoFormat extends React.Component {
     }
 
     stitch() {
+        this.setState(Object.assign({}, this.state, { conversion: STARTED }))
+
         this.stitchEye('left', 0, 0);
         this.stitchEye('right', 0, 2048);
 
@@ -88,7 +94,7 @@ export class EquiStereoFormat extends React.Component {
 
         var image = c.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
         this.onCreativeAddition(dataURItoBlob(image));
-        this.setState(Object.assign({}, this.state, { converting: false }))
+        this.setState(Object.assign({}, this.state, { conversion: CONVERTED }))
     }
 
     render() {
@@ -130,14 +136,16 @@ export class EquiStereoFormat extends React.Component {
                     <Grid.Row columns={3}>
                         <Grid.Column width={6} />
                         <Grid.Column width={4}>
-                            <Button fluid positive content="Stitch" onClick={this.stitch} disabled={!this.state.valid} />
+                            <Button fluid positive content="Stitch" onClick={this.stitch} disabled={!this.state.valid} loading={this.state.conversion == STARTED} />
                         </Grid.Column>
                         <Grid.Column width={6} />
                     </Grid.Row>
                 </Grid>
                 <canvas id="workingCanvas" height="2048" width="4096" style={{ display: "none" }} />
                 <canvas id="stitchedCanvas" height="4096" width="4096" style={{ display: "none" }} />
-                <Segment basic textAlign="center"><canvas className="ui" id="previewCanvas" height="600" width="600" /></Segment>
+                <Segment basic textAlign="center">
+                    <canvas className="ui" id="previewCanvas" height="600" width="600" style={this.state.conversion == CONVERTED ? {} : { display: 'none' }} />
+                </Segment>
                 <Dimmer active={this.state.converting} inverted>
                     <Loader>Converting File..</Loader>
                 </Dimmer>
