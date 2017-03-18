@@ -1,6 +1,6 @@
 import React, { ReactDOM } from 'react'
 import { FormInput, NumberInput } from '../common'
-import { callRawApiWithJwt, debug } from '../../lib.js'
+import { callRawApiWithJwt, debug, getCreativeType } from '../../lib.js'
 import { hashHistory } from 'react-router'
 import { config } from '../../config'
 import { Grid, Card, Table, Checkbox, Button, Icon, Header, Modal, Form, Input, Select, Radio, Dimmer, Loader, Dropdown } from 'semantic-ui-react'
@@ -9,7 +9,6 @@ import { CubeMonoFormat } from './formats/cubeMono'
 import { EquiMonoFormat } from './formats/equiMono'
 import { CubeStereoFormat } from './formats/cubeStereo'
 import { EquiStereoFormat } from './formats/equiStereo'
-
 
 const creativeFormatOptions = Object.keys(config.creativeFormats).map(id => {
     return { key: id, text: config.creativeFormats[id], value: id };
@@ -70,10 +69,14 @@ export class AdModal extends React.Component {
         this.setState(Object.assign({}, this.state, { uploading: true }));
         const jwtToken = localStorage.getItem(config.jwt.tokenKey);
         var data = new FormData();
-        data.append("name", this.state.ad.name);
-        data.append("adgroup", this.state.ad.adgroup);
-        data.append("creative", this.state.ad.creative);
-        data.append("landingPage", this.state.ad.landingPage);
+        const ad = this.state.ad;
+
+        data.append("name", ad.name);
+        data.append("adgroup", ad.adgroup);
+        data.append("creative", ad.creative);
+        data.append("landingPage", ad.landingPage);
+        data.append("adType", getCreativeType(ad.creativeFormat, ad.vision));
+        
         fetch('/user/api/advertiser/ad/', {
             method: 'POST',
             body: data,
