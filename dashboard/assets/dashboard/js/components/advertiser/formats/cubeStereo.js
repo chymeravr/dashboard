@@ -221,10 +221,12 @@ export class CubeStereoFormat extends React.Component {
 
                         </Grid.Column>
                     </Grid.Row>
-                    <Grid.Row>
-                        <Grid.Column>
-                            <Button floated="right" positive content="Convert" onClick={this.convertToEquiWrapper} disabled={!this.state.valid} />
+                    <Grid.Row columns={3}>
+                        <Grid.Column width={6} />
+                        <Grid.Column width={4}>
+                            <Button fluid positive content="Convert" onClick={this.convertToEquiWrapper} disabled={!this.state.valid} />
                         </Grid.Column>
+                        <Grid.Column width={6} />
                     </Grid.Row>
                 </Grid>
                 <canvas id="workingCanvas" height="2048" width="4096" style={{ display: "none" }} />

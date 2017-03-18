@@ -8,6 +8,7 @@ import { ImgUploadColumn } from '../imageUpload'
 import { CubeMonoFormat } from './formats/cubeMono'
 import { EquiMonoFormat } from './formats/equiMono'
 import { CubeStereoFormat } from './formats/cubeStereo'
+import { EquiStereoFormat } from './formats/equiStereo'
 
 
 const creativeFormatOptions = Object.keys(config.creativeFormats).map(id => {
@@ -127,7 +128,10 @@ export class AdModal extends React.Component {
         var adInput;
         switch (ad.creativeFormat) {
             case '0':
-                adInput = <EquiMonoFormat onCreativeAddition={(img) => this.setCreative(img)} />
+                switch (ad.vision) {
+                    case '0': adInput = <EquiMonoFormat onCreativeAddition={(img) => this.setCreative(img)} />; break
+                    case '1': adInput = <EquiStereoFormat onCreativeAddition={(img) => this.setCreative(img)} />; break
+                }
                 break;
             case '1':
                 switch (ad.vision) {
@@ -138,7 +142,7 @@ export class AdModal extends React.Component {
         }
 
         return (
-            <Modal  open={this.state.open} onClose={this.closeModal} dimmer='blurring'>
+            <Modal open={this.state.open} onClose={this.closeModal} dimmer='blurring'>
                 <Modal.Header>{this.label}</Modal.Header>
                 <Modal.Content>
                     <Form>
