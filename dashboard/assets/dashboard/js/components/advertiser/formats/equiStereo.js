@@ -53,7 +53,7 @@ export class EquiStereoFormat extends React.Component {
                     {this.state.valid ? '' :
                         <Message negative>
                             <Message.Header>Invalid Image Dimensions</Message.Header>
-                            <p>Please upload a 4096x2048 Image</p>
+                            <p>Please upload a 4096x4096 Image</p>
                         </Message>}
                     <Table.Body>
                         <Table.Row textAlign='center'>

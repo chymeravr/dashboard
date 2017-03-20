@@ -71,16 +71,9 @@ export function dataURItoBlob(dataURI) {
 }
 
 export function getCreativeType(format, vision) {
-    switch (format) {
-        case '0':
-            switch (vision) {
-                case '0': return 0;
-                case '1': return 1;
-            }
-        case '1':
-            switch (vision) {
-                case '0': return 2;
-                case '1': return 3;
-            }
+    // Webapp will always send an equirectangular image.
+    switch (vision) {
+        case '0': return 0; // Mono
+        case '1': return 1; // Stereo
     }
 }
