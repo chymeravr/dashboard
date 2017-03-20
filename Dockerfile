@@ -63,6 +63,7 @@ RUN python manage.py collectstatic --noinput
 
 # nginx config
 COPY server/dashboard_nginx.conf /etc/nginx/sites-enabled
+COPY server/nginx.conf /etc/nginx/nginx.conf
 
 CMD service nginx restart; uwsgi --ini $BASE/server/dashboard.ini
 
