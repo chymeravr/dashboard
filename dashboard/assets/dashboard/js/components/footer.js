@@ -7,6 +7,7 @@ class Footer extends React.Component {
     render() {
         var style = {
             color: '#ffffff',
+            backgroundColor: '#003045'
         }
 
         return (
@@ -21,7 +22,7 @@ class Footer extends React.Component {
                                         <Image src='/static/img/Logo.png' size='small' inline={true}>
                                         </Image>
                                     </List.Item>
-                                    <List.Item disabled  href='/'>© Chymera VR, Inc.</List.Item>
+                                    <List.Item disabled href='/'>© Chymera VR, Inc.</List.Item>
                                 </List>
                             </Grid.Column>
                             <Grid.Column width={4} />
@@ -49,7 +50,7 @@ class Footer extends React.Component {
                                 </List>
                             </Grid.Column>
                         </Grid.Row>
-                        
+
                     </Grid>
                 </Segment>
             </footer>

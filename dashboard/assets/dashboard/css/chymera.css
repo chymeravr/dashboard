@@ -39,6 +39,26 @@
     color: #555 !important;
 }
 
+rect {
+    fill: none;
+    pointer-events: all;
+}
+
+circle {
+    fill: none;
+    stroke-width: 2.5px;
+}
+
+.slider{
+    width: 100%;
+	background: rgba(0,0,0,0);
+	height: 70vh;
+	position: absolute;
+	top:0px;
+    left:0px;
+	z-index: 6;
+}
+
 .greyGradientBackground {
   /* fallback */
   background-color: #fff;
