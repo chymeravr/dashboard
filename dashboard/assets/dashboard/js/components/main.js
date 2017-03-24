@@ -103,7 +103,9 @@ class AppView extends React.Component {
         } else {
             return (
                 <div className="Site">
-                    <Header showLogout={dashboard} currentPath={this.props.location.pathname} />
+                    <div>
+                        <Header showLogout={dashboard} currentPath={this.props.location.pathname} />
+                    </div>
                     <main className="Site-content ui center aligned grid" style={{ backgroundColor: '#2185d0' }}>
                         <Grid centered columns={16} style={{ margin: 0 }} verticalAlign='middle'>
                             <Grid.Row columns={16} verticalAlign='middle' style={{ height: '92vh' }}>

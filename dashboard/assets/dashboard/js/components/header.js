@@ -56,7 +56,7 @@ class Header extends React.Component {
         }
 
         return (
-            <Menu attached secondary inverted size='massive' floated='right' color='blue' style={{ padding: '20px 10px 20px 20px', margin: '0 0 14px 0' }} >
+            <Menu attached secondary inverted size='massive' floated='right' color='blue' style={{ padding: '20px 10px 20px 20px', margin: '0 0 14px 0' }} className="transparentHeader" >
                 <Menu.Item />
                 <Image src="/static/img/Logo.png" size="tiny" as={Link} to="/" style={{ marginBottom: -10 }} />
                 <Menu.Item />
@@ -66,7 +66,6 @@ class Header extends React.Component {
                 {logoutButton}
                 <Menu.Item />
             </Menu>
-
         );
     }
 }
