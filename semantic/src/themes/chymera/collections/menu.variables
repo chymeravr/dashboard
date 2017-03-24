@@ -11,7 +11,7 @@
 @horizontalMargin: 0em;
 @margin: @verticalMargin @horizontalMargin;
 @background: #FFFFFF;
-@fontFamily: @pageFont;
+@fontFamily: @headerFont;
 @itemBackground: none;
 @fontWeight: normal;
 @borderWidth: 1px;
@@ -29,7 +29,7 @@
   box-shadow @defaultDuration @defaultEasing,
   color @defaultDuration @defaultEasing
 ;
-@itemFontWeight: normal;
+@itemFontWeight: bold;
 @itemTextColor: @textColor;
 
 /* Divider */
@@ -169,7 +169,7 @@
 /* Active Item */
 @activeItemBackground: @transparentBlack;
 @activeItemTextColor: @selectedTextColor;
-@activeItemFontWeight: normal;
+@activeItemFontWeight: bold;
 @activeIconOpacity: 1;
 @activeItemBoxShadow: none;
 
@@ -286,7 +286,7 @@
 @tieredActiveMenuBackground: #FCFCFC;
 
 @tieredSubMenuTextTransform: normal;
-@tieredSubMenuFontWeight: normal;
+@tieredSubMenuFontWeight: bold;
 
 @tieredSubMenuColor: @lightTextColor;
 
@@ -346,7 +346,7 @@
 @textMenuItemSpacing: @relative7px;
 @textMenuMargin: @relativeMedium -(@textMenuItemSpacing);
 @textMenuItemColor: @mutedTextColor;
-@textMenuItemFontWeight: normal;
+@textMenuItemFontWeight: bold;
 @textMenuItemMargin: 0em 0em;
 @textMenuItemPadding: @relative5px @textMenuItemSpacing;
 @textMenuItemTransition: opacity @defaultDuration @defaultEasing;
@@ -355,7 +355,7 @@
 @textMenuSubMenuItemMargin: 0em;
 @textMenuSubMenuItemPadding: @relative7px 0em;
 
-@textMenuActiveItemFontWeight: normal;
+@textMenuActiveItemFontWeight: bold;
 @textMenuActiveItemColor: @selectedTextColor;
 
 @textMenuHeaderSize: @relativeSmall;

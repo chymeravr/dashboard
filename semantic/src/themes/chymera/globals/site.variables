@@ -6,11 +6,11 @@
        Fonts
 --------------------*/
 
-@fontName          : 'Lato';
+@fontName          : 'Roboto';
 @fontSmoothing     : antialiased;
 
-@headerFont        : @fontName, 'Helvetica Neue', Arial, Helvetica, sans-serif;
-@pageFont          : @fontName, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+@headerFont        : 'Open Sans', Bold, sans-serif;
+@pageFont          : @fontName, sans-serif;
 
 @googleFontName    : @fontName;
 @importGoogleFonts : true;
@@ -192,12 +192,12 @@
 
 /*---  Colors  ---*/
 @red              : #DB2828;
-@orange           : #F2711C;
+@orange           : #FDA700;
 @yellow           : #FBBD08;
 @olive            : #B5CC18;
 @green            : #21BA45;
 @teal             : #00B5AD;
-@blue             : #2185D0;
+@blue             : #008FCB;
 @violet           : #6435C9;
 @purple           : #A333C8;
 @pink             : #E03997;

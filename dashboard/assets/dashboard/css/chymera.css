@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web:400,600');
+
+
 .Site {
   display: flex;
   min-height: 100vh;
@@ -20,5 +24,38 @@
 
 .ui.celled.grid.row.column {
     padding: 0em;
+}
+
+.ui.menu  {
+    font-family: 'Titillium Web', sans-serif !important;
+    font-weight: bold !important
+}
+
+.ui.header  {
+    font-family: 'Titillium Web', sans-serif !important;
+}
+
+.ui.orange.button {
+    color: #555 !important;
+}
+
+.greyGradientBackground {
+  /* fallback */
+  background-color: #fff;
+
+  /* Safari 4-5, Chrome 1-9 */
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#f3f3f3));
+
+  /* Safari 5.1, Chrome 10+ */
+  background: -webkit-linear-gradient(top, #fff, #f3f3f3);
+
+  /* Firefox 3.6+ */
+  background: -moz-linear-gradient(top, #fff, #f3f3f3);
+
+  /* IE 10 */
+  background: -ms-linear-gradient(top, #fff, #f3f3f3);
+
+  /* Opera 11.10+ */
+  background: -o-linear-gradient(top, #fff, #f3f3f3);
 }
 
