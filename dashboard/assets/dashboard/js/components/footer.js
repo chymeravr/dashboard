@@ -7,15 +7,27 @@ class Footer extends React.Component {
     render() {
         var style = {
             color: '#ffffff',
-            backgroundColor: '#003045'
+            backgroundColor: '#003045',
+            backgroundImage: 'url(static/img/footer-arts-dark.png)',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'bottom',
+            minHeight: '40vh',
+            paddingTop: '10vh',
+            fontSize: '20px',
+        }
+
+        var headingStyle = {
+            color: '#008fcb',
+            fontSize: '30px',
+            fontFamily: 'Roboto'
         }
 
         return (
-            <footer style={style}>
-                <Segment inverted attached padded>
+            <footer>
+                <Segment inverted attached padded style={style}>
                     <Grid columns={16}>
                         <Grid.Row>
-                            <Grid.Column width={1} />
+                            <Grid.Column width={2} />
                             <Grid.Column width={6} verticalAlign='bottom'>
                                 <List inverted>
                                     <List.Item>
@@ -25,11 +37,11 @@ class Footer extends React.Component {
                                     <List.Item disabled href='/'>© Chymera VR, Inc.</List.Item>
                                 </List>
                             </Grid.Column>
-                            <Grid.Column width={4} />
+                            <Grid.Column width={2} />
                             <Grid.Column width={2}>
                                 <List link inverted>
-                                    <List.Item><Header>Links</Header></List.Item>
-                                    <List.Item as='a'>Contact Us</List.Item>
+                                    <List.Item><Header style={headingStyle}>Links</Header></List.Item>
+                                    <List.Item as='a' href='/#/contact'>Contact Us</List.Item>
                                     <List.Item as='a'>Blog</List.Item>
                                     <List.Item as='a'>Careers</List.Item>
                                     <List.Item as='a'>Press</List.Item>
@@ -37,7 +49,7 @@ class Footer extends React.Component {
                             </Grid.Column>
                             <Grid.Column width={2}>
                                 <List link inverted>
-                                    <List.Item><Header>Socials</Header></List.Item>
+                                    <List.Item><Header style={headingStyle}>Socials</Header></List.Item>
                                     <List.Item as='a'>
                                         <Icon name='facebook' /> Facebook
                                     </List.Item>
@@ -49,6 +61,7 @@ class Footer extends React.Component {
                                     </List.Item>
                                 </List>
                             </Grid.Column>
+                            <Grid.Column width={2} />
                         </Grid.Row>
 
                     </Grid>

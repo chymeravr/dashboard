@@ -26,95 +26,95 @@ class HomeView extends React.Component {
         );
     }
 
-    componentDidMount() {
+    // componentDidMount() {
 
-        var width = screen.width,
-            height = screen.height,
-            τ = 2 * Math.PI,
-            gravity = .05;
+    //     var width = screen.width,
+    //         height = screen.height,
+    //         τ = 2 * Math.PI,
+    //         gravity = .05;
 
 
 
-        console.info(width, height);
-        const nodes = [{ x: 0, y: 0 }]
-        for (var _x = 0; _x < width + 75; _x += 75) {
-            for (var _y = 0; _y < height + 75; _y += 75) {
-                nodes.push({ x: _x, y: _y, cx: _x, cy: _y });
-            }
-        }
+    //     console.info(width, height);
+    //     const nodes = [{ x: 0, y: 0 }]
+    //     for (var _x = 0; _x < width + 75; _x += 175) {
+    //         for (var _y = 0; _y < height + 75; _y += 175) {
+    //             nodes.push({ x: _x, y: _y, cx: _x, cy: _y });
+    //         }
+    //     }
 
-        console.info(nodes);
-        var force = d3.layout.force()
-            .size([width, height])
-            .nodes(nodes.slice())
-            .gravity(0)
-            .charge(function (d, i) { return i ? -30 : -3000; })
-            .on("tick", ticked)
-            .start();
+    //     console.info(nodes);
+    //     var force = d3.layout.force()
+    //         .size([width, height])
+    //         .nodes(nodes.slice())
+    //         .gravity(0)
+    //         .charge(function (d, i) { return i ? -30 : -3000; })
+    //         .on("tick", ticked)
+    //         .start();
 
-        var voronoi = d3.geom.voronoi()
-            .x(function (d) { return d.x; })
-            .y(function (d) { return d.y; });
+    //     var voronoi = d3.geom.voronoi()
+    //         .x(function (d) { return d.x; })
+    //         .y(function (d) { return d.y; });
 
-        var root = nodes.shift();
+    //     var root = nodes.shift();
 
-        root.fixed = true;
+    //     root.fixed = true;
 
-        var links = voronoi.links(nodes);
+    //     var links = voronoi.links(nodes);
 
-        console.info(links)
-        var canvas = d3.select("#animatedBackground").append("canvas")
-            .attr("width", width)
-            .attr("height", height)
-            .attr("id", "backgroundMesh")
-            .on("ontouchstart" in document ? "touchmove" : "mousemove", moved);
+    //     console.info(links)
+    //     var canvas = d3.select("#animatedBackground").append("canvas")
+    //         .attr("width", width)
+    //         .attr("height", height)
+    //         .attr("id", "backgroundMesh")
+    //         .on("ontouchstart" in document ? "touchmove" : "mousemove", moved);
 
-        var context = canvas.node().getContext("2d");
+    //     var context = canvas.node().getContext("2d");
 
-        function moved() {
-            var p1 = d3.mouse(this);
-            root.px = p1[0];
-            root.py = p1[1];
-            force.resume();
-        }
+    //     function moved() {
+    //         var p1 = d3.mouse(this);
+    //         root.px = p1[0];
+    //         root.py = p1[1];
+    //         force.resume();
+    //     }
 
-        function ticked() {
-            force.resume();
+    //     function ticked() {
+    //         force.resume();
 
-            for (var i = 0, n = nodes.length; i < n; ++i) {
-                var node = nodes[i];
-                node.y += (node.cy - node.y) * gravity;
-                node.x += (node.cx - node.x) * gravity;
-            }
+    //         for (var i = 0, n = nodes.length; i < n; ++i) {
+    //             var node = nodes[i];
+    //             node.y += (node.cy - node.y) * gravity;
+    //             node.x += (node.cx - node.x) * gravity;
+    //         }
 
-            context.clearRect(0, 0, width, height);
+    //         context.clearRect(0, 0, width, height);
 
-            context.beginPath();
-            for (var i = 0, n = links.length; i < n; ++i) {
-                var link = links[i];
-                context.moveTo(link.source.x, link.source.y);
-                context.lineTo(link.target.x, link.target.y);
-            }
-            var lineColor = "rgba(255, 255, 255, 0.1)";
-            var dotColor = "rgba(255, 255, 255, 0.05)";
+    //         context.beginPath();
+    //         for (var i = 0, n = links.length; i < n; ++i) {
+    //             var link = links[i];
+    //             context.moveTo(link.source.x, link.source.y);
+    //             context.lineTo(link.target.x, link.target.y);
+    //         }
+    //         var lineColor = "rgba(255, 255, 255, 0.1)";
+    //         var dotColor = "rgba(255, 255, 255, 0.05)";
 
-            context.lineWidth = 2;
-            context.strokeStyle = lineColor;
-            context.stroke();
+    //         context.lineWidth = 2;
+    //         context.strokeStyle = lineColor;
+    //         context.stroke();
 
-            context.beginPath();
-            for (var i = 0, n = nodes.length; i < n; ++i) {
-                var node = nodes[i];
-                context.moveTo(node.x, node.y);
-                context.arc(node.x, node.y, 3, 0, τ);
-            }
-            context.lineWidth = 1;
-            context.strokeStyle = dotColor;
-            context.stroke();
-            context.fillStyle = dotColor;
-            context.fill();
-        }
-    }
+    //         context.beginPath();
+    //         for (var i = 0, n = nodes.length; i < n; ++i) {
+    //             var node = nodes[i];
+    //             context.moveTo(node.x, node.y);
+    //             context.arc(node.x, node.y, 3, 0, τ);
+    //         }
+    //         context.lineWidth = 1;
+    //         context.strokeStyle = dotColor;
+    //         context.stroke();
+    //         context.fillStyle = dotColor;
+    //         context.fill();
+    //     }
+    // }
 
     handleChange(key) {
         return function (e) {
@@ -180,7 +180,7 @@ class HomeView extends React.Component {
                             </Grid>
                         </Grid.Column>
                     </Grid.Row>
-                    <Grid.Row style={{ backgroundColor: 'rgba(0, 0, 0, 0)'   }}>
+                    <Grid.Row style={{ backgroundColor: 'rgba(0, 0, 0, 0)' }}>
                         <Image src="/static/img/arrow.png" />
                     </Grid.Row>
                     <Grid.Row style={{ backgroundColor: '#0d95ce' }}>

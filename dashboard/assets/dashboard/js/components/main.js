@@ -9,6 +9,7 @@ import HomeView from './home'
 import Header from './header'
 import Footer from './footer'
 import { ProfileView } from './profile'
+import { ContactView } from './contact'
 import { LoginForm } from './login'
 import { AdvertiserView } from './advertiser/advertiser'
 import { CampaignDetailView } from './advertiser/campaignDetail'
@@ -131,6 +132,7 @@ render((
     <Router history={hashHistory} onUpdate={logPageView} >
         <Route path="/" component={AppView}>
             <IndexRoute name="home" component={HomeView} />
+            <Route name="contact" path="/contact" component={ContactView} />
             <Route name="login" path="/login" component={LoginForm} />
             <Route name="profile" path="/profile/" component={ProfileView} />} />
             <Route name="advertiser" path="/advertiser/" component={AdvertiserView} />
