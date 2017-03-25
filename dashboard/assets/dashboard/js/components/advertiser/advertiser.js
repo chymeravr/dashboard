@@ -52,7 +52,7 @@ export class AdvertiserView extends React.Component {
                 this.setState(Object.assign({}, this.state, { campaigns: response }))
             },
             (error) => {
-                alert(error);
+                // alert(error);
                 hashHistory.push('/login/')
             },
         );

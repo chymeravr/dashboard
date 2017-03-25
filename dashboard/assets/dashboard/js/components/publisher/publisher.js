@@ -38,7 +38,7 @@ export class PublisherView extends React.Component {
                 document.title = "Apps"
             },
             (error) => {
-                alert(error);
+                // alert(error);
                 hashHistory.push('/login/')
             },
         );
@@ -51,7 +51,7 @@ export class PublisherView extends React.Component {
                 this.setState(Object.assign({}, this.state, { testDevices: response }));
             },
             (error) => {
-                alert(error);
+                // alert(error);
                 hashHistory.push('/login/')
             },
         );
