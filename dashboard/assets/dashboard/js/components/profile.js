@@ -73,7 +73,7 @@ export class ProfileView extends React.Component {
             var body = <div key="notloaded"></div>
         }
         return (
-            <main className="Site-content ui center aligned grid" style={{ backgroundColor: '#2185d0', height: '100vh' }}>
+            <main className="Site-content ui center aligned grid" style={{ backgroundColor: '#008FCB', height: '100vh' }}>
                 {body}
             </main>
         );

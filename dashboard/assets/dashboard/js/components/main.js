@@ -95,7 +95,9 @@ class AppView extends React.Component {
         if (!this.state.adblock || currentRoute == "home") {
             return (
                 <div className="Site">
-                    <Header showLogout={dashboard} currentPath={this.props.location.pathname} />
+                    <div>
+                        <Header showLogout={dashboard} currentPath={this.props.location.pathname} />
+                    </div>
                     {this.props.children}
                     <Footer />
                 </div>

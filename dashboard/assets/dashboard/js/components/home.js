@@ -33,7 +33,7 @@ class HomeView extends React.Component {
             τ = 2 * Math.PI,
             gravity = .05;
 
- 
+
 
         console.info(width, height);
         const nodes = [{ x: 0, y: 0 }]
@@ -180,7 +180,7 @@ class HomeView extends React.Component {
                             </Grid>
                         </Grid.Column>
                     </Grid.Row>
-                    <Grid.Row style={{ backgroundColor: '#008FCB' }}>
+                    <Grid.Row style={{ backgroundColor: 'rgba(0, 0, 0, 0)'   }}>
                         <Image src="/static/img/arrow.png" />
                     </Grid.Row>
                     <Grid.Row style={{ backgroundColor: '#0d95ce' }}>
