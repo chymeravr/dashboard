@@ -66,7 +66,7 @@ class HomeView extends React.Component {
         return (
             <main className="Site-content ui center aligned grid" style={{ backgroundColor: '#008FCB' }}>
                 <Grid stackable centered columns={16} style={{ margin: 0 }} verticalAlign='middle'>
-                    <Grid.Row columns={16} verticalAlign='middle' style={{ height: '70vh' }} id="animatedBackground">
+                    <Grid.Row columns={16} verticalAlign='middle' style={{ height: '100vh' }} id="animatedBackground">
                         <Grid.Column width={10} style={{ position: 'absolute', zIndex: 2 }}>
                             <Grid centered verticalAlign='middle'>
                                 <Grid.Row>

@@ -24,6 +24,7 @@ import { Grid, Container, Message } from 'semantic-ui-react'
 ReactGA.initialize('UA-89829978-1');
 
 function logPageView() {
+    window.scrollTo(0, 0)
     ReactGA.set({ page: window.location.hash });
     ReactGA.pageview(window.location.hash);
 }
@@ -109,7 +110,7 @@ class AppView extends React.Component {
                     <div>
                         <Header showLogout={dashboard} currentPath={this.props.location.pathname} />
                     </div>
-                    <main className="Site-content ui center aligned grid" style={{ backgroundColor: '#2185d0' }}>
+                    <main className="Site-content ui center aligned grid" style={{ backgroundColor: '#008FCB' }}>
                         <Grid centered columns={16} style={{ margin: 0 }} verticalAlign='middle'>
                             <Grid.Row columns={16} verticalAlign='middle' style={{ height: '92vh' }}>
                                 <Grid.Column width={10}>

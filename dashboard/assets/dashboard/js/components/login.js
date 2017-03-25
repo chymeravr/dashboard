@@ -66,7 +66,7 @@ export class LoginForm extends React.Component {
         ) : <div></div>
 
         return (
-            <main className="Site-content ui center aligned grid" style={{ backgroundColor: '#2185d0' }}>
+            <main className="Site-content ui center aligned grid" style={{ backgroundColor: '#008FCB' }}>
 
                 <Grid centered stretched verticalAlign='middle' columns={4}>
                     <Grid.Row verticalAlign='middle'>
