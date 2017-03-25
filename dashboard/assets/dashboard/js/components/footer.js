@@ -25,7 +25,7 @@ class Footer extends React.Component {
         return (
             <footer>
                 <Segment inverted attached padded style={style}>
-                    <Grid columns={16}>
+                    <Grid stackable     columns={16}>
                         <Grid.Row>
                             <Grid.Column width={2} />
                             <Grid.Column width={6} verticalAlign='bottom'>
