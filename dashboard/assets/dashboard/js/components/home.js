@@ -26,96 +26,6 @@ class HomeView extends React.Component {
         );
     }
 
-    // componentDidMount() {
-
-    //     var width = screen.width,
-    //         height = screen.height,
-    //         τ = 2 * Math.PI,
-    //         gravity = .05;
-
-
-
-    //     console.info(width, height);
-    //     const nodes = [{ x: 0, y: 0 }]
-    //     for (var _x = 0; _x < width + 75; _x += 175) {
-    //         for (var _y = 0; _y < height + 75; _y += 175) {
-    //             nodes.push({ x: _x, y: _y, cx: _x, cy: _y });
-    //         }
-    //     }
-
-    //     console.info(nodes);
-    //     var force = d3.layout.force()
-    //         .size([width, height])
-    //         .nodes(nodes.slice())
-    //         .gravity(0)
-    //         .charge(function (d, i) { return i ? -30 : -3000; })
-    //         .on("tick", ticked)
-    //         .start();
-
-    //     var voronoi = d3.geom.voronoi()
-    //         .x(function (d) { return d.x; })
-    //         .y(function (d) { return d.y; });
-
-    //     var root = nodes.shift();
-
-    //     root.fixed = true;
-
-    //     var links = voronoi.links(nodes);
-
-    //     console.info(links)
-    //     var canvas = d3.select("#animatedBackground").append("canvas")
-    //         .attr("width", width)
-    //         .attr("height", height)
-    //         .attr("id", "backgroundMesh")
-    //         .on("ontouchstart" in document ? "touchmove" : "mousemove", moved);
-
-    //     var context = canvas.node().getContext("2d");
-
-    //     function moved() {
-    //         var p1 = d3.mouse(this);
-    //         root.px = p1[0];
-    //         root.py = p1[1];
-    //         force.resume();
-    //     }
-
-    //     function ticked() {
-    //         force.resume();
-
-    //         for (var i = 0, n = nodes.length; i < n; ++i) {
-    //             var node = nodes[i];
-    //             node.y += (node.cy - node.y) * gravity;
-    //             node.x += (node.cx - node.x) * gravity;
-    //         }
-
-    //         context.clearRect(0, 0, width, height);
-
-    //         context.beginPath();
-    //         for (var i = 0, n = links.length; i < n; ++i) {
-    //             var link = links[i];
-    //             context.moveTo(link.source.x, link.source.y);
-    //             context.lineTo(link.target.x, link.target.y);
-    //         }
-    //         var lineColor = "rgba(255, 255, 255, 0.1)";
-    //         var dotColor = "rgba(255, 255, 255, 0.05)";
-
-    //         context.lineWidth = 2;
-    //         context.strokeStyle = lineColor;
-    //         context.stroke();
-
-    //         context.beginPath();
-    //         for (var i = 0, n = nodes.length; i < n; ++i) {
-    //             var node = nodes[i];
-    //             context.moveTo(node.x, node.y);
-    //             context.arc(node.x, node.y, 3, 0, τ);
-    //         }
-    //         context.lineWidth = 1;
-    //         context.strokeStyle = dotColor;
-    //         context.stroke();
-    //         context.fillStyle = dotColor;
-    //         context.fill();
-    //     }
-    // }
-
     handleChange(key) {
         return function (e) {
             var state = {};
@@ -154,9 +64,9 @@ class HomeView extends React.Component {
 
         var submitButton = <Button color='orange' onClick={this.registerUser}>Sign Up</Button>;
         return (
-            <main className="Site-content ui center aligned grid" style={{ backgroundColor: 'rgba(0, 0, 0, 0)' }}>
+            <main className="Site-content ui center aligned grid" style={{ backgroundColor: '#008FCB' }}>
                 <Grid stackable centered columns={16} style={{ margin: 0 }} verticalAlign='middle'>
-                    <Grid.Row columns={16} verticalAlign='middle' style={{ height: '100vh' }} id="animatedBackground">
+                    <Grid.Row columns={16} verticalAlign='middle' style={{ height: '70vh' }} id="animatedBackground">
                         <Grid.Column width={10} style={{ position: 'absolute', zIndex: 2 }}>
                             <Grid centered verticalAlign='middle'>
                                 <Grid.Row>

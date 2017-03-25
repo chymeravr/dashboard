@@ -47,21 +47,17 @@ class Header extends React.Component {
 
         const currentPath = this.state.currentPath
         var activeItem = '';
-        var transparentHeader = true;
         if (currentPath.match('publisher')) {
             activeItem = 'publisher';
-            transparentHeader = false;
         } else if (currentPath.match('advertiser')) {
             activeItem = 'advertiser';
-            transparentHeader = false;
         } else if (currentPath.match('profile')) {
             activeItem = 'profile';
         }
 
 
         return (
-            <Menu attached secondary inverted size='massive' floated='right' color='blue' style={{ padding: '20px 10px 20px 20px', margin: '0 0 14px 0' }}
-                className={transparentHeader ? "transparentHeader" : ''}>
+            <Menu attached secondary inverted size='massive' floated='right' color='blue' style={{ padding: '20px 10px 20px 20px', margin: '0 0 14px 0' }}>
                 <Menu.Item />
                 <Image src="/static/img/Logo.png" size="tiny" as={Link} to="/" style={{ marginBottom: -10 }} />
                 <Menu.Item />

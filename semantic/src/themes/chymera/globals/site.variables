@@ -9,7 +9,7 @@
 @fontName          : 'Roboto';
 @fontSmoothing     : antialiased;
 
-@headerFont        : 'Open Sans', Bold, sans-serif;
+@headerFont        : 'Roboto', Bold, sans-serif;
 @pageFont          : @fontName, sans-serif;
 
 @googleFontName    : @fontName;
