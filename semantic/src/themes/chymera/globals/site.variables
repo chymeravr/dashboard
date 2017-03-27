@@ -9,7 +9,7 @@
 @fontName          : 'Roboto';
 @fontSmoothing     : antialiased;
 
-@headerFont        : 'Roboto', Bold, sans-serif;
+@headerFont        : 'Roboto', sans-serif;
 @pageFont          : @fontName, sans-serif;
 
 @googleFontName    : @fontName;
@@ -57,7 +57,7 @@
   Page Heading
 ---------------*/
 
-@headerFontWeight : bold;
+@headerFontWeight : normal;
 @headerLineHeight : unit((18 / 14), em);
 
 @h1 : unit((28 / 14), rem);

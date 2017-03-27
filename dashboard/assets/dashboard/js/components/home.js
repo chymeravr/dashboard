@@ -2,7 +2,7 @@ var React = require('react');
 var Link = require('react-router').Link
 import { debug, callApiWithJwt } from '../lib.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
-import { Grid, Form, Button, Header, Input, Icon, Image, Message, Divider, Segment } from 'semantic-ui-react'
+import { Grid, Form, Button, Header, Input, Icon, Image, Message, Divider, Segment, Container } from 'semantic-ui-react'
 // import '../../css/animation.css'
 
 class HomeView extends React.Component {
@@ -52,38 +52,66 @@ class HomeView extends React.Component {
     render() {
         debug('home', this.state);
         var style = {
-            color: '#FFFFFF',
-            fontSize: '60px',
-            textAlign: 'center',
+
         }
 
         var imgCaptionStyle = {
-            textAlign: 'center',
-            color: '#444'
+
         }
 
-        var submitButton = <Button color='orange' onClick={this.registerUser}>Sign Up</Button>;
+        const getClientLink = (header, content, link, className) => {
+            return (
+                <Grid.Column width={8} verticalAlign="center">
+                    <div className={className}>
+                        <Header as='h2' style={{ fontWeight: 'bold', color: '#008fcb', }}>{header}</Header>
+                        <p>{content}</p>
+                        <Button content='READ MORE' color="orange" />
+                    </div>
+                </Grid.Column>
+            )
+        }
+
+        const getImageWithCaption = (image, caption) => {
+            return (
+                <Grid.Column verticalAlign='bottom' width={3}>
+                    <Image centered src={'static/img/' + image} />
+                    <p className="boldText caption">{caption}</p>
+                </Grid.Column>
+            )
+        }
+
+        const submitButton = <Button onClick={this.registerUser} className="button">Sign Up</Button>;
+
+        const topEmailInput =
+            <Input fluid error={this.state.emailExists && this.state.registered}
+                label={submitButton} placeholder='Email Address' labelPosition='right'
+                onChange={this.handleChange('email').bind(this)} value={this.state.email} />
+
+        const bottomEmailInput =
+            <Input className='orangeInput' fluid error={this.state.emailExists && this.state.registered}
+                label={submitButton} placeholder='Email Address' labelPosition='right'
+                onChange={this.handleChange('email').bind(this)} value={this.state.email} />
+
         return (
-            <main className="Site-content ui center aligned grid" style={{ backgroundColor: '#008FCB' }}>
-                <Grid stackable centered  verticalAlign='middle'>
-                    <Grid.Row columns={16} verticalAlign='middle' style={{ height: '100vh' }} id="animatedBackground">
-                        <Grid.Column width={10} style={{ position: 'absolute', zIndex: 2 }}>
+            <main className="Site-content" style={{ backgroundColor: '#008FCB', marginTop: '-100px', }}>
+                <Grid stackable centered verticalAlign='middle'>
+                    <Grid.Row columns={1} verticalAlign='middle' style={{ height: '100vh' }}>
+                        <Grid.Column width={10}>
                             <Grid centered verticalAlign='middle'>
                                 <Grid.Row>
                                     <Grid.Column width={12}>
-                                        <Header as='h1' style={style}>Cross Promotion Network For <strong>VR</strong></Header>
-                                        <p style={Object.assign({}, style, { fontSize: '20px', fontWeight: 'normal !important' })}>
+                                        <Header as='h1' className='centerText whiteText'>Cross Promotion Network For <strong>VR</strong></Header>
+                                        <p className='centerText whiteText'>
                                             We are the world's smallest ad network
                                         </p>
                                     </Grid.Column>
                                 </Grid.Row>
                                 <Grid.Row>
-                                    <Grid.Column width={8} >
+                                    <Grid.Column width={10} >
                                         <Form>
                                             {this.state.emailExists ? <Message negative><p>Email invalid or already registered!</p></Message> : ''}
                                             {this.state.registered ? <Message positive><p>Email registered!</p></Message> : ''}
-                                            <Input fluid error={this.state.emailExists && this.state.registered}
-                                                action={submitButton} placeholder='Email Address' onChange={this.handleChange('email').bind(this)} value={this.state.email} />
+                                            {topEmailInput}
                                         </Form>
                                     </Grid.Column>
                                 </Grid.Row>
@@ -93,48 +121,33 @@ class HomeView extends React.Component {
                     <Grid.Row style={{ backgroundColor: 'rgba(0, 0, 0, 0)' }}>
                         <Image src="/static/img/arrow.png" />
                     </Grid.Row>
-                    <Grid.Row style={{ backgroundColor: '#0d95ce' }}>
-                        <Header as='h6' style={Object.assign({}, style, { fontSize: '20px' })}>NEXT EVENT <strong>VR</strong></Header>
-                    </Grid.Row>
-                    <Grid.Row style={{ backgroundColor: '#FFF', minHeight: '200px' }}></Grid.Row>
-                    <Grid.Row style={{ backgroundColor: '#FFF', minHeight: '200px' }} columns={5}>
-                        <Grid.Column verticalAlign='bottom' width={3}>
-                            <Image centered src="/static/img/integrate-chymera.png" />
-                            <Header as='h1' style={imgCaptionStyle}>INTEGRATE CHYMERA ADS</Header>
+                    <Grid.Row style={{ backgroundColor: '#0d95ce', }}>
+                        <Grid.Column>
+                            <p className='centerText whiteText'>NEXT EVENT</p>
                         </Grid.Column>
+                    </Grid.Row>
+
+
+                    <Grid.Row style={{ backgroundColor: '#FFF', minHeight: '200px', paddingTop: '100px', paddingBottom: '100px' }} columns={5}>
+                        {getImageWithCaption("integrate-chymera.png", 'INTEGRATE CHYMERA ADS')}
                         <Grid.Column only='computer' width={2}><Image centered src="/static/img/arrow-right.png" /></Grid.Column>
-                        <Grid.Column verticalAlign='bottom' width={3}>
-                            <Image centered src="/static/img/earn-credits.png" />
-                            <Header as='h1' style={imgCaptionStyle}>EARN CREDITS</Header>
-                        </Grid.Column>
+                        {getImageWithCaption("earn-credits.png", 'EARN CREDITS')}
                         <Grid.Column only='computer' width={2}><Image centered src="/static/img/arrow-right.png" /></Grid.Column>
-                        <Grid.Column verticalAlign='bottom' width={3}>
-                            <Image centered src="/static/img/spend-credits.png" />
-                            <Header as='h1' style={imgCaptionStyle}>SPEND CREDITS TO PROMOTE YOUR APP</Header>
-                        </Grid.Column>
+                        {getImageWithCaption("spend-credits.png", 'SPEND CREDITS TO PROMOTE YOUR APP')}
                     </Grid.Row>
-                    <Grid.Row style={{ backgroundColor: '#FFF', minHeight: '150px' }}></Grid.Row>
-                    <Grid.Row columns={2} style={{ backgroundColor: '#f9f9f9', minHeight: '200px', margin: '0px', padding: '0px' }}>
-                        <Grid.Column width={8} verticalAlign="center" style={{ backgroundImage: 'url(static/img/advertiser.png)', backgroundSize: 'cover', height: '600px', paddingTop: '50px' }}>
-                            <Header as='h1' style={{ fontSize: '40px', fontWeight: 'bold', color: '#008fcb', paddingTop: '100px' }}>ADVERTISER</Header>
-                            <Header as='h1' style={{ fontSize: '30px', fontWeight: 'normal', color: '#444', maxWidth: '500px', margin: '0px auto', paddingBottom: '50px' }}>
-                                Advertise with us and make the most of your money. Advertise with us and make the most of your money.
-                                </Header>
-                            <Button content='READ MORE' color="orange" />
-                        </Grid.Column>
-                        <Grid.Column width={8} verticalAlign="center" style={{ backgroundImage: 'url(static/img/publisher.png)', backgroundSize: 'cover', height: '600px', paddingTop: '50px' }}>
-                            <Header as='h1' style={{ fontSize: '40px', fontWeight: 'bold', color: '#008fcb', paddingTop: '100px' }}>PUBLISHER</Header>
-                            <Header as='h1' style={{ fontSize: '30px', fontWeight: 'normal', color: '#444', maxWidth: '500px', margin: '0px auto', paddingBottom: '50px' }}>
-                                Monetise with us and make the most money. Monetise with us and make the most money.
-                                </Header>
-                            <Button content='READ MORE' color="orange" />
-                        </Grid.Column>
+
+
+                    <Grid.Row columns={2} className='advPubSection' verticalAlign='middle'>
+                        {getClientLink('ADVERTISER', 'Advertise with us and make the most of your money. Advertise with us and make the most of your money.', '', 'advertiserSummary')}
+                        {getClientLink('PUBLISHER', 'Monetise with us and make the most money. Monetise with us and make the most money. Get rich', '', 'publisherSummary')}
                     </Grid.Row>
-                    <Grid.Row columns={2} style={{ minHeight: '200px', margin: '0px', padding: '0px' }} className="greyGradientBackground">
+
+
+                    <Grid.Row columns={2} style={{ minHeight: '200px', margin: '0px', }} className="greyGradientBackground">
                         <Grid stackable>
                             <Grid.Row columns={1}>
                                 <Grid.Column>
-                                    <Header as='h1' style={{ fontSize: '40px', fontWeight: 'bold', color: '#4a4a4a', paddingTop: '100px' }}>ALL FORMAT SUPPORT</Header>
+                                    <Header as='h2'>ALL FORMAT SUPPORT</Header>
                                     <Image centered src="/static/img/lines-heading.png" />
                                 </Grid.Column>
                             </Grid.Row>
@@ -143,18 +156,20 @@ class HomeView extends React.Component {
                                 </Grid.Column>
                                 <Grid.Column verticalAlign='bottom' width={5}>
                                     <Image centered src="/static/img/360-image-video.png" />
-                                    <Header as='h1' style={{ color: "#1196ce", textAlign: 'center' }}> 360 IMAGE/ VIDEO</Header>
-                                    <Header as='h3' style={{ color: '#353535', fontWeight: 'normal' }}>Most immersive formats available at your fingertips</Header>
+                                    <Header as='h3'> 360 IMAGE/ VIDEO</Header>
+                                    <p>Most immersive formats available at your fingertips</p>
                                 </Grid.Column>
                                 <Grid.Column verticalAlign='bottom' width={5}>
                                     <Image centered src="/static/img/2d-texture.png" />
-                                    <Header as='h1' style={{ color: "#1196ce", textAlign: 'center' }}>2D TEXTURES</Header>
-                                    <Header as='h3' style={{ color: '#353535', fontWeight: 'normal' }}>Most immersive in game formats available at your fingertips</Header>
+                                    <Header as='h3'>2D TEXTURES</Header>
+                                    <p>Most immersive in game formats available at your fingertips</p>
                                 </Grid.Column>
                                 <Grid.Column width={3}></Grid.Column>
                             </Grid.Row>
                             <Grid.Row>
-                                <Image style={{ padding: '100px' }} centered src="/static/img/all-platforms.png" />
+                                <Grid.Column>
+                                    <Image size='medium' style={{ paddingBottom: '10vh' }} centered src="/static/img/all-platforms.png" />
+                                </Grid.Column>
                             </Grid.Row>
                         </Grid>
                     </Grid.Row>
@@ -163,24 +178,24 @@ class HomeView extends React.Component {
                             <Grid centered verticalAlign='middle'>
                                 <Grid.Row>
                                     <Grid.Column width={12}>
-                                        <p style={Object.assign({}, style, { fontSize: '20px', fontWeight: 'normal', color: '#505050' })}>
+                                        <Header as='h3' className="centerText">
                                             We are the world's smallest ad network
-                                        </p>
+                                        </Header>
                                     </Grid.Column>
                                 </Grid.Row>
                                 <Grid.Row>
-                                    <Grid.Column width={8} >
+                                    <Grid.Column width={10} >
                                         <Form>
                                             {this.state.emailExists ? <Message negative><p>Email invalid or already registered!</p></Message> : ''}
                                             {this.state.registered ? <Message positive><p>Email registered!</p></Message> : ''}
-                                            <Input fluid error={this.state.emailExists && this.state.registered} action={submitButton} placeholder='Email Address' onChange={this.handleChange('email').bind(this)} value={this.state.email} />
+                                            {bottomEmailInput}
                                         </Form>
                                     </Grid.Column>
                                 </Grid.Row>
                             </Grid>
                         </Grid.Column>
                     </Grid.Row>
-                </Grid>
+                </Grid >
             </main >
         );
     }
