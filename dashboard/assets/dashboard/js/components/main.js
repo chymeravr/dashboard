@@ -111,16 +111,18 @@ class AppView extends React.Component {
                         <Header showLogout={dashboard} currentPath={this.props.location.pathname} />
                     </div>
                     <main className="Site-content ui center aligned grid" style={{ backgroundColor: '#008FCB' }}>
-                        <Grid centered columns={16} style={{ margin: 0 }} verticalAlign='middle'>
-                            <Grid.Row columns={16} verticalAlign='middle' style={{ height: '92vh' }}>
-                                <Grid.Column width={10}>
-                                    <Message negative>
-                                        <Message.Header>Disable AdBlock</Message.Header>
-                                        <p>Please turn off AdBlock to navigate the site. Adblock falsely marks our API requests as Ads</p>
-                                    </Message>
-                                </Grid.Column>
-                            </Grid.Row>
-                        </Grid>
+                        <Container>
+                            <Grid centered columns={16} style={{ margin: 0 }} verticalAlign='middle'>
+                                <Grid.Row columns={16} verticalAlign='middle' style={{ height: '92vh' }}>
+                                    <Grid.Column width={10}>
+                                        <Message negative>
+                                            <Message.Header>Disable AdBlock</Message.Header>
+                                            <p>Please turn off AdBlock to navigate the site. Adblock falsely marks our API requests as Ads</p>
+                                        </Message>
+                                    </Grid.Column>
+                                </Grid.Row>
+                            </Grid>
+                        </Container>
                     </main >
                     <Footer />
                 </div>

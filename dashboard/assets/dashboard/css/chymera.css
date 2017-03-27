@@ -35,6 +35,16 @@
     color: #555 !important;
 }
 
+@media only screen and (max-width: 767px) {
+    .ui.grid {
+        margin-right: 0px !important;
+    }
+
+    ui.grid .ui.stackable.grid {
+        margin-right: 0px !important;
+    }
+}
+
 .greyGradientBackground {
   /* fallback */
   background-color: #fff;

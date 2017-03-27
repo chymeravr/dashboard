@@ -65,7 +65,7 @@ class HomeView extends React.Component {
         var submitButton = <Button color='orange' onClick={this.registerUser}>Sign Up</Button>;
         return (
             <main className="Site-content ui center aligned grid" style={{ backgroundColor: '#008FCB' }}>
-                <Grid stackable centered columns={16} style={{ margin: 0 }} verticalAlign='middle'>
+                <Grid stackable centered  verticalAlign='middle'>
                     <Grid.Row columns={16} verticalAlign='middle' style={{ height: '100vh' }} id="animatedBackground">
                         <Grid.Column width={10} style={{ position: 'absolute', zIndex: 2 }}>
                             <Grid centered verticalAlign='middle'>
@@ -131,7 +131,7 @@ class HomeView extends React.Component {
                         </Grid.Column>
                     </Grid.Row>
                     <Grid.Row columns={2} style={{ minHeight: '200px', margin: '0px', padding: '0px' }} className="greyGradientBackground">
-                        <Grid>
+                        <Grid stackable>
                             <Grid.Row columns={1}>
                                 <Grid.Column>
                                     <Header as='h1' style={{ fontSize: '40px', fontWeight: 'bold', color: '#4a4a4a', paddingTop: '100px' }}>ALL FORMAT SUPPORT</Header>
