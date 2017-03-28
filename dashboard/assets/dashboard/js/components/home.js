@@ -206,7 +206,7 @@ class HomeView extends React.Component {
                             </Grid.Row>
                         </Grid>
                     </Grid.Row>
-                    <Grid.Row columns={16} verticalAlign='middle' style={{ minHeight: '40vh', backgroundColor: '#FFFFFF' }}>
+                    <Grid.Row columns={16} verticalAlign='middle' style={{ backgroundColor: '#FFFFFF', padding:'10rem 0 10rem 0' }}>
                         <Grid.Column width={10}>
                             <Grid centered verticalAlign='middle'>
                                 <Grid.Row>
@@ -226,7 +226,7 @@ class HomeView extends React.Component {
                                     </Grid.Column>
                                 </Grid.Row>
                                 <Grid.Row only='mobile'>
-                                    <Grid.Column width={14} >
+                                    <Grid.Column width={14}>
                                         <Form>
                                             {this.state.emailExists ? <Message negative><p>Email invalid or already registered!</p></Message> : ''}
                                             {this.state.registered ? <Message positive><p>Email registered!</p></Message> : ''}
