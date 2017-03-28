@@ -36,9 +36,8 @@ export class ProfileView extends React.Component {
 
         if (this.state.user && this.state.user.username) {
             var body = (
-                <Grid centered stretched verticalAlign='middle' columns={1}>
-                    <Grid.Row verticalAlign='middle' columns={5}>
-                        <Grid.Column />
+                <Grid centered verticalAlign='middle' columns={1}>
+                    <Grid.Row verticalAlign='middle' columns={5} style={{ height: '100vh' }}>
                         <Grid.Column verticalAlign='middle'>
                             <Card fluid>
                                 <Card.Content>
@@ -62,7 +61,6 @@ export class ProfileView extends React.Component {
                                 </Card.Content>
                             </Card>
                         </Grid.Column>
-                        <Grid.Column />
                     </Grid.Row>
                 </Grid>
             )
@@ -73,7 +71,7 @@ export class ProfileView extends React.Component {
             var body = <div key="notloaded"></div>
         }
         return (
-            <main className="Site-content ui center aligned grid" style={{ backgroundColor: '#008FCB', minHeight: '100vh' }}>
+            <main className="Site-content" style={{ backgroundColor: '#008FCB', minHeight: '100vh' }}>
                 {body}
             </main>
         );

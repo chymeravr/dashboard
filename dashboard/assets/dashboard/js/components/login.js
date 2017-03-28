@@ -66,11 +66,10 @@ export class LoginForm extends React.Component {
         ) : <div></div>
 
         return (
-            <main className="Site-content ui center aligned grid" style={{ backgroundColor: '#008FCB' }}>
-
-                <Grid centered stretched verticalAlign='middle' columns={4}>
-                    <Grid.Row verticalAlign='middle'>
-                        <Grid.Column verticalAlign='middle'>
+            <main className="Site-content" style={{ backgroundColor: '#008FCB' }}>
+                <Grid centered verticalAlign='middle' columns={4}>
+                    <Grid.Row verticalAlign='middle' columns={1} style={{ height: '100vh' }}>
+                        <Grid.Column verticalAlign='middle' width={4}>
                             {errorMessage}
                             <Form>
                                 <Form.Input placeholder='Username' onChange={(e, d) => this.handleChange('username')(e, d)} />
