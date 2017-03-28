@@ -26,7 +26,7 @@ export class ContactView extends React.Component {
 
         return (
             <main className="Site-content centre ui aligned" style={{ backgroundColor: '#FFF', minHeight: '100vh' }}>
-                <Grid stackable columns={1} verticalAlign='top' style={{ paddingTop: '100px' }}>
+                <Grid stackable columns={10} verticalAlign='top' style={{ paddingTop: '100px' }}>
                     <Grid.Row centered columns={1} >
                         <Grid.Column width={6}>
                             <Header as='h1' style={Object.assign({}, style, { textAlign: 'left' })}>OFFICE</Header>
@@ -84,7 +84,7 @@ export class ContactView extends React.Component {
                     </Grid.Row>
                     <Grid.Row centered columns={4}>
                         <Grid.Column width={5} />
-                        <Grid.Column width={2} >
+                        <Grid.Column width={3} >
                             <Header as='h3' style={{ color: '#444', fontWeight: 'bold' }}>Write to us</Header>
                             <Header as='a' >
                                 <a style={{ color: '#008fcb', fontWeight: 'normal' }} href="mailto:help@chymeravr.com" target="_top">help@chymeravr.com</a>
@@ -102,7 +102,7 @@ export class ContactView extends React.Component {
                             Koramangala 8th Block, Bengaluru <br />
                             560095
                          </Grid.Column>
-                        <Grid.Column width={6} />
+                        <Grid.Column width={5} />
                     </Grid.Row>
                 </Grid>
             </main>

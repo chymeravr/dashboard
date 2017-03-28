@@ -81,16 +81,35 @@ class HomeView extends React.Component {
         }
 
         const submitButton = <Button onClick={this.registerUser} className="button">Sign Up</Button>;
-
+        const mobileSubmitButton = <Button fluid onClick={this.registerUser} className="button">Sign Up</Button>;
         const topEmailInput =
             <Input fluid error={this.state.emailExists && this.state.registered}
                 label={submitButton} placeholder='Email Address' labelPosition='right'
                 onChange={this.handleChange('email').bind(this)} value={this.state.email} />
 
+        const topEmailInputMobile = (
+            <div>
+                <Input fluid error={this.state.emailExists && this.state.registered}
+                    placeholder='Email Address' labelPosition='right'
+                    onChange={this.handleChange('email').bind(this)} value={this.state.email} />
+                <br />
+                {mobileSubmitButton}
+            </div>
+        )
+
         const bottomEmailInput =
             <Input className='orangeInput' fluid error={this.state.emailExists && this.state.registered}
                 label={submitButton} placeholder='Email Address' labelPosition='right'
                 onChange={this.handleChange('email').bind(this)} value={this.state.email} />
+
+        const bottomEmailInputMobile =
+            <div>
+                <Input classNAme='orangeInput' fluid error={this.state.emailExists && this.state.registered}
+                    placeholder='Email Address' labelPosition='right'
+                    onChange={this.handleChange('email').bind(this)} value={this.state.email} />
+                <br />
+                {mobileSubmitButton}
+            </div>
 
         return (
             <main className="Site-content" style={{ backgroundColor: '#008FCB' }}>
@@ -109,12 +128,21 @@ class HomeView extends React.Component {
                                         </p>
                                     </Grid.Column>
                                 </Grid.Row>
-                                <Grid.Row>
+                                <Grid.Row only='computer'>
                                     <Grid.Column width={10} >
                                         <Form>
                                             {this.state.emailExists ? <Message negative><p>Email invalid or already registered!</p></Message> : ''}
                                             {this.state.registered ? <Message positive><p>Email registered!</p></Message> : ''}
                                             {topEmailInput}
+                                        </Form>
+                                    </Grid.Column>
+                                </Grid.Row>
+                                <Grid.Row only='mobile'>
+                                    <Grid.Column width={14} >
+                                        <Form>
+                                            {this.state.emailExists ? <Message negative><p>Email invalid or already registered!</p></Message> : ''}
+                                            {this.state.registered ? <Message positive><p>Email registered!</p></Message> : ''}
+                                            {topEmailInputMobile}
                                         </Form>
                                     </Grid.Column>
                                 </Grid.Row>
@@ -124,8 +152,8 @@ class HomeView extends React.Component {
                     <Grid.Row style={{ backgroundColor: 'rgba(0, 0, 0, 0)' }}>
                         <Image src="/static/img/arrow.png" />
                     </Grid.Row>
-                    <Grid.Row style={{ backgroundColor: '#0d95ce', }}>
-                        <Grid.Column>
+                    <Grid.Row style={{ backgroundColor: '#0d95ce', }} columns={1}>
+                        <Grid.Column width={4}>
                             <p className='centerText whiteText'>MEET US AT SVVR 2017, 29-31 MARCH IN SAN JOSE, CA</p>
                         </Grid.Column>
                     </Grid.Row>
@@ -134,8 +162,10 @@ class HomeView extends React.Component {
                     <Grid.Row style={{ backgroundColor: '#FFF', minHeight: '200px', paddingTop: '100px', paddingBottom: '100px' }} columns={5}>
                         {getImageWithCaption("integrate-chymera.png", 'INTEGRATE CHYMERA ADS')}
                         <Grid.Column only='computer' width={2}><Image centered src="/static/img/arrow-right.png" /></Grid.Column>
+                        <Grid.Column only='mobile' width={2}><Image centered src="/static/img/arrow-down.png" /></Grid.Column>
                         {getImageWithCaption("earn-credits.png", 'EARN CREDITS')}
                         <Grid.Column only='computer' width={2}><Image centered src="/static/img/arrow-right.png" /></Grid.Column>
+                        <Grid.Column only='mobile' width={2}><Image centered src="/static/img/arrow-down.png" /></Grid.Column>
                         {getImageWithCaption("spend-credits.png", 'SPEND CREDITS TO PROMOTE YOUR APP')}
                     </Grid.Row>
 
@@ -186,12 +216,21 @@ class HomeView extends React.Component {
                                         </Header>
                                     </Grid.Column>
                                 </Grid.Row>
-                                <Grid.Row>
+                                <Grid.Row only='computer'>
                                     <Grid.Column width={10} >
                                         <Form>
                                             {this.state.emailExists ? <Message negative><p>Email invalid or already registered!</p></Message> : ''}
                                             {this.state.registered ? <Message positive><p>Email registered!</p></Message> : ''}
                                             {bottomEmailInput}
+                                        </Form>
+                                    </Grid.Column>
+                                </Grid.Row>
+                                <Grid.Row only='mobile'>
+                                    <Grid.Column width={14} >
+                                        <Form>
+                                            {this.state.emailExists ? <Message negative><p>Email invalid or already registered!</p></Message> : ''}
+                                            {this.state.registered ? <Message positive><p>Email registered!</p></Message> : ''}
+                                            {bottomEmailInputMobile}
                                         </Form>
                                     </Grid.Column>
                                 </Grid.Row>

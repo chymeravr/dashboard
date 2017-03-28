@@ -149,7 +149,7 @@ p {
 
 .navbarMenuMobile {
     border-bottom: none !important;
-    padding: 0 10px 0 10px !important;
+    padding: 0 10px 15px 10px !important;
 }
 
 .navbarActiveItem {
@@ -159,6 +159,7 @@ p {
 
 .navbarItem {
     color: white !important;
+    text-align: right !important;
 }
 
 .navbarButton {
@@ -173,8 +174,9 @@ p {
 
 .navbarMobile {
     background-color: #008FCB !important;
-    -webkit-box-shadow: 0 4px 4px -2px #444;
-    -moz-box-shadow: 0 4px 4px -2px #444;
-    box-shadow: 0 4px 4px -2px #444;
+    padding-bottom: 0 !important;
+    -webkit-box-shadow: 0 4px 18px -2px #444;
+    -moz-box-shadow: 0 4px 18px -2px #444;
+    box-shadow: 0 4px 18px -2px #444;
 }
 

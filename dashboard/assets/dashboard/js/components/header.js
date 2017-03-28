@@ -31,9 +31,9 @@ class Header extends React.Component {
         debug("header", this.state);
 
         if (this.state.showHeader && localStorage.getItem(config.jwt.tokenKey)) {
-            var logoutButton = <Menu.Item className="navbarButton" position="right" name='logout' onClick={this.handleLogout} />
+            var logoutButton = <Menu.Item className="navbarButton navbarItem" position="right" name='logout' onClick={this.handleLogout} />
         } else {
-            var logoutButton = <Menu.Item className="navbarButton" position="right" name='Sign-in' onClick={() => hashHistory.push('/login')} />
+            var logoutButton = <Menu.Item className="navbarButton navbarItem" position="right" name='Sign-in' onClick={() => hashHistory.push('/login')} />
         }
 
 
@@ -52,11 +52,13 @@ class Header extends React.Component {
 
         return (
             <Grid columns={16}>
-                <Grid.Row only='mobile' columns={1} className="navbarMobile">
-                    <Grid.Column width={16}>
+                <Grid.Row only='mobile' columns={2} className="navbarMobile">
+                    <Grid.Column width={6}>
+                        <Image size='tiny' src='/static/img/logo-simple.png' style={{ padding: '10px 20px 0px 15px' }} onClick={(e) => hashHistory.push('/')} />
+                    </Grid.Column>
+                    <Grid.Column width={10}>
                         <Accordion className='blueBg'>
-                            <Accordion.Title>
-                                <Image inline size='tiny' src='/static/img/logo-simple.png' style={{ padding: '10px 20px 0px 15px' }} />
+                            <Accordion.Title style={{height:'4rem'}}>
                                 <Icon inverted style={{ float: 'right', padding: '5px 30px 0px 0px' }} size='big' name='content' />
                             </Accordion.Title>
                             <Accordion.Content>
