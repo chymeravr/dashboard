@@ -2,7 +2,7 @@ var React = require('react')
 import { Link, hashHistory } from 'react-router'
 import { logout, debug } from '../lib'
 import { config } from '../config'
-import { Menu, Segment, Image } from 'semantic-ui-react'
+import { Table, Segment, Image, Menu } from 'semantic-ui-react'
 
 class Header extends React.Component {
     constructor(props) {
@@ -28,22 +28,11 @@ class Header extends React.Component {
         }
 
         if (this.state.showHeader && localStorage.getItem(config.jwt.tokenKey)) {
-            var logoutButton = <Menu.Item position="right" name='logout' onClick={this.handleLogout} />
+            var logoutButton = <Menu.Item className="navbarButton" position="right" name='logout' onClick={this.handleLogout} />
         } else {
-            var logoutButton = ""
+            var logoutButton = <Menu.Item className="navbarButton" position="right" name='Sign-in' onClick={() => hashHistory.push('/login')} />
         }
 
-
-        var Links = (
-            <div>
-                {// <li><a href="sass.html">Sass</a></li>
-                    // <li><a href="badges.html">Components</a></li>
-                    // <li><a href="collapsible.html">Javascript</a></li>
-                    // <li><a href="mobile.html">Mobile</a></li>
-                }
-                {logoutButton}
-            </div>
-        );
 
         const currentPath = this.state.currentPath
         var activeItem = '';
@@ -56,17 +45,26 @@ class Header extends React.Component {
         }
 
 
+        const getItem = (name, link) => <Menu.Item name={name} className={activeItem === name ? 'navbarActiveItem' : 'navbarItem'} as={Link} to={link} />
+
         return (
-            <Menu stackable attached secondary inverted size='massive' floated='right' color='blue' style={{ padding: '20px 10px 20px 20px', margin: '0 0 13px 0', zIndex: 100 }}>
-                <Menu.Item />
-                <Image src="/static/img/Logo.png" size="tiny" as={Link} to="/" style={{ marginBottom: -10 }} />
-                <Menu.Item />
-                <Menu.Item name='profile' active={activeItem === 'profile'} as={Link} to='/profile/' />
-                <Menu.Item name='advertisers' active={activeItem === 'advertiser'} as={Link} to='/advertiser/' />
-                <Menu.Item name='publishers' active={activeItem === 'publisher'} as={Link} to='/publisher/' />
-                {logoutButton}
-                <Menu.Item />
-            </Menu>
+            <Table inverted color='blue' className="navbar">
+                <Table.Body>
+                    <Table.Row>
+                        <Table.Cell><Image src="/static/img/logo.png" size="tiny" href="/"  style={{paddingTop:'14px'}}/></Table.Cell>
+                        <Table.Cell textAlign='right'>
+                            <Menu pointing secondary size='massive' floated='right' color='blue' className="navbarMenu">
+                                {getItem('profile', '/profile/')}
+                                {getItem('advertiser', '/advertiser/')}
+                                {getItem('publisher', '/publisher/')}
+                                {getItem('careers', '/profile/')}
+                                {getItem('blog', '/profile/')}
+                                {logoutButton}
+                            </Menu>
+                        </Table.Cell>
+                    </Table.Row>
+                </Table.Body>
+            </Table>
         );
     }
 }

@@ -93,7 +93,7 @@ class HomeView extends React.Component {
                 onChange={this.handleChange('email').bind(this)} value={this.state.email} />
 
         return (
-            <main className="Site-content" style={{ backgroundColor: '#008FCB', marginTop: '-100px', }}>
+            <main className="Site-content" style={{ backgroundColor: '#008FCB' }}>
                 <Grid stackable centered verticalAlign='middle'>
                     <Grid.Row columns={1} verticalAlign='middle' style={{ height: '100vh' }}>
                         <Grid.Column width={10}>
