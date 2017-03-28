@@ -143,7 +143,7 @@ class HomeView extends React.Component {
                     </Grid.Row>
 
 
-                    <Grid.Row columns={2} style={{ minHeight: '200px', margin: '0px', }} className="greyGradientBackground">
+                    <Grid.Row columns={2} style={{ minHeight: '200px', paddingTop:'100px' }} className="greyGradientBackground">
                         <Grid stackable>
                             <Grid.Row columns={1}>
                                 <Grid.Column>
@@ -151,7 +151,7 @@ class HomeView extends React.Component {
                                     <Image centered src="/static/img/lines-heading.png" />
                                 </Grid.Column>
                             </Grid.Row>
-                            <Grid.Row columns={4} style={{ paddingTop: '100px' }}>
+                            <Grid.Row columns={4}>
                                 <Grid.Column width={3}>
                                 </Grid.Column>
                                 <Grid.Column verticalAlign='bottom' width={5}>
@@ -168,7 +168,7 @@ class HomeView extends React.Component {
                             </Grid.Row>
                             <Grid.Row>
                                 <Grid.Column>
-                                    <Image size='medium' style={{ paddingBottom: '10vh' }} centered src="/static/img/all-platforms.png" />
+                                    <Image size='medium' style={{ paddingBottom: '100px', paddingTop:'100px' }} centered src="/static/img/all-platforms.png" />
                                 </Grid.Column>
                             </Grid.Row>
                         </Grid>

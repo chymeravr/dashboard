@@ -100,7 +100,8 @@ p {
     background-repeat: no-repeat;
     background-position-x: center;
     background-position-y: bottom;
-    padding: 100px 0px 100px 0px !important;
+    padding: 150px 0px 150px 0px !important;
+    margin: -1em;
 }
 
 .publisherSummary {
@@ -110,7 +111,8 @@ p {
     background-repeat: no-repeat;
     background-position-x: center;
     background-position-y: bottom;
-    padding: 100px 0px 100px 0px !important;
+    padding: 150px 0px 150px 0px !important;
+    margin: -1em;
 }
 
 .button {
@@ -126,26 +128,6 @@ p {
 }
 
 @media only screen and (max-width: 767px) {
-    .advertiserSummary {
-        background-color: #f9f9f9;
-        background-image: url('/static/img/advertiser.png');
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position-x: center;
-        background-position-y: bottom;
-        padding: 100px 0px 100px 0px !important;
-    }
-
-    .publisherSummary {
-        background-color: #f9f9f9;
-        background-image: url('/static/img/publisher.png');
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position-x: center;
-        background-position-y: bottom;
-        padding: 100px 0px 100px 0px !important;
-    }
-
     h1 {
     font-size: calc( 30rem/16 ) !important;       
     }
