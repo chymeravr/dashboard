@@ -64,7 +64,7 @@ class HomeView extends React.Component {
                 <Grid.Column width={8} verticalAlign="center">
                     <div className={className}>
                         <Header as='h2' style={{ fontWeight: 'bold', color: '#008fcb', }}>{header}</Header>
-                        <p>{content}</p>
+                        <p style={{ paddingLeft: '40px', paddingRight: '40px' }}>{content}</p>
                         <Button content='READ MORE' color="orange" />
                     </div>
                 </Grid.Column>
@@ -143,7 +143,7 @@ class HomeView extends React.Component {
                     </Grid.Row>
 
 
-                    <Grid.Row columns={2} style={{ minHeight: '200px', paddingTop:'100px' }} className="greyGradientBackground">
+                    <Grid.Row columns={2} style={{ minHeight: '200px', paddingTop: '100px' }} className="greyGradientBackground">
                         <Grid stackable>
                             <Grid.Row columns={1}>
                                 <Grid.Column>
@@ -156,19 +156,19 @@ class HomeView extends React.Component {
                                 </Grid.Column>
                                 <Grid.Column verticalAlign='bottom' width={5}>
                                     <Image centered src="/static/img/360-image-video.png" />
-                                    <Header as='h3'> 360 IMAGE/ VIDEO</Header>
-                                    <p>Most immersive formats available at your fingertips</p>
+                                    <Header as='h3' className="boldText blue"> 360 IMAGE/ VIDEO</Header>
+                                    <p style={{ paddingLeft: '40px', paddingRight: '40px' }}>Most immersive formats available at your fingertips</p>
                                 </Grid.Column>
                                 <Grid.Column verticalAlign='bottom' width={5}>
                                     <Image centered src="/static/img/2d-texture.png" />
-                                    <Header as='h3'>2D TEXTURES</Header>
-                                    <p>Most immersive in game formats available at your fingertips</p>
+                                    <Header as='h3' className="boldText blue">2D TEXTURES</Header>
+                                    <p style={{ paddingLeft: '40px', paddingRight: '40px' }}>Most immersive in game formats available at your fingertips</p>
                                 </Grid.Column>
                                 <Grid.Column width={3}></Grid.Column>
                             </Grid.Row>
                             <Grid.Row>
                                 <Grid.Column>
-                                    <Image size='medium' style={{ paddingBottom: '100px', paddingTop:'100px' }} centered src="/static/img/all-platforms.png" />
+                                    <Image size='medium' style={{ paddingBottom: '100px', paddingTop: '100px' }} centered src="/static/img/all-platforms.png" />
                                 </Grid.Column>
                             </Grid.Row>
                         </Grid>

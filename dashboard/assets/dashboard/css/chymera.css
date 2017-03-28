@@ -54,6 +54,9 @@
   background: -o-linear-gradient(top, #fff, #f3f3f3);
 }
 
+.blue {
+    color: #008FCB;
+}
 
 .centerText {
     text-align: center
@@ -85,7 +88,7 @@ p {
 }
 
 .boldText {
-    font-weight: bold;
+    font-weight: bold !important;
 }
 
 .advPubSection {

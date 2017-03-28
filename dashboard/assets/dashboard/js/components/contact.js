@@ -25,7 +25,7 @@ export class ContactView extends React.Component {
         }
 
         return (
-            <main className="Site-content centre ui aligned grid" style={{ backgroundColor: '#FFF', minHeight: '100vh' }}>
+            <main className="Site-content centre ui aligned" style={{ backgroundColor: '#FFF', minHeight: '100vh' }}>
                 <Grid stackable columns={1} verticalAlign='top' style={{ paddingTop: '100px' }}>
                     <Grid.Row centered columns={1} >
                         <Grid.Column width={6}>
@@ -37,6 +37,7 @@ export class ContactView extends React.Component {
                             <Table basic='very'>
                                 <Table.Body>
                                     <Table.Row>
+                                        <Table.Cell />
                                         <Table.Cell>
                                             <Item.Group>
                                                 <Item>
