@@ -40,11 +40,8 @@ export class ContactView extends React.Component {
                                         <Item.Header>United States</Item.Header>
                                         <Item.Extra>San Francisco, CA</Item.Extra>
                                         <Item.Description>
-                                            Ideapad Technologies Pvt. Ltd. <br />
-                                            91springboard, 3rd Floor <br />
-                                            Padmavati Complex, 80 ft Road <br />
-                                            Koramangala 8th Block, Bengaluru <br />
-                                            560095
+                                            1535 Mission Street<br />
+                                            (650) 336 5405
                                         </Item.Description>
                                     </Item.Content>
                                 </Item>
@@ -58,10 +55,8 @@ export class ContactView extends React.Component {
                                         <Item.Extra>Bengaluru, KA</Item.Extra>
                                         <Item.Description>
                                             Ideapad Technologies Pvt. Ltd. <br />
-                                            91springboard, 3rd Floor <br />
-                                            Padmavati Complex, 80 ft Road <br />
-                                            Koramangala 8th Block, Bengaluru <br />
-                                            560095
+                                            91Springboard, 80 ft Road <br />
+                                            Koramangala 8th Block, 560095
                                         </Item.Description>
                                     </Item.Content>
                                 </Item>
