@@ -4,13 +4,14 @@
 
 .Site {
   display: flex;
-  min-height: 100vh;
+  flex: 0 0 auto;
   flex-direction: column;
   overflow-x: hidden;
 }
 
 .Site-content {
-  flex: 1;
+    top: auto;
+    padding-top: 20px; 
 }
 
 .DateRangePicker__picker, .SingleDatePicker__picker {

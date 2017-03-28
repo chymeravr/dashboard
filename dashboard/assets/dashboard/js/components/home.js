@@ -61,7 +61,7 @@ class HomeView extends React.Component {
 
         const getClientLink = (header, content, link, className) => {
             return (
-                <Grid.Column width={8} verticalAlign="center">
+                <Grid.Column width={8} verticalAlign="middle">
                     <div className={className}>
                         <Header as='h2' style={{ fontWeight: 'bold', color: '#008fcb', }}>{header}</Header>
                         <p style={{ paddingLeft: '40px', paddingRight: '40px' }}>{content}</p>
@@ -80,8 +80,8 @@ class HomeView extends React.Component {
             )
         }
 
-        const submitButton = <Button onClick={this.registerUser} className="button">Sign Up</Button>;
-        const mobileSubmitButton = <Button fluid onClick={this.registerUser} className="button">Sign Up</Button>;
+        const submitButton = <Button onClick={(e, d) => { this.registerUser(); e.preventDefault(); } } className="button">Sign Up</Button >;
+        const mobileSubmitButton = <Button fluid onClick={(e, d) => { this.registerUser(); e.preventDefault(); } } className="button">Sign Up</Button>;
         const topEmailInput =
             <Input fluid error={this.state.emailExists && this.state.registered}
                 label={submitButton} placeholder='Email Address' labelPosition='right'
@@ -104,7 +104,7 @@ class HomeView extends React.Component {
 
         const bottomEmailInputMobile =
             <div>
-                <Input classNAme='orangeInput' fluid error={this.state.emailExists && this.state.registered}
+                <Input className='orangeInput' fluid error={this.state.emailExists && this.state.registered}
                     placeholder='Email Address' labelPosition='right'
                     onChange={this.handleChange('email').bind(this)} value={this.state.email} />
                 <br />
@@ -114,7 +114,7 @@ class HomeView extends React.Component {
         return (
             <main className="Site-content" style={{ backgroundColor: '#008FCB' }}>
                 <Grid stackable centered verticalAlign='middle'>
-                    <Grid.Row columns={1} verticalAlign='middle' style={{ height: '100vh' }}>
+                    <Grid.Row columns={1} verticalAlign='middle' style={{ minHeight: '100vh' }}>
                         <Grid.Column width={10}>
                             <Grid centered verticalAlign='middle'>
                                 <Grid.Row>

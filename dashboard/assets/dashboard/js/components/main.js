@@ -97,9 +97,7 @@ class AppView extends React.Component {
         if (!this.state.adblock || currentRoute == "home") {
             return (
                 <div className="Site">
-                    <div>
-                        <Header showLogout={dashboard} currentPath={this.props.location.pathname} />
-                    </div>
+                    <Header showLogout={dashboard} currentPath={this.props.location.pathname} />
                     {this.props.children}
                     <Footer />
                 </div>
@@ -107,9 +105,7 @@ class AppView extends React.Component {
         } else {
             return (
                 <div className="Site">
-                    <div>
-                        <Header showLogout={dashboard} currentPath={this.props.location.pathname} />
-                    </div>
+                    <Header showLogout={dashboard} currentPath={this.props.location.pathname} />
                     <main className="Site-content ui center aligned" style={{ backgroundColor: '#008FCB' }}>
                         <Grid centered columns={16} style={{ margin: 0 }} verticalAlign='middle'>
                             <Grid.Row columns={16} verticalAlign='middle' style={{ height: '92vh' }}>
