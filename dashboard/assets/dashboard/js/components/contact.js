@@ -32,49 +32,40 @@ export class ContactView extends React.Component {
                             <Header as='h1' style={Object.assign({}, style, { textAlign: 'left' })}>OFFICE</Header>
                         </Grid.Column>
                     </Grid.Row>
-                    <Grid.Row centered columns={1}>
-                        <Grid.Column width={6}>
-                            <Table basic='very'>
-                                <Table.Body>
-                                    <Table.Row>
-                                        <Table.Cell />
-                                        <Table.Cell>
-                                            <Item.Group>
-                                                <Item>
-                                                    <Item.Content>
-                                                        <Item.Header>United States</Item.Header>
-                                                        <Item.Extra>San Francisco, CA</Item.Extra>
-                                                        <Item.Description>
-                                                            Ideapad Technologies Pvt. Ltd. <br />
-                                                            91springboard, 3rd Floor <br />
-                                                            Padmavati Complex, 80 ft Road <br />
-                                                            Koramangala 8th Block, Bengaluru <br />
-                                                            560095
-                                                        </Item.Description>
-                                                    </Item.Content>
-                                                </Item>
-                                            </Item.Group>
-                                        </Table.Cell>
-                                        <Table.Cell>
-                                            <Item.Group style={{ textAlign: 'left' }}>
-                                                <Item>
-                                                    <Item.Content>
-                                                        <Item.Header>India</Item.Header>
-                                                        <Item.Extra>Bengaluru, KA</Item.Extra>
-                                                        <Item.Description>
-                                                            Ideapad Technologies Pvt. Ltd. <br />
-                                                            91springboard, 3rd Floor <br />
-                                                            Padmavati Complex, 80 ft Road <br />
-                                                            Koramangala 8th Block, Bengaluru <br />
-                                                            560095
-                                                        </Item.Description>
-                                                    </Item.Content>
-                                                </Item>
-                                            </Item.Group>
-                                        </Table.Cell>
-                                    </Table.Row>
-                                </Table.Body>
-                            </Table>
+                    <Grid.Row centered columns={2}>
+                        <Grid.Column width={3}>
+                            <Item.Group>
+                                <Item>
+                                    <Item.Content>
+                                        <Item.Header>United States</Item.Header>
+                                        <Item.Extra>San Francisco, CA</Item.Extra>
+                                        <Item.Description>
+                                            Ideapad Technologies Pvt. Ltd. <br />
+                                            91springboard, 3rd Floor <br />
+                                            Padmavati Complex, 80 ft Road <br />
+                                            Koramangala 8th Block, Bengaluru <br />
+                                            560095
+                                        </Item.Description>
+                                    </Item.Content>
+                                </Item>
+                            </Item.Group>
+                        </Grid.Column>
+                        <Grid.Column width={3}>
+                            <Item.Group style={{ textAlign: 'left' }}>
+                                <Item>
+                                    <Item.Content>
+                                        <Item.Header>India</Item.Header>
+                                        <Item.Extra>Bengaluru, KA</Item.Extra>
+                                        <Item.Description>
+                                            Ideapad Technologies Pvt. Ltd. <br />
+                                            91springboard, 3rd Floor <br />
+                                            Padmavati Complex, 80 ft Road <br />
+                                            Koramangala 8th Block, Bengaluru <br />
+                                            560095
+                                        </Item.Description>
+                                    </Item.Content>
+                                </Item>
+                            </Item.Group>
                         </Grid.Column>
                     </Grid.Row>
                     <Grid.Row centered columns={1} >
@@ -94,7 +85,7 @@ export class ContactView extends React.Component {
                                 <a style={{ color: '#008fcb', fontWeight: 'normal' }} href="mailto:sales@chymeravr.com" target="_top">sales@chymeravr.com</a>
                             </Header>
                         </Grid.Column>
-                        <Grid.Column width={3}>
+                        <Grid.Column width={2}>
                             <Header as='h3' style={{ color: '#444', fontWeight: 'bold' }}>Mailing Address</Header>
                             Ideapad Technologies Pvt. Ltd. <br />
                             91springboard, 3rd Floor <br />
@@ -102,10 +93,10 @@ export class ContactView extends React.Component {
                             Koramangala 8th Block, Bengaluru <br />
                             560095
                          </Grid.Column>
-                        <Grid.Column width={5} />
+                        <Grid.Column width={6} />
                     </Grid.Row>
                 </Grid>
-            </main>
+            </main >
         );
     }
 }
