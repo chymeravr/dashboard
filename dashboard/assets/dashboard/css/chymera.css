@@ -131,7 +131,7 @@ p {
 
 @media only screen and (max-width: 767px) {
     h1 {
-    font-size: calc( 30rem/16 ) !important;       
+        font-size: calc( 30rem/16 ) !important;       
     }
 
     p {
@@ -145,6 +145,11 @@ p {
 
 .navbarMenu {
     border-bottom: none !important;
+}
+
+.navbarMenuMobile {
+    border-bottom: none !important;
+    padding: 0 10px 0 10px !important;
 }
 
 .navbarActiveItem {
@@ -161,3 +166,15 @@ p {
     border-radius:6px !important;
     color: white !important;
 }
+
+.blueBg {
+    background-color: #008FCB !important;
+}
+
+.navbarMobile {
+    background-color: #008FCB !important;
+    -webkit-box-shadow: 0 4px 4px -2px #444;
+    -moz-box-shadow: 0 4px 4px -2px #444;
+    box-shadow: 0 4px 4px -2px #444;
+}
+

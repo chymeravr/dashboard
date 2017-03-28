@@ -100,9 +100,12 @@ class HomeView extends React.Component {
                             <Grid centered verticalAlign='middle'>
                                 <Grid.Row>
                                     <Grid.Column width={12}>
-                                        <Header as='h1' className='centerText whiteText'>Cross Promotion Network For <strong>VR</strong></Header>
+                                        <Header as='h1' className='centerText whiteText boldText'>Virtual Reality Monetization and Advertising Network
+                                        </Header>
                                         <p className='centerText whiteText'>
-                                            We are the world's smallest ad network
+                                            Chymera enables VR developers to monetize content via premium advertisements
+                                                and drive higher engagement. <br />We deliver value to advertisers, helping their
+                                                consumers discover new products in a highly immersive medium.
                                         </p>
                                     </Grid.Column>
                                 </Grid.Row>
@@ -123,7 +126,7 @@ class HomeView extends React.Component {
                     </Grid.Row>
                     <Grid.Row style={{ backgroundColor: '#0d95ce', }}>
                         <Grid.Column>
-                            <p className='centerText whiteText'>NEXT EVENT</p>
+                            <p className='centerText whiteText'>MEET US AT SVVR 2017, 29-31 MARCH IN SAN JOSE, CA</p>
                         </Grid.Column>
                     </Grid.Row>
 
@@ -138,8 +141,8 @@ class HomeView extends React.Component {
 
 
                     <Grid.Row columns={2} className='advPubSection' verticalAlign='middle'>
-                        {getClientLink('ADVERTISER', 'Advertise with us and make the most of your money. Advertise with us and make the most of your money.', '', 'advertiserSummary')}
-                        {getClientLink('PUBLISHER', 'Monetise with us and make the most money. Monetise with us and make the most money. Get rich', '', 'publisherSummary')}
+                        {getClientLink('ADVERTISER', 'Immerse target audience in VR to help them discover new products', '', 'advertiserSummary')}
+                        {getClientLink('PUBLISHER', 'Monetize your VR apps/games and 360 content via premium Ads', '', 'publisherSummary')}
                     </Grid.Row>
 
 
@@ -156,13 +159,13 @@ class HomeView extends React.Component {
                                 </Grid.Column>
                                 <Grid.Column verticalAlign='bottom' width={5}>
                                     <Image centered src="/static/img/360-image-video.png" />
-                                    <Header as='h3' className="boldText blue"> 360 IMAGE/ VIDEO</Header>
-                                    <p style={{ paddingLeft: '40px', paddingRight: '40px' }}>Most immersive formats available at your fingertips</p>
+                                    <Header as='h3' className="boldText blue"> 360 IMAGE/VIDEO</Header>
+                                    <p style={{ paddingLeft: '40px', paddingRight: '40px' }}>Fully immersive user experience using 360 Ad creatives</p>
                                 </Grid.Column>
                                 <Grid.Column verticalAlign='bottom' width={5}>
                                     <Image centered src="/static/img/2d-texture.png" />
                                     <Header as='h3' className="boldText blue">2D TEXTURES</Header>
-                                    <p style={{ paddingLeft: '40px', paddingRight: '40px' }}>Most immersive in game formats available at your fingertips</p>
+                                    <p style={{ paddingLeft: '40px', paddingRight: '40px' }}> Use traditional 2D Ads, strategically placed within VR environment</p>
                                 </Grid.Column>
                                 <Grid.Column width={3}></Grid.Column>
                             </Grid.Row>
@@ -179,7 +182,7 @@ class HomeView extends React.Component {
                                 <Grid.Row>
                                     <Grid.Column width={12}>
                                         <Header as='h3' className="centerText">
-                                            We are the world's smallest ad network
+                                            Sign-up on the platform as an Advertiser/Publisher
                                         </Header>
                                     </Grid.Column>
                                 </Grid.Row>

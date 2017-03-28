@@ -55,9 +55,9 @@ class Footer extends React.Component {
                                             <Table.Cell>
                                                 <List link inverted>
                                                     <List.Item><Header as='h3' style={headingStyle}>Socials</Header></List.Item>
-                                                    {footerLink('Facebook', '/#/contact')}
-                                                    {footerLink('Twitter', '')}
-                                                    {footerLink('LinkedIn', '')}
+                                                    {footerLink('Twitter', 'https://twitter.com/ChymeraVR')}
+                                                    {footerLink('Facebook', 'https://www.facebook.com/ChymeraVR')}
+                                                    {footerLink('LinkedIn', 'https://www.linkedin.com/company/chymera-vr')}
                                                 </List>
                                             </Table.Cell>
                                         </Table.Row>
