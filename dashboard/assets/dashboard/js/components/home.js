@@ -17,6 +17,10 @@ class HomeView extends React.Component {
         this.registerUser = this.registerUser.bind(this);
     }
 
+    componentDidMount() {
+        document.title = 'Chymera VR | VR Ad Network'
+    }
+
     componentWillMount() {
         callApiWithJwt('/user/api/view_profile',
             'GET',

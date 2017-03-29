@@ -1,4 +1,5 @@
 import json
+import traceback
 
 import sendgrid
 from django.http import HttpResponse
@@ -13,17 +14,30 @@ from chym_user.models import Profile, InterestedUser, TestDevice
 from chym_user.serializers import UserProfileSerializer, TestDeviceSerializer
 from dashboard import settings
 
-RECEPIENTS = map(lambda x: x + '@chymeravr.com', ['info'])
+RECEPIENTS = ['info@chymeravr.com']
 
 WELCOME_MESSAGE = """
-Hi
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<div>
+<pre style="background-color: rgb(255, 255, 255); font-family: &quot;DejaVu Sans Mono&quot;; font-size: 9pt;">
+<span style="font-family:arial,helvetica,sans-serif;"><span style="font-size:12.8px;">Hi
 
-Thanks for being interested in Chymera VR, the VR ad-network. I'm Smeet, CEO of the company.
+Thanks for being interested in <a href="http://www.chymeravr.com">Chymera VR</a>, the VR ad-network. I&#39;m Smeet, CEO of the company.
 
-I'd like to tell you more about our product. Would you be available for a call this week?
+I&#39;d like to tell you more about our product. Would you be available for a call this week?
 
-Best,\n
-Smeet
+
+--
+Best,
+Smeet</span></span></pre>
+</div>
+</body>
+</html>
+
 """
 
 
@@ -50,14 +64,14 @@ class TestDeviceView(ListCreateAPIView, RetrieveUpdateAPIView):
 def send_welcome_mail(email):
     sg = sendgrid.SendGridAPIClient(apikey=settings.SENDGRID_API_KEY)
     from_email = Email('smeet@chymeravr.com', name="Smeet Bhatt")
-    subject = "Welcome to the world of Chymera VR"
-    content = Content("text/plain", WELCOME_MESSAGE)
+    subject = "Chymera VR Ad Network"
+    content = Content("text/html", WELCOME_MESSAGE)
     mail = Mail(from_email, subject, Email(email), content=content)
     personalization = Personalization()
-
     for recepient in RECEPIENTS:
-        personalization.add_bcc(Email(recepient))
+        personalization.add_to(Email(recepient))
 
+    print(personalization)
     mail.add_personalization(personalization)
     response = sg.client.mail.send.post(request_body=mail.get())
     print(response.status_code)
@@ -77,6 +91,7 @@ def preview_register(request):
             user.save()
             return HttpResponse(status=201, content='{}', content_type='application/json')
         # User already exists
-        return HttpResponse(status=409, content='{}', content_type='application/json')
+        else:
+            return HttpResponse(status=409, content='{}', content_type='application/json')
     else:
-        return HttpResponse(status=400, content='{}', content_type='application/json')
+        return HttpResponse(status=402, content='{}', content_type='application/json')
