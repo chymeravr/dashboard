@@ -26,10 +26,10 @@ export class ContactView extends React.Component {
 
         return (
             <main className="Site-content centre ui aligned" style={{ backgroundColor: '#FFF', minHeight: '100vh' }}>
-                <Grid stackable columns={10} verticalAlign='top' style={{ paddingTop: '100px' }}>
+                <Grid stackable columns={10} verticalAlign='top' style={{ paddingTop: '100px', paddingLeft:'20px' }}>
                     <Grid.Row centered columns={1} >
                         <Grid.Column width={6}>
-                            <Header as='h1' style={Object.assign({}, style, { textAlign: 'left' })}>OFFICE</Header>
+                            <Header as='h1' style={Object.assign({}, style, { textAlign: 'left' })}>Office</Header>
                         </Grid.Column>
                     </Grid.Row>
                     <Grid.Row centered columns={2}>
@@ -48,19 +48,7 @@ export class ContactView extends React.Component {
                             </Item.Group>
                         </Grid.Column>
                         <Grid.Column width={3}>
-                            <Item.Group style={{ textAlign: 'left' }}>
-                                <Item>
-                                    <Item.Content>
-                                        <Item.Header>India</Item.Header>
-                                        <Item.Extra>Bengaluru, KA</Item.Extra>
-                                        <Item.Description>
-                                            Ideapad Technologies Pvt. Ltd. <br />
-                                            91Springboard, 80 ft Road <br />
-                                            Koramangala 8th Block, 560095
-                                        </Item.Description>
-                                    </Item.Content>
-                                </Item>
-                            </Item.Group>
+
                         </Grid.Column>
                     </Grid.Row>
                     <Grid.Row centered columns={1} >
@@ -73,7 +61,7 @@ export class ContactView extends React.Component {
                         <Grid.Column width={3} >
                             <Header as='h3' style={{ color: '#444', fontWeight: 'bold' }}>Write to us</Header>
                             <Header as='a' >
-                                <a style={{ color: '#008fcb', fontWeight: 'normal' }} href="mailto:help@chymeravr.com" target="_top">help@chymeravr.com</a>
+                                <a style={{ color: '#008fcb', fontWeight: 'normal' }} href="mailto:info@chymeravr.com" target="_top">info@chymeravr.com</a>
                             </Header>
                             <Header as='h3' style={{ color: '#444', fontWeight: 'bold' }}>Sales enquiry</Header>
                             <Header as='a' >
@@ -81,13 +69,8 @@ export class ContactView extends React.Component {
                             </Header>
                         </Grid.Column>
                         <Grid.Column width={2}>
-                            <Header as='h3' style={{ color: '#444', fontWeight: 'bold' }}>Mailing Address</Header>
-                            Ideapad Technologies Pvt. Ltd. <br />
-                            91springboard, 3rd Floor <br />
-                            Padmavati Complex, 80 ft Road <br />
-                            Koramangala 8th Block, Bengaluru <br />
-                            560095
-                         </Grid.Column>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.6961475840726!2d-122.41972038468245!3d37.77372227975972!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809de8449d55%3A0x930cde3edb0c120c!2s1535+Mission+St%2C+San+Francisco%2C+CA+94103%2C+USA!5e0!3m2!1sen!2sin!4v1490792625405"  frameborder="0" style={{ border: 0 }} allowfullscreen></iframe>
+                        </Grid.Column>
                         <Grid.Column width={6} />
                     </Grid.Row>
                 </Grid>

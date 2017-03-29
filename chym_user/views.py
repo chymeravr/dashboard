@@ -13,18 +13,17 @@ from chym_user.models import Profile, InterestedUser, TestDevice
 from chym_user.serializers import UserProfileSerializer, TestDeviceSerializer
 from dashboard import settings
 
-RECEPIENTS = map(lambda x: x + '@chymeravr.com', ['rubbal', 'smeet', 'sushil', 'robin'])
+RECEPIENTS = map(lambda x: x + '@chymeravr.com', ['info'])
 
 WELCOME_MESSAGE = """
 Hi
 
-I'm Smeet, Co-founder of ChymeraVR. If you are an advertiser, give me ads. If you are a publisher give me inventory.
+Thanks for being interested in Chymera VR, the VR ad-network. I'm Smeet, CEO of the company.
 
-Till then read the SDK docs which do not exist yet. http://chymeravr.com/sdk/docs
+I'd like to tell you more about our product. Would you be available for a call this week?
 
---
-Thanks\n
-Smeet @ ChymeraVR
+Best,\n
+Smeet
 """
 
 
@@ -50,14 +49,14 @@ class TestDeviceView(ListCreateAPIView, RetrieveUpdateAPIView):
 
 def send_welcome_mail(email):
     sg = sendgrid.SendGridAPIClient(apikey=settings.SENDGRID_API_KEY)
-    from_email = Email('smeet@chymeravr.com')
+    from_email = Email('smeet@chymeravr.com', name="Smeet Bhatt")
     subject = "Welcome to the world of Chymera VR"
     content = Content("text/plain", WELCOME_MESSAGE)
     mail = Mail(from_email, subject, Email(email), content=content)
     personalization = Personalization()
 
     for recepient in RECEPIENTS:
-        personalization.add_to(Email(recepient))
+        personalization.add_bcc(Email(recepient))
 
     mail.add_personalization(personalization)
     response = sg.client.mail.send.post(request_body=mail.get())

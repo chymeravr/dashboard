@@ -58,12 +58,11 @@ class Header extends React.Component {
                     </Grid.Column>
                     <Grid.Column width={10}>
                         <Accordion className='blueBg'>
-                            <Accordion.Title style={{height:'4rem'}}>
+                            <Accordion.Title style={{ height: '4rem' }}>
                                 <Icon inverted style={{ float: 'right', padding: '5px 30px 0px 0px' }} size='big' name='content' />
                             </Accordion.Title>
                             <Accordion.Content>
                                 <Menu fluid vertical pointing secondary size='massive' floated='right' color='blue' className="navbarMenuMobile">
-                                    {getItem('profile', '/profile/')}
                                     {getItem('advertiser', '/advertiser/')}
                                     {getItem('publisher', '/publisher/')}
                                     {getItem('careers', '/profile/')}
@@ -81,11 +80,11 @@ class Header extends React.Component {
                                 <Table.Cell><Image src="/static/img/logo.png" size="tiny" href="/" style={{ paddingTop: '14px' }} /></Table.Cell>
                                 <Table.Cell textAlign='right'>
                                     <Menu pointing secondary size='massive' floated='right' color='blue' className="navbarMenu">
-                                        {getItem('profile', '/profile/')}
                                         {getItem('advertiser', '/advertiser/')}
                                         {getItem('publisher', '/publisher/')}
                                         {getItem('careers', '/profile/')}
                                         {getItem('blog', '/profile/')}
+                                        <Menu.Item />
                                         {logoutButton}
                                     </Menu>
                                 </Table.Cell>

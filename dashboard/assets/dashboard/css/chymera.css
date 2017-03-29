@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
-@import url('https://fonts.googleapis.com/css?family=Titillium+Web:400,600');
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web:200,400,600');
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
 
+body {
+    color: #555 !important;
+}
 
 .Site {
   display: flex;
@@ -22,7 +26,6 @@
 .ui.form input[type="file"] {
     display: none;
 }
-
 
 .ui.menu  {
     font-family: 'Roboto', sans-serif !important;
@@ -63,11 +66,13 @@
 }
 
 h1 {
+    font-family: 'Titillium-Web', sans-serif !important;
+    font-weight: 200 !important;
     font-size: calc( 54rem/16 ) !important;       
 }
 
 h2 {
-    font-size: calc( 30rem/16 ) !important;       
+    font-size: calc( 30rem/16 ) !important;  
 }
 
 h3 {
@@ -75,7 +80,7 @@ h3 {
 }
 
 p {
-    font-size: calc( 16em/16) !important;
+    font-size: 18px !important;
 }
 
 .caption {
@@ -91,36 +96,36 @@ p {
     font-weight: bold !important;
 }
 
+h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
+    font-family: 'Lato', sans-serif !important;
+}
+
 .advPubSection {
     background-color: #f9f9f9;
     padding-bottom: 0px !important;
 }
 
-.advertiserSummary {
+.summary {
     background-color: #f9f9f9;
-    background-image: url('/static/img/advertiser.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position-x: center;
     background-position-y: bottom;
-    padding: 150px 0px 150px 0px !important;
-    margin: -1em;
+    padding: 100px 0px 100px 0px !important;
+    margin: -1em; 
+}
+.advertiserSummary {
+    background-image: url('/static/img/advertiser.png');
 }
 
 .publisherSummary {
-    background-color: #f9f9f9;
     background-image: url('/static/img/publisher.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position-x: center;
-    background-position-y: bottom;
-    padding: 150px 0px 150px 0px !important;
-    margin: -1em;
 }
 
 .button {
+    font-family: 'Lato', sans-serif !important;
     font-size: calc(18rem/16) !important;
-    font-weight: bold !important;
+    font-weight: 700 !important;
     color: #414042 !important;
     background-color: #fda700 !important;
 }
@@ -128,16 +133,6 @@ p {
 .orangeInput {
     border: 2px solid #fda700 !important;
     border-radius: 6px !important;
-}
-
-@media only screen and (max-width: 767px) {
-    h1 {
-        font-size: calc( 30rem/16 ) !important;       
-    }
-
-    p {
-        font-size: calc( 18em/16) !important;
-    }
 }
 
 .navbar {
@@ -156,17 +151,31 @@ p {
 .navbarActiveItem {
     color: white !important;
     border-color: white !important;
+    margin-bottom: 2px !important;
+    padding: 10px 25px 10px 25px !important;
 }
 
 .navbarItem {
     color: white !important;
     text-align: right !important;
+    margin-bottom: 2px !important;
+    padding: 10px 25px 10px 25px !important;
+}
+
+.navbarItem, .navbarActiveItem {
+    font-weight: normal !important;
+}
+
+.navbarItem:hover {
+    border-color: white !important;
 }
 
 .navbarButton {
     border: 2px solid white !important;
-    border-radius:6px !important;
+    border-radius:2px !important;
     color: white !important;
+    padding: 10px 25px 10px 25px !important;
+    margin-bottom: 2px !important;
 }
 
 .blueBg {
@@ -181,3 +190,24 @@ p {
     box-shadow: 0 4px 18px -2px #444;
 }
 
+@media only screen and (max-width: 767px) {
+    .navbarButton {
+        border: 0px !important;
+    }
+
+    h1 {
+        font-size: calc( 40rem/16 ) !important;       
+    }
+
+    p {
+        font-size: calc( 18em/16) !important;
+    }
+
+    .summary {
+        padding: 70px 0px 20px 0px !important;
+    }
+
+    .summary .item {
+        padding-top: 10px !important;
+    }
+}

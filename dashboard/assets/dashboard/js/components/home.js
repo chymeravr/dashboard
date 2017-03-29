@@ -2,7 +2,7 @@ var React = require('react');
 var Link = require('react-router').Link
 import { debug, callApiWithJwt } from '../lib.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
-import { Grid, Form, Button, Header, Input, Icon, Image, Message, Divider, Segment, Container } from 'semantic-ui-react'
+import { Grid, Form, Button, Header, Input, Icon, Image, Message, Divider, Segment, Container, List } from 'semantic-ui-react'
 // import '../../css/animation.css'
 
 class HomeView extends React.Component {
@@ -64,8 +64,16 @@ class HomeView extends React.Component {
                 <Grid.Column width={8} verticalAlign="middle">
                     <div className={className}>
                         <Header as='h2' style={{ fontWeight: 'bold', color: '#008fcb', }}>{header}</Header>
-                        <p style={{ paddingLeft: '40px', paddingRight: '40px' }}>{content}</p>
-                        <Button content='READ MORE' color="orange" />
+                        <List style={{ padding: '20px 10vw 20px 15vw', textAlign: 'left' }}>
+                            {content.map(x =>
+                                <List.Item style={{ paddingTop: '20px' }}>
+                                    <List.Icon name="angle double right" />
+                                    <List.Content>
+                                        <p style={{ color: '#444', fontStyle: 'italic' }}>{x}</p>
+                                    </List.Content>
+                                </List.Item>
+                            )}
+                        </List>
                     </div>
                 </Grid.Column>
             )
@@ -114,20 +122,19 @@ class HomeView extends React.Component {
         return (
             <main className="Site-content" style={{ backgroundColor: '#008FCB' }}>
                 <Grid stackable centered verticalAlign='middle'>
-                    <Grid.Row columns={1} verticalAlign='middle' style={{ minHeight: '100vh' }}>
+                    <Grid.Row columns={1} verticalAlign='middle' style={{ minHeight: 'calc(70vh)' }}>
                         <Grid.Column width={10}>
                             <Grid centered verticalAlign='middle'>
                                 <Grid.Row>
                                     <Grid.Column width={12}>
-                                        <Header as='h1' className='centerText whiteText boldText'>Virtual Reality Monetization and Advertising Network
+                                        <Header as='h1' className='centerText whiteText boldText'>Advertising platform for VR
                                         </Header>
                                         <p className='centerText whiteText'>
-                                            Chymera enables VR developers to monetize content via premium advertisements
-                                                and drive higher engagement. <br />We deliver value to advertisers, helping their
-                                                consumers discover new products in a highly immersive medium.
+                                            Powering engaging ads with highest ROI on premium Apps
                                         </p>
                                     </Grid.Column>
                                 </Grid.Row>
+                                <Grid.Row />
                                 <Grid.Row only='computer'>
                                     <Grid.Column width={10} >
                                         <Form>
@@ -153,8 +160,8 @@ class HomeView extends React.Component {
                         <Image src="/static/img/arrow.png" />
                     </Grid.Row>
                     <Grid.Row style={{ backgroundColor: '#0d95ce', }} columns={1}>
-                        <Grid.Column width={4}>
-                            <p className='centerText whiteText'>MEET US AT SVVR 2017, 29-31 MARCH IN SAN JOSE, CA</p>
+                        <Grid.Column width={16}>
+                            <p className='centerText whiteText'>Meet us at <strong>SVVR 2017</strong>, 29-31 March in San Jose, CA</p>
                         </Grid.Column>
                     </Grid.Row>
 
@@ -166,13 +173,23 @@ class HomeView extends React.Component {
                         {getImageWithCaption("earn-credits.png", 'EARN CREDITS')}
                         <Grid.Column only='computer' width={2}><Image centered src="/static/img/arrow-right.png" /></Grid.Column>
                         <Grid.Column only='mobile' width={2}><Image centered src="/static/img/arrow-down.png" /></Grid.Column>
-                        {getImageWithCaption("spend-credits.png", 'SPEND CREDITS TO PROMOTE YOUR APP')}
+                        {getImageWithCaption("spend-credits.png", 'PROMOTE YOUR APP')}
                     </Grid.Row>
 
 
                     <Grid.Row columns={2} className='advPubSection' verticalAlign='middle'>
-                        {getClientLink('ADVERTISER', 'Immerse target audience in VR to help them discover new products', '', 'advertiserSummary')}
-                        {getClientLink('PUBLISHER', 'Monetize your VR apps/games and 360 content via premium Ads', '', 'publisherSummary')}
+                        {getClientLink('ADVERTISER',
+                            ['Ad formats with higher interaction rates',
+                                'Ad spend that generates more conversions',
+                                'Harness VR data to analyze user behaviour',
+                                'Advertise on best VR apps'],
+                            '', 'summary advertiserSummary')}
+
+                        {getClientLink('PUBLISHER',
+                            ['Ad formats designed for the best user experience',
+                                'Channelize advertisers willingness to spend in VR',
+                                'Generate more revenue through premium VR ads',
+                                'Integrate highest quality ads'], '', 'summary publisherSummary')}
                     </Grid.Row>
 
 
@@ -180,33 +197,35 @@ class HomeView extends React.Component {
                         <Grid stackable>
                             <Grid.Row columns={1}>
                                 <Grid.Column>
-                                    <Header as='h2'>ALL FORMAT SUPPORT</Header>
+                                    <Header as='h2' style={{ color: '#444' }}>Ad Formats</Header>
                                     <Image centered src="/static/img/lines-heading.png" />
                                 </Grid.Column>
                             </Grid.Row>
+                            <Grid.Row only='computer' style={{height:'100px'}}/>
                             <Grid.Row columns={4}>
-                                <Grid.Column width={3}>
+                                <Grid.Column width={3} only='computer'>
                                 </Grid.Column>
-                                <Grid.Column verticalAlign='bottom' width={5}>
+                                <Grid.Column verticalAlign='top' width={5}>
                                     <Image centered src="/static/img/360-image-video.png" />
-                                    <Header as='h3' className="boldText blue"> 360 IMAGE/VIDEO</Header>
+                                    <Header as='h3' className="boldText blue"> 360 IMAGE/VIDEO AD</Header>
                                     <p style={{ paddingLeft: '40px', paddingRight: '40px' }}>Fully immersive user experience using 360 Ad creatives</p>
                                 </Grid.Column>
-                                <Grid.Column verticalAlign='bottom' width={5}>
+                                <Grid.Column verticalAlign='top' width={5}>
                                     <Image centered src="/static/img/2d-texture.png" />
-                                    <Header as='h3' className="boldText blue">2D TEXTURES</Header>
+                                    <Header as='h3' className="boldText blue">TEXTURE ADS</Header>
                                     <p style={{ paddingLeft: '40px', paddingRight: '40px' }}> Use traditional 2D Ads, strategically placed within VR environment</p>
                                 </Grid.Column>
-                                <Grid.Column width={3}></Grid.Column>
+                                <Grid.Column width={3} only='computer' />
                             </Grid.Row>
                             <Grid.Row>
                                 <Grid.Column>
-                                    <Image size='medium' style={{ paddingBottom: '100px', paddingTop: '100px' }} centered src="/static/img/all-platforms.png" />
+                                    <Image size='medium' style={{ paddingBottom: '50px', paddingTop: '50px' }} centered src="/static/img/all-platforms.png" />
+
                                 </Grid.Column>
                             </Grid.Row>
                         </Grid>
                     </Grid.Row>
-                    <Grid.Row columns={16} verticalAlign='middle' style={{ backgroundColor: '#FFFFFF', padding:'10rem 0 10rem 0' }}>
+                    <Grid.Row columns={16} verticalAlign='middle' style={{ backgroundColor: '#FFFFFF', padding: '10rem 0 10rem 0' }}>
                         <Grid.Column width={10}>
                             <Grid centered verticalAlign='middle'>
                                 <Grid.Row>

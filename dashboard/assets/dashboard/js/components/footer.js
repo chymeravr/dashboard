@@ -19,7 +19,7 @@ class Footer extends React.Component {
             fontFamily: 'Roboto'
         }
 
-        const footerLink = (content, href) => <List.Item as='a' style={{ fontSize: '1rem', color: '#fff' }} href={href}>{content}</List.Item>
+        const footerLink = (content, href) => <List.Item as='a' style={{ fontSize: '1rem', color: '#fff' }} href={href} target='_blank'>{content}</List.Item>
 
         return (
             <footer>
@@ -34,13 +34,13 @@ class Footer extends React.Component {
                                         <Image src='/static/img/logo-simple.png' size='tiny' ></Image>
                                     </List.Item>
                                     <List.Item href='/' style={{
-                                        color: '#fff', textAlign: 'left', fontSize: 'calc(13rem/16)'
+                                        color: 'rgba(255, 255, 255, 0.5)', textAlign: 'left', fontSize: 'calc(13rem/16)', marginTop:'10px'
                                     }}>© Chymera VR, Inc.</List.Item>
                                 </List>
                             </Grid.Column>
                             <Grid.Column width={6} />
                             <Grid.Column width={4}>
-                                <Table unstackable style={{ backgroundColor: 'rgba(0, 0, 0, 0)' }}>
+                                <Table basic='very' unstackable style={{ backgroundColor: 'rgba(0, 0, 0, 0)' }}>
                                     <Table.Body>
                                         <Table.Row>
                                             <Table.Cell />
