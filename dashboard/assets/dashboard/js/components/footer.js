@@ -19,7 +19,8 @@ class Footer extends React.Component {
             fontFamily: 'Roboto'
         }
 
-        const footerLink = (content, href) => <List.Item as='a' style={{ fontSize: '1rem', color: '#fff' }} href={href} target='_blank'>{content}</List.Item>
+        const footerLink = (content, href) => <List.Item as='a' style={{ fontSize: '1rem', color: '#fff' }} href={href}>{content}</List.Item>;
+        const footerLinkNewTab = (content, href) => <List.Item as='a' style={{ fontSize: '1rem', color: '#fff' }} href={href} target='_blank'>{content}</List.Item>;
 
         return (
             <footer>
@@ -49,15 +50,15 @@ class Footer extends React.Component {
                                                     <List.Item><Header as='h3' style={headingStyle}>Links</Header></List.Item>
                                                     {footerLink('Contact Us', '/#/contact')}
                                                     {footerLink('Blog', '')}
-                                                    {footerLink('Careers', '')}
+                                                    {footerLink('Careers', '/#/')}
                                                 </List>
                                             </Table.Cell>
                                             <Table.Cell>
                                                 <List link inverted>
                                                     <List.Item><Header as='h3' style={headingStyle}>Socials</Header></List.Item>
-                                                    {footerLink('Twitter', 'https://twitter.com/ChymeraVR')}
-                                                    {footerLink('Facebook', 'https://www.facebook.com/ChymeraVR')}
-                                                    {footerLink('LinkedIn', 'https://www.linkedin.com/company/chymera-vr')}
+                                                    {footerLinkNewTab('Twitter', 'https://twitter.com/ChymeraVR')}
+                                                    {footerLinkNewTab('Facebook', 'https://www.facebook.com/ChymeraVR')}
+                                                    {footerLinkNewTab('LinkedIn', 'https://www.linkedin.com/company/chymera-vr')}
                                                 </List>
                                             </Table.Cell>
                                         </Table.Row>
