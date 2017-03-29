@@ -115,7 +115,7 @@ h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
     margin: -1em; 
 }
 .advertiserSummary {
-    background-image: url('/static/img/advertiser.png');
+    background-image: url('/static/img/mountain.png');
 }
 
 .publisherSummary {
