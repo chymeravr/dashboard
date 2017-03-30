@@ -218,13 +218,17 @@ h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
     font-style: italic !important;
 }
 
-.publisherOffering1 {
+.section {
     padding: 7rem 0 7rem 0 !important;
 }
 
 @media only screen and (max-width: 767px) {
     .navbarButton {
         border: 0px !important;
+    }
+
+    .navbarButton.transparent {
+        border: 2px solid white !important;
     }
 
     h1 {
@@ -248,4 +252,9 @@ h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
         padding-top: 70vh !important;
         padding-bottom: 30vh !important;
     }
+
+    .section {
+        padding: 0rem 0 0rem 0 !important;
+    }
+
 }

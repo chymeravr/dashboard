@@ -14,6 +14,7 @@ export class SignUp extends React.Component {
         this.bordered = props.bordered;
         this.handleChange = this.handleChange.bind(this);
         this.registerUser = this.registerUser.bind(this);
+        this.clearMessages = this.clearMessages.bind(this);
     }
 
 
@@ -25,16 +26,22 @@ export class SignUp extends React.Component {
         };
     }
 
+    clearMessages() {
+        this.setState(Object.assign({}, this.state, { emailExists: false, registered: false }));
+    }
+
     registerUser() {
         callApiWithJwt(
             '/user/api/preview_register',
             'POST',
             JSON.stringify({ user_email: this.state.email }),
             (response) => {
-                (this.setState(Object.assign({}, this.state, { emailExists: false, registered: true })))
+                this.setState(Object.assign({}, this.state, { emailExists: false, registered: true }));
+                setTimeout(this.clearMessages, 5000);
             },
             (error) => {
-                (this.setState(Object.assign({}, this.state, { emailExists: true, registered: false })))
+                this.setState(Object.assign({}, this.state, { emailExists: true, registered: false }))
+                setTimeout(this.clearMessages, 5000);
             },
             201
         );
@@ -61,29 +68,29 @@ export class SignUp extends React.Component {
             </div>
 
         return (
-                <Grid.Column width={10}>
-                    <Grid centered verticalAlign='middle'>
-                        {this.headingRow}
-                        <Grid.Row only='computer'>
-                            <Grid.Column width={10} >
-                                <Form>
-                                    {this.state.emailExists ? <Message negative><p>Email invalid or already registered!</p></Message> : ''}
-                                    {this.state.registered ? <Message positive><p>Email registered!</p></Message> : ''}
-                                    {emailInput}
-                                </Form>
-                            </Grid.Column>
-                        </Grid.Row>
-                        <Grid.Row only='mobile'>
-                            <Grid.Column width={14}>
-                                <Form>
-                                    {this.state.emailExists ? <Message negative><p>Email invalid or already registered!</p></Message> : ''}
-                                    {this.state.registered ? <Message positive><p>Email registered!</p></Message> : ''}
-                                    {emailInputMobile}
-                                </Form>
-                            </Grid.Column>
-                        </Grid.Row>
-                    </Grid>
-                </Grid.Column>
+            <Grid.Column width={10}>
+                <Grid centered verticalAlign='middle'>
+                    {this.headingRow}
+                    <Grid.Row only='computer'>
+                        <Grid.Column width={10} >
+                            <Form>
+                                {this.state.emailExists ? <Message negative><p>Email invalid or already registered!</p></Message> : ''}
+                                {this.state.registered ? <Message positive><p>Email registered!</p></Message> : ''}
+                                {emailInput}
+                            </Form>
+                        </Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row only='mobile'>
+                        <Grid.Column width={14}>
+                            <Form>
+                                {this.state.emailExists ? <Message negative><p>Email invalid or already registered!</p></Message> : ''}
+                                {this.state.registered ? <Message positive><p>Email registered!</p></Message> : ''}
+                                {emailInputMobile}
+                            </Form>
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
+            </Grid.Column>
         );
     }
 }

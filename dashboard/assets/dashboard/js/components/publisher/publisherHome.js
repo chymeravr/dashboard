@@ -14,7 +14,7 @@ export class PublisherHomeView extends React.Component {
     }
 
     componentDidMount() {
-        document.title = 'Publishers | Chymera VR'
+        document.title = 'Publisher | Chymera VR'
     }
 
     componentWillMount() {
@@ -56,14 +56,14 @@ export class PublisherHomeView extends React.Component {
                             <Header as='h2' className='centerText whiteText boldText italic'>
                                 Monetize your VR &amp; 360<sup>o</sup> Video Content <br />
                                 &amp; drive discovery <br /><br />
-                                <Button className="ui button navbarButton transparent" onClick={(e, d) => {}}>
+                                <Button className="ui button navbarButton transparent" onClick={(e, d) => { } }>
                                     <Icon name='book' /> Documentation
                                 </Button>
                             </Header>
 
                         </Grid.Column>
                     </Grid.Row>
-                    <Grid.Row style={{ backgroundColor: '#FFF', minHeight: '200px', paddingTop: '100px', paddingBottom: '100px' }} columns={9}>
+                    <Grid.Row className='section' columns={9}>
                         <Grid.Column width={1} />
                         <Grid.Column only='computer' width={3} textAlign='right' verticalAlign='bottom'>
                             <Header as='h1' className='boldText greyText'>
@@ -90,7 +90,7 @@ export class PublisherHomeView extends React.Component {
                         <Grid.Column width={2} />
                     </Grid.Row>
                     <Divider />
-                    <Grid.Row columns={3} verticalAlign='middle' className='publisherOffering1'>
+                    <Grid.Row columns={3} verticalAlign='middle' className='section'>
                         <Grid.Column only='computer' width={2} />
                         <Grid.Column only='computer' width={4}>
                             <Image centered src="/static/img/access-premium.png" size='small' />
@@ -110,48 +110,40 @@ export class PublisherHomeView extends React.Component {
                         <Grid.Column width={2} />
                     </Grid.Row>
                     <Divider />
-                    <Grid.Row columns={4} verticalAlign='middle' className='publisherOffering1'>
-                        <Grid.Column width={2} />
-                        <Grid.Column width={6}>
-                            <Header as='h3' className='boldText blue'>
-                                <Icon name='clock' />
-                                Timely payouts
-                            </Header>
-                            <p>
-                                We make sure your money reaches you at the earliest
-                            </p>
-                            <br />
-                            <Header as='h3' className='boldText blue'>
-                                <Icon name='android' />
-                                Have native android app for VR?
-                            </Header>
-                            <p>
-                                Use Chymera Android SDK for Daydream, Cardboard and GearVR.
-                            </p>
-                        </Grid.Column>
-                        <Grid.Column width={6}>
-                            <Header as='h3' className='boldText blue'>
-                                <Icon name='cubes' />
-                                Unity app?
-                            </Header>
-                            <p >
-                                Use easy to use, drag and drop Chymera Unity SDK
-                            </p>
-                            <br />
-                            <Header as='h3' className='boldText blue'>
-                                <Icon name='line chart' />
-                                Worried when and where to place ad units?
-                            </Header>
-                            <p>
-                                Use Chymera Analytics for publishers and find out the best placement time and location
-                            </p>
-                        </Grid.Column>
-                        <Grid.Column width={2} />
+                    <Grid.Row className='section' verticalAlign='middle'>
+                        <Grid stackable columns={16}>
+                            <Grid.Row columns={4} verticalAlign='middle' textAlign='left'>
+                                <Grid.Column width={2} />
+                                <Grid.Column width={6}>
+                                    <Header as='h3' className='boldText blue'><Icon name='clock' />Timely payouts </Header>
+                                    <p>We make sure your money reaches you at the earliest</p>
+                                    <br />
+                                </Grid.Column>
+                                <Grid.Column width={6}>
+                                    <Header as='h3' className='boldText blue'><Icon name='cubes' />Unity app?</Header>
+                                    <p >Use easy to use, drag and drop Chymera Unity SDK</p>
+                                    <br />
+                                </Grid.Column>
+                                <Grid.Column only='computer' width={2} />
+                                <Grid.Column only='computer' width={2} />
+                                <Grid.Column width={6}>
+                                    <Header as='h3' className='boldText blue'><Icon name='android' />Have native android app for VR?</Header>
+                                    <p>Use Chymera Android SDK for Daydream, Cardboard and GearVR.</p>
+                                    <br />
+                                </Grid.Column>
+                                <Grid.Column width={6}>
+                                    <Header as='h3' className='boldText blue'><Icon name='line chart' />Worried when and where to place ad units?</Header>
+                                    <p>Use Chymera Analytics for publishers and find out the best placement time and location</p>
+                                </Grid.Column>
+                                <Grid.Column width={2} />
+                            </Grid.Row>
+                        </Grid>
                     </Grid.Row>
                     <Divider />
-                    <Grid.Row columns={16} verticalAlign='middle' style={{ backgroundColor: '#FFFFFF', padding: '10rem 0 10rem 0' }}>
+                    <Grid.Row columns={16} verticalAlign='middle' className="section">
                         <SignUp headingRow={signUpHeader} />
                     </Grid.Row>
+                    <Divider hidden/>
                 </Grid >
             </main >
         );

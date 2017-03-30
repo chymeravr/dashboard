@@ -1,5 +1,6 @@
 var React = require('react');
 var Link = require('react-router').Link
+import { hashHistory } from 'react-router'
 import { debug, callApiWithJwt } from '../lib.js'
 import { SignUp } from './signUpRow'
 import { Grid, Form, Button, Header, Input, Icon, Image, Message, Divider, Segment, Container, List } from 'semantic-ui-react'
@@ -30,19 +31,11 @@ export class HomeView extends React.Component {
 
         const getClientLink = (header, content, link, className) => {
             return (
-                <Grid.Column width={8} verticalAlign="middle">
+                <Grid.Column width={5}>
                     <div className={className}>
                         <Header as='h2' style={{ fontWeight: 'bold', color: '#008fcb', }}>{header}</Header>
-                        <List style={{ padding: '20px 10vw 20px 15vw', textAlign: 'left' }}>
-                            {content.map(x =>
-                                <List.Item style={{ paddingTop: '20px' }}>
-                                    <List.Icon name="angle double right" />
-                                    <List.Content>
-                                        <p style={{ color: '#444', fontStyle: 'italic' }}>{x}</p>
-                                    </List.Content>
-                                </List.Item>
-                            )}
-                        </List>
+                        <p style={{ textAlign: 'left' }}>{content}</p>
+                        <Button as='a' content='Read More' color="orange" onClick={(e, d) => hashHistory.push(link)} />
                     </div>
                 </Grid.Column>
             )
@@ -68,9 +61,9 @@ export class HomeView extends React.Component {
         );
 
         return (
-            <main className="Site-content" style={{ backgroundColor: '#008FCB' }}>
+            <main className="Site-content" >
                 <Grid stackable centered verticalAlign='middle'>
-                    <Grid.Row columns={1} verticalAlign='middle' style={{ minHeight: 'calc(70vh)' }}>
+                    <Grid.Row columns={1} verticalAlign='middle' style={{ minHeight: 'calc(70vh)', marginTop: '-10px' }} className='blueBg'>
                         <Grid.Column width={10}>
                             <Grid centered verticalAlign='middle'>
                                 <Grid.Row>
@@ -89,7 +82,7 @@ export class HomeView extends React.Component {
                             </Grid>
                         </Grid.Column>
                     </Grid.Row>
-                    <Grid.Row style={{ backgroundColor: 'rgba(0, 0, 0, 0)' }}>
+                    <Grid.Row className="blueBg">
                         <Image src="/static/img/arrow.png" />
                     </Grid.Row>
                     <Grid.Row style={{ backgroundColor: '#0d95ce', }} columns={1}>
@@ -99,68 +92,67 @@ export class HomeView extends React.Component {
                     </Grid.Row>
 
 
-                    <Grid.Row style={{ backgroundColor: '#FFF', minHeight: '200px', paddingTop: '100px', paddingBottom: '100px' }} columns={5}>
-                        {getImageWithCaption("integrate-chymera.png", 'INTEGRATE CHYMERA ADS')}
-                        <Grid.Column only='computer' width={2}><Image centered src="/static/img/arrow-right.png" /></Grid.Column>
-                        <Grid.Column only='mobile' width={2}><Image centered src="/static/img/arrow-down.png" /></Grid.Column>
-                        {getImageWithCaption("earn-credits.png", 'EARN CREDITS')}
-                        <Grid.Column only='computer' width={2}><Image centered src="/static/img/arrow-right.png" /></Grid.Column>
-                        <Grid.Column only='mobile' width={2}><Image centered src="/static/img/arrow-down.png" /></Grid.Column>
-                        {getImageWithCaption("spend-credits.png", 'PROMOTE YOUR APP')}
+                    <Grid.Row className='section' columns={5}>
+                        {getImageWithCaption("cross-promotion.png", 'CROSS PROMOTE')}
+                        {getImageWithCaption("increase-downloads.png", 'TARGET HIGH VALUE USERS')}
+                        {getImageWithCaption("access-premium.png", 'MONETIZE')}
                     </Grid.Row>
 
 
-                    <Grid.Row columns={2} className='advPubSection' verticalAlign='middle'>
+                    <Grid.Row columns={4} className='advPubSection' verticalAlign='top'>
+                        <Grid.Column width={1} />
                         {getClientLink('ADVERTISER',
-                            ['Ad formats with higher interaction rates',
-                                'Ad spend that generates more conversions',
-                                'Harness VR data to analyze user behaviour',
-                                'Advertise on best VR apps'],
-                            '', 'summary advertiserSummary')}
-
+                            "VR is an amazing platform for story-telling. Research has shown that VR \
+                            content evokes more intense emotions than traditional 2D platforms\
+                            . Don't you want to leave a long lasting impression of your brand in user's mind? \
+                            Check out innovative Chymera ad-formats.",
+                            '/advertiser/', 'summary advertiserSummary')}
+                        <Grid.Column width={1} />
                         {getClientLink('PUBLISHER',
-                            ['Ad formats designed for the best user experience',
-                                'Channelize advertisers willingness to spend in VR',
-                                'Generate more revenue through premium VR ads',
-                                'Integrate highest quality ads'], '', 'summary publisherSummary')}
+                            "Advertising in VR is much more effective than traditional 2D platforms. Hence, advertisers are willing\
+                             to spend much more for getting an access to this platform. You can channelize this to an alternative\
+                              source of revenue. And guess what, VR ads aren't obstructive, as they have great UX.\
+                               Check out Chymera products for publishers - cross \
+                               promotion network and ad network.",
+                            '/publisher/', 'summary publisherSummary')}
+                        <Grid.Column width={1} />
                     </Grid.Row>
 
 
-                    <Grid.Row columns={2} style={{ minHeight: '200px', paddingTop: '100px' }} className="greyGradientBackground">
-                        <Grid stackable>
-                            <Grid.Row columns={1}>
-                                <Grid.Column>
-                                    <Header as='h2' style={{ color: '#444' }}>Ad Formats</Header>
-                                    <Image centered src="/static/img/lines-heading.png" />
-                                </Grid.Column>
-                            </Grid.Row>
-                            <Grid.Row only='computer' style={{ height: '100px' }} />
-                            <Grid.Row columns={4}>
-                                <Grid.Column width={3} only='computer'>
-                                </Grid.Column>
-                                <Grid.Column verticalAlign='top' width={5}>
-                                    <Image centered src="/static/img/360-image-video.png" />
-                                    <Header as='h3' className="boldText blue"> 360 IMAGE/VIDEO AD</Header>
-                                    <p style={{ paddingLeft: '40px', paddingRight: '40px' }}>Fully immersive user experience using 360 Ad creatives</p>
-                                </Grid.Column>
-                                <Grid.Column verticalAlign='top' width={5}>
-                                    <Image centered src="/static/img/2d-texture.png" />
-                                    <Header as='h3' className="boldText blue">TEXTURE ADS</Header>
-                                    <p style={{ paddingLeft: '40px', paddingRight: '40px' }}> Use traditional 2D Ads, strategically placed within VR environment</p>
-                                </Grid.Column>
-                                <Grid.Column width={3} only='computer' />
-                            </Grid.Row>
-                            <Grid.Row>
-                                <Grid.Column>
-                                    <Image size='medium' style={{ paddingBottom: '50px', paddingTop: '50px' }} centered src="/static/img/all-platforms.png" />
-
-                                </Grid.Column>
-                            </Grid.Row>
-                        </Grid>
+                    <Grid.Row columns={2} className="greyGradientBackground section">
+                        <Grid.Column>
+                            <Grid centered stackable>
+                                <Grid.Row columns={1}>
+                                    <Grid.Column>
+                                        <Header as='h2' className='greyText centerText'>Ad Formats</Header>
+                                        <Image centered src="/static/img/lines-heading.png" />
+                                    </Grid.Column>
+                                </Grid.Row>
+                                <Grid.Row columns={2}>
+                                    <Grid.Column verticalAlign='top' width={8}>
+                                        <Image centered src="/static/img/360-image-video.png" />
+                                        <Header as='h3' className="boldText blue"> 360 IMAGE/VIDEO AD</Header>
+                                        <p style={{ paddingLeft: '40px', paddingRight: '40px' }}>Fully immersive user experience using 360 Ad creatives</p>
+                                    </Grid.Column>
+                                    <Grid.Column verticalAlign='top' width={8}>
+                                        <Image centered src="/static/img/2d-texture.png" />
+                                        <Header as='h3' className="boldText blue">TEXTURE ADS</Header>
+                                        <p style={{ paddingLeft: '40px', paddingRight: '40px' }}> Use traditional 2D Ads, strategically placed within VR environment</p>
+                                    </Grid.Column>
+                                </Grid.Row>
+                                <Grid.Row only='computer' />
+                                <Grid.Row>
+                                    <Grid.Column>
+                                        <Image size='medium' centered src="/static/img/all-platforms.png" />
+                                    </Grid.Column>
+                                </Grid.Row>
+                            </Grid>
+                        </Grid.Column>
                     </Grid.Row>
-                    <Grid.Row columns={16} verticalAlign='middle' style={{ backgroundColor: '#FFFFFF', padding: '10rem 0 10rem 0' }}>
+                    <Grid.Row columns={16} verticalAlign='middle' className='section'>
                         <SignUp headingRow={signUpHeader} bordered={true} />
                     </Grid.Row>
+                    <Divider hidden />
                 </Grid >
             </main >
         );
