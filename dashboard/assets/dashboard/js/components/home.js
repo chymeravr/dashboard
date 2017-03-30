@@ -31,8 +31,8 @@ export class HomeView extends React.Component {
 
         const getClientLink = (header, content, link, className) => {
             return (
-                <Grid.Column width={5}>
-                    <div className={className}>
+                <Grid.Column width={5} className={className}>
+                    <div >
                         <Header as='h2' style={{ fontWeight: 'bold', color: '#008fcb', }}>{header}</Header>
                         <p style={{ textAlign: 'left' }}>{content}</p>
                         <Button as='a' content='Read More' color="orange" onClick={(e, d) => hashHistory.push(link)} />
@@ -99,7 +99,7 @@ export class HomeView extends React.Component {
                     </Grid.Row>
 
 
-                    <Grid.Row columns={4} className='advPubSection' verticalAlign='top'>
+                    <Grid.Row columns={4} className='advPubSection' verticalAlign='top' style={{paddingBottom:'0px'}}>
                         <Grid.Column width={1} />
                         {getClientLink('ADVERTISER',
                             "VR is an amazing platform for story-telling. Research has shown that VR \
