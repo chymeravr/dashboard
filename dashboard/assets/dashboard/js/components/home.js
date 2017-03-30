@@ -1,9 +1,8 @@
 var React = require('react');
 var Link = require('react-router').Link
 import { debug, callApiWithJwt } from '../lib.js'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
+import { SignUpColumn } from './signUpRow'
 import { Grid, Form, Button, Header, Input, Icon, Image, Message, Divider, Segment, Container, List } from 'semantic-ui-react'
-// import '../../css/animation.css'
 
 class HomeView extends React.Component {
     constructor(props) {
@@ -13,8 +12,6 @@ class HomeView extends React.Component {
             emailExists: false,
             registered: false
         };
-        this.handleChange = this.handleChange.bind(this);
-        this.registerUser = this.registerUser.bind(this);
     }
 
     componentDidMount() {
@@ -30,38 +27,8 @@ class HomeView extends React.Component {
         );
     }
 
-    handleChange(key) {
-        return function (e) {
-            var state = {};
-            state[key] = e.target.value;
-            this.setState(Object.assign({}, this.state, state));
-        };
-    }
-
-    registerUser() {
-        callApiWithJwt(
-            '/user/api/preview_register',
-            'POST',
-            JSON.stringify({ user_email: this.state.email }),
-            (response) => {
-                (this.setState(Object.assign({}, this.state, { emailExists: false, registered: true })))
-            },
-            (error) => {
-                (this.setState(Object.assign({}, this.state, { emailExists: true, registered: false })))
-            },
-            201
-        );
-    }
-
     render() {
         debug('home', this.state);
-        var style = {
-
-        }
-
-        var imgCaptionStyle = {
-
-        }
 
         const getClientLink = (header, content, link, className) => {
             return (
@@ -92,36 +59,15 @@ class HomeView extends React.Component {
             )
         }
 
-        const submitButton = <Button onClick={(e, d) => { this.registerUser(); e.preventDefault(); } } className="button">Sign Up</Button >;
-        const mobileSubmitButton = <Button fluid onClick={(e, d) => { this.registerUser(); e.preventDefault(); } } className="button">Sign Up</Button>;
-        const topEmailInput =
-            <Input fluid error={this.state.emailExists && this.state.registered}
-                label={submitButton} placeholder='Email Address' labelPosition='right'
-                onChange={this.handleChange('email').bind(this)} value={this.state.email} />
-
-        const topEmailInputMobile = (
-            <div>
-                <Input fluid error={this.state.emailExists && this.state.registered}
-                    placeholder='Email Address' labelPosition='right'
-                    onChange={this.handleChange('email').bind(this)} value={this.state.email} />
-                <br />
-                {mobileSubmitButton}
-            </div>
-        )
-
-        const bottomEmailInput =
-            <Input className='orangeInput' fluid error={this.state.emailExists && this.state.registered}
-                label={submitButton} placeholder='Email Address' labelPosition='right'
-                onChange={this.handleChange('email').bind(this)} value={this.state.email} />
-
-        const bottomEmailInputMobile =
-            <div>
-                <Input className='orangeInput' fluid error={this.state.emailExists && this.state.registered}
-                    placeholder='Email Address' labelPosition='right'
-                    onChange={this.handleChange('email').bind(this)} value={this.state.email} />
-                <br />
-                {mobileSubmitButton}
-            </div>
+        const signUpHeader = (
+            <Grid.Row>
+                <Grid.Column width={12}>
+                    <Header as='h3' className="centerText">
+                        Sign-up on the platform as an Advertiser/Publisher
+                    </Header>
+                </Grid.Column>
+            </Grid.Row>
+        );
 
         return (
             <main className="Site-content" style={{ backgroundColor: '#008FCB' }}>
@@ -139,23 +85,8 @@ class HomeView extends React.Component {
                                     </Grid.Column>
                                 </Grid.Row>
                                 <Grid.Row />
-                                <Grid.Row only='computer'>
-                                    <Grid.Column width={10} >
-                                        <Form>
-                                            {this.state.emailExists ? <Message negative><p>Email invalid or already registered!</p></Message> : ''}
-                                            {this.state.registered ? <Message positive><p>Email registered!</p></Message> : ''}
-                                            {topEmailInput}
-                                        </Form>
-                                    </Grid.Column>
-                                </Grid.Row>
-                                <Grid.Row only='mobile'>
-                                    <Grid.Column width={14} >
-                                        <Form>
-                                            {this.state.emailExists ? <Message negative><p>Email invalid or already registered!</p></Message> : ''}
-                                            {this.state.registered ? <Message positive><p>Email registered!</p></Message> : ''}
-                                            {topEmailInputMobile}
-                                        </Form>
-                                    </Grid.Column>
+                                <Grid.Row >
+                                    <SignUpColumn />
                                 </Grid.Row>
                             </Grid>
                         </Grid.Column>
@@ -205,7 +136,7 @@ class HomeView extends React.Component {
                                     <Image centered src="/static/img/lines-heading.png" />
                                 </Grid.Column>
                             </Grid.Row>
-                            <Grid.Row only='computer' style={{height:'100px'}}/>
+                            <Grid.Row only='computer' style={{ height: '100px' }} />
                             <Grid.Row columns={4}>
                                 <Grid.Column width={3} only='computer'>
                                 </Grid.Column>
@@ -230,35 +161,7 @@ class HomeView extends React.Component {
                         </Grid>
                     </Grid.Row>
                     <Grid.Row columns={16} verticalAlign='middle' style={{ backgroundColor: '#FFFFFF', padding: '10rem 0 10rem 0' }}>
-                        <Grid.Column width={10}>
-                            <Grid centered verticalAlign='middle'>
-                                <Grid.Row>
-                                    <Grid.Column width={12}>
-                                        <Header as='h3' className="centerText">
-                                            Sign-up on the platform as an Advertiser/Publisher
-                                        </Header>
-                                    </Grid.Column>
-                                </Grid.Row>
-                                <Grid.Row only='computer'>
-                                    <Grid.Column width={10} >
-                                        <Form>
-                                            {this.state.emailExists ? <Message negative><p>Email invalid or already registered!</p></Message> : ''}
-                                            {this.state.registered ? <Message positive><p>Email registered!</p></Message> : ''}
-                                            {bottomEmailInput}
-                                        </Form>
-                                    </Grid.Column>
-                                </Grid.Row>
-                                <Grid.Row only='mobile'>
-                                    <Grid.Column width={14}>
-                                        <Form>
-                                            {this.state.emailExists ? <Message negative><p>Email invalid or already registered!</p></Message> : ''}
-                                            {this.state.registered ? <Message positive><p>Email registered!</p></Message> : ''}
-                                            {bottomEmailInputMobile}
-                                        </Form>
-                                    </Grid.Column>
-                                </Grid.Row>
-                            </Grid>
-                        </Grid.Column>
+                        <SignUpColumn headingRow={signUpHeader} bordered={true} />
                     </Grid.Row>
                 </Grid >
             </main >
