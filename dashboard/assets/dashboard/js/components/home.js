@@ -104,16 +104,12 @@ export class HomeView extends React.Component {
                         {getClientLink('ADVERTISER',
                             "VR is an amazing platform for story-telling. Research has shown that VR \
                             content evokes more intense emotions than traditional 2D platforms\
-                            . Don't you want to leave a long lasting impression of your brand in user's mind? \
-                            Check out innovative Chymera ad-formats.",
+                            . Don't you want to leave a long lasting impression of your brand in user's mind?",
                             '/advertiser/', 'summary advertiserSummary')}
                         <Grid.Column width={1} />
                         {getClientLink('PUBLISHER',
-                            "Advertising in VR is much more effective than traditional 2D platforms. Hence, advertisers are willing\
-                             to spend much more for getting an access to this platform. You can channelize this to an alternative\
-                              source of revenue. And guess what, VR ads aren't obstructive, as they have great UX.\
-                               Check out Chymera products for publishers - cross \
-                               promotion network and ad network.",
+                            "Being much more effective and engaging than traditional ads, VR advertising is attracting\
+                             leading advertisers globally. And guess what, we make sure Chymera ads aren't intrusive",
                             '/publisher/', 'summary publisherSummary')}
                         <Grid.Column width={1} />
                     </Grid.Row>
