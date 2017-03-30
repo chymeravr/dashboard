@@ -130,6 +130,10 @@ h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
     background-color: #fda700 !important;
 }
 
+.transparent {
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
 .orangeInput {
     border: 2px solid #fda700 !important;
     border-radius: 6px !important;
@@ -149,6 +153,7 @@ h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
 }
 
 .navbarActiveItem {
+    text-align: right !important;
     color: white !important;
     border-color: white !important;
     margin-bottom: 2px !important;
@@ -183,11 +188,22 @@ h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
 }
 
 .navbarMobile {
-    background-color: #008FCB !important;
     padding-bottom: 0 !important;
     -webkit-box-shadow: 0 4px 18px -2px #444;
     -moz-box-shadow: 0 4px 18px -2px #444;
     box-shadow: 0 4px 18px -2px #444;
+}
+
+.publisherHomeMain {
+    margin-top: -120px !important;
+    background-image: url('/static/img/banner-publisher.png');
+    background-size: cover;
+    /*background-attachment: fixed;*/
+    z-index: -1;
+}
+
+.italic {
+    font-style: italic !important;
 }
 
 @media only screen and (max-width: 767px) {
@@ -209,5 +225,11 @@ h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
 
     .summary .item {
         padding-top: 10px !important;
+    }
+
+    .publisherHomeMain {
+        margin-top: -40vh !important;
+        padding-top: 70vh !important;
+        padding-bottom: 30vh !important;
     }
 }

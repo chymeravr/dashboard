@@ -1,5 +1,5 @@
 import React from 'react'
-import { debug, callApiWithJwt } from '../../lib.js'
+import { debug, callApiWithJwt } from '../../lib'
 import { config } from '../../config.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 import { hashHistory, Link } from 'react-router'

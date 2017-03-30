@@ -1,16 +1,14 @@
 var React = require('react');
 var Link = require('react-router').Link
 import { debug, callApiWithJwt } from '../lib.js'
-import { SignUpColumn } from './signUpRow'
+import { SignUp } from './signUpRow'
 import { Grid, Form, Button, Header, Input, Icon, Image, Message, Divider, Segment, Container, List } from 'semantic-ui-react'
 
-class HomeView extends React.Component {
+export class HomeView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             next: '/login',
-            emailExists: false,
-            registered: false
         };
     }
 
@@ -86,7 +84,7 @@ class HomeView extends React.Component {
                                 </Grid.Row>
                                 <Grid.Row />
                                 <Grid.Row >
-                                    <SignUpColumn />
+                                    <SignUp />
                                 </Grid.Row>
                             </Grid>
                         </Grid.Column>
@@ -161,12 +159,10 @@ class HomeView extends React.Component {
                         </Grid>
                     </Grid.Row>
                     <Grid.Row columns={16} verticalAlign='middle' style={{ backgroundColor: '#FFFFFF', padding: '10rem 0 10rem 0' }}>
-                        <SignUpColumn headingRow={signUpHeader} bordered={true} />
+                        <SignUp headingRow={signUpHeader} bordered={true} />
                     </Grid.Row>
                 </Grid >
             </main >
         );
     }
 }
-
-module.exports = HomeView 

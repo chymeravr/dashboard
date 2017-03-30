@@ -5,7 +5,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 import 'fuckadblock'
 import 'whatwg-fetch'
 
-import HomeView from './home'
+import { HomeView } from './home'
 import Header from './header'
 import Footer from './footer'
 import { ProfileView } from './profile'
@@ -14,7 +14,7 @@ import { LoginForm } from './login'
 import { AdvertiserView } from './advertiser/advertiser'
 import { CampaignDetailView } from './advertiser/campaignDetail'
 import { AdgroupDetailView } from './advertiser/adgroupDetail'
-import { PublisherView } from './publisher/publisher'
+import { PublisherHomeView } from './publisher/publisherHome'
 import { AppDetailView } from './publisher/appDetail'
 import { debug, callApiWithJwt } from '../lib.js'
 import ReactGA from 'react-ga'
@@ -89,15 +89,15 @@ class AppView extends React.Component {
                 dashboard = false;
             }
         }
-
-        var mainStyle = {
-
+        var transparent = false;
+        if (currentRoute == 'publisher') {
+            transparent = true;
         }
 
         if (!this.state.adblock || currentRoute == "home") {
             return (
                 <div className="Site">
-                    <Header showLogout={dashboard} currentPath={this.props.location.pathname} />
+                    <Header showLogout={dashboard} currentPath={this.props.location.pathname} transparent={transparent} />
                     {this.props.children}
                     <Footer />
                 </div>
@@ -135,7 +135,7 @@ render((
             <Route name="advertiser" path="/advertiser/" component={AdvertiserView} />
             <Route name="campaignDetail" path="/advertiser/campaigns/:campaignId" component={CampaignDetailView} />
             <Route name="adgroupDetail" path="/advertiser/adgroups/:adgroupId" component={AdgroupDetailView} />
-            <Route name="publisher" path="/publisher/" component={PublisherView} />
+            <Route name="publisher" path="/publisher/" component={PublisherHomeView} />
             <Route name="appDetail" path="/publisher/apps/:appId" component={AppDetailView} />
         </Route>
     </Router>
