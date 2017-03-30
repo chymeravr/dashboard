@@ -96,6 +96,9 @@ p {
     font-weight: bold !important;
 }
 
+.greyText {
+    color: #555 !important;
+}
 h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
     font-family: 'Lato', sans-serif !important;
 }
@@ -130,6 +133,14 @@ h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
     background-color: #fda700 !important;
 }
 
+.button.transparent {
+    font-family: 'Lato', sans-serif !important;
+    font-size: calc(18rem/16) !important;
+    font-weight: 700 !important;
+    color: #FFF !important;
+    background-color: rgba(0,0,0,0) !important;
+}
+
 .transparent {
     background-color: rgba(0, 0, 0, 0) !important;
 }
@@ -141,11 +152,12 @@ h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
 
 .navbar {
     padding: 0 150px 0 150px;
+    z-index: 3;
 }
 
 .navbarMenu {
     border-bottom: none !important;
-}
+}   
 
 .navbarMenuMobile {
     border-bottom: none !important;
@@ -188,6 +200,7 @@ h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
 }
 
 .navbarMobile {
+    z-index: 3;
     padding-bottom: 0 !important;
     -webkit-box-shadow: 0 4px 18px -2px #444;
     -moz-box-shadow: 0 4px 18px -2px #444;
@@ -199,11 +212,14 @@ h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
     background-image: url('/static/img/banner-publisher.png');
     background-size: cover;
     /*background-attachment: fixed;*/
-    z-index: -1;
 }
 
 .italic {
     font-style: italic !important;
+}
+
+.publisherOffering1 {
+    padding: 7rem 0 7rem 0 !important;
 }
 
 @media only screen and (max-width: 767px) {
