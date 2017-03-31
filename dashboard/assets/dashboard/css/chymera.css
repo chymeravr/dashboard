@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
 @import url('https://fonts.googleapis.com/css?family=Titillium+Web:200,400,600');
-@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
 
 body {
     color: #555 !important;
@@ -169,14 +169,16 @@ h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
     color: white !important;
     border-color: white !important;
     margin-bottom: 2px !important;
-    padding: 10px 25px 10px 25px !important;
+    padding: 10px 0px 10px 0px !important;
+    margin: 0px 25px 0px 25px !important;
 }
 
 .navbarItem {
     color: white !important;
     text-align: right !important;
     margin-bottom: 2px !important;
-    padding: 10px 25px 10px 25px !important;
+    padding: 10px 0px 10px 0px !important;
+    margin: 0px 25px 0px 25px !important;
 }
 
 .navbarItem, .navbarActiveItem {

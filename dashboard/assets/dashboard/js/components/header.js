@@ -67,7 +67,7 @@ class Header extends React.Component {
                                 <Menu fluid vertical pointing secondary size='massive' floated='right' color='blue' className="navbarMenuMobile">
                                     {getItem('advertisers', '/advertiser/')}
                                     {getItem('publishers', '/publisher/')}
-                                    {getItem('careers', '/')}
+                                    {getItem('careers', '/careers')}
                                     {logoutButton}
                                 </Menu>
                             </Accordion.Content>
@@ -83,7 +83,7 @@ class Header extends React.Component {
                                     <Menu pointing secondary size='massive' floated='right' color='blue' className="navbarMenu">
                                         {getItem('advertisers', '/advertiser/')}
                                         {getItem('publishers', '/publisher/')}
-                                        {getItem('careers', '/')}
+                                        {getItem('careers', '/careers')}
                                         <Menu.Item />
                                         {logoutButton}
                                     </Menu>

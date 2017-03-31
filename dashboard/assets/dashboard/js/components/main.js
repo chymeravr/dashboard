@@ -10,6 +10,7 @@ import Header from './header'
 import Footer from './footer'
 import { ProfileView } from './profile'
 import { ContactView } from './contact'
+import { CareerView } from './careers'
 import { LoginForm } from './login'
 import { AdvertiserView } from './advertiser/advertiser'
 import { CampaignDetailView } from './advertiser/campaignDetail'
@@ -94,7 +95,7 @@ class AppView extends React.Component {
             transparent = true;
         }
 
-        if (!this.state.adblock || currentRoute == "home") {
+        if (!this.state.adblock || ['home', 'contact', 'careers', 'advertisers', 'publishers'].indexOf(currentRoute) > 0) {
             return (
                 <div className="Site">
                     <Header showLogout={dashboard} currentPath={this.props.location.pathname} transparent={transparent} />
@@ -130,6 +131,7 @@ render((
         <Route path="/" component={AppView}>
             <IndexRoute name="home" component={HomeView} />
             <Route name="contact" path="/contact" component={ContactView} />
+            <Route name="career" path="/careers" component={CareerView} />
             <Route name="login" path="/login" component={LoginForm} />
             <Route name="profile" path="/profile/" component={ProfileView} />} />
             <Route name="advertiser" path="/advertiser/" component={AdvertiserView} />
