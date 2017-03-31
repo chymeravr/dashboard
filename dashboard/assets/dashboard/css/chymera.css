@@ -216,6 +216,11 @@ h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
     /*background-attachment: fixed;*/
 }
 
+.smallText {
+    font-size: 14px !important;
+    font-weight: 300 !important;
+}
+
 .italic {
     font-style: italic !important;
 }

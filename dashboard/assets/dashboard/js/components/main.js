@@ -25,7 +25,7 @@ import { Grid, Container, Message } from 'semantic-ui-react'
 ReactGA.initialize('UA-89829978-1');
 
 function logPageView() {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
     ReactGA.set({ page: window.location.hash });
     ReactGA.pageview(window.location.hash);
 }
