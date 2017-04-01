@@ -100,11 +100,10 @@ export class PublisherHomeView extends React.Component {
                                 Premium Advertisers
                             </Header>
                             <p style={{ lineHeight: '35px' }}>
-                                VR is an excellent platform for story telling. But did you know that advertisers are keen on realizing
-                                this potential of VR to tell their brand story? They are eager to shell out premium bucks to connect to their users. And
-                                well, you want to make more money. Don't you?
-
-                                Integrate Chymera ads and open an alternate channel for revenue influx.
+                                VR is an excellent platform for storytelling. Did you know that advertisers are excited to
+                                unlock the potential of VR to share their brand story? They are eager to shell out big monies
+                                to connect with users. So, your search for earnings ends here. Integrate Chymera ads and open
+                                a brand new channel for revenue influx.
                             </p>
                         </Grid.Column>
                         <Grid.Column width={2} />
@@ -121,19 +120,19 @@ export class PublisherHomeView extends React.Component {
                                 </Grid.Column>
                                 <Grid.Column width={6}>
                                     <Header as='h3' className='boldText blue'><Icon name='cubes' />Unity app?</Header>
-                                    <p >Use easy to use, drag and drop Chymera Unity SDK</p>
+                                    <p >Easy to use, drag and drop Chymera Unity SDK</p>
                                     <br />
                                 </Grid.Column>
                                 <Grid.Column only='computer' width={2} />
                                 <Grid.Column only='computer' width={2} />
                                 <Grid.Column width={6}>
-                                    <Header as='h3' className='boldText blue'><Icon name='android' />Have native android app for VR?</Header>
-                                    <p>Use Chymera Android SDK for Daydream, Cardboard and GearVR.</p>
+                                    <Header as='h3' className='boldText blue'><Icon name='android' />Have native Android app for VR?</Header>
+                                    <p>Try Chymera Android SDK for Daydream, Cardboard and GearVR</p>
                                     <br />
                                 </Grid.Column>
                                 <Grid.Column width={6}>
                                     <Header as='h3' className='boldText blue'><Icon name='line chart' />Worried when and where to place ad units?</Header>
-                                    <p>Use Chymera Analytics for publishers and find out the best placement time and location</p>
+                                    <p>Chymera Analytics helps you find out the best time and location for ad placement.</p>
                                 </Grid.Column>
                                 <Grid.Column width={2} />
                             </Grid.Row>
@@ -143,7 +142,7 @@ export class PublisherHomeView extends React.Component {
                     <Grid.Row columns={16} verticalAlign='middle' className="section">
                         <SignUp headingRow={signUpHeader} />
                     </Grid.Row>
-                    <Divider hidden/>
+                    <Divider hidden />
                 </Grid >
             </main >
         );

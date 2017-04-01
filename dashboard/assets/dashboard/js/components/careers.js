@@ -3,7 +3,7 @@ import { debug, callApiWithJwt } from '../lib.js'
 import { config } from '../config.js'
 import { hashHistory, Link } from 'react-router';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
-import { Button, Form, Container, Grid, Message, Card, Image, Statistic, Icon, Header, Input, Flag, Table, Item, Divider, Accordion, List } from 'semantic-ui-react'
+import { Button, Form, Container, Grid, Message, Card, Image, Statistic, Icon, Header, Accordion, List } from 'semantic-ui-react'
 
 export class CareerView extends React.Component {
     constructor(props) {
