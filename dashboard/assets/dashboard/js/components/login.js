@@ -4,7 +4,7 @@ import { hashHistory } from 'react-router';
 import { callRawApiWithJwt, callApiWithJwt, debug } from '../lib.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 import { FormInput } from './common'
-import { Button, Form, Container, Grid, Message } from 'semantic-ui-react'
+import { Button, Form, Container, Grid, Message, Header } from 'semantic-ui-react'
 
 export class LoginForm extends React.Component {
     constructor(props) {
@@ -68,8 +68,9 @@ export class LoginForm extends React.Component {
         return (
             <main className="Site-content" style={{ backgroundColor: '#008FCB' }}>
                 <Grid centered verticalAlign='middle' columns={4}>
-                    <Grid.Row verticalAlign='middle' columns={1} style={{ height: '100vh' }}>
+                    <Grid.Row verticalAlign='middle' columns={1} style={{ height: '80vh' }}>
                         <Grid.Column verticalAlign='middle' width={4}>
+                            <Header as='h1' className='whiteText'>Login!</Header>
                             {errorMessage}
                             <Form>
                                 <Form.Input placeholder='Username' onChange={(e, d) => this.handleChange('username')(e, d)} />
