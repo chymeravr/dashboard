@@ -12,7 +12,7 @@ export class TermsView extends React.Component {
     }
 
     componentDidMount() {
-
+        document.title = 'Terms of Service & Privacy Policy'
     }
 
     render() {

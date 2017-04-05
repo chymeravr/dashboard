@@ -12,9 +12,7 @@ export class CareerView extends React.Component {
     }
 
     componentDidMount() {
-        $('.ui.accordion')
-            .accordion()
-            ;
+        document.title = 'Careers | Chymera VR'
     }
 
     render() {
