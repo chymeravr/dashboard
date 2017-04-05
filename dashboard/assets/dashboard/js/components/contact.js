@@ -14,6 +14,7 @@ export class ContactView extends React.Component {
     componentDidMount() {
         document.title = 'Contact Us | Chymera VR'
     }
+    
 
     render() {
 
