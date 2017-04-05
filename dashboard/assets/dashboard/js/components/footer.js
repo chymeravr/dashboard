@@ -19,8 +19,15 @@ class Footer extends React.Component {
             fontFamily: 'Roboto'
         }
 
-        const footerLink = (content, href) => <List.Item as='a' style={{ fontSize: '1rem', color: '#fff' }} onClick={()=>hashHistory.push(href)}>{content}</List.Item>;
+        const footerLink = (content, href) => <List.Item as='a' style={{ fontSize: '1rem', color: '#fff' }} onClick={() => hashHistory.push(href)}>{content}</List.Item>;
         const footerLinkNewTab = (content, href) => <List.Item as='a' style={{ fontSize: '1rem', color: '#fff' }} href={href} target='_blank'>{content}</List.Item>;
+
+        const iconTextStyle = {
+            color: 'rgba(255, 255, 255, 0.5)',
+            textAlign: 'left',
+            fontSize: 'calc(13rem/16)',
+            marginTop: '10px'
+        };
 
         return (
             <footer>
@@ -34,9 +41,10 @@ class Footer extends React.Component {
                                     <List.Item>
                                         <Image src='/static/img/logo-simple.png' size='tiny' ></Image>
                                     </List.Item>
-                                    <List.Item href='/' style={{
-                                        color: 'rgba(255, 255, 255, 0.5)', textAlign: 'left', fontSize: 'calc(13rem/16)', marginTop:'10px'
-                                    }}>© Chymera VR, Inc.</List.Item>
+                                    <List.Item href='/' style={iconTextStyle}>
+                                        © Chymera VR, Inc.
+                                    </List.Item>
+                                    <List.Item ><Link to='/terms' style={iconTextStyle}>Terms of Service and Privacy Policy</Link></List.Item>
                                 </List>
                             </Grid.Column>
                             <Grid.Column width={6} />

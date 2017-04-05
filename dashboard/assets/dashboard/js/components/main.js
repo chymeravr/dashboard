@@ -12,6 +12,7 @@ import { ProfileView } from './profile'
 import { ContactView } from './contact'
 import { CareerView } from './careers'
 import { LoginForm } from './login'
+import { TermsView } from './terms'
 import { AdvertiserView } from './advertiser/advertiser'
 import { CampaignDetailView } from './advertiser/campaignDetail'
 import { AdgroupDetailView } from './advertiser/adgroupDetail'
@@ -132,6 +133,7 @@ render((
             <IndexRoute name="home" component={HomeView} />
             <Route name="contact" path="/contact" component={ContactView} />
             <Route name="career" path="/careers" component={CareerView} />
+            <Route name="terms" path="/terms" component={TermsView} />
             <Route name="login" path="/login" component={LoginForm} />
             <Route name="profile" path="/profile/" component={ProfileView} />} />
             <Route name="advertiser" path="/advertiser/" component={AdvertiserView} />
