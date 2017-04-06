@@ -68,10 +68,10 @@ export class HomeView extends React.Component {
                             <Grid centered verticalAlign='middle'>
                                 <Grid.Row>
                                     <Grid.Column width={12}>
-                                        <Header as='h1' className='centerText whiteText boldText'>Ad platform for VR
+                                        <Header as='h1' className='centerText whiteText boldText'>Ad Platform for VR
                                         </Header>
                                         <p className='centerText whiteText'>
-                                            Ads are <strong>NOW</strong> cool
+                                            ... ads are <strong>NOW</strong> cool
                                         </p>
                                     </Grid.Column>
                                 </Grid.Row>
