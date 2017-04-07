@@ -96,7 +96,7 @@ class AppView extends React.Component {
             transparent = true;
         }
 
-        if (!this.state.adblock || ['home', 'contact', 'careers', 'advertisers', 'publishers'].indexOf(currentRoute) > 0) {
+        if (!this.state.adblock || ['home', 'contact', 'careers', 'advertiser', 'publisher'].indexOf(currentRoute) >= 0) {
             return (
                 <div className="Site">
                     <Header showLogout={dashboard} currentPath={this.props.location.pathname} transparent={transparent} />
@@ -113,7 +113,7 @@ class AppView extends React.Component {
                             <Grid.Row columns={16} verticalAlign='middle' style={{ height: '92vh' }}>
                                 <Grid.Column width={10}>
                                     <Message negative>
-                                        <Message.Header>Disable AdBlock</Message.Header>
+                                        <Message.Header>Disable AdBlo11231ck</Message.Header>
                                         <p>Please turn off AdBlock to navigate the site. Adblock falsely marks our API requests as Ads</p>
                                     </Message>
                                 </Grid.Column>
