@@ -1,5 +1,4 @@
 import json
-import traceback
 
 import sendgrid
 from django.http import HttpResponse
