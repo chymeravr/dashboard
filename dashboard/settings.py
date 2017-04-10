@@ -48,7 +48,6 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -84,6 +83,7 @@ if DEBUG:
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            'ATOMIC_REQUESTS': True,
         }
     }
 else:
@@ -95,6 +95,7 @@ else:
             'PASSWORD': 'ciportal',
             'HOST': '13.93.217.168',
             'PORT': '5432',
+            'ATOMIC_REQUESTS': True
         },
     }
 # Password validation

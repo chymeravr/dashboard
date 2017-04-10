@@ -1,4 +1,6 @@
 from django.contrib.auth.models import User
+from django.db import transaction
+from django.db.transaction import atomic
 from rest_framework.serializers import ModelSerializer
 
 from chym_user.models import Profile, TestDevice
@@ -9,13 +11,11 @@ class UserSerializer(ModelSerializer):
         model = User
         fields = (
             'username',
-            'email',
             'password',
-            'email'
         )
 
         read_only_fields = (
-            'email',
+            ('username',)
         )
 
         extra_kwargs = {
@@ -31,18 +31,28 @@ class UserProfileSerializer(ModelSerializer):
         fields = (
             'id',
             'user',
+            'email',
             'advertising_funds',
             'advertising_burn',
             'publisher_earnings',
             'publisher_payout',
-            'currency'
+            'currency',
+            'active',
         )
-        read_only_fields = ('advertising_budget', 'publisher_earnings', 'advertising_burn', 'publisher_payout')
+        read_only_fields = ('advertising_budget',
+                            'publisher_earnings',
+                            'advertising_burn',
+                            'publisher_payout',
+                            'email',
+                            'active')
 
+    @atomic
     def create(self, validated_data):
         user_data = validated_data.pop('user')
+        user_data['is_active'] = False
         user = User.objects.create_user(**user_data)
         return Profile.objects.create(user=user, **validated_data)
+
 
 
 class TestDeviceSerializer(ModelSerializer):

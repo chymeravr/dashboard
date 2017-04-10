@@ -30,11 +30,13 @@ STATUS = (
 class Profile(models.Model):
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    email = models.EmailField(editable=False, blank=False, null=False)
     currency = models.CharField(choices=CURRENCY, default=USD, max_length=20)
     advertising_funds = models.FloatField(default=0)
     advertising_burn = models.FloatField(default=0)
     publisher_earnings = models.FloatField(default=0)
     publisher_payout = models.FloatField(default=0)
+    activation_code = models.UUIDField(default=uuid.uuid4, unique=True, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
