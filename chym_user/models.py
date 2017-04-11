@@ -28,9 +28,12 @@ STATUS = (
 
 # Create your models here.
 class Profile(models.Model):
+    def __str__(self):
+        return '%s : %s' % (str(self.user.username), str(self.email))
+
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    email = models.EmailField(editable=False, blank=False, null=False)
+    email = models.EmailField(blank=False, null=False, unique=True, db_index=True)
     currency = models.CharField(choices=CURRENCY, default=USD, max_length=20)
     advertising_funds = models.FloatField(default=0)
     advertising_burn = models.FloatField(default=0)
@@ -42,6 +45,9 @@ class Profile(models.Model):
 
 
 class InterestedUser(models.Model):
+    def __str__(self):
+        return '%s' % (str(self.user.username))
+
     email = models.CharField(max_length=100, primary_key=True)
     status = models.CharField(choices=STATUS, default=SIGNED_UP, max_length=20)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -49,6 +55,9 @@ class InterestedUser(models.Model):
 
 
 class TestDevice(models.Model):
+    def __str__(self):
+        return '%s : %s' % (str(self.user), str(self.deviceId))
+
     deviceId = models.CharField(max_length=100)
     user = models.ForeignKey(User)
     status = models.BooleanField(default=True)

@@ -31,12 +31,26 @@ class RegisterView(APIView):
     @permission_classes((AllowAny,))
     def post(self, request):
         try:
-            self.serializer_class.create(UserProfileSerializer(),
-                                     json.loads(request.body.decode('utf-8')))
+            serializer = UserProfileSerializer(data=json.loads(request.body.decode('utf-8')))
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
             return HttpResponse(status=201)
-        except:
-            return HttpResponse(status=400)
+        except Exception, e:
+            raise e
 
+
+@permission_classes((AllowAny,))
+class ActivateView(APIView):
+    @permission_classes((AllowAny,))
+    def get(self, request, activation_code):
+        try:
+            user = Profile.objects.get(activation_code=activation_code).user
+            user.is_active = True
+            user.save()
+            print user
+            return HttpResponse(status=200)
+        except Exception, e:
+            return HttpResponse(status=400, content=str(e.message))
 
 
 @permission_classes((IsAuthenticated,))

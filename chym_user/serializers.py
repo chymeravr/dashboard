@@ -1,5 +1,4 @@
 from django.contrib.auth.models import User
-from django.db import transaction
 from django.db.transaction import atomic
 from rest_framework.serializers import ModelSerializer
 
@@ -14,13 +13,12 @@ class UserSerializer(ModelSerializer):
             'password',
         )
 
-        read_only_fields = (
-            ('username',)
-        )
-
         extra_kwargs = {
             'password': {'write_only': True},
         }
+
+    def create(self, validated_data):
+        return User.objects.create_user(**validated_data)
 
 
 class UserProfileSerializer(ModelSerializer):
@@ -37,22 +35,20 @@ class UserProfileSerializer(ModelSerializer):
             'publisher_earnings',
             'publisher_payout',
             'currency',
-            'active',
         )
         read_only_fields = ('advertising_budget',
                             'publisher_earnings',
                             'advertising_burn',
-                            'publisher_payout',
-                            'email',
-                            'active')
+                            'publisher_payout',)
 
     @atomic
     def create(self, validated_data):
         user_data = validated_data.pop('user')
         user_data['is_active'] = False
-        user = User.objects.create_user(**user_data)
+        user_serializer = UserSerializer(data=user_data)
+        user_serializer.is_valid(raise_exception=True)
+        user = user_serializer.save()
         return Profile.objects.create(user=user, **validated_data)
-
 
 
 class TestDeviceSerializer(ModelSerializer):
