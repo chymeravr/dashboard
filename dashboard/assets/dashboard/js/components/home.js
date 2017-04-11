@@ -18,12 +18,7 @@ export class HomeView extends React.Component {
     }
 
     componentWillMount() {
-        callApiWithJwt('/user/api/view_profile',
-            'GET',
-            {},
-            (response) => this.setState({ next: '/profile/' }),
-            (error) => ({})
-        );
+
     }
 
     render() {
@@ -35,7 +30,7 @@ export class HomeView extends React.Component {
                     <div >
                         <Header as='h2' style={{ fontWeight: 'bold', color: '#008fcb', }}>{header}</Header>
                         <p style={{ textAlign: 'left' }}>{content}</p>
-                        <Button as='a' content='Read More' color="orange" onClick={(e, d) => hashHistory.push(link)} />
+                        <Button color="orange" as='a' content='Read More' onClick={(e, d) => hashHistory.push(link)} href={link} />
                     </div>
                 </Grid.Column>
             )

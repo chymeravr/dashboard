@@ -50,8 +50,8 @@ export class SignUp extends React.Component {
     render() {
         debug('signUp', this.state);
 
-        const submitButton = <Button onClick={(e, d) => { this.registerUser(); e.preventDefault(); } } className="button">Sign Up</Button >;
-        const mobileSubmitButton = <Button fluid onClick={(e, d) => { this.registerUser(); e.preventDefault(); } } className="button">Sign Up</Button>;
+        const submitButton = <Button color="orange" onClick={(e, d) => { this.registerUser(); e.preventDefault(); } } className="button">Sign Up</Button >;
+        const mobileSubmitButton = <Button color="orange" fluid onClick={(e, d) => { this.registerUser(); e.preventDefault(); } } className="button">Sign Up</Button>;
 
         const emailInput =
             <Input className={this.bordered ? 'orangeInput' : ''} fluid error={this.state.emailExists && this.state.registered}

@@ -19,7 +19,7 @@ class Footer extends React.Component {
             fontFamily: 'Roboto'
         }
 
-        const footerLink = (content, href) => <List.Item as='a' style={{ fontSize: '1rem', color: '#fff' }} onClick={() => hashHistory.push(href)}>{content}</List.Item>;
+        const footerLink = (content, href) => <List.Item as='a' style={{ fontSize: '1rem', color: '#fff' }} onClick={() => hashHistory.push(href)} href={href}>{content}</List.Item>;
         const footerLinkNewTab = (content, href) => <List.Item as='a' style={{ fontSize: '1rem', color: '#fff' }} href={href} target='_blank'>{content}</List.Item>;
 
         const iconTextStyle = {
@@ -56,9 +56,9 @@ class Footer extends React.Component {
                                             <Table.Cell>
                                                 <List link inverted>
                                                     <List.Item><Header as='h3' style={headingStyle}>Links</Header></List.Item>
-                                                    {footerLink('Contact Us', 'contact')}
+                                                    {footerLink('Contact Us', 'contact/')}
                                                     {footerLinkNewTab('Blog', '')}
-                                                    {footerLink('Careers', 'careers')}
+                                                    {footerLink('Careers', 'careers/')}
                                                 </List>
                                             </Table.Cell>
                                             <Table.Cell>

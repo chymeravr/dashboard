@@ -18,12 +18,7 @@ export class PublisherHomeView extends React.Component {
     }
 
     componentWillMount() {
-        callApiWithJwt('/user/api/view_profile',
-            'GET',
-            {},
-            (response) => this.setState({ loggedIn: true }),
-            (error) => ({})
-        );
+
     }
 
     render() {

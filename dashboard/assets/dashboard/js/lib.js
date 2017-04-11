@@ -24,6 +24,21 @@ export function callApiWithJwt(path, method, body, onSuccess, onError, statusCod
     }).then(onSuccess).catch(onError);
 }
 
+export function callApi(path, method, body, onSuccess, onError, statusCode = 200) {
+    fetch(path, {
+        method: method,
+        body: body,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(response => {
+        if (response.status != statusCode) {
+            throw new Error(response.statusText)
+        }
+        return response.json();
+    }).then(onSuccess).catch(onError);
+}
+
 export function callRawApiWithJwt(path, method, body, onSuccess, onError, statusCode = 200) {
     const jwtToken = localStorage.getItem(config.jwt.tokenKey);
     fetch(path, {

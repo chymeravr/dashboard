@@ -8,20 +8,22 @@ class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showHeader: props.showLogout,
             currentPath: props.currentPath,
             headerVisible: false,
             transparent: props.transparent,
+            signedIn: props.signedIn,
         }
+        this.handleLogout = props.handleLogout;
         this.toggleVisibility = this.toggleVisibility.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({ showHeader: nextProps.showLogout, currentPath: nextProps.currentPath, headerVisible: false, transparent: nextProps.transparent });
-    }
-
-    handleLogout() {
-        logout(hashHistory);
+        this.setState({
+            currentPath: nextProps.currentPath,
+            headerVisible: false,
+            transparent: nextProps.transparent,
+            signedIn: nextProps.signedIn
+        });
     }
 
     toggleVisibility() {
@@ -31,10 +33,10 @@ class Header extends React.Component {
     render() {
         debug("header", this.state);
 
-        if (this.state.showHeader && localStorage.getItem(config.jwt.tokenKey)) {
-            var logoutButton = <Menu.Item className="navbarButton navbarItem" position="right" name='logout' onClick={this.handleLogout} />
+        if (this.state.signedIn) {
+            var button = <Menu.Item className="navbarButton navbarItem" position="right" name='logout' onClick={this.handleLogout} />
         } else {
-            var logoutButton = <Menu.Item className="navbarButton navbarItem" position="right" name='Sign-in' onClick={() => hashHistory.push('/login')} />
+            var button = <Menu.Item className="navbarButton navbarItem" position="right" name='Sign-in' onClick={() => hashHistory.push('/login')} />
         }
 
 
@@ -68,7 +70,7 @@ class Header extends React.Component {
                                     {getItem('advertisers', '/advertiser/')}
                                     {getItem('publishers', '/publisher/')}
                                     {getItem('careers', '/careers')}
-                                    {logoutButton}
+                                    {button}
                                 </Menu>
                             </Accordion.Content>
                         </Accordion>
@@ -84,8 +86,10 @@ class Header extends React.Component {
                                         {getItem('advertisers', '/advertiser/')}
                                         {getItem('publishers', '/publisher/')}
                                         {getItem('careers', '/careers')}
-                                        <Menu.Item />
-                                        {logoutButton}
+                                        <Menu.Item only='computer'/>
+                                        {button}
+                                        {this.state.signedIn ? <Button color="teal" position="right" content='Advertiser' onClick={(e) => hashHistory.push('/dashboard/advertiser/')} /> : ''}
+                                        {this.state.signedIn ? <Button color="yellow" position="right" content='Publisher' onClick={(e) => hashHistory.push('/dashboard/publisher/')} /> : ''}
                                     </Menu>
                                 </Table.Cell>
                             </Table.Row>

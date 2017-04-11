@@ -34,7 +34,7 @@ class RegisterView(APIView):
             serializer = UserProfileSerializer(data=json.loads(request.body.decode('utf-8')))
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            return HttpResponse(status=201)
+            return HttpResponse(status=201, content='{}', content_type='application/json')
         except Exception, e:
             raise e
 

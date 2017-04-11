@@ -25,6 +25,18 @@ body {
     display: none;
 }
 
+.ui.form .field.field input:-webkit-autofill  {
+    border-color: #fff !important;
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+}
+
+.ui.form .field.field input:-webkit-autofill:focus  {
+    border-color: #fff !important;
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+}
+
+
+
 .ui.menu  {
     font-family: 'Roboto', sans-serif !important;
     font-weight: bold !important
@@ -33,6 +45,10 @@ body {
 
 .ui.orange.button {
     color: #555 !important;
+    background-color: #fda700 !important; 
+    font-size: calc(18rem/16) !important;
+    font-weight: 700 !important;
+    color: #414042 !important;
 }
 
 .greyGradientBackground {
@@ -124,10 +140,6 @@ h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
 
 .button {
     font-family: 'Lato', sans-serif !important;
-    font-size: calc(18rem/16) !important;
-    font-weight: 700 !important;
-    color: #414042 !important;
-    background-color: #fda700 !important;
 }
 
 .button.transparent {
@@ -191,6 +203,8 @@ h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
     border-radius:2px !important;
     color: white !important;
     padding: 10px 25px 10px 25px !important;
+    margin-left: 50px !important;
+    margin-right: 50px !important;
     margin-bottom: 2px !important;
 }
 

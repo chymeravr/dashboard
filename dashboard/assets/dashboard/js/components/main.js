@@ -17,8 +17,10 @@ import { AdvertiserView } from './advertiser/advertiser'
 import { CampaignDetailView } from './advertiser/campaignDetail'
 import { AdgroupDetailView } from './advertiser/adgroupDetail'
 import { PublisherHomeView } from './publisher/publisherHome'
+import { PublisherView } from './publisher/publisher'
 import { AppDetailView } from './publisher/appDetail'
-import { debug, callApiWithJwt } from '../lib.js'
+import { debug, callApiWithJwt, logout, callRawApiWithJwt } from '../lib.js'
+import { config } from '../config'
 import ReactGA from 'react-ga'
 import '../../../../../semantic/dist/semantic.min.css';
 import { Grid, Container, Message } from 'semantic-ui-react'
@@ -34,20 +36,38 @@ function logPageView() {
 class AppView extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {};
+        this.handleLogout = this.handleLogout.bind(this);
+        this.tryLogin = this.tryLogin.bind(this);
     }
 
-    componentDidMount() {
-        if (this.props.children.props.route.name == 'home') {
-            callApiWithJwt('/user/api/view_profile',
-                'GET',
-                null,
-                (response) => hashHistory.push('/profile/'),
-                (error) => {
+    tryLogin(event, username, password) {
+        event.preventDefault();
+        var data = new FormData();
+        data.append("username", username);
+        data.append("password", password);
 
-                }
-            );
-        }
+        callRawApiWithJwt('/user/api/login',
+            'POST',
+            data,
+            (response) => {
+                localStorage.setItem(config.jwt.tokenKey, response['token']);
+                this.setState(Object.assign({}, this.state, { signedIn: true }));
+            },
+            (error) => {
+                this.setState(Object.assign({}, this.state, { loginFailed: true }));
+            });
+    }
+
+    componentWillMount() {
+        callApiWithJwt('/user/api/view_profile',
+            'GET',
+            null,
+            (response) => this.setState(Object.assign({}, this.state, { signedIn: true })),
+            (error) => {
+
+            }
+        );
 
         var isAdBlockDetected;
         // Function called if AdBlock is not detected
@@ -75,21 +95,21 @@ class AppView extends React.Component {
         this.setState(Object.assign({}, this.state, { adblock: isAdBlockDetected }));
     }
 
+    handleLogout() {
+        this.setState(Object.assign(this.state, { signedIn: false }))
+        logout(hashHistory);
+    }
+
     render() {
         debug("main", this.state);
         var props = {}
         var currentRoute = this.props.children.props.route.name;
         var align = "";
-        var dashboard = true;
         if (!currentRoute
             || currentRoute == 'profile'
             || currentRoute == 'home'
             || currentRoute == 'login') {
             align += "  ui center aligned grid";
-
-            if (currentRoute != 'profile') { // Center profile but show logout button as well
-                dashboard = false;
-            }
         }
         var transparent = false;
         if (currentRoute == 'publisher') {
@@ -99,21 +119,21 @@ class AppView extends React.Component {
         if (!this.state.adblock || ['home', 'contact', 'careers', 'advertiser', 'publisher'].indexOf(currentRoute) >= 0) {
             return (
                 <div className="Site">
-                    <Header showLogout={dashboard} currentPath={this.props.location.pathname} transparent={transparent} />
-                    {this.props.children}
+                    <Header currentPath={this.props.location.pathname} transparent={transparent} signedIn={this.state.signedIn} handleLogout={this.handleLogout} />
+                    {React.cloneElement(this.props.children, { tryLogin: this.tryLogin })}
                     <Footer />
                 </div>
             );
         } else {
             return (
                 <div className="Site">
-                    <Header showLogout={dashboard} currentPath={this.props.location.pathname} />
+                    <Header currentPath={this.props.location.pathname} signedIn={this.state.signedIn} handleLogout={this.handleLogout} />
                     <main className="Site-content ui center aligned" style={{ backgroundColor: '#008FCB' }}>
                         <Grid centered columns={16} style={{ margin: 0 }} verticalAlign='middle'>
                             <Grid.Row columns={16} verticalAlign='middle' style={{ height: '92vh' }}>
                                 <Grid.Column width={10}>
                                     <Message negative>
-                                        <Message.Header>Disable AdBlo11231ck</Message.Header>
+                                        <Message.Header>Disable AdBlock</Message.Header>
                                         <p>Please turn off AdBlock to navigate the site. Adblock falsely marks our API requests as Ads</p>
                                     </Message>
                                 </Grid.Column>
@@ -138,6 +158,8 @@ render((
             <Route name="login" path="/login" component={LoginForm} />
             <Route name="profile" path="/profile/" component={ProfileView} />} />
             <Route name="advertiser" path="/advertiser/" component={AdvertiserView} />
+            <Route name="advertiserDashbooard" path="/dashboard/advertiser/" component={AdvertiserView} />
+            <Route name="publisherDashbooard" path="/dashboard/publisher/" component={PublisherView} />
             <Route name="campaignDetail" path="/advertiser/campaigns/:campaignId" component={CampaignDetailView} />
             <Route name="adgroupDetail" path="/advertiser/adgroups/:adgroupId" component={AdgroupDetailView} />
             <Route name="publisher" path="/publisher/" component={PublisherHomeView} />
