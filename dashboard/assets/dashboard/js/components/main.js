@@ -11,7 +11,7 @@ import Footer from './footer'
 import { ProfileView } from './profile'
 import { ContactView } from './contact'
 import { CareerView } from './careers'
-import Login_C  from './login_c'
+import Login_C from './login_c'
 import { TermsView } from './terms'
 import { AdvertiserView } from './advertiser/advertiser'
 import { CampaignDetailView } from './advertiser/campaignDetail'
@@ -25,10 +25,13 @@ import ReactGA from 'react-ga'
 import '../../../../../semantic/dist/semantic.min.css';
 import { Grid, Container, Message } from 'semantic-ui-react'
 import { createStore, store } from 'redux'
-import { Provider } from 'react-redux'
+import { Provider, connect } from 'react-redux'
 import loginApp from '../redux/loginReducers'
+import { loginSucceeded } from '../redux/loginActions'
 
 ReactGA.initialize('UA-89829978-1');
+
+let loginStore = createStore(loginApp)
 
 function logPageView() {
     window.scrollTo(0, 0);
@@ -36,22 +39,28 @@ function logPageView() {
     ReactGA.pageview(window.location.hash);
 }
 
+let createHandlers = function (dispatch) {
+    return {
+        checkLogin: () => {
+            callApiWithJwt('/user/api/view_profile',
+                'GET',
+                null,
+                (response) => { console.info(response); loginStore.dispatch(loginSucceeded(response.user.username)) },
+                (error) => { }
+            );
+        },
+    }
+}
+
 class AppView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
+        this.handlers = createHandlers(this.props.dispatch);
     }
 
     componentWillMount() {
-        callApiWithJwt('/user/api/view_profile',
-            'GET',
-            null,
-            (response) => this.setState(Object.assign({}, this.state, { signedIn: true })),
-            (error) => {
-
-            }
-        );
-
+        this.handlers.checkLogin();
         var isAdBlockDetected;
         // Function called if AdBlock is not detected
         function adBlockNotDetected() {
@@ -126,17 +135,16 @@ class AppView extends React.Component {
 
 }
 
-let loginStore = createStore(loginApp)
 
 render((
     <Provider store={loginStore}>
         <Router history={hashHistory} onUpdate={logPageView} >
-            <Route path="/" component={AppView}>
+            <Route path="/" component={connect()(AppView)}>
                 <IndexRoute name="home" component={HomeView} />
-                <Route name="contact" path="/contact" component={ContactView} />
-                <Route name="career" path="/careers" component={CareerView} />
-                <Route name="terms" path="/terms" component={TermsView} />
-                <Route name="login" path="/login" component={Login_C} />
+                <Route name="contact" path="/contact/" component={ContactView} />
+                <Route name="career" path="/careers/" component={CareerView} />
+                <Route name="terms" path="/terms/" component={TermsView} />
+                <Route name="login" path="/login/" component={Login_C} />
                 <Route name="profile" path="/profile/" component={ProfileView} />} />
                 <Route name="advertiser" path="/advertiser/" component={AdvertiserView} />
                 <Route name="advertiserDashbooard" path="/dashboard/advertiser/" component={AdvertiserView} />

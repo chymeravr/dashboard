@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { startLogin, loginSucceeded, loginFailed, logout } from '../redux/loginActions'
 import { Login_P } from './login_p'
 import { callRawApiWithJwt, callApiWithJwt, debug, callApi } from '../lib.js'
-import {config} from  '../config'
+import { config } from '../config'
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -17,7 +17,12 @@ const mapDispatchToProps = (dispatch) => {
                 data,
                 (response) => {
                     localStorage.setItem(config.jwt.tokenKey, response['token']);
-                    dispatch(loginSucceeded());
+                    callApiWithJwt('/user/api/view_profile',
+                        'GET',
+                        null,
+                        (response) => { console.info(response); dispatch(loginSucceeded(response.user.username)) },
+                        (error) => { }
+                    );
                 },
                 (error) => {
                     console.error(error)

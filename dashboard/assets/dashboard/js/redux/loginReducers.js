@@ -18,8 +18,18 @@ function login(state = NOT_ATTEMPTED, action) {
     }
 }
 
+function username(state = '', action) {
+    switch (action.type) {
+        case LOGIN_SUCCEEDED:
+            return action.username
+        default:
+            return state;
+    }
+}
+
 const loginApp = combineReducers({
-    login
+    login,
+    username
 })
 
 export default loginApp

@@ -38,12 +38,12 @@ class Header_P extends React.Component {
 
         const currentPath = this.state.currentPath
         var activeItem = '';
-        if (currentPath.match('publisher')) {
+        if (currentPath === '/publisher/') {
             activeItem = 'publishers';
-        } else if (currentPath.match('advertiser')) {
+        } else if (currentPath === '/advertiser/') {
             activeItem = 'advertisers';
-        } else if (currentPath.match('profile')) {
-            activeItem = 'profile';
+        } else if (currentPath === '/careers/') {
+            activeItem = 'careers';
         }
 
         const transparent = this.state.transparent;
@@ -65,7 +65,7 @@ class Header_P extends React.Component {
                                 <Menu fluid vertical pointing secondary size='massive' floated='right' color='blue' className="navbarMenuMobile">
                                     {getItem('advertisers', '/advertiser/')}
                                     {getItem('publishers', '/publisher/')}
-                                    {getItem('careers', '/careers')}
+                                    {getItem('careers', '/careers/')}
                                     {button}
                                 </Menu>
                             </Accordion.Content>
@@ -81,7 +81,7 @@ class Header_P extends React.Component {
                                     <Menu pointing secondary size='massive' floated='right' color='blue' className="navbarMenu">
                                         {getItem('advertisers', '/advertiser/')}
                                         {getItem('publishers', '/publisher/')}
-                                        {getItem('careers', '/careers')}
+                                        {getItem('careers', '/careers/')}
                                         <Menu.Item only='computer' />
                                         {button}
                                         {this.state.loginState === LOGIN_SUCCEEDED ? <Button color="teal" position="right" content='Advertiser' onClick={(e) => hashHistory.push('/dashboard/advertiser/')} /> : ''}
