@@ -11,6 +11,7 @@ class UserSerializer(ModelSerializer):
         fields = (
             'username',
             'password',
+            'is_active'
         )
 
         extra_kwargs = {
@@ -44,7 +45,7 @@ class UserProfileSerializer(ModelSerializer):
     @atomic
     def create(self, validated_data):
         user_data = validated_data.pop('user')
-        user_data['is_active'] = False
+        user_data[u'is_active'] = False
         user_serializer = UserSerializer(data=user_data)
         user_serializer.is_valid(raise_exception=True)
         user = user_serializer.save()

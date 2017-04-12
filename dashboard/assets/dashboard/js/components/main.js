@@ -6,12 +6,12 @@ import 'fuckadblock'
 import 'whatwg-fetch'
 
 import { HomeView } from './home'
-import Header from './header'
+import Header_C from './header_c'
 import Footer from './footer'
 import { ProfileView } from './profile'
 import { ContactView } from './contact'
 import { CareerView } from './careers'
-import { LoginForm } from './login'
+import Login_C  from './login_c'
 import { TermsView } from './terms'
 import { AdvertiserView } from './advertiser/advertiser'
 import { CampaignDetailView } from './advertiser/campaignDetail'
@@ -19,11 +19,14 @@ import { AdgroupDetailView } from './advertiser/adgroupDetail'
 import { PublisherHomeView } from './publisher/publisherHome'
 import { PublisherView } from './publisher/publisher'
 import { AppDetailView } from './publisher/appDetail'
-import { debug, callApiWithJwt, logout, callRawApiWithJwt } from '../lib.js'
+import { debug, callApiWithJwt, callRawApiWithJwt } from '../lib.js'
 import { config } from '../config'
 import ReactGA from 'react-ga'
 import '../../../../../semantic/dist/semantic.min.css';
 import { Grid, Container, Message } from 'semantic-ui-react'
+import { createStore, store } from 'redux'
+import { Provider } from 'react-redux'
+import loginApp from '../redux/loginReducers'
 
 ReactGA.initialize('UA-89829978-1');
 
@@ -37,26 +40,6 @@ class AppView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
-        this.handleLogout = this.handleLogout.bind(this);
-        this.tryLogin = this.tryLogin.bind(this);
-    }
-
-    tryLogin(event, username, password) {
-        event.preventDefault();
-        var data = new FormData();
-        data.append("username", username);
-        data.append("password", password);
-
-        callRawApiWithJwt('/user/api/login',
-            'POST',
-            data,
-            (response) => {
-                localStorage.setItem(config.jwt.tokenKey, response['token']);
-                this.setState(Object.assign({}, this.state, { signedIn: true }));
-            },
-            (error) => {
-                this.setState(Object.assign({}, this.state, { loginFailed: true }));
-            });
     }
 
     componentWillMount() {
@@ -95,11 +78,6 @@ class AppView extends React.Component {
         this.setState(Object.assign({}, this.state, { adblock: isAdBlockDetected }));
     }
 
-    handleLogout() {
-        this.setState(Object.assign(this.state, { signedIn: false }))
-        logout(hashHistory);
-    }
-
     render() {
         debug("main", this.state);
         var props = {}
@@ -119,15 +97,15 @@ class AppView extends React.Component {
         if (!this.state.adblock || ['home', 'contact', 'careers', 'advertiser', 'publisher'].indexOf(currentRoute) >= 0) {
             return (
                 <div className="Site">
-                    <Header currentPath={this.props.location.pathname} transparent={transparent} signedIn={this.state.signedIn} handleLogout={this.handleLogout} />
-                    {React.cloneElement(this.props.children, { tryLogin: this.tryLogin })}
+                    <Header_C currentPath={this.props.location.pathname} transparent={transparent} handleLogout={this.handleLogout} />
+                    {this.props.children}
                     <Footer />
                 </div>
             );
         } else {
             return (
                 <div className="Site">
-                    <Header currentPath={this.props.location.pathname} signedIn={this.state.signedIn} handleLogout={this.handleLogout} />
+                    <Header_C currentPath={this.props.location.pathname} handleLogout={this.handleLogout} />
                     <main className="Site-content ui center aligned" style={{ backgroundColor: '#008FCB' }}>
                         <Grid centered columns={16} style={{ margin: 0 }} verticalAlign='middle'>
                             <Grid.Row columns={16} verticalAlign='middle' style={{ height: '92vh' }}>
@@ -148,24 +126,28 @@ class AppView extends React.Component {
 
 }
 
+let loginStore = createStore(loginApp)
+
 render((
-    <Router history={hashHistory} onUpdate={logPageView} >
-        <Route path="/" component={AppView}>
-            <IndexRoute name="home" component={HomeView} />
-            <Route name="contact" path="/contact" component={ContactView} />
-            <Route name="career" path="/careers" component={CareerView} />
-            <Route name="terms" path="/terms" component={TermsView} />
-            <Route name="login" path="/login" component={LoginForm} />
-            <Route name="profile" path="/profile/" component={ProfileView} />} />
-            <Route name="advertiser" path="/advertiser/" component={AdvertiserView} />
-            <Route name="advertiserDashbooard" path="/dashboard/advertiser/" component={AdvertiserView} />
-            <Route name="publisherDashbooard" path="/dashboard/publisher/" component={PublisherView} />
-            <Route name="campaignDetail" path="/advertiser/campaigns/:campaignId" component={CampaignDetailView} />
-            <Route name="adgroupDetail" path="/advertiser/adgroups/:adgroupId" component={AdgroupDetailView} />
-            <Route name="publisher" path="/publisher/" component={PublisherHomeView} />
-            <Route name="appDetail" path="/publisher/apps/:appId" component={AppDetailView} />
-        </Route>
-    </Router>
+    <Provider store={loginStore}>
+        <Router history={hashHistory} onUpdate={logPageView} >
+            <Route path="/" component={AppView}>
+                <IndexRoute name="home" component={HomeView} />
+                <Route name="contact" path="/contact" component={ContactView} />
+                <Route name="career" path="/careers" component={CareerView} />
+                <Route name="terms" path="/terms" component={TermsView} />
+                <Route name="login" path="/login" component={Login_C} />
+                <Route name="profile" path="/profile/" component={ProfileView} />} />
+                <Route name="advertiser" path="/advertiser/" component={AdvertiserView} />
+                <Route name="advertiserDashbooard" path="/dashboard/advertiser/" component={AdvertiserView} />
+                <Route name="publisherDashbooard" path="/dashboard/publisher/" component={PublisherView} />
+                <Route name="campaignDetail" path="/advertiser/campaigns/:campaignId" component={CampaignDetailView} />
+                <Route name="adgroupDetail" path="/advertiser/adgroups/:adgroupId" component={AdgroupDetailView} />
+                <Route name="publisher" path="/publisher/" component={PublisherHomeView} />
+                <Route name="appDetail" path="/publisher/apps/:appId" component={AppDetailView} />
+            </Route>
+        </Router>
+    </Provider>
 ), document.getElementById('root'))
 
 let sitemapFunction = (() => {

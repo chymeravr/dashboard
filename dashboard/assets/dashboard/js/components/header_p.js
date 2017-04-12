@@ -3,18 +3,18 @@ import { Link, hashHistory } from 'react-router'
 import { logout, debug } from '../lib'
 import { config } from '../config'
 import { Table, Segment, Image, Menu, Grid, Button, Accordion, Icon } from 'semantic-ui-react'
+import { ATTEMPT_LOGIN, LOGIN_SUCCEEDED, LOGIN_FAILED } from '../redux/loginActions'
 
-class Header extends React.Component {
+class Header_P extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             currentPath: props.currentPath,
             headerVisible: false,
             transparent: props.transparent,
-            signedIn: props.signedIn,
+            loginState: props.loginState.login,
         }
         this.handleLogout = props.handleLogout;
-        this.toggleVisibility = this.toggleVisibility.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -22,18 +22,14 @@ class Header extends React.Component {
             currentPath: nextProps.currentPath,
             headerVisible: false,
             transparent: nextProps.transparent,
-            signedIn: nextProps.signedIn
+            loginState: nextProps.loginState.login
         });
-    }
-
-    toggleVisibility() {
-        this.setState(Object.assign({}, this.state, { headerVisible: !this.state.headerVisible }))
     }
 
     render() {
         debug("header", this.state);
 
-        if (this.state.signedIn) {
+        if (this.state.loginState === LOGIN_SUCCEEDED) {
             var button = <Menu.Item className="navbarButton navbarItem" position="right" name='logout' onClick={this.handleLogout} />
         } else {
             var button = <Menu.Item className="navbarButton navbarItem" position="right" name='Sign-in' onClick={() => hashHistory.push('/login')} />
@@ -86,10 +82,10 @@ class Header extends React.Component {
                                         {getItem('advertisers', '/advertiser/')}
                                         {getItem('publishers', '/publisher/')}
                                         {getItem('careers', '/careers')}
-                                        <Menu.Item only='computer'/>
+                                        <Menu.Item only='computer' />
                                         {button}
-                                        {this.state.signedIn ? <Button color="teal" position="right" content='Advertiser' onClick={(e) => hashHistory.push('/dashboard/advertiser/')} /> : ''}
-                                        {this.state.signedIn ? <Button color="yellow" position="right" content='Publisher' onClick={(e) => hashHistory.push('/dashboard/publisher/')} /> : ''}
+                                        {this.state.loginState === LOGIN_SUCCEEDED ? <Button color="teal" position="right" content='Advertiser' onClick={(e) => hashHistory.push('/dashboard/advertiser/')} /> : ''}
+                                        {this.state.loginState === LOGIN_SUCCEEDED ? <Button color="yellow" position="right" content='Publisher' onClick={(e) => hashHistory.push('/dashboard/publisher/')} /> : ''}
                                     </Menu>
                                 </Table.Cell>
                             </Table.Row>
@@ -101,4 +97,4 @@ class Header extends React.Component {
     }
 }
 
-module.exports = Header
+module.exports = Header_P

@@ -6,7 +6,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 import { FormInput } from './common'
 import { Button, Form, Container, Grid, Message, Header, Menu } from 'semantic-ui-react'
 
-export class LoginForm extends React.Component {
+export class Login_P extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -24,6 +24,8 @@ export class LoginForm extends React.Component {
     }
 
 
+
+    
     handleChange(key) {
         return (e, d) => {
             var state = {};
@@ -54,7 +56,7 @@ export class LoginForm extends React.Component {
             'POST',
             JSON.stringify(data),
             (response) => this.setState(Object.assign({}, this.state, { registered: true, registrationFailed: false })),
-            (error) => { this.setState(Object.assign({}, this.state, { registrationFailed: true })); throw error;},
+            (error) => { this.setState(Object.assign({}, this.state, { registrationFailed: true })); throw error; },
             201);
     }
 
@@ -95,6 +97,7 @@ export class LoginForm extends React.Component {
         const signUpForm =
             <Grid.Column verticalAlign='middle' width={4}>
                 {registrationErrorMessage}
+                {this.state.registered ? <Message positive content='Registration Successful. Our team will contact you regarding further steps on how to activate your account' /> : ''}
                 <Form>
                     <Form.Input placeholder='Username' onChange={(e, d) => this.handleChange('username')(e, d)} />
                     <Form.Input placeholder='Password' type='password' onChange={(e, d) => this.handleChange('password')(e, d)} />
