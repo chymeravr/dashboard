@@ -4,6 +4,10 @@ body {
     color: #555 !important;
 }
 
+body.wait, body.wait *{
+    cursor: wait !important;   
+}
+
 .Site {
   display: flex;
   flex: 0 0 auto;
@@ -155,8 +159,7 @@ h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
 }
 
 .orangeInput {
-    border: 2px solid #fda700 !important;
-    border-radius: 6px !important;
+ 
 }
 
 .navbar {

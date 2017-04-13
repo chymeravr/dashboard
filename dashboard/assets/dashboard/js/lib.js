@@ -8,6 +8,7 @@ export function debug(message, props) {
 }
 
 export function callApiWithJwt(path, method, body, onSuccess, onError, statusCode = 200) {
+    document.body.classList.add("wait");
     const jwtToken = localStorage.getItem(config.jwt.tokenKey);
     fetch(path, {
         method: method,
@@ -21,10 +22,17 @@ export function callApiWithJwt(path, method, body, onSuccess, onError, statusCod
             throw new Error(response.statusText)
         }
         return response.json();
-    }).then(onSuccess).catch(onError);
+    }).then(json => {
+        onSuccess(json);
+        document.body.classList.remove("wait");
+    }).catch(error => {
+        onError(error);
+        document.body.classList.remove("wait");
+    });
 }
 
 export function callApi(path, method, body, onSuccess, onError, statusCode = 200) {
+    document.body.classList.add("wait");
     fetch(path, {
         method: method,
         body: body,
@@ -36,10 +44,17 @@ export function callApi(path, method, body, onSuccess, onError, statusCode = 200
             throw new Error(response.statusText)
         }
         return response.json();
-    }).then(onSuccess).catch(onError);
+    }).then(json => {
+        onSuccess(json);
+        document.body.classList.remove("wait");
+    }).catch(error => {
+        onError(error);
+        document.body.classList.remove("wait");
+    });
 }
 
 export function callRawApiWithJwt(path, method, body, onSuccess, onError, statusCode = 200) {
+    document.body.classList.add("wait");
     const jwtToken = localStorage.getItem(config.jwt.tokenKey);
     fetch(path, {
         method: method,
@@ -52,7 +67,13 @@ export function callRawApiWithJwt(path, method, body, onSuccess, onError, status
             throw new Error(response.statusText)
         }
         return response.json();
-    }).then(onSuccess).catch(onError);
+    }).then(json => {
+        onSuccess(json);
+        document.body.classList.remove("wait");
+    }).catch(error => {
+        onError(error);
+        document.body.classList.remove("wait");
+    });
 }
 
 export function logout(hashHistory) {

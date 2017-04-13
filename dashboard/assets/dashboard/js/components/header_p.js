@@ -32,7 +32,7 @@ class Header_P extends React.Component {
         if (this.state.loginState === LOGIN_SUCCEEDED) {
             var button = <Menu.Item className="navbarButton navbarItem" position="right" name='logout' onClick={this.handleLogout} />
         } else {
-            var button = <Menu.Item className="navbarButton navbarItem" position="right" name='Sign-in' onClick={() => hashHistory.push('/login')} />
+            var button = <Menu.Item className="navbarButton navbarItem" position="right" name='Sign-in' onClick={() => hashHistory.push('/login/')} />
         }
 
 

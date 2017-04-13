@@ -22,9 +22,6 @@ export class Login_P extends React.Component {
     componentWillMount() {
 
     }
-
-
-
     
     handleChange(key) {
         return (e, d) => {
