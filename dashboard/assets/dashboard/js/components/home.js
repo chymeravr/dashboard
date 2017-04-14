@@ -87,7 +87,7 @@ export class HomeView extends React.Component {
                     </Grid.Row>
                     <Grid.Row style={{ backgroundColor: '#0d95ce', }} columns={1}>
                         <Grid.Column width={16}>
-                            <p className='centerText whiteText'>Meet us at <strong>SVVR 2017</strong>, 29-31 March in San Jose, CA</p>
+                            <p className='centerText whiteText'>Meet us at <strong>VRLA 2017</strong>, 14-15 April in Los Angeles, CA</p>
                         </Grid.Column>
                     </Grid.Row>
 
