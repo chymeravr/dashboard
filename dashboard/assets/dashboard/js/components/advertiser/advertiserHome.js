@@ -49,7 +49,7 @@ export class AdvertiserHomeView extends React.Component {
                     <Grid.Row columns={1} verticalAlign='middle' className='advertiserHomeMain' style={{ minHeight: 'calc(80vh)' }}>
                         <Grid.Column width={10}>
                             <Header as='h2' className='centerText whiteText boldText italic'>
-                                Monetize your VR &amp; 360<sup>o</sup> Video Content <br />
+                                Promote your VR &amp; 360<sup>o</sup> Video Content <br />
                                 &amp; drive discovery <br /><br />
                                 <Button className="ui button navbarButton transparent" onClick={(e, d) => { } }>
                                     <Icon name='book' /> Documentation
@@ -68,10 +68,7 @@ export class AdvertiserHomeView extends React.Component {
                                 Premium Advertisers
                             </Header>
                             <p style={{ lineHeight: '35px' }}>
-                                VR is an excellent platform for storytelling. Did you know that advertisers are excited to
-                                unlock the potential of VR to share their brand story? They are eager to shell out big monies
-                                to connect with users. So, your search for earnings ends here. Integrate Chymera ads and open
-                                a brand new channel for revenue influx.
+                                
                             </p>
                         </Grid.Column>
                         <Grid.Column width={2} />
@@ -83,10 +80,7 @@ export class AdvertiserHomeView extends React.Component {
                                 Global audience to reach
                             </Header>
                             <p style={{ lineHeight: '35px' }}>
-                                VR is an excellent platform for storytelling. Did you know that advertisers are excited to
-                                unlock the potential of VR to share their brand story? They are eager to shell out big monies
-                                to connect with users. So, your search for earnings ends here. Integrate Chymera ads and open
-                                a brand new channel for revenue influx.
+                               
                             </p>
                         </Grid.Column>
                         <Grid.Column only='computer' width={4}>
@@ -104,10 +98,7 @@ export class AdvertiserHomeView extends React.Component {
                                 Analytics
                             </Header>
                             <p style={{ lineHeight: '35px' }}>
-                                VR is an excellent platform for storytelling. Did you know that advertisers are excited to
-                                unlock the potential of VR to share their brand story? They are eager to shell out big monies
-                                to connect with users. So, your search for earnings ends here. Integrate Chymera ads and open
-                                a brand new channel for revenue influx.
+                               
                             </p>
                         </Grid.Column>
                         <Grid.Column width={2} />
@@ -119,10 +110,7 @@ export class AdvertiserHomeView extends React.Component {
                                 Ad creation services
                             </Header>
                             <p style={{ lineHeight: '35px' }}>
-                                VR is an excellent platform for storytelling. Did you know that advertisers are excited to
-                                unlock the potential of VR to share their brand story? They are eager to shell out big monies
-                                to connect with users. So, your search for earnings ends here. Integrate Chymera ads and open
-                                a brand new channel for revenue influx.
+                               
                             </p>
                         </Grid.Column>
                         <Grid.Column only='computer' width={4}>
