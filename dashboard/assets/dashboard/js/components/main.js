@@ -17,6 +17,7 @@ import { AdvertiserView } from './advertiser/advertiser'
 import { CampaignDetailView } from './advertiser/campaignDetail'
 import { AdgroupDetailView } from './advertiser/adgroupDetail'
 import { PublisherHomeView } from './publisher/publisherHome'
+import { AdvertiserHomeView } from './advertiser/advertiserHome'
 import { PublisherView } from './publisher/publisher'
 import { AppDetailView } from './publisher/appDetail'
 import { debug, callApiWithJwt, callRawApiWithJwt } from '../lib.js'
@@ -39,7 +40,7 @@ function logPageView() {
     ReactGA.pageview(window.location.hash);
 }
 
-let createHandlers = function (dispatch) {
+let createHandlers = function(dispatch) {
     return {
         checkLogin: () => {
             callApiWithJwt('/user/api/view_profile',
@@ -99,7 +100,7 @@ class AppView extends React.Component {
             align += "  ui center aligned grid";
         }
         var transparent = false;
-        if (currentRoute == 'publisher') {
+        if (['publisher', 'advertiser'].indexOf(currentRoute) >= 0) {
             transparent = true;
         }
 
@@ -146,7 +147,7 @@ render((
                 <Route name="terms" path="/terms/" component={TermsView} />
                 <Route name="login" path="/login/" component={Login_C} />
                 <Route name="profile" path="/profile/" component={ProfileView} />} />
-                <Route name="advertiser" path="/advertiser/" component={AdvertiserView} />
+                <Route name="advertiser" path="/advertiser/" component={AdvertiserHomeView} />
                 <Route name="advertiserDashbooard" path="/dashboard/advertiser/" component={AdvertiserView} />
                 <Route name="publisherDashbooard" path="/dashboard/publisher/" component={PublisherView} />
                 <Route name="campaignDetail" path="/advertiser/campaigns/:campaignId" component={CampaignDetailView} />

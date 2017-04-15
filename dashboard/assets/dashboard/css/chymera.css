@@ -55,6 +55,10 @@ body.wait, body.wait *{
     color: #414042 !important;
 }
 
+.greyBackground {
+    background-color: #f3f3f3 !important;
+}
+
 .greyGradientBackground {
   /* fallback */
   background-color: #fff;
@@ -226,6 +230,13 @@ h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
 .publisherHomeMain {
     margin-top: -120px !important;
     background-image: url('/static/img/banner-publisher.png');
+    background-size: cover;
+    /*background-attachment: fixed;*/
+}
+
+.advertiserHomeMain {
+    margin-top: -120px !important;
+    background-image: url('/static/img/advertiser-banner.png');
     background-size: cover;
     /*background-attachment: fixed;*/
 }

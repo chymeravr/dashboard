@@ -5,9 +5,7 @@ import { logout as logoutMethod } from '../lib'
 import Header_P from './header_p'
 
 const mapStateToProps = (state) => {
-    return {
-        loginState: state
-    }
+    return state;
 }
 
 const mapDispatchToProps = (dispatch) => {

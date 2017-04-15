@@ -18,16 +18,18 @@ export function callApiWithJwt(path, method, body, onSuccess, onError, statusCod
             'Content-Type': 'application/json'
         }
     }).then(response => {
+        let json = response.json();
         if (response.status != statusCode) {
-            throw new Error(response.statusText)
+            json.then(error => {
+                onError(error);
+                document.body.classList.remove("wait");
+            })
+        } else {
+            json.then(json => {
+                onSuccess(json);
+                document.body.classList.remove("wait");
+            })
         }
-        return response.json();
-    }).then(json => {
-        onSuccess(json);
-        document.body.classList.remove("wait");
-    }).catch(error => {
-        onError(error);
-        document.body.classList.remove("wait");
     });
 }
 
@@ -40,16 +42,18 @@ export function callApi(path, method, body, onSuccess, onError, statusCode = 200
             'Content-Type': 'application/json'
         }
     }).then(response => {
+        let json = response.json();
         if (response.status != statusCode) {
-            throw new Error(response.statusText)
+            json.then(error => {
+                onError(error);
+                document.body.classList.remove("wait");
+            })
+        } else {
+            json.then(json => {
+                onSuccess(json);
+                document.body.classList.remove("wait");
+            })
         }
-        return response.json();
-    }).then(json => {
-        onSuccess(json);
-        document.body.classList.remove("wait");
-    }).catch(error => {
-        onError(error);
-        document.body.classList.remove("wait");
     });
 }
 
@@ -63,16 +67,18 @@ export function callRawApiWithJwt(path, method, body, onSuccess, onError, status
             'Authorization': 'JWT ' + jwtToken,
         }
     }).then(response => {
+        let json = response.json();
         if (response.status != statusCode) {
-            throw new Error(response.statusText)
+            json.then(error => {
+                onError(error);
+                document.body.classList.remove("wait");
+            })
+        } else {
+            json.then(json => {
+                onSuccess(json);
+                document.body.classList.remove("wait");
+            })
         }
-        return response.json();
-    }).then(json => {
-        onSuccess(json);
-        document.body.classList.remove("wait");
-    }).catch(error => {
-        onError(error);
-        document.body.classList.remove("wait");
     });
 }
 

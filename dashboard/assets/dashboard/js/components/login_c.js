@@ -4,6 +4,11 @@ import { Login_P } from './login_p'
 import { callRawApiWithJwt, callApiWithJwt, debug, callApi } from '../lib.js'
 import { config } from '../config'
 
+const mapStateToProps = (state) => {
+    console.info(state)
+    return state;
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
         tryLogin: (event, username, password) => {
@@ -21,11 +26,10 @@ const mapDispatchToProps = (dispatch) => {
                         'GET',
                         null,
                         (response) => { console.info(response); dispatch(loginSucceeded(response.user.username)) },
-                        (error) => { }
+                        (error) => dispatch(loginFailed())
                     );
                 },
                 (error) => {
-                    console.error(error)
                     dispatch(loginFailed());
                 }
             );
@@ -33,6 +37,6 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-const Login_C = connect(null, mapDispatchToProps)(Login_P)
+const Login_C = connect(mapStateToProps, mapDispatchToProps)(Login_P)
 
 export default Login_C 

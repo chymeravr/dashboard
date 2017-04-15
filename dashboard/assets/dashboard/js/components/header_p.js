@@ -12,7 +12,7 @@ class Header_P extends React.Component {
             currentPath: props.currentPath,
             headerVisible: false,
             transparent: props.transparent,
-            loginState: props.loginState.login,
+            loginState: props.loginState,
         }
         this.handleLogout = props.handleLogout;
     }
@@ -22,7 +22,7 @@ class Header_P extends React.Component {
             currentPath: nextProps.currentPath,
             headerVisible: false,
             transparent: nextProps.transparent,
-            loginState: nextProps.loginState.login
+            loginState: nextProps.loginState
         });
     }
 
