@@ -58,14 +58,10 @@ export class AdvertiserHomeView extends React.Component {
 
                         </Grid.Column>
                     </Grid.Row>
-                    <Grid.Row className='section' columns={9} style={{ minHeight: '300px' }}>
-
-                    </Grid.Row>
-                    <Divider />
                     <Grid.Row columns={3} verticalAlign='middle' className='section'>
                         <Grid.Column only='computer' width={2} />
                         <Grid.Column only='computer' width={4}>
-                            <Image centered src="/static/img/access-to-premium.png" size='medium' />
+                            <Image centered src="/static/img/access-to-premium.png" width='200px' />
                         </Grid.Column>
                         <Grid.Column width={6}>
                             <Header as='h1' className='boldText blue'>
@@ -94,14 +90,14 @@ export class AdvertiserHomeView extends React.Component {
                             </p>
                         </Grid.Column>
                         <Grid.Column only='computer' width={4}>
-                            <Image centered src="/static/img/global-audience.png" size='medium' />
+                            <Image centered src="/static/img/global-audience.png" width='200px' />
                         </Grid.Column>
                         <Grid.Column width={2} />
                     </Grid.Row>
                     <Grid.Row columns={3} verticalAlign='middle' className='section'>
                         <Grid.Column only='computer' width={2} />
                         <Grid.Column only='computer' width={4}>
-                            <Image centered src="/static/img/analytics-to-understand.png" size='medium' />
+                            <Image centered src="/static/img/analytics-to-understand.png" width='300px' />
                         </Grid.Column>
                         <Grid.Column width={6}>
                             <Header as='h1' className='boldText blue'>
@@ -130,7 +126,7 @@ export class AdvertiserHomeView extends React.Component {
                             </p>
                         </Grid.Column>
                         <Grid.Column only='computer' width={4}>
-                            <Image centered src="/static/img/ad-creation-services.png" size='medium' />
+                            <Image centered src="/static/img/ad-creation-services.png" width='200px'/>
                         </Grid.Column>
                         <Grid.Column width={2} />
                     </Grid.Row>

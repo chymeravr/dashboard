@@ -213,6 +213,7 @@ h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
     margin-left: 50px !important;
     margin-right: 50px !important;
     margin-bottom: 2px !important;
+    text-align: right !important;
 }
 
 .blueBg {
@@ -237,7 +238,7 @@ h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
 .advertiserHomeMain {
     margin-top: -120px !important;
     background-image: url('/static/img/advertiser-banner.png');
-    background-size: cover;
+    background-size: contain;
     /*background-attachment: fixed;*/
 }
 
@@ -257,6 +258,8 @@ h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
 @media only screen and (max-width: 767px) {
     .navbarButton {
         border: 0px !important;
+        padding-right: 0px !important;
+        margin-right: 25px !important;
     }
 
     .navbarButton.transparent {
@@ -284,6 +287,13 @@ h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
         padding-top: 70vh !important;
         padding-bottom: 30vh !important;
     }
+
+    .advertiserHomeMain {
+        margin-top: -40vh !important;
+        padding-top: 70vh !important;
+        padding-bottom: 30vh !important;
+    }
+
 
     .section {
         padding: 0rem 0 0rem 0 !important;

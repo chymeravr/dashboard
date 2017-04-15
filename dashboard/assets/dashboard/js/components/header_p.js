@@ -67,6 +67,8 @@ class Header_P extends React.Component {
                                     {getItem('publishers', '/publisher/')}
                                     {getItem('careers', '/careers/')}
                                     {button}
+                                    {this.state.loginState === LOGIN_SUCCEEDED ? <Button color="teal" position="right" content='Advertiser' onClick={(e) => hashHistory.push('/dashboard/advertiser/')} /> : ''}
+                                    {this.state.loginState === LOGIN_SUCCEEDED ? <Button color="yellow" position="right" content='Publisher' onClick={(e) => hashHistory.push('/dashboard/publisher/')} /> : ''}
                                 </Menu>
                             </Accordion.Content>
                         </Accordion>
