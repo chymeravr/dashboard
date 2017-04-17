@@ -51,9 +51,9 @@ class Campaign(BaseModel):
     clicks = models.IntegerField(default=0)
     totalBurn = models.FloatField(validators=[MinValueValidator(0.0)], default=0)
     todayBurn = models.FloatField(validators=[MinValueValidator(0.0)], default=0)
-    hmd = models.ForeignKey(Hmd, blank=True, null=True)
-    ram = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)], null=True, blank=True)
-    os = models.ForeignKey(Os, null=True, blank=True)
+    hmd = models.ForeignKey(Hmd, default=-1)
+    ram = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)], default=0)
+    os = models.ForeignKey(Os, default=-1)
 
 
 class Adgroup(BaseModel):
