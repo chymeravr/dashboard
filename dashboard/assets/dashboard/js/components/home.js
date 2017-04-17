@@ -18,14 +18,16 @@ export class HomeView extends React.Component {
     }
 
     componentDidMount() {
-        Particles.init({
-            // normal options
-            selector: '.particles',
-            maxParticles: 100,
-            // connectParticles: true,
-            minDistance: 200,
-            color: '#ffffff',
-        })
+        // Particles.init({
+        //     // normal options
+        //     selector: '.particles',
+        //     maxParticles: 0, // Disabled
+        //     // connectParticles: true,
+        //     speed: 1,
+        //     sizeVariations: 2,
+        //     minDistance: 200,
+        //     color: '#ffffff',
+        // })
     }
 
 
@@ -67,8 +69,9 @@ export class HomeView extends React.Component {
             <main className="Site-content" >
                 <Grid stackable centered verticalAlign='middle'>
 
-                    <Grid.Row columns={1} verticalAlign='middle' style={{ minHeight: 'calc(70vh)', marginTop: '-10px' }} >
-                        <canvas className="particles"></canvas>
+                    <Grid.Row columns={1} verticalAlign='middle' style={{ minHeight: 'calc(70vh)', marginTop: '-10px' }} className='blueBg' >
+                        {//<canvas className="particles"></canvas>
+                        }
                         <Grid.Column width={10}>
                             <Grid centered verticalAlign='middle'>
                                 <Grid.Row>
