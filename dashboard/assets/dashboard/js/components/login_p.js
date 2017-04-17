@@ -87,7 +87,7 @@ export class Login_P extends React.Component {
 
         const signUpForm =
             <Grid.Column verticalAlign='middle' width={4}>
-                {this.state.reigstered ? <Message positive content='Registration Successful. Our team will contact you regarding further steps on how to activate your account' /> : ''}
+                {this.state.registered ? <Message positive content='Registration Successful. Our team will contact you regarding further steps on how to activate your account' /> : ''}
                 <Form error={this.state.error}>
                     {usernameError ? (<Message error content={this.state.error.user.username.join('\n')} />) : <div></div>}
                     <Form.Input placeholder='Username' onChange={(e, d) => this.handleChange('r_username')(e, d)} error={usernameError} />
