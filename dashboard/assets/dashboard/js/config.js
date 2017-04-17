@@ -26,7 +26,7 @@ config.defaultPricing = 1;
 config.hmds = {
     '-1': null,
     '1': 'Gear VR',
-    '2': 'Cardboard'
+    '2': 'Cardboard',
 }
 
 config.defaultHmd = '-1';

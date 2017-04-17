@@ -4,7 +4,7 @@ import { callApiWithJwt, debug, addHttp } from '../../lib.js'
 import { hashHistory } from 'react-router'
 import { config } from '../../config'
 
-import { Grid, Card, Table, Checkbox, Button, Icon, Header, Modal, Form, Input, Select, Radio, Message } from 'semantic-ui-react'
+import { Grid, Card, Table, Checkbox, Button, Icon, Header, Modal, Form, Input, Select, Radio, Message, Dropdown } from 'semantic-ui-react'
 import { DateRangePicker } from 'react-dates';
 import moment from 'moment';
 import 'react-dates/lib/css/_datepicker.css';
@@ -19,6 +19,9 @@ export class CampaignEditModal extends React.Component {
             validAppUrl: true,
             campaign: {
                 campaignType: config.defaultCampaignType,
+                hmd: config.defaultHmd,
+                os: config.defaultOperatingSystem,
+                ram: 0,
             },
             open: false,
         }, props);
@@ -34,6 +37,8 @@ export class CampaignEditModal extends React.Component {
         this.onFocusChange = this.onFocusChange.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.validateState = this.validateState.bind(this);
+        this.setOs = this.setOs.bind(this);
+        this.setHmd = this.setHmd.bind(this);
     }
 
     componentDidMount() {
@@ -108,6 +113,17 @@ export class CampaignEditModal extends React.Component {
             }).catch((ex) => { this.setState(Object.assign({}, this.state, { valid: false, validAppUrl: false })) });
     }
 
+    setHmd(e, d) {
+        const updatedCampaign = Object.assign({}, this.state.campaign, { hmd: d.value });
+        this.setState(Object.assign({}, this.state, { campaign: updatedCampaign }))
+    };
+
+    setOs(e, d) {
+        const updatedCampaign = Object.assign({}, this.state.campaign, { os: d.value });
+        this.setState(Object.assign({}, this.state, { campaign: updatedCampaign }))
+    };
+
+
     render() {
         debug("campaignModal", this.state);
         const { startDate, endDate } = this.state.campaign;
@@ -116,6 +132,18 @@ export class CampaignEditModal extends React.Component {
         const appName = campaign.appName ? campaign.appName : '';
         const appUrl = campaign.appUrl ? campaign.appUrl : '';
 
+        const hmds = config.hmds;
+        const hmdOptions = Object.keys(hmds).map(hmdId => {
+            return { key: hmdId, text: hmds[hmdId] ? hmds[hmdId] : 'All', value: hmdId };
+        });
+
+        const operatingSystems = config.operatingSystems;
+        const osOptions = Object.keys(operatingSystems).map(osId => {
+            return { key: osId, text: operatingSystems[osId] ? operatingSystems[osId] : 'All', value: osId };
+        });
+
+        console.info(hmds);
+        console.info(hmds[this.state.campaign.hmd])
         return (
             <Modal open={this.state.open} onClose={this.closeModal} dimmer='blurring'>
                 <Modal.Header>{this.label}</Modal.Header>
@@ -136,6 +164,15 @@ export class CampaignEditModal extends React.Component {
                             <Form.Field control={Input} label='Total Budget ($)' type='number' placeholder='Total Budget' onChange={this.handleChange('totalBudget')} value={campaign.totalBudget} />
                             <Form.Field control={Input} label='Daily Budget ($)' type='number' placeholder='Daily Budget' onChange={this.handleChange('dailyBudget')} value={campaign.dailyBudget} />
                         </Form.Group>
+
+                        <Form.Group widths='equal'>
+                            <Form.Field control={Dropdown} selection label='Hmd' options={hmdOptions} placeholder='Hmd'
+                                onChange={this.setHmd} value={this.state.campaign.hmd + ''} />
+                            <Form.Field control={Dropdown} selection label='Os' options={osOptions} placeholder='Os'
+                                onChange={this.setOs} value={this.state.campaign.os + ''} />
+                        </Form.Group>
+
+
                         <Form.Field>
                             <label>Schedule</label>
                         </Form.Field>
