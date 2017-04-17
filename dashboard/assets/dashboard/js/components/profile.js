@@ -17,8 +17,8 @@ export class ProfileView extends React.Component {
             null,
             (response) => {
                 // List of users will have exacatly 1 element
-                this.setState(response[0]);
-                document.title = response[0].username;
+                this.setState(response);
+                document.title = response.username;
             },
             (error) => {
                 hashHistory.push('/login/');
@@ -37,7 +37,7 @@ export class ProfileView extends React.Component {
         if (this.state.user && this.state.user.username) {
             var body = (
                 <Grid centered verticalAlign='middle' columns={1}>
-                    <Grid.Row verticalAlign='middle' columns={5} style={{ height: '100vh' }}>
+                    <Grid.Row verticalAlign='middle' columns={5} style={{ minHeight: '70vh' }}>
                         <Grid.Column verticalAlign='middle'>
                             <Card fluid>
                                 <Card.Content>
@@ -55,8 +55,8 @@ export class ProfileView extends React.Component {
                                 </Card.Content>
                                 <Card.Content extra>
                                     <div className='ui two buttons'>
-                                        <Button color='blue' as={Link} to='/advertiser/'>Advertise</Button>
-                                        <Button inverted color='blue' as={Link} to='/publisher/'>Monetize</Button>
+                                        <Button color='teal' as={Link} to='/dashboard/advertiser/'>Advertiser Dashboard</Button>
+                                        <Button color='yellow' as={Link} to='/dashboard/publisher/'>Publisher Dashboard</Button>
                                     </div>
                                 </Card.Content>
                             </Card>

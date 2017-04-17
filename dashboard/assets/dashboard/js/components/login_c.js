@@ -3,6 +3,7 @@ import { startLogin, loginSucceeded, loginFailed, logout } from '../redux/loginA
 import { Login_P } from './login_p'
 import { callRawApiWithJwt, callApiWithJwt, debug, callApi } from '../lib.js'
 import { config } from '../config'
+import { hashHistory } from 'react-router'
 
 const mapStateToProps = (state) => {
     console.info(state)
@@ -25,7 +26,7 @@ const mapDispatchToProps = (dispatch) => {
                     callApiWithJwt('/user/api/view_profile',
                         'GET',
                         null,
-                        (response) => { console.info(response); dispatch(loginSucceeded(response.user.username)) },
+                        (response) => { console.info(response); dispatch(loginSucceeded(response.user.username)); hashHistory.push('/profile/') },
                         (error) => dispatch(loginFailed())
                     );
                 },
