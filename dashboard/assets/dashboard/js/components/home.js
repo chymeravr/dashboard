@@ -4,7 +4,7 @@ import { hashHistory } from 'react-router'
 import { debug, callApiWithJwt } from '../lib.js'
 import { SignUp } from './signUpRow'
 import { Grid, Form, Button, Header, Input, Icon, Image, Message, Divider, Segment, Container, List } from 'semantic-ui-react'
-
+import Particles from 'particlesjs'
 export class HomeView extends React.Component {
     constructor(props) {
         super(props);
@@ -14,12 +14,20 @@ export class HomeView extends React.Component {
     }
 
     componentDidMount() {
-        document.title = 'Chymera VR | VR Ad Network'
+        document.title = 'Chymera VR | VR Ad Network';
     }
 
-    componentWillMount() {
-
+    componentDidMount() {
+        Particles.init({
+            // normal options
+            selector: '.particles',
+            maxParticles: 100,
+            // connectParticles: true,
+            minDistance: 200,
+            color: '#ffffff',
+        })
     }
+
 
     render() {
         debug('home', this.state);
@@ -58,7 +66,9 @@ export class HomeView extends React.Component {
         return (
             <main className="Site-content" >
                 <Grid stackable centered verticalAlign='middle'>
-                    <Grid.Row columns={1} verticalAlign='middle' style={{ minHeight: 'calc(70vh)', marginTop: '-10px' }} className='blueBg'>
+
+                    <Grid.Row columns={1} verticalAlign='middle' style={{ minHeight: 'calc(70vh)', marginTop: '-10px' }} >
+                        <canvas className="particles"></canvas>
                         <Grid.Column width={10}>
                             <Grid centered verticalAlign='middle'>
                                 <Grid.Row>

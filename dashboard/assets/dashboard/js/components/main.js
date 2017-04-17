@@ -4,6 +4,7 @@ import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 import 'fuckadblock'
 import 'whatwg-fetch'
+import 'particlesjs'
 
 import { HomeView } from './home'
 import Header_C from './header_c'
