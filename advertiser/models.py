@@ -35,14 +35,6 @@ class Hmd(BaseModel):
     name = models.CharField(max_length=50)
 
 
-class Targeting(BaseModel):
-    user = models.ForeignKey(User)
-    name = models.CharField(max_length=100)
-    hmd = models.ForeignKey(Hmd, blank=True, null=True)
-    ram = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)], null=True, blank=True)
-    os = models.ForeignKey(Os, null=True, blank=True)
-
-
 class Campaign(BaseModel):
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     user = models.ForeignKey(User)
@@ -59,6 +51,9 @@ class Campaign(BaseModel):
     clicks = models.IntegerField(default=0)
     totalBurn = models.FloatField(validators=[MinValueValidator(0.0)], default=0)
     todayBurn = models.FloatField(validators=[MinValueValidator(0.0)], default=0)
+    hmd = models.ForeignKey(Hmd, blank=True, null=True)
+    ram = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)], null=True, blank=True)
+    os = models.ForeignKey(Os, null=True, blank=True)
 
 
 class Adgroup(BaseModel):
@@ -72,7 +67,6 @@ class Adgroup(BaseModel):
     endDate = models.DateField()
     pricing = models.ForeignKey(Pricing)
     status = models.BooleanField(default=False)
-    targeting = models.ManyToManyField(Targeting, blank=True)
     impressions = models.IntegerField(default=0)
     clicks = models.IntegerField(default=0)
     totalBurn = models.FloatField(validators=[MinValueValidator(0.0)], default=0)

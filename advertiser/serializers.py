@@ -2,7 +2,7 @@ from django.db import models
 from rest_framework import serializers
 from rest_framework.relations import PrimaryKeyRelatedField
 
-from advertiser.models import CampaignType, Os, Hmd, Campaign, Targeting, Adgroup, Ad, Pricing
+from advertiser.models import CampaignType, Os, Hmd, Campaign, Adgroup, Ad, Pricing
 
 
 class UserFilteredPKRelatedField(PrimaryKeyRelatedField):
@@ -45,22 +45,6 @@ class HmdSerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
 
 
-class TargetingReadOnlySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Targeting
-        fields = ['id', 'hmd', 'ram', 'os', 'name']
-
-
-class TargetingSerializer(serializers.ModelSerializer):
-    hmd = PrimaryKeyRelatedField(queryset=Hmd.objects.all(), allow_null=True)
-    os = PrimaryKeyRelatedField(queryset=Os.objects.all(), allow_null=True)
-    user = serializers.ReadOnlyField(source='user.username')
-
-    class Meta:
-        model = Targeting
-        fields = ['id', 'user', 'hmd', 'ram', 'os', 'name']
-
-
 class AdSerializer(serializers.ModelSerializer):
     # adgroup = UserFilteredPKRelatedField(queryset=Adgroup.objects)
 
@@ -74,13 +58,11 @@ class AdSerializer(serializers.ModelSerializer):
 class AdgroupUpdateSerializer(serializers.ModelSerializer):
     pricing = PrimaryKeyRelatedField(queryset=Pricing.objects.all())
     campaign = UserFilteredPKRelatedField(queryset=Campaign.objects)
-    targeting = UserFilteredPKRelatedField(queryset=Targeting.objects, many=True,
-                                           allow_null=True, allow_empty=True, required=False)
 
     class Meta:
         model = Adgroup
         fields = ['id', 'campaign', 'name', 'dailyBudget', 'totalBudget',
-                  'targeting', 'bid', 'pricing', 'startDate', 'endDate',
+                  'bid', 'pricing', 'startDate', 'endDate',
                   'ads', 'impressions', 'clicks', 'totalBurn', 'todayBurn', 'status']
         read_only_fields = ['impressions', 'clicks', 'totalBurn', 'todayBurn', 'ads']
 
@@ -89,13 +71,12 @@ class AdgroupDetailSerializer(serializers.ModelSerializer):
     name = models.CharField(max_length=100)
     pricing = PricingSerializer(read_only=True)
     campaign = UserFilteredPKRelatedField(queryset=Campaign.objects)
-    targeting = TargetingReadOnlySerializer(read_only=True, many=True)
     ads = AdSerializer(many=True, read_only=True)
 
     class Meta:
         model = Adgroup
         fields = ['id', 'campaign', 'name', 'dailyBudget', 'totalBudget',
-                  'targeting', 'bid', 'pricing', 'startDate', 'endDate',
+                  'bid', 'pricing', 'startDate', 'endDate',
                   'ads', 'impressions', 'clicks', 'totalBurn', 'todayBurn', 'status']
         read_only_fields = ['impressions', 'clicks', 'totalBurn', 'todayBurn']
 
@@ -110,5 +91,5 @@ class CampaignSerializer(serializers.ModelSerializer):
         fields = ('user', 'id', 'name', 'campaignType', 'totalBudget',
                   'dailyBudget', 'startDate', 'endDate',
                   'status', 'adgroups', 'impressions', 'clicks', 'totalBurn',
-                  'todayBurn', 'modified_date', 'appName', 'appUrl')
+                  'todayBurn', 'modified_date', 'appName', 'appUrl',  'hmd', 'ram', 'os')
         read_only_fields = ('impressions', 'clicks', 'totalBurn', 'todayBurn', 'modified_date')

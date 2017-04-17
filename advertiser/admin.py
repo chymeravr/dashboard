@@ -5,7 +5,6 @@ from advertiser import models
 adv_models = [
     models.Campaign,
     models.Adgroup,
-    models.Targeting,
     models.Pricing,
     models.Hmd,
     models.CampaignType,

@@ -6,8 +6,10 @@ After=docker.service
 [Service]
 ExecStartPre=-/usr/bin/docker kill dashboard
 ExecStartPre=-/usr/bin/docker rm dashboard
+ExecStartPre=/bin/sh -c "echo 'Starting dashboard service on' $(hostname) | slacktee.sh"
 ExecStart=/usr/bin/docker run --net=host --name dashboard ciportal-prod
 ExecStop=/usr/bin/docker stop dashboard
+ExecStopPost=/bin/sh -c "echo 'Stopping dashboard service on' $(hostname) | slacktee.sh"
 
 [Install]
 WantedBy=default.target
