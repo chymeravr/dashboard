@@ -30,6 +30,9 @@ export function callApiWithJwt(path, method, body, onSuccess, onError, statusCod
                 document.body.classList.remove("wait");
             })
         }
+    }).catch(error => {
+        document.body.classList.remove("wait");
+        alert('Site unreachable');
     });
 }
 
@@ -54,7 +57,10 @@ export function callApi(path, method, body, onSuccess, onError, statusCode = 200
                 document.body.classList.remove("wait");
             })
         }
-    });
+    }).catch(error => {
+        document.body.classList.remove("wait");
+        alert('Site unreachable');
+    });;
 }
 
 export function callRawApiWithJwt(path, method, body, onSuccess, onError, statusCode = 200) {
@@ -79,7 +85,10 @@ export function callRawApiWithJwt(path, method, body, onSuccess, onError, status
                 document.body.classList.remove("wait");
             })
         }
-    });
+    }).catch(error => {
+        document.body.classList.remove("wait");
+        alert('Site unreachable');
+    });;
 }
 
 export function logout(hashHistory) {
