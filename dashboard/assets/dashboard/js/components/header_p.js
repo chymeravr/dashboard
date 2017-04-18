@@ -67,8 +67,7 @@ class Header_P extends React.Component {
                                     {getItem('publishers', '/publisher/')}
                                     {getItem('careers', '/careers/')}
                                     {button}
-                                    {this.state.loginState === LOGIN_SUCCEEDED ? <Button color="teal" position="right" content='Advertiser' onClick={(e) => hashHistory.push('/dashboard/advertiser/')} /> : ''}
-                                    {this.state.loginState === LOGIN_SUCCEEDED ? <Button color="yellow" position="right" content='Publisher' onClick={(e) => hashHistory.push('/dashboard/publisher/')} /> : ''}
+                                    {this.state.loginState === LOGIN_SUCCEEDED ? <Button color="teal" position="right" content='Profile' onClick={(e, d) => hashHistory.push('/profile/')} /> : ''}
                                 </Menu>
                             </Accordion.Content>
                         </Accordion>
@@ -86,8 +85,7 @@ class Header_P extends React.Component {
                                         {getItem('careers', '/careers/')}
                                         <Menu.Item only='computer' />
                                         {button}
-                                        {this.state.loginState === LOGIN_SUCCEEDED ? <Button color="teal" position="right" content='Advertiser' onClick={(e) => hashHistory.push('/dashboard/advertiser/')} /> : ''}
-                                        {this.state.loginState === LOGIN_SUCCEEDED ? <Button color="yellow" position="right" content='Publisher' onClick={(e) => hashHistory.push('/dashboard/publisher/')} /> : ''}
+                                        {this.state.loginState === LOGIN_SUCCEEDED ? <Button color="teal" position="right" content='Profile' onClick={(e) => hashHistory.push('/profile/')} /> : ''}
                                     </Menu>
                                 </Table.Cell>
                             </Table.Row>
