@@ -39,7 +39,7 @@ export class HomeView extends React.Component {
                 <Grid.Column width={5} className={className}>
                     <div >
                         <Header as='h2' style={{ fontWeight: 'bold', color: '#008fcb', }}>{header}</Header>
-                        <p style={{ textAlign: 'left' }}>{content}</p>
+                        <p>{content}</p>
                         <Button color="orange" as='a' content='Read More' onClick={(e, d) => hashHistory.push(link)} href={link} />
                     </div>
                 </Grid.Column>
@@ -76,7 +76,7 @@ export class HomeView extends React.Component {
                             <Grid centered verticalAlign='middle'>
                                 <Grid.Row>
                                     <Grid.Column width={12}>
-                                        <Header as='h1' className='centerText whiteText boldText'>Ad Platform for VR
+                                        <Header as='h1' className='centerText whiteText boldText'>Advertising Platform for VR
                                         </Header>
                                         <p className='centerText whiteText'>
                                             ... ads are <strong>NOW</strong> cool

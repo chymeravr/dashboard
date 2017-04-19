@@ -147,6 +147,7 @@ h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
     background-position-y: bottom;
     padding: 100px 0px 100px 0px !important;
     margin: -1em; 
+    text-align: center !important;
 }
 .advertiserSummary {
     background-image: url('/static/img/mountain.png');
@@ -286,6 +287,7 @@ h1, h2, h3, h4, .navbarItem, .navbarActiveItem {
 
     .summary {
         padding: 70px 0px 20px 0px !important;
+        text-align: left !important;
     }
 
     .summary .item {
