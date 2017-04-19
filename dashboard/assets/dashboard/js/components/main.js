@@ -41,7 +41,7 @@ function logPageView() {
     ReactGA.pageview(window.location.hash);
 }
 
-let createHandlers = function(dispatch) {
+let createHandlers = function (dispatch) {
     return {
         checkLogin: () => {
             callApiWithJwt('/user/api/view_profile',
@@ -136,7 +136,6 @@ class AppView extends React.Component {
     }
 
 }
-
 
 render((
     <Provider store={loginStore}>

@@ -1,6 +1,7 @@
 from django.conf.urls import url, include
 from rest_framework_jwt.views import obtain_jwt_token
 
+import receivers
 from chym_user.views import ProfileView, preview_register, TestDeviceView, RegisterView, ActivateView, PaymentView, \
     PayoutView, charge
 
@@ -23,3 +24,6 @@ urlpatterns = [
     url(r'^api/advertiser/', include('advertiser.urls')),
     url(r'^api/publisher/', include('publisher.urls'))
 ]
+
+# Random line to avoid deletion of import of signals
+x = receivers.Payment

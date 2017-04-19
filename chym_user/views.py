@@ -1,5 +1,5 @@
 import json
-from httplib import METHOD_NOT_ALLOWED
+from httplib import METHOD_NOT_ALLOWED, UNAUTHORIZED
 
 import stripe
 from django.http import HttpResponse
@@ -106,21 +106,28 @@ class PayoutView(generics.ListAPIView):
 
 
 def charge(request):
+    stripe_token_key = 'token'
     errors = {}
-    print request.user
-    if request.method == 'POST' or not request.user.is_authenticated():
-        try:
-            if 'stripeToken' not in request.POST:
-                errors['stripeToken'] = 'Field required'
+    user = get_user_jwt(request)
 
-            if 'amount' not in request.POST:
+    if not user.is_authenticated():
+        return HttpResponse(status=UNAUTHORIZED)
+
+    if request.method == 'POST':
+        json_data = json.loads(request.body)
+
+        try:
+            if stripe_token_key not in json_data:
+                errors[stripe_token_key] = 'Field required'
+
+            if 'amount' not in json_data:
                 errors['amount'] = 'Field required'
 
             if len(errors) > 0:
                 return HttpResponse(content=json.dumps(errors), status=400, content_type='application/json')
 
-            token = request.POST['stripeToken']
-            amount = int(request.POST['amount'])
+            token = json_data[stripe_token_key]
+            amount = int(json_data['amount'])
         except Exception, e:
             return HttpResponse(content=json.dumps({'error': str(e)}), status=400, content_type='application/json')
 
@@ -133,12 +140,12 @@ def charge(request):
             )
 
             payment = Payment()
-            payment.user = get_user_jwt(request)
+            payment.user = user
             payment.amount = amount
             payment.transaction_id = token
             payment.save()
 
-            return HttpResponse(status=200, content_type='application/json')
+            return HttpResponse(content='{}', status=200, content_type='application/json')
         except Exception, e:
             return HttpResponse(content=json.dumps({'error': str(e)}), status=400, content_type='application/json')
     else:
