@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.db.transaction import atomic
 from rest_framework.serializers import ModelSerializer
 
-from chym_user.models import Profile, TestDevice
+from chym_user.models import Profile, TestDevice, Payment, Payout
 
 
 class UserSerializer(ModelSerializer):
@@ -61,3 +61,16 @@ class TestDeviceSerializer(ModelSerializer):
     def create(self, validated_data):
         validated_data['user'] = self.context['request'].user
         return TestDevice.objects.create(**validated_data)
+
+
+class PaymentsSerializer(ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = ('amount', 'created_date')
+
+
+class PayoutsSerializer(ModelSerializer):
+    class Meta:
+        model = Payout
+        fields = ('amount', 'created_date')
+

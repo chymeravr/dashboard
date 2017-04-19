@@ -14,6 +14,8 @@ import os
 from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import stripe
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
@@ -207,3 +209,6 @@ LOGGING = {
 
 # Sendgrid
 SENDGRID_API_KEY = 'SG.9I5__tjvRIyPIYmBOztGcw.jyrPEFa_BJYm0eZBO1jPyF2dSB00nE5e-nYv_C9GCy8'
+
+# Stripe
+stripe.api_key = "sk_test_BQokikJOvBiI2HlWgH4olfQ2"

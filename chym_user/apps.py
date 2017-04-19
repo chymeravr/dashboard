@@ -5,3 +5,6 @@ from django.apps import AppConfig
 
 class ChymUserConfig(AppConfig):
     name = 'chym_user'
+
+    def ready(self):
+        import receivers

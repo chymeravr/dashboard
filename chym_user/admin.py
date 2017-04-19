@@ -1,7 +1,11 @@
 from django.contrib import admin
 
-from chym_user.models import Profile, InterestedUser, TestDevice
+from chym_user.models import Profile, InterestedUser, TestDevice, Payment, Payout
 
-admin.site.register(Profile)
-admin.site.register(InterestedUser)
-admin.site.register(TestDevice)
+admin.site.register([
+    Profile,
+    InterestedUser,
+    TestDevice,
+    Payment,
+    Payout,
+])
