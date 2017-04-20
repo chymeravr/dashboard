@@ -19,7 +19,6 @@ export class ProfileView extends React.Component {
             'GET',
             null,
             (response) => {
-                // List of users will have exacatly 1 element
                 this.setState(response);
                 document.title = response.username;
             },
@@ -87,7 +86,7 @@ export class ProfileView extends React.Component {
                             </Card>
                             <Divider />
                             <Header as='h3' className='whiteText'>Add Funds</Header>
-                            <Input type='number' min='1' step='1' fluid label="Amount ($)" pattern="[0-9]*" value={amount} onChange={this.handleChange('amount').bind(this)} />
+                            <Input type='number' min='1' step='1' fluid label="Amount ($)" value={amount} onChange={this.handleChange('amount').bind(this)} />
                             {amount != parseInt(amount, 10) ? <Message error className='smallText' content="Please round up the amount to nearest dollar value" /> : ''}
                             <br />
                             <StripeCheckout
