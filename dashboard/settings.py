@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import os
 from datetime import timedelta
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import stripe
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -43,10 +42,12 @@ INSTALLED_APPS = [
     'dashboard',
     'advertiser',
     'rest_framework',
-    'publisher'
+    'publisher',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -56,7 +57,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
 
 ROOT_URLCONF = 'dashboard.urls'
 
@@ -212,3 +212,13 @@ SENDGRID_API_KEY = 'SG.9I5__tjvRIyPIYmBOztGcw.jyrPEFa_BJYm0eZBO1jPyF2dSB00nE5e-n
 
 # Stripe
 stripe.api_key = "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
+
+if DEBUG:
+    CORS_ORIGIN_ALLOW_ALL = True
+else:
+    CORS_ORIGIN_ALLOW_ALL = False
+
+CORS_ORIGIN_WHITELIST = (
+    'chymeravr.com',
+    'www.chymeravr.com',
+)
