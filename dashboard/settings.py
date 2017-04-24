@@ -162,13 +162,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
-WEBPACK_LOADER = {
-    'DASHBOARD': {
-        'BUNDLE_DIR_NAME': 'dashboard/bundles/',
-        'STATS_FILE': os.path.join(BASE_DIR, 'dashboard/webpack-stats.json'),
-    },
-}
-
 APPEND_SLASH = True
 
 # MEDIA_ROOT = '/tmp/'

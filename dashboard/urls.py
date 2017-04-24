@@ -25,5 +25,4 @@ urlpatterns = [
     url(r'^creatives/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     url(r'^admin/', admin.site.urls),
     url(r'^user/', include('chym_user.urls')),
-    url(r'^', views.home)
 ]
