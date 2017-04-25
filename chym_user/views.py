@@ -12,9 +12,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from chym_user.auth_utils import get_user_jwt
-from chym_user.models import Profile, InterestedUser, TestDevice, Payment, Payout
+from chym_user.models import Profile, InterestedUser, TestDevice, Payment, Payout, VrEvent
 from chym_user.send_email import send_welcome_mail
-from chym_user.serializers import UserProfileSerializer, TestDeviceSerializer, PaymentsSerializer, PayoutsSerializer
+from chym_user.serializers import UserProfileSerializer, TestDeviceSerializer, PaymentsSerializer, PayoutsSerializer, \
+    VrEventSerializer
 
 
 class ProfileView(APIView):
@@ -103,6 +104,20 @@ class PayoutView(generics.ListAPIView):
 
     def get_queryset(self):
         return Payout.objects.filter(user=self.request.user)
+
+
+@permission_classes((AllowAny,))
+class VrEventView(APIView):
+    renderer_classes = (JSONRenderer,)
+    serializer_class = VrEventSerializer
+
+    @permission_classes((AllowAny,))
+    def get(self, request):
+        try:
+            serializedReponse = VrEventSerializer(VrEvent.objects.latest('modified_date'))
+            return Response(serializedReponse.data)
+        except:
+            return Response('{}')
 
 
 def charge(request):

@@ -76,3 +76,7 @@ class Payout(BaseModel):
     user = models.ForeignKey(User)
     transaction_id = models.CharField(max_length=100, unique=True)
     amount = models.IntegerField(validators=[MinValueValidator(0)])
+
+class VrEvent(BaseModel):
+    event_name = models.CharField(max_length=200)
+    description = models.CharField(max_length=200)

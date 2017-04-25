@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.db.transaction import atomic
 from rest_framework.serializers import ModelSerializer
 
-from chym_user.models import Profile, TestDevice, Payment, Payout
+from chym_user.models import Profile, TestDevice, Payment, Payout, VrEvent
 
 
 class UserSerializer(ModelSerializer):
@@ -74,3 +74,8 @@ class PayoutsSerializer(ModelSerializer):
         model = Payout
         fields = ('amount', 'created_date')
 
+
+class VrEventSerializer(ModelSerializer):
+    class Meta:
+        model = VrEvent
+        fields = ('event_name', 'description')
