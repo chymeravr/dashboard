@@ -62,7 +62,6 @@ ROOT_URLCONF = 'dashboard.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['dashboard/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -151,10 +150,10 @@ REST_FRAMEWORK = {
 STATIC_URL = '/static/'
 STATIC_ROOT = 'staticfiles'
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'dashboard/assets/'),
-    os.path.join(BASE_DIR, 'dashboard/assets/dashboard'),
-)
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'dashboard/assets/'),
+#     os.path.join(BASE_DIR, 'dashboard/assets/dashboard'),
+# )
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
