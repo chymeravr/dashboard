@@ -42,6 +42,8 @@ ENV DEBUG=$DEBUG
 RUN if [ "$DEBUG" = "True" ]; then bash devbootstrap.sh; fi
 
 # nginx config
+RUN python manage.py collectstatic --noinput 
+
 COPY server/dashboard_nginx.conf /etc/nginx/sites-enabled
 RUN rm /etc/nginx/sites-enabled/default
 COPY server/nginx.conf /etc/nginx/nginx.conf
