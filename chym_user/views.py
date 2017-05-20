@@ -1,5 +1,5 @@
 import json
-from httplib import METHOD_NOT_ALLOWED, UNAUTHORIZED
+from httplib import CREATED, METHOD_NOT_ALLOWED, UNAUTHORIZED, OK, BAD_REQUEST, CONFLICT
 
 import stripe
 from django.http import HttpResponse
@@ -39,7 +39,7 @@ class RegisterView(APIView):
             serializer = UserProfileSerializer(data=json.loads(request.body.decode('utf-8')))
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            return HttpResponse(status=201, content='{}', content_type='application/json')
+            return HttpResponse(status=CREATED, content='{}', content_type='application/json')
         except Exception, e:
             raise e
 
@@ -53,9 +53,9 @@ class ActivateView(APIView):
             user.is_active = True
             user.save()
             print user
-            return HttpResponse(status=200)
+            return HttpResponse(status=OK)
         except Exception, e:
-            return HttpResponse(status=400, content=str(e.message))
+            return HttpResponse(status=BAD_REQUEST, content=str(e.message))
 
 
 @permission_classes((IsAuthenticated,))
@@ -78,12 +78,12 @@ def preview_register(request):
         if not user:
             user = InterestedUser(email=user_email)
             user.save()
-            return HttpResponse(status=201, content='{}', content_type='application/json')
+            return HttpResponse(status=CREATED, content='{}', content_type='application/json')
         # User already exists
         else:
-            return HttpResponse(status=409, content='{}', content_type='application/json')
+            return HttpResponse(status=CONFLICT, content='{}', content_type='application/json')
     else:
-        return HttpResponse(status=402, content='{}', content_type='application/json')
+        return HttpResponse(status=METHOD_NOT_ALLOWED, content='{}', content_type='application/json')
 
 
 @permission_classes((IsAuthenticated,))

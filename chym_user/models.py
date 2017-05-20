@@ -31,6 +31,7 @@ STATUS = (
 
 # Create your models here.
 class Profile(models.Model):
+    # this string is shown in admin
     def __str__(self):
         return '%s : %s' % (str(self.user.username), str(self.email))
 
@@ -49,7 +50,7 @@ class Profile(models.Model):
 
 class InterestedUser(models.Model):
     def __str__(self):
-        return '%s' % (str(self.user.username))
+        return '%s' % (str(self.email))
 
     email = models.CharField(max_length=100, primary_key=True)
     status = models.CharField(choices=STATUS, default=SIGNED_UP, max_length=20)
